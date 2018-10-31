@@ -1,1 +1,6 @@
 This file contains paths on erebor to preprocessed data.
+
+Location to the search engine (Work In Progress; queries need to be in XML format, for now):
+/usr0/home/hmuralid/search_engine
+Location to the index (which needs to be specified in the commandline, for now):
+/usr0/home/hmuralid/search_engine/index
