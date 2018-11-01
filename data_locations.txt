@@ -4,3 +4,7 @@ Location to the search engine (Work In Progress; queries need to be in XML forma
 /usr0/home/hmuralid/search_engine
 Location to the index (which needs to be specified in the commandline, for now):
 /usr0/home/hmuralid/search_engine/index
+
+Location to the quotation attribution annotation corpus
+/usr0/home/corpus/quote_attribution
+
