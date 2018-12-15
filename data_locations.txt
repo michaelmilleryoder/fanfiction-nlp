@@ -21,13 +21,18 @@ Location to the processed output from the Book NLP
 : Code for fetching and preprocessing this data, adding soon.
 /usr0/home/shefalig/FanFic/BookNLP/ProcessedOutputs/Friends_Original_Transcript
 
-Location to the coref results from the Book NLP and Stanford CoreNLP
+--------------------------------------------------------------------------
+
+Location to the coref results from the Book NLP and Stanford CoreNLP:
 
 1. test article
 /usr0/home/xuanyuey/coref/friends.test.txt
+
 2. tagged Book NLP results
 /usr0/home/xuanyuey/coref/friends.test.booknlp.txt
+
 3. tagged CoreNLP results with character name constraint
 /usr0/home/xuanyuey/coref/friends.test.corenlp.char.txt
+
 4. tagged CoreNLP results with character name and gender constraint
 /usr0/home/xuanyuey/coref/friends.test.corenlp.char.gender.txt
