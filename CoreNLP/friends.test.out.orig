@@ -1,0 +1,4217 @@
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=347=347with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=349=349with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=337=337with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey]=349=349with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=275=275with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=281=281with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=177=177with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=194=194with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=254=254with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=264=264with genderFEMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=68=68with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=78=78with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=85=85with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=97=97with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=15=15with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=16=16with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=266=266with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel]=281=281with genderFEMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily, Emily]=16=16with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=34=34with genderFEMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=249=249with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica]=264=264with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=729=729with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=743=743with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross]=454=454with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=471=471with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross]=471=471with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=464=464with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey]=743=743with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=731=731with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=661=661with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=670=670with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=157=157with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=168=168with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=330=330with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey]=349=349with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica]=264=264with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=267=267with genderFEMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=677=677with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=692=692with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=141=141with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=168=168with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily]=34=34with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=46=46with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=230=230with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=232=232with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=491=491with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=501=501with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=14=14with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily, Emily]=46=46with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel]=281=281with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=286=286with genderFEMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=276=276with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=282=282with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler]=168=168with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=194=194with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica]=692=692with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=684=684with genderFEMALE
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=120=120with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=122=122with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=658=658with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica]=684=684with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey]=670=670with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey]=731=731with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=571=571with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=580=580with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=719=719with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=727=727with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey]=501=501with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=512=512with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler]=194=194with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=145=145with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=750=750with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=752=752with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey]=349=349with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=366=366with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily, Emily, Emily]=46=46with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily]=78=78with genderFEMALE
+cluster c1 of m1 is represented by he
+first mention is he
+[he]=284=284with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[He]=287=287with genderMALE
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=221=221with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=216=216with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel]=286=286with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=302=302with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=570=570with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=577=577with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica]=267=267with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=303=303with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=435=435with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey]=512=512with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica]=303=303with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica]=282=282with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel]=302=302with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=314=314with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=752=752with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=759=759with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica]=684=684with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica]=727=727with genderFEMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross]=464=464with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=521=521with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=149=149with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=162=162with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=652=652with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica]=727=727with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=760=760with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=769=769with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=118=118with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=132=132with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey]=366=366with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=403=403with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=581=581with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=597=597with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=355=355with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=391=391with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey]=403=403with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=423=423with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=458=458with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=476=476with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=526=526with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=544=544with genderFEMALE
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=88=88with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=90=90with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica]=282=282with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica]=293=293with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=577=577with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=597=597with genderMALE
+cluster c1 of m1 is represented by me
+first mention is me
+[me]=425=425with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=430=430with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=97=97with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=107=107with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross]=783=783with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=796=796with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey]=512=512with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=560=560with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey]=423=423with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey]=560=560with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=52=52with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=140=140with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=560=560with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=408=408with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey]=140=140with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey]=162=162with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=591=591with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=638=638with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=12=12with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=24=24with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler]=597=597with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=633=633with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=9=9with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=25=25with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross]=521=521with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=531=531with genderMALE
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard]=233=233with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard]=239=239with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel]=638=638with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=695=695with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey]=162=162with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey]=132=132with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel]=544=544with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=555=555with genderFEMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica]=293=293with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica]=391=391with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=408=408with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=478=478with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel]=555=555with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=585=585with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey]=731=731with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=705=705with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey]=132=132with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=192=192with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey]=705=705with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey]=769=769with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=478=478with genderMALE
+cluster c2 of m2 is represented by Joey 's
+first mention is Joey 's
+[Joey 's]=517=517with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=517=517with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey]=580=580with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=739=739with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler]=759=759with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=769=769with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=683=683with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey]=192=192with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=203=203with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross]=58=58with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=84=84with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=683=683with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=801=801with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey]=637=637with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=801=801with genderMALE
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=785=785with genderMALE
+cluster c2 of m2 is represented by he
+first mention is he
+[he]=786=786with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel]=253=253with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=314=314with genderFEMALE
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=220=220with genderMALE
+cluster c2 of m2 is represented by his
+first mention is him
+[him, his]=216=216with genderMALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=272=272with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=273=273with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel]=695=695with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=598=598with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel]=476=476with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel]=585=585with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=203=203with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=86=86with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel]=232=232with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=314=314with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler]=759=759with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=744=744with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=314=314with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=392=392with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=10=10with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=24=24with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey]=580=580with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=379=379with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=554=554with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler]=633=633with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=86=86with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=214=214with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=585=585with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel]=598=598with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey]=379=379with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey]=600=600with genderMALE
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard, Richard]=239=239with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard]=255=255with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler]=744=744with genderMALE
+cluster c2 of m2 is represented by Chandler 's
+first mention is Chandler 's
+[Chandler 's]=761=761with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler]=761=761with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=798=798with genderMALE
+cluster c1 of m1 is represented by my
+first mention is my
+[my]=242=242with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=244=244with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=633=633with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=660=660with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=392=392with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=598=598with genderFEMALE
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=169=169with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=170=170with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=500=500with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=516=516with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=798=798with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=781=781with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey]=600=600with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=801=801with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=223=223with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica]=391=391with genderFEMALE
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=256=256with genderMALE
+cluster c2 of m2 is represented by he
+first mention is he
+[he]=259=259with genderMALE
+cluster c1 of m1 is represented by you
+first mention is you
+[you]=289=289with genderUNKNOWN
+cluster c2 of m2 is represented by you
+first mention is you
+[you]=291=291with genderUNKNOWN
+cluster c1 of m1 is represented by She
+first mention is She
+[She]=72=72with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=73=73with genderFEMALE
+cluster c1 of m1 is represented by They
+first mention is They
+[They]=486=486with genderUNKNOWN
+cluster c2 of m2 is represented by they
+first mention is they
+[they]=488=488with genderUNKNOWN
+cluster c1 of m1 is represented by she
+first mention is she
+[she]=604=604with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=606=606with genderFEMALE
+cluster c1 of m1 is represented by They
+first mention is they
+[they, They]=488=488with genderUNKNOWN
+cluster c2 of m2 is represented by their
+first mention is their
+[their]=489=489with genderUNKNOWN
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=451=451with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=447=447with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=598=598with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=509=509with genderFEMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=188=188with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=189=189with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=660=660with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=640=640with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross]=531=531with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=541=541with genderMALE
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=767=767with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=770=770with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross]=35=35with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross, Ross]=84=84with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=509=509with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=505=505with genderFEMALE
+cluster c1 of m1 is represented by He
+first mention is his
+[He, his]=170=170with genderMALE
+cluster c2 of m2 is represented by he
+first mention is he
+[he]=174=174with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=742=742with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=784=784with genderFEMALE
+cluster c1 of m1 is represented by You
+first mention is You
+[You]=361=361with genderUNKNOWN
+cluster c2 of m2 is represented by you
+first mention is you
+[you]=362=362with genderUNKNOWN
+cluster c1 of m1 is represented by you
+first mention is you
+[you]=672=672with genderUNKNOWN
+cluster c2 of m2 is represented by you
+first mention is you
+[you]=674=674with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross, Ross]=541=541with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=601=601with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler]=107=107with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=145=145with genderMALE
+cluster c1 of m1 is represented by he
+first mention is he
+[he]=217=217with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[He]=227=227with genderMALE
+cluster c1 of m1 is represented by my
+first mention is my
+[my]=532=532with genderUNKNOWN
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=535=535with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey]=25=25with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=214=214with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=640=640with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=696=696with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross]=741=741with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross, Ross]=796=796with genderMALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=368=368with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=372=372with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey]=801=801with genderMALE
+cluster c2 of m2 is represented by Joey 's
+first mention is Joey 's
+[Joey 's]=753=753with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=505=505with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=393=393with genderFEMALE
+cluster c1 of m1 is represented by she
+first mention is she
+[she]=678=678with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=679=679with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler]=479=479with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler]=516=516with genderMALE
+cluster c1 of m1 is represented by he
+first mention is He
+[he, He]=287=287with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=288=288with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=393=393with genderFEMALE
+cluster c2 of m2 is represented by Rachel
+first mention is Rachel
+[Rachel]=515=515with genderFEMALE
+cluster c1 of m1 is represented by her
+first mention is her
+[her]=603=603with genderFEMALE
+cluster c2 of m2 is represented by she
+first mention is her
+[she, her]=606=606with genderFEMALE
+cluster c1 of m1 is represented by my
+first mention is I
+[I, my]=244=244with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=247=247with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross]=2=2with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross]=84=84with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey]=753=753with genderMALE
+cluster c2 of m2 is represented by Joey , what are you doing
+first mention is Joey , what are you doing
+[Joey , what are you doing]=353=353with genderMALE
+cluster c1 of m1 is represented by you
+first mention is you
+[you]=690=690with genderUNKNOWN
+cluster c2 of m2 is represented by your
+first mention is your
+[your]=688=688with genderUNKNOWN
+cluster c1 of m1 is represented by my
+first mention is I
+[I, I, my]=247=247with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=245=245with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross, Ross, Ross]=601=601with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross]=796=796with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=515=515with genderFEMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I, I]=273=273with genderUNKNOWN
+cluster c1 of m1 is represented by I
+first mention is I
+[I, I]=447=447with genderUNKNOWN
+cluster c2 of m2 is represented by my
+first mention is my
+[my]=444=444with genderUNKNOWN
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=320=320with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=322=322with genderMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=706=706with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=707=707with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler]=516=516with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=696=696with genderMALE
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard, Richard, Richard]=255=255with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard]=285=285with genderMALE
+cluster c1 of m1 is represented by You
+first mention is You
+[You]=309=309with genderUNKNOWN
+cluster c2 of m2 is represented by You
+first mention is You
+[You]=311=311with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=696=696with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=781=781with genderMALE
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily 's]=3=3with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily, Emily, Emily, Emily, Emily]=78=78with genderFEMALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=109=109with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=113=113with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=145=145with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[He]=158=158with genderMALE
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard, Richard, Richard, Richard]=285=285with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard]=356=356with genderMALE
+cluster c1 of m1 is represented by He
+first mention is him
+[He, him, his]=216=216with genderMALE
+cluster c2 of m2 is represented by he
+first mention is He
+[he, He]=227=227with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=214=214with genderMALE
+cluster c2 of m2 is represented by Joey sighs.Ross
+first mention is Joey sighs.Ross
+[Joey sighs.Ross]=13=13with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler]=24=24with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=158=158with genderMALE
+cluster c1 of m1 is represented by you
+first mention is you
+[you, you]=291=291with genderUNKNOWN
+cluster c2 of m2 is represented by You
+first mention is You
+[You]=294=294with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler]=158=158with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=348=348with genderMALE
+cluster c1 of m1 is represented by my
+first mention is my
+[my]=257=257with genderUNKNOWN
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=260=260with genderUNKNOWN
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=746=746with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=748=748with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey]=214=214with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey]=753=753with genderMALE
+cluster c1 of m1 is represented by me
+first mention is me
+[me]=545=545with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=547=547with genderUNKNOWN
+cluster c1 of m1 is represented by I
+first mention is my
+[I, my, I]=444=444with genderUNKNOWN
+cluster c2 of m2 is represented by myself
+first mention is myself
+[myself]=452=452with genderUNKNOWN
+cluster c1 of m1 is represented by He
+first mention is his
+[his, He]=322=322with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=325=325with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross]=84=84with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=241=241with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross]=241=241with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross]=796=796with genderMALE
+cluster c1 of m1 is represented by My
+first mention is My
+[My]=712=712with genderUNKNOWN
+cluster c2 of m2 is represented by my
+first mention is my
+[my]=714=714with genderUNKNOWN
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=723=723with genderUNKNOWN
+cluster c2 of m2 is represented by my
+first mention is my
+[my]=721=721with genderUNKNOWN
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=666=666with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=668=668with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=781=781with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=730=730with genderMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=681=681with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=682=682with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross]=796=796with genderMALE
+cluster c2 of m2 is represented by Ross
+first mention is Ross
+[Ross]=414=414with genderMALE
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=124=124with genderMALE
+cluster c2 of m2 is represented by his
+first mention is him
+[him, his]=122=122with genderMALE
+cluster c1 of m1 is represented by me
+first mention is I
+[me, I]=547=547with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=546=546with genderUNKNOWN
+cluster c1 of m1 is represented by he
+first mention is he
+[he]=152=152with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=153=153with genderMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=181=181with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we, we]=189=189with genderUNKNOWN
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard]=639=639with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard]=724=724with genderMALE
+cluster c1 of m1 is represented by her
+first mention is her
+[her]=304=304with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=306=306with genderFEMALE
+cluster c1 of m1 is represented by the band 's
+first mention is the band 's
+[the band 's]=409=409with genderNEUTRAL
+cluster c2 of m2 is represented by the band
+first mention is the band
+[the band]=416=416with genderNEUTRAL
+cluster c1 of m1 is represented by They
+first mention is They
+[They]=538=538with genderUNKNOWN
+cluster c2 of m2 is represented by they
+first mention is they
+[they]=542=542with genderUNKNOWN
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica]=391=391with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=358=358with genderFEMALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=659=659with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=663=663with genderUNKNOWN
+cluster c1 of m1 is represented by He
+first mention is he
+[He, his, he]=174=174with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=172=172with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey]=753=753with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=493=493with genderMALE
+cluster c1 of m1 is represented by you
+first mention is you
+[you]=308=308with genderUNKNOWN
+cluster c2 of m2 is represented by You
+first mention is You
+[You, You]=311=311with genderUNKNOWN
+cluster c1 of m1 is represented by The room
+first mention is The room
+[The room]=772=772with genderNEUTRAL
+cluster c2 of m2 is represented by The room
+first mention is The room
+[The room]=775=775with genderNEUTRAL
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=420=420with genderUNKNOWN
+cluster c2 of m2 is represented by me
+first mention is I
+[I, me]=430=430with genderUNKNOWN
+cluster c1 of m1 is represented by the wine cellar
+first mention is the wine cellar
+[the wine cellar]=316=316with genderNEUTRAL
+cluster c2 of m2 is represented by the wine cellar
+first mention is the wine cellar
+[the wine cellar]=328=328with genderNEUTRAL
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=210=210with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[he, He, He, him, his]=227=227with genderMALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I, I]=663=663with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=673=673with genderUNKNOWN
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica]=727=727with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=693=693with genderFEMALE
+cluster c1 of m1 is represented by you
+first mention is you
+[you]=61=61with genderUNKNOWN
+cluster c2 of m2 is represented by your
+first mention is your
+[your]=62=62with genderUNKNOWN
+cluster c1 of m1 is represented by the band 's
+first mention is the band 's
+[the band, the band 's]=416=416with genderNEUTRAL
+cluster c2 of m2 is represented by the band 's
+first mention is the band 's
+[the band 's]=413=413with genderNEUTRAL
+cluster c1 of m1 is represented by London
+first mention is London
+[London]=148=148with genderUNKNOWN
+cluster c2 of m2 is represented by London
+first mention is London
+[London]=155=155with genderUNKNOWN
+cluster c1 of m1 is represented by his
+first mention is his
+[his]=184=184with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=178=178with genderMALE
+cluster c1 of m1 is represented by their
+first mention is their
+[their]=482=482with genderUNKNOWN
+cluster c2 of m2 is represented by They
+first mention is their
+[they, They, their]=489=489with genderUNKNOWN
+cluster c1 of m1 is represented by he
+first mention is he
+[he]=803=803with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=804=804with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=730=730with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler]=802=802with genderMALE
+cluster c1 of m1 is represented by London
+first mention is London
+[London, London]=155=155with genderUNKNOWN
+cluster c2 of m2 is represented by London
+first mention is London
+[London]=161=161with genderUNKNOWN
+cluster c1 of m1 is represented by he
+first mention is he
+[he]=18=18with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=23=23with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=407=407with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=434=434with genderFEMALE
+cluster c1 of m1 is represented by He
+first mention is He
+[He]=212=212with genderMALE
+cluster c2 of m2 is represented by his
+first mention is He
+[he, He, He, his, him, his]=227=227with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=802=802with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=583=583with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, her, Monica, Monica, Monica]=358=358with genderFEMALE
+cluster c2 of m2 is represented by she
+first mention is she
+[she]=364=364with genderFEMALE
+cluster c1 of m1 is represented by Richard 's
+first mention is Richard 's
+[Richard 's]=629=629with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard, Richard]=724=724with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=469=469with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=472=472with genderFEMALE
+cluster c1 of m1 is represented by We
+first mention is We
+[We]=701=701with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we, we]=707=707with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=273=273with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=528=528with genderFEMALE
+cluster c1 of m1 is represented by her
+first mention is her
+[her]=277=277with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=279=279with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, her, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=528=528with genderFEMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=236=236with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, I, her, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=236=236with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=318=318with genderFEMALE
+cluster c1 of m1 is represented by You
+first mention is You
+[You]=301=301with genderUNKNOWN
+cluster c2 of m2 is represented by you
+first mention is You
+[You, You, you]=311=311with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler 's, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler]=583=583with genderMALE
+cluster c2 of m2 is represented by his
+first mention is him
+[his, him]=770=770with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=628=628with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica, her]=693=693with genderFEMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, her]=693=693with genderFEMALE
+cluster c2 of m2 is represented by I
+first mention is my
+[my, I]=721=721with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross]=414=414with genderMALE
+cluster c2 of m2 is represented by Ross bursting into the room unannounced
+first mention is Ross bursting into the room unannounced
+[Ross bursting into the room unannounced]=792=792with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, I, her, Rachel, Rachel, her, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=318=318with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her, her]=279=279with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey]=493=493with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I, I, me]=430=430with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, I, her, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, her, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel]=279=279with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her, her]=306=306with genderFEMALE
+cluster c1 of m1 is represented by us
+first mention is us
+[us]=567=567with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=575=575with genderUNKNOWN
+cluster c1 of m1 is represented by he
+first mention is he
+[he]=622=622with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=625=625with genderMALE
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily 's]=78=78with genderFEMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=77=77with genderUNKNOWN
+cluster c1 of m1 is represented by his plate
+first mention is his plate
+[his plate]=106=106with genderUNKNOWN
+cluster c2 of m2 is represented by his plate
+first mention is his plate
+[his plate]=154=154with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler]=348=348with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his, his]=178=178with genderMALE
+cluster c1 of m1 is represented by the wine cellar
+first mention is the wine cellar
+[the wine cellar, the wine cellar]=328=328with genderNEUTRAL
+cluster c2 of m2 is represented by the wine cellar
+first mention is the wine cellar
+[the wine cellar]=344=344with genderNEUTRAL
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross]=414=414with genderMALE
+cluster c2 of m2 is represented by his
+first mention is him
+[him, his]=90=90with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey 's, I, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, Joey, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey]=430=430with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=503=503with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey 's, I, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, Joey, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey]=503=503with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[He]=507=507with genderMALE
+cluster c1 of m1 is represented by Monica or Richard
+first mention is Monica or Richard
+[Monica or Richard]=646=646with genderUNKNOWN
+cluster c2 of m2 is represented by they
+first mention is they
+[they]=647=647with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, I, Joey]=507=507with genderMALE
+cluster c2 of m2 is represented by his
+first mention is him
+[his, him]=668=668with genderMALE
+cluster c1 of m1 is represented by her arm
+first mention is her arm
+[her arm]=278=278with genderUNKNOWN
+cluster c2 of m2 is represented by her arm
+first mention is her arm
+[her arm]=307=307with genderUNKNOWN
+cluster c1 of m1 is represented by The room
+first mention is The room
+[The room, The room]=775=775with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=776=776with genderNEUTRAL
+cluster c1 of m1 is represented by the door
+first mention is the door
+[the door]=645=645with genderUNKNOWN
+cluster c2 of m2 is represented by the door
+first mention is the door
+[the door]=650=650with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, I, her, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, her, Rachel]=306=306with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=269=269with genderFEMALE
+cluster c1 of m1 is represented by My
+first mention is My
+[My]=37=37with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=40=40with genderUNKNOWN
+cluster c1 of m1 is represented by Pheebs
+first mention is Pheebs
+[Pheebs]=590=590with genderUNKNOWN
+cluster c2 of m2 is represented by Pheebs
+first mention is Pheebs
+[Pheebs]=611=611with genderUNKNOWN
+cluster c1 of m1 is represented by the door
+first mention is the door
+[the door, the door]=650=650with genderUNKNOWN
+cluster c2 of m2 is represented by the door
+first mention is the door
+[the door]=653=653with genderUNKNOWN
+cluster c1 of m1 is represented by his plate
+first mention is his plate
+[his plate, his plate]=154=154with genderUNKNOWN
+cluster c2 of m2 is represented by his plate
+first mention is his plate
+[his plate]=222=222with genderUNKNOWN
+cluster c1 of m1 is represented by My
+first mention is my
+[my, My]=714=714with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=717=717with genderUNKNOWN
+cluster c1 of m1 is represented by you
+first mention is you
+[you]=237=237with genderUNKNOWN
+cluster c2 of m2 is represented by You
+first mention is You
+[You]=240=240with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey 's, him, I, Joey]=668=668with genderMALE
+cluster c2 of m2 is represented by he
+first mention is he
+[he]=641=641with genderMALE
+cluster c1 of m1 is represented by he
+first mention is him
+[he, him, He]=288=288with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=295=295with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey 's, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey 's, him, I, Joey]=641=641with genderMALE
+cluster c2 of m2 is represented by he
+first mention is his
+[he, his]=153=153with genderMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=135=135with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=143=143with genderUNKNOWN
+cluster c1 of m1 is represented by my
+first mention is I
+[I, I, I, my]=245=245with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=251=251with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[Ross, Ross, Ross, his, Ross, him, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross]=90=90with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[He]=474=474with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, Joey, Joey 's, Joey, Joey, his, Joey, Joey, Joey, his, Joey, Joey 's, him, I, Joey]=153=153with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=196=196with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, I, her, Rachel, Rachel, her, her, her, Rachel, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, her, Rachel]=269=269with genderFEMALE
+cluster c2 of m2 is represented by she
+first mention is she
+[she]=463=463with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, Joey, Joey 's, Joey, Joey, his, Joey, Joey, Joey, his, Joey, Joey 's, him, I, Joey]=196=196with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=206=206with genderMALE
+cluster c1 of m1 is represented by the room
+first mention is the room
+[the room]=740=740with genderNEUTRAL
+cluster c2 of m2 is represented by The room
+first mention is The room
+[it, The room, The room]=776=776with genderNEUTRAL
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, Emily, Emily, Emily, I, Emily, Emily, Emily, Emily 's]=77=77with genderFEMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=70=70with genderMALE
+wrong merging based on gender!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Emily with gender FEMALE with cluster gender FEMALE
+his with gender MALE with cluster gender MALE
+cluster c1 of m1 is represented by My
+first mention is I
+[My, I]=40=40with genderUNKNOWN
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=44=44with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler]=770=770with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=756=756with genderUNKNOWN
+cluster c1 of m1 is represented by my
+first mention is my
+[my]=522=522with genderUNKNOWN
+cluster c2 of m2 is represented by My
+first mention is My
+[My]=524=524with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, his, Joey, Joey, Joey, his, Joey, Joey 's, him, I, Joey]=206=206with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[he, He, He, He, his, him, his]=227=227with genderMALE
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard]=27=27with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard, Richard, Richard, Richard, Richard]=356=356with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler]=756=756with genderMALE
+cluster c2 of m2 is represented by He
+first mention is he
+[He, he]=786=786with genderMALE
+cluster c1 of m1 is represented by my name
+first mention is my name
+[my name]=523=523with genderUNKNOWN
+cluster c2 of m2 is represented by my name
+first mention is my name
+[my name]=533=533with genderUNKNOWN
+cluster c1 of m1 is represented by my name
+first mention is my name
+[my name]=243=243with genderUNKNOWN
+cluster c2 of m2 is represented by my name
+first mention is my name
+[my name]=258=258with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, I, Rachel, Rachel, I, her, Rachel, Rachel, her, her, her, Rachel, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, Rachel, Rachel, she, Rachel, her, Rachel]=463=463with genderFEMALE
+cluster c2 of m2 is represented by my
+first mention is me
+[me, my]=535=535with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, Ross, his, Ross, him, Ross, Ross]=474=474with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=67=67with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, He, Joey, Joey, Joey, Joey, He, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, his, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=227=227with genderMALE
+cluster c2 of m2 is represented by Joey answered , grabbing some food and
+first mention is Joey answered , grabbing some food and
+[Joey answered , grabbing some food and]=102=102with genderMALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=129=129with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=134=134with genderUNKNOWN
+cluster c1 of m1 is represented by the honeymoon suite
+first mention is the honeymoon suite
+[the honeymoon suite]=734=734with genderNEUTRAL
+cluster c2 of m2 is represented by the honeymoon suite
+first mention is the honeymoon suite
+[the honeymoon suite]=765=765with genderNEUTRAL
+cluster c1 of m1 is represented by a piece of chicken
+first mention is a piece of chicken
+[a piece of chicken]=351=351with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=350=350with genderNEUTRAL
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, He, Joey, Joey, Joey, Joey, He, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, I, Joey, his, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=227=227with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I, I]=372=372with genderUNKNOWN
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[my, Monica, Monica, Monica, Monica, Monica, Monica, Monica, Monica, I, her]=721=721with genderFEMALE
+cluster c2 of m2 is represented by she
+first mention is her
+[she, her]=679=679with genderFEMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=557=557with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=558=558with genderUNKNOWN
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily]=468=468with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily]=472=472with genderFEMALE
+cluster c1 of m1 is represented by his face
+first mention is his face
+[his face]=383=383with genderUNKNOWN
+cluster c2 of m2 is represented by his face
+first mention is his face
+[his face]=428=428with genderUNKNOWN
+cluster c1 of m1 is represented by their
+first mention is their
+[their]=402=402with genderUNKNOWN
+cluster c2 of m2 is represented by them
+first mention is them
+[them]=404=404with genderUNKNOWN
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily, Emily]=434=434with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily]=472=472with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, He, Joey, Joey, Joey, He, He, Joey, Joey, Joey, I, I, Joey, his, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, his, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=372=372with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=54=54with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, He, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, He, Joey, Joey, I, I, Joey, his, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=54=54with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=150=150with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, his, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, he, I, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler]=786=786with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=782=782with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[she, my, Monica, her, Monica, Monica, Monica, Monica, Monica, Monica, Monica, I, her]=679=679with genderFEMALE
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=726=726with genderUNKNOWN
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, she, Monica, Monica, her, Monica, Monica, Monica, Monica, Monica, Monica, Monica]=364=364with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[she, my, Monica, her, Monica, Monica, Monica, Monica, Monica, Monica, Monica, me, I, her]=726=726with genderFEMALE
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, Emily, Emily, Emily, I, Emily, Emily, Emily, Emily 's]=77=77with genderFEMALE
+cluster c2 of m2 is represented by My
+first mention is me
+[me, My, I]=44=44with genderUNKNOWN
+cluster c1 of m1 is represented by his face
+first mention is his face
+[his face, his face]=428=428with genderUNKNOWN
+cluster c2 of m2 is represented by his face
+first mention is his face
+[his face]=563=563with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[his, Chandler, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler]=178=178with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=180=180with genderUNKNOWN
+cluster c1 of m1 is represented by his face
+first mention is his face
+[his face, his face, his face]=563=563with genderUNKNOWN
+cluster c2 of m2 is represented by his face
+first mention is his face
+[his face]=768=768with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, Ross, Ross, Ross, Ross, his, Ross, him, Ross, Ross]=67=67with genderMALE
+cluster c2 of m2 is represented by he
+first mention is he
+[he]=534=534with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[his, Chandler, his, Chandler, I, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler]=180=180with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler 's, Chandler, his, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, he, I, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler]=782=782with genderMALE
+cluster c1 of m1 is represented by his face
+first mention is his face
+[his face]=71=71with genderUNKNOWN
+cluster c2 of m2 is represented by his face
+first mention is his face
+[his face]=185=185with genderUNKNOWN
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica]=26=26with genderFEMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, me, I, her, Monica, Monica, Monica, she, my, Monica, Monica, she, Monica, her, Monica, her, Monica, Monica, Monica, Monica, Monica, Monica]=726=726with genderFEMALE
+cluster c1 of m1 is represented by a chicken wing
+first mention is a chicken wing
+[a chicken wing]=208=208with genderUNKNOWN
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=209=209with genderNEUTRAL
+cluster c1 of m1 is represented by the room
+first mention is the room
+[it, the room, The room, The room]=776=776with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=779=779with genderNEUTRAL
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, his, Chandler, his, Chandler, I, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, his, he, I, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler]=782=782with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=518=518with genderMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, He, He, Joey, Joey, Joey, He, Joey, Joey, Joey, He, Joey, Joey, Joey, Joey, I, I, I, Joey, his, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=150=150with genderMALE
+cluster c2 of m2 is represented by I
+first mention is myself
+[myself, I, my, I]=452=452with genderUNKNOWN
+cluster c1 of m1 is represented by Monica or Richard
+first mention is Monica or Richard
+[they, Monica or Richard]=647=647with genderUNKNOWN
+cluster c2 of m2 is represented by They
+first mention is They
+[They]=654=654with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler 's, his, Chandler, his, Chandler, I, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, his, he, I, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, his, Chandler, Chandler]=518=518with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I, I]=113=113with genderUNKNOWN
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard, Richard, Richard, Richard, Richard, Richard]=356=356with genderMALE
+cluster c2 of m2 is represented by Richard 's
+first mention is Richard 's
+[Richard, Richard 's, Richard]=724=724with genderMALE
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, me, I, her, Monica, Monica, Monica, she, my, Monica, Monica, Monica, she, Monica, her, Monica, her, Monica, Monica, Monica, Monica, Monica, Monica]=726=726with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=297=297with genderFEMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, I, her, Rachel, Rachel, her, her, her, Rachel, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=535=535with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=537=537with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[He, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, He, Joey, Joey, Joey, He, Joey, Joey, I, I, I, Joey, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=452=452with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=807=807with genderUNKNOWN
+cluster c1 of m1 is represented by The obsession
+first mention is The obsession
+[The obsession]=616=616with genderUNKNOWN
+cluster c2 of m2 is represented by his obsession
+first mention is his obsession
+[his obsession]=626=626with genderUNKNOWN
+cluster c1 of m1 is represented by we
+first mention is we
+[we, we]=682=682with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=685=685with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, his, he, I, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, Chandler, Chandler 's, his, Chandler, his, Chandler, I, Chandler, Chandler]=113=113with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his, his]=748=748with genderMALE
+cluster c1 of m1 is represented by The boys
+first mention is The boys
+[The boys]=536=536with genderUNKNOWN
+cluster c2 of m2 is represented by They
+first mention is they
+[They, they]=542=542with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, her, I, her, Rachel, Rachel, her, her, her, Rachel, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=537=537with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=543=543with genderFEMALE
+cluster c1 of m1 is represented by it
+first mention is it
+[it]=708=708with genderNEUTRAL
+cluster c2 of m2 is represented by It
+first mention is It
+[It]=711=711with genderNEUTRAL
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, Joey, He, Joey, Joey, He, I, I, I, Joey, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=807=807with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I, I]=134=134with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, He, He, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, I, I, I, I, Joey, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=134=134with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=204=204with genderUNKNOWN
+cluster c1 of m1 is represented by his pocket
+first mention is his pocket
+[his pocket]=326=326with genderNEUTRAL
+cluster c2 of m2 is represented by his pocket
+first mention is his pocket
+[his pocket]=494=494with genderNEUTRAL
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, him, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, him, his, he, I, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, Chandler, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=748=748with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I, I, I]=673=673with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[He, Joey, Joey, Joey, Joey, He, Joey, Joey, He, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, I, I, I, I, I, Joey, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, Joey, Joey 's, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=204=204with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=427=427with genderMALE
+cluster c1 of m1 is represented by the men
+first mention is the men
+[the men]=593=593with genderUNKNOWN
+cluster c2 of m2 is represented by the men
+first mention is the men
+[the men]=720=720with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, Joey, He, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, I, I, I, I, I, Joey, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, Joey, Joey 's, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=427=427with genderMALE
+cluster c2 of m2 is represented by he
+first mention is his
+[his, he]=804=804with genderMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we, we]=558=558with genderUNKNOWN
+cluster c2 of m2 is represented by us
+first mention is we
+[us, we]=575=575with genderUNKNOWN
+cluster c1 of m1 is represented by the room
+first mention is the room
+[the room]=649=649with genderNEUTRAL
+cluster c2 of m2 is represented by the room
+first mention is the room
+[it, the room, it, The room, The room]=779=779with genderNEUTRAL
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, Chandler, Chandler, Chandler, Chandler, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, Chandler, Chandler, Chandler, him, his, he, I, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, Chandler, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=673=673with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=198=198with genderMALE
+cluster c1 of m1 is represented by Emily
+first mention is Emily
+[Emily, Emily]=784=784with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily]=794=794with genderFEMALE
+cluster c1 of m1 is represented by their
+first mention is their
+[their]=224=224with genderUNKNOWN
+cluster c2 of m2 is represented by them
+first mention is them
+[them]=231=231with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, her, I, her, Rachel, Rachel, her, her, her, Rachel, her, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=543=543with genderFEMALE
+cluster c2 of m2 is represented by me
+first mention is I
+[me, I, I]=546=546with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, He, Joey, Joey, Joey, I, I, I, I, I, Joey, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=804=804with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=562=562with genderMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=373=373with genderUNKNOWN
+cluster c2 of m2 is represented by We
+first mention is We
+[We]=384=384with genderUNKNOWN
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, me, Emily, Emily, Emily, My, I, I, Emily, Emily, Emily, Emily 's]=44=44with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily, Emily, Emily]=472=472with genderFEMALE
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, me, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, My, I, I, Emily, Emily 's]=472=472with genderFEMALE
+cluster c2 of m2 is represented by She
+first mention is her
+[her, She]=73=73with genderFEMALE
+cluster c1 of m1 is represented by the band 's
+first mention is the band 's
+[the band, the band 's, the band 's]=413=413with genderNEUTRAL
+cluster c2 of m2 is represented by the stupid band
+first mention is the stupid band
+[the stupid band]=421=421with genderNEUTRAL
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[her, Emily, me, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, She, Emily, Emily, My, I, I, Emily, Emily 's]=73=73with genderFEMALE
+cluster c2 of m2 is represented by Emily
+first mention is Emily
+[Emily, Emily, Emily]=794=794with genderFEMALE
+cluster c1 of m1 is represented by We
+first mention is We
+[We]=175=175with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we, we, we]=189=189with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, Ross, Ross, Ross, Ross, his, he, Ross, him, Ross, Ross]=534=534with genderMALE
+cluster c2 of m2 is represented by he
+first mention is he
+[he]=605=605with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, Chandler, Chandler, Chandler, Chandler, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, Chandler, Chandler, Chandler, him, his, he, I, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=198=198with genderMALE
+cluster c2 of m2 is represented by He
+first mention is him
+[him, He, his, he]=172=172with genderMALE
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[he, He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, Ross, Ross, Ross, Ross, his, he, Ross, him, Ross, Ross]=605=605with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=8=8with genderMALE
+cluster c1 of m1 is represented by her own room
+first mention is her own room
+[her own room]=680=680with genderNEUTRAL
+cluster c2 of m2 is represented by your own room
+first mention is your own room
+[your own room]=689=689with genderNEUTRAL
+cluster c1 of m1 is represented by the door
+first mention is the door
+[the door, the door, the door]=653=653with genderUNKNOWN
+cluster c2 of m2 is represented by the door
+first mention is the door
+[the door]=728=728with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[He, Joey, Joey, Joey, He, Joey, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, I, I, I, I, I, Joey, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=562=562with genderMALE
+cluster c2 of m2 is represented by My
+first mention is I
+[my, I, My]=717=717with genderUNKNOWN
+cluster c1 of m1 is represented by My friends and family
+first mention is My friends and family
+[My friends and family]=38=38with genderUNKNOWN
+cluster c2 of m2 is represented by them
+first mention is them
+[them]=41=41with genderUNKNOWN
+cluster c1 of m1 is represented by a condom in his hand
+first mention is a condom in his hand
+[a condom in his hand]=321=321with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=324=324with genderNEUTRAL
+cluster c1 of m1 is represented by his arms
+first mention is his arms
+[his arms]=749=749with genderUNKNOWN
+cluster c2 of m2 is represented by Chandler 's arms
+first mention is Chandler 's arms
+[Chandler 's arms]=766=766with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[He, He, Joey, Joey, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, I, I, I, I, I, I, Joey, My, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=717=717with genderMALE
+cluster c2 of m2 is represented by Joe
+first mention is Joe
+[Joe]=736=736with genderMALE
+cluster c1 of m1 is represented by away.Ross and Rachel
+first mention is away.Ross and Rachel
+[away.Ross and Rachel]=398=398with genderUNKNOWN
+cluster c2 of m2 is represented by their
+first mention is them
+[their, them]=404=404with genderUNKNOWN
+cluster c1 of m1 is represented by Monica or Richard
+first mention is Monica or Richard
+[They, they, Monica or Richard]=654=654with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we, we, we]=685=685with genderUNKNOWN
+cluster c1 of m1 is represented by Ugh
+first mention is Ugh
+[Ugh]=128=128with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=125=125with genderNEUTRAL
+cluster c1 of m1 is represented by she
+first mention is she
+[she]=5=5with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[her]=19=19with genderFEMALE
+cluster c1 of m1 is represented by the bathroom
+first mention is the bathroom
+[the bathroom]=22=22with genderUNKNOWN
+cluster c2 of m2 is represented by the bathroom
+first mention is the bathroom
+[the bathroom]=57=57with genderUNKNOWN
+cluster c1 of m1 is represented by her own room
+first mention is her own room
+[your own room, her own room]=689=689with genderNEUTRAL
+cluster c2 of m2 is represented by her hotel room
+first mention is her hotel room
+[her hotel room]=694=694with genderNEUTRAL
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[He, He, Joey, Joey, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, I, I, I, I, I, I, Joey, My, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, he, his, Joey, Joey 's, him, I, Joey]=717=717with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=573=573with genderMALE
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, her, I, her, Rachel, me, Rachel, her, I, her, her, Rachel, her, I, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=546=546with genderFEMALE
+cluster c2 of m2 is represented by He
+first mention is his
+[his, He, his]=325=325with genderMALE
+wrong merging based on gender!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Rachel with gender FEMALE with cluster gender FEMALE
+He with gender MALE with cluster gender MALE
+cluster c1 of m1 is represented by I
+first mention is I
+[I]=497=497with genderUNKNOWN
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=502=502with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[He, Chandler, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, his, Chandler, Chandler, Chandler, Chandler, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, him, Chandler, Chandler, Chandler, him, his, he, I, he, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=172=172with genderMALE
+cluster c2 of m2 is represented by He
+first mention is him
+[He, him, his]=122=122with genderMALE
+cluster c1 of m1 is represented by the bed
+first mention is the bed
+[the bed]=530=530with genderUNKNOWN
+cluster c2 of m2 is represented by the bed
+first mention is the bed
+[the bed]=791=791with genderUNKNOWN
+cluster c1 of m1 is represented by a deep breath
+first mention is a deep breath
+[a deep breath]=332=332with genderUNKNOWN
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=333=333with genderNEUTRAL
+cluster c1 of m1 is represented by a choice
+first mention is a choice
+[a choice]=182=182with genderUNKNOWN
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=190=190with genderNEUTRAL
+cluster c1 of m1 is represented by he
+first mention is him
+[him, he]=23=23with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard, Richard, Richard, Richard, Richard, Richard 's, Richard, Richard, Richard]=724=724with genderMALE
+cluster c1 of m1 is represented by a bed
+first mention is a bed
+[a bed]=506=506with genderUNKNOWN
+cluster c2 of m2 is represented by the bed
+first mention is the bed
+[the bed, the bed]=791=791with genderUNKNOWN
+cluster c1 of m1 is represented by their
+first mention is them
+[their, them]=231=231with genderUNKNOWN
+cluster c2 of m2 is represented by you
+first mention is You
+[You, you]=240=240with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, He, He, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, He, Joey, Joey, Joey, Joey, Joey, I, I, I, I, I, I, Joey, My, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=573=573with genderMALE
+cluster c2 of m2 is represented by You
+first mention is You
+[You]=738=738with genderUNKNOWN
+cluster c1 of m1 is represented by the room
+first mention is the room
+[the room]=340=340with genderNEUTRAL
+cluster c2 of m2 is represented by the room
+first mention is the room
+[it, the room, it, The room, the room, The room]=779=779with genderNEUTRAL
+cluster c1 of m1 is represented by she
+first mention is she
+[she]=588=588with genderFEMALE
+cluster c2 of m2 is represented by her
+first mention is her
+[she, her, her]=606=606with genderFEMALE
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, He, He, Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, You, I, I, I, I, I, I, Joey, My, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=738=738with genderMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=564=564with genderUNKNOWN
+cluster c1 of m1 is represented by Joey answered , grabbing some food and
+first mention is Joey answered , grabbing some food and
+[Joey answered , grabbing some food and]=102=102with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=105=105with genderMALE
+cluster c1 of m1 is represented by them
+first mention is them
+[them]=96=96with genderUNKNOWN
+cluster c2 of m2 is represented by them
+first mention is them
+[them]=101=101with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, her, I, her, Rachel, me, Rachel, her, I, her, her, Rachel, her, I, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=546=546with genderFEMALE
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=313=313with genderUNKNOWN
+cluster c1 of m1 is represented by his face
+first mention is his face
+[his face, his face]=185=185with genderUNKNOWN
+cluster c2 of m2 is represented by his face
+first mention is his face
+[his face, his face, his face, his face]=768=768with genderUNKNOWN
+cluster c1 of m1 is represented by the room
+first mention is the room
+[it, the room, it, The room, the room, The room, the room]=779=779with genderNEUTRAL
+cluster c2 of m2 is represented by our room
+first mention is our room
+[our room]=676=676with genderNEUTRAL
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, He, Joey, Joey, He, He, Joey, He, Joey, Joey, Joey, Joey, Joey, Joey, You, I, I, I, I, I, I, Joey, I, My, I, I, his, I, I, I, he, me, Joey, Joey, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=564=564with genderMALE
+cluster c2 of m2 is represented by you
+first mention is you
+[you]=354=354with genderUNKNOWN
+cluster c1 of m1 is represented by surprised.Later on at the London Marriott , Joey and Chandler
+first mention is surprised.Later on at the London Marriott , Joey and Chandler
+[surprised.Later on at the London Marriott , Joey and Chandler]=480=480with genderUNKNOWN
+cluster c2 of m2 is represented by their
+first mention is their
+[they, They, their, their]=489=489with genderUNKNOWN
+cluster c1 of m1 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, me, I, her, Monica, Monica, Monica, she, my, Monica, Monica, Monica, she, Monica, her, Monica, her, Monica, Monica, her, Monica, Monica, Monica, Monica]=297=297with genderFEMALE
+cluster c2 of m2 is represented by You
+first mention is you
+[You, you]=362=362with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel , Chandler , Joey , Monica and Richard
+first mention is Rachel , Chandler , Joey , Monica and Richard
+[Rachel , Chandler , Joey , Monica and Richard]=29=29with genderUNKNOWN
+cluster c2 of m2 is represented by You
+first mention is You
+[You]=30=30with genderUNKNOWN
+cluster c1 of m1 is represented by his face
+first mention is his face
+[his face, his face, his face, his face, his face, his face]=768=768with genderUNKNOWN
+cluster c2 of m2 is represented by his red face
+first mention is his red face
+[his red face]=584=584with genderUNKNOWN
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=164=164with genderUNKNOWN
+cluster c2 of m2 is represented by We
+first mention is we
+[we, we, We, we]=189=189with genderUNKNOWN
+cluster c1 of m1 is represented by Monica or Richard
+first mention is Monica or Richard
+[we, we, They, they, Monica or Richard, we]=685=685with genderUNKNOWN
+cluster c2 of m2 is represented by We
+first mention is we
+[we, We, we]=707=707with genderUNKNOWN
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, He, He, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, his, Chandler, Chandler, Chandler, Chandler, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, him, Chandler, Chandler, Chandler, him, his, he, I, his, he, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, him, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=122=122with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=764=764with genderMALE
+cluster c1 of m1 is represented by Ross and Emily
+first mention is Ross and Emily
+[Ross and Emily]=49=49with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we]=50=50with genderUNKNOWN
+cluster c1 of m1 is represented by my
+first mention is me
+[me, my]=260=260with genderUNKNOWN
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=262=262with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, me, her, I, her, Rachel, me, Rachel, her, I, her, her, Rachel, her, I, Rachel, Rachel, her, her, Rachel, Rachel, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=313=313with genderFEMALE
+cluster c2 of m2 is represented by my
+first mention is I
+[I, me, my]=262=262with genderUNKNOWN
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, her, Emily, me, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, She, Emily, Emily, My, I, I, Emily, Emily 's]=794=794with genderFEMALE
+cluster c2 of m2 is represented by she
+first mention is her
+[she, her]=19=19with genderFEMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, He, He, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, his, Chandler, Chandler, Chandler, Chandler, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, him, Chandler, Chandler, Chandler, him, his, he, I, his, his, he, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, him, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=764=764with genderMALE
+cluster c2 of m2 is represented by my
+first mention is My
+[My, my]=524=524with genderUNKNOWN
+cluster c1 of m1 is represented by the bathroom
+first mention is the bathroom
+[the bathroom]=443=443with genderUNKNOWN
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=446=446with genderNEUTRAL
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[he, He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, Ross, Ross, Ross, Ross, his, he, Ross, him, him, Ross, Ross]=8=8with genderMALE
+cluster c2 of m2 is represented by my
+first mention is I
+[I, I, I, my, I]=251=251with genderUNKNOWN
+cluster c1 of m1 is represented by Ross.Rachel forces
+first mention is Ross.Rachel forces
+[Ross.Rachel forces]=437=437with genderUNKNOWN
+cluster c2 of m2 is represented by them
+first mention is them
+[them]=442=442with genderUNKNOWN
+cluster c1 of m1 is represented by the next room quickly
+first mention is the next room quickly
+[the next room quickly]=228=228with genderNEUTRAL
+cluster c2 of m2 is represented by the room
+first mention is the room
+[it, the room, it, The room, the room, The room, the room, our room]=676=676with genderNEUTRAL
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, He, Joey, Joey, He, Joey, Joey, Joey, Joey, He, Joey, He, Joey, Joey, You, I, I, I, I, I, I, Joey, I, My, I, I, his, I, I, I, he, me, Joey, Joey, you, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=354=354with genderMALE
+cluster c2 of m2 is represented by him
+first mention is him
+[him]=144=144with genderMALE
+cluster c1 of m1 is represented by the next room quickly
+first mention is the next room quickly
+[it, the room, it, The room, the room, The room, the room, our room, the next room quickly]=676=676with genderNEUTRAL
+cluster c2 of m2 is represented by her own room
+first mention is her own room
+[her hotel room, your own room, her own room]=694=694with genderNEUTRAL
+cluster c1 of m1 is represented by Richard
+first mention is Richard
+[Richard, him, Richard, he, Richard, Richard, Richard, Richard 's, Richard, Richard, Richard]=724=724with genderMALE
+cluster c2 of m2 is represented by Monica
+first mention is Monica
+[Monica, Monica, Monica, Monica, Monica, Monica, You, me, I, you, her, Monica, Monica, Monica, she, my, Monica, Monica, Monica, she, Monica, her, Monica, her, Monica, Monica, her, Monica, Monica, Monica, Monica]=362=362with genderFEMALE
+cluster c1 of m1 is represented by we
+first mention is we
+[we]=630=630with genderUNKNOWN
+cluster c2 of m2 is represented by our
+first mention is our
+[our]=635=635with genderUNKNOWN
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, her, Emily, me, Emily, she, Emily, her, Emily, Emily, Emily, Emily, Emily, Emily, Emily, Emily, She, Emily, Emily, My, I, I, Emily, Emily 's]=19=19with genderFEMALE
+cluster c2 of m2 is represented by you
+first mention is you
+[you]=76=76with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, He, Joey, Joey, He, Joey, Joey, He, Joey, Joey, He, Joey, Joey, Joey, Joey, You, I, I, I, I, I, I, Joey, I, My, I, I, his, I, I, I, he, me, Joey, Joey, you, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, him, his, his, his, Joey, Joey 's, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=144=144with genderMALE
+cluster c2 of m2 is represented by He
+first mention is He
+[He]=346=346with genderMALE
+cluster c1 of m1 is represented by all
+first mention is all
+[all]=461=461with genderUNKNOWN
+cluster c2 of m2 is represented by they
+first mention is they
+[they]=462=462with genderUNKNOWN
+cluster c1 of m1 is represented by his red face
+first mention is his face
+[his face, his face, his face, his face, his face, his red face, his face]=584=584with genderUNKNOWN
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=589=589with genderNEUTRAL
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, My, He, He, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, his, Chandler, Chandler, Chandler, Chandler, my, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, him, Chandler, Chandler, Chandler, him, his, he, I, his, his, he, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, him, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=524=524with genderMALE
+cluster c2 of m2 is represented by Ugh
+first mention is Ugh
+[Ugh, it]=125=125with genderNEUTRAL
+cluster c1 of m1 is represented by me
+first mention is me
+[me]=623=623with genderUNKNOWN
+cluster c2 of m2 is represented by me
+first mention is me
+[me]=657=657with genderUNKNOWN
+cluster c1 of m1 is represented by he
+first mention is him
+[him, he, him, He]=295=295with genderMALE
+cluster c2 of m2 is represented by you
+first mention is You
+[You, you, you]=294=294with genderUNKNOWN
+cluster c1 of m1 is represented by the next room quickly
+first mention is the next room quickly
+[her hotel room, it, the room, it, The room, the room, your own room, The room, the room, her own room, our room, the next room quickly]=694=694with genderNEUTRAL
+cluster c2 of m2 is represented by my room
+first mention is my room
+[my room]=722=722with genderNEUTRAL
+cluster c1 of m1 is represented by we
+first mention is our
+[our, we]=635=635with genderUNKNOWN
+cluster c2 of m2 is represented by Monica or Richard
+first mention is Monica or Richard
+[we, we, we, They, We, they, Monica or Richard, we, we]=707=707with genderUNKNOWN
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[I, he, He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, my, I, Ross, Ross, Ross, I, Ross, his, he, Ross, I, him, him, Ross, Ross]=251=251with genderMALE
+cluster c2 of m2 is represented by Richard
+first mention is Richard
+[Richard, him, Richard, he, Richard, Richard, Richard, Richard 's, Richard, Richard, Richard]=724=724with genderMALE
+cluster c1 of m1 is represented by The band
+first mention is The band
+[The band]=0=0with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=7=7with genderNEUTRAL
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, Emily, Emily, Emily, Emily, Emily, Emily, She, Emily, Emily, My, I, I, Emily, you, Emily 's, Emily, her, me, Emily, she, Emily, her, Emily, Emily]=76=76with genderFEMALE
+cluster c2 of m2 is represented by you
+first mention is you
+[you]=83=83with genderUNKNOWN
+cluster c1 of m1 is represented by Emily 's
+first mention is Emily 's
+[Emily, Emily, Emily, Emily, Emily, Emily, Emily, She, Emily, Emily, My, I, I, Emily, you, Emily 's, you, Emily, her, me, Emily, she, Emily, her, Emily, Emily]=83=83with genderFEMALE
+cluster c2 of m2 is represented by I
+first mention is I
+[I]=470=470with genderUNKNOWN
+cluster c1 of m1 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, He, Joey, Joey, He, He, Joey, Joey, Joey, Joey, Joey, Joey, Joey, He, Joey, You, I, I, I, I, I, I, Joey, I, My, I, I, his, I, I, I, he, me, Joey, Joey, you, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, he, Joey, him, his, his, his, Joey, Joey 's, He, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=346=346with genderMALE
+cluster c2 of m2 is represented by his
+first mention is his
+[his]=382=382with genderMALE
+cluster c1 of m1 is represented by our
+first mention is our
+[our]=675=675with genderUNKNOWN
+cluster c2 of m2 is represented by our
+first mention is our
+[our]=697=697with genderUNKNOWN
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, I, me, her, I, her, Rachel, my, me, Rachel, her, I, her, her, Rachel, her, I, Rachel, Rachel, her, her, Rachel, Rachel, me, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=262=262with genderFEMALE
+cluster c2 of m2 is represented by he
+first mention is You
+[him, he, him, You, He, you, you]=294=294with genderMALE
+wrong merging based on gender!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Rachel with gender FEMALE with cluster gender FEMALE
+he with gender MALE with cluster gender MALE
+cluster c1 of m1 is represented by excitement
+first mention is excitement
+[excitement]=592=592with genderNEUTRAL
+cluster c2 of m2 is represented by It
+first mention is It
+[It]=594=594with genderNEUTRAL
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[I, he, He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, my, I, Ross, Ross, Ross, I, Ross, his, he, Ross, I, him, him, Ross, Ross]=251=251with genderMALE
+cluster c2 of m2 is represented by Joey
+first mention is Joey
+[Joey, Joey, Joey, Joey, He, Joey, Joey, Joey, He, Joey, Joey, He, He, Joey, Joey, Joey, Joey, You, I, I, I, I, I, I, Joey, I, My, I, I, his, I, I, I, he, me, Joey, Joey, you, his, Joey, Joey, Joey, my, myself, Joey, Joey, him, Joey, Joey, Joey, his, Joey, Joey, his, Joey, he, my, Joey, Joey, Joey, Joey, Joey, his, he, Joey, him, his, his, his, Joey, Joey 's, He, his, Joey, Joey, I, him, his, Joey, Joey, Joey, him, he, his, Joey, Joey 's, him, I, Joey]=382=382with genderMALE
+cluster c1 of m1 is represented by the next room quickly
+first mention is the next room quickly
+[her hotel room, it, my room, the room, it, the room, your own room, her own room, our room, The room, The room, the room, the next room quickly]=722=722with genderNEUTRAL
+cluster c2 of m2 is represented by it
+first mention is it
+[it]=745=745with genderNEUTRAL
+cluster c1 of m1 is represented by Rachel
+first mention is Rachel
+[Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, Rachel, I, Rachel, Rachel, my, I, Rachel, Rachel, I, me, her, I, her, Rachel, my, me, Rachel, her, I, her, her, Rachel, her, I, Rachel, Rachel, her, her, Rachel, Rachel, me, Rachel, me, Rachel, Rachel, she, Rachel, her, Rachel]=262=262with genderFEMALE
+cluster c2 of m2 is represented by she
+first mention is her
+[she, her, her, she]=606=606with genderFEMALE
+cluster c1 of m1 is represented by the next room quickly
+first mention is the next room quickly
+[her hotel room, it, my room, the room, it, the room, your own room, it, her own room, our room, The room, The room, the room, the next room quickly]=745=745with genderNEUTRAL
+cluster c2 of m2 is represented by the room unannounced
+first mention is the room unannounced
+[the room unannounced]=793=793with genderNEUTRAL
+cluster c1 of m1 is represented by we
+first mention is we
+[we, we]=143=143with genderUNKNOWN
+cluster c2 of m2 is represented by we
+first mention is we
+[we, we, we, We, we]=189=189with genderUNKNOWN
+cluster c1 of m1 is represented by a bit
+first mention is a bit
+[a bit]=299=299with genderNEUTRAL
+cluster c2 of m2 is represented by a bit
+first mention is a bit
+[a bit]=513=513with genderNEUTRAL
+cluster c1 of m1 is represented by Ross
+first mention is Ross
+[I, he, He, Ross, Ross, Ross, Ross, Ross, Ross, Ross, I, Ross, Ross, my, I, Ross, Ross, Ross, I, Ross, his, he, Ross, I, him, him, Ross, Ross]=251=251with genderMALE
+cluster c2 of m2 is represented by Chandler
+first mention is Chandler
+[Chandler, My, He, He, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, his, Chandler, Chandler, Chandler, Chandler, my, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, him, Chandler, Chandler, Chandler, him, his, he, I, his, his, he, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, him, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=524=524with genderMALE
+cluster c1 of m1 is represented by Chandler
+first mention is Chandler
+[Chandler, My, He, He, He, Chandler, Chandler, Chandler, Chandler, He, Chandler, Chandler, I, his, Chandler, Chandler, Chandler, Chandler, my, I, I, him, Chandler, Chandler, Chandler, I, Chandler, Chandler, him, Chandler, Chandler, Chandler, him, his, he, I, his, his, he, his, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, Chandler, I, his, Chandler, him, Chandler, his, his, Chandler 's, his, his, Chandler, his, Chandler, I, Chandler, Chandler]=524=524with genderMALE
+cluster c2 of m2 is represented by I
+first mention is me
+[I, me]=502=502with genderUNKNOWN
+cluster c1 of m1 is represented by everything
+first mention is everything
+[everything]=31=31with genderNEUTRAL
+cluster c2 of m2 is represented by It
+first mention is It
+[It]=33=33with genderNEUTRAL
+---
+coref chains
+	CHAIN384-["we" in sentence 84, "We" in sentence 87]
+	CHAIN513-["a bit" in sentence 64, "a bit" in sentence 118]
+	CHAIN258-["my name" in sentence 52, "my name" in sentence 54]
+	CHAIN259-["He" in sentence 54, "he" in sentence 54]
+	CHAIN7-["The band" in sentence 1, "it" in sentence 2]
+	CHAIN657-["me" in sentence 149, "me" in sentence 155]
+	CHAIN404-["away.Ross and Rachel" in sentence 90, "their" in sentence 90, "them" in sentence 91]
+	CHAIN533-["my name" in sentence 121, "my name" in sentence 125]
+	CHAIN791-["a bed" in sentence 116, "the bed" in sentence 124, "the bed" in sentence 191]
+	CHAIN793-["the next room quickly" in sentence 48, "the room" in sentence 76, "the room" in sentence 153, "our room" in sentence 159, "her own room" in sentence 160, "your own room" in sentence 164, "her hotel room" in sentence 165, "my room" in sentence 173, "the room" in sentence 179, "it" in sentence 180, "The room" in sentence 185, "The room" in sentence 186, "it" in sentence 186, "it" in sentence 187, "the room unannounced" in sentence 191]
+	CHAIN30-["Rachel , Chandler , Joey , Monica and Richard" in sentence 5, "You" in sentence 6]
+	CHAIN542-["The boys" in sentence 126, "They" in sentence 127, "they" in sentence 128]
+	CHAIN33-["everything" in sentence 6, "It" in sentence 7]
+	CHAIN161-["London" in sentence 33, "London" in sentence 34, "London" in sentence 37]
+	CHAIN674-["you" in sentence 159, "you" in sentence 159]
+	CHAIN421-["the band 's" in sentence 92, "the band 's" in sentence 94, "the band" in sentence 95, "the stupid band" in sentence 96]
+	CHAIN294-["he" in sentence 61, "He" in sentence 62, "him" in sentence 62, "you" in sentence 63, "you" in sentence 63, "You" in sentence 64, "him" in sentence 64]
+	CHAIN41-["My friends and family" in sentence 9, "them" in sentence 10]
+	CHAIN688-["you" in sentence 164, "your" in sentence 164]
+	CHAIN50-["Ross and Emily" in sentence 12, "we" in sentence 12]
+	CHAIN307-["her arm" in sentence 60, "her arm" in sentence 67]
+	CHAIN311-["You" in sentence 66, "you" in sentence 67, "You" in sentence 68, "You" in sentence 69]
+	CHAIN57-["the bathroom" in sentence 4, "the bathroom" in sentence 13]
+	CHAIN697-["our" in sentence 159, "our" in sentence 166]
+	CHAIN442-["Ross.Rachel forces" in sentence 99, "them" in sentence 99]
+	CHAIN189-["we" in sentence 28, "we" in sentence 31, "we" in sentence 37, "We" in sentence 39, "we" in sentence 40, "we" in sentence 41, "we" in sentence 41]
+	CHAIN62-["you" in sentence 14, "your" in sentence 14]
+	CHAIN190-["a choice" in sentence 40, "it" in sentence 41]
+	CHAIN446-["the bathroom" in sentence 100, "it" in sentence 100]
+	CHAIN575-["we" in sentence 131, "we" in sentence 132, "us" in sentence 134, "we" in sentence 135]
+	CHAIN707-["we" in sentence 150, "our" in sentence 152, "Monica or Richard" in sentence 153, "they" in sentence 153, "They" in sentence 154, "we" in sentence 161, "we" in sentence 161, "we" in sentence 163, "We" in sentence 167, "we" in sentence 169, "we" in sentence 169]
+	CHAIN324-["a condom in his hand" in sentence 71, "it" in sentence 71]
+	CHAIN325-["He" in sentence 71, "his" in sentence 71, "his" in sentence 71]
+	CHAIN711-["it" in sentence 169, "It" in sentence 170]
+	CHAIN333-["a deep breath" in sentence 73, "it" in sentence 73]
+	CHAIN589-["his face" in sentence 16, "his face" in sentence 40, "his face" in sentence 86, "his face" in sentence 97, "his face" in sentence 133, "his red face" in sentence 137, "it" in sentence 138, "his face" in sentence 183]
+	CHAIN462-["all" in sentence 104, "they" in sentence 104]
+	CHAIN720-["the men" in sentence 141, "the men" in sentence 172]
+	CHAIN209-["a chicken wing" in sentence 45, "it" in sentence 45]
+	CHAIN594-["excitement" in sentence 141, "It" in sentence 142]
+	CHAIN724-["he" in sentence 4, "him" in sentence 4, "Richard" in sentence 5, "Richard" in sentence 50, "Richard" in sentence 51, "Richard" in sentence 54, "Richard" in sentence 62, "Richard" in sentence 81, "Richard 's" in sentence 150, "Richard" in sentence 153, "Richard" in sentence 174]
+	CHAIN470-["Emily 's" in sentence 2, "she" in sentence 2, "her" in sentence 4, "Emily" in sentence 4, "Emily" in sentence 4, "Emily" in sentence 4, "Emily" in sentence 8, "My" in sentence 9, "I" in sentence 10, "me" in sentence 11, "Emily" in sentence 12, "Emily" in sentence 16, "She" in sentence 17, "her" in sentence 17, "I" in sentence 18, "you" in sentence 18, "Emily" in sentence 19, "you" in sentence 20, "Emily" in sentence 92, "Emily" in sentence 98, "Emily" in sentence 106, "Emily" in sentence 107, "I" in sentence 108, "Emily" in sentence 110, "Emily" in sentence 180, "Emily" in sentence 189, "Emily" in sentence 192]
+	CHAIN344-["the wine cellar" in sentence 70, "the wine cellar" in sentence 72, "the wine cellar" in sentence 77]
+	CHAIN728-["the door" in sentence 153, "the door" in sentence 153, "the door" in sentence 154, "the door" in sentence 176]
+	CHAIN222-["his plate" in sentence 23, "his plate" in sentence 33, "his plate" in sentence 47]
+	CHAIN350-["a piece of chicken" in sentence 79, "it" in sentence 79]
+	CHAIN606-["Rachel" in sentence 49, "I" in sentence 50, "Rachel" in sentence 50, "my" in sentence 54, "me" in sentence 54, "Rachel" in sentence 54, "I" in sentence 55, "Rachel" in sentence 58, "her" in sentence 58, "I" in sentence 59, "I" in sentence 59, "Rachel" in sentence 60, "her" in sentence 60, "her" in sentence 60, "Rachel" in sentence 61, "Rachel" in sentence 62, "Rachel" in sentence 67, "her" in sentence 67, "her" in sentence 67, "me" in sentence 69, "Rachel" in sentence 70, "her" in sentence 70, "Rachel" in sentence 90, "Rachel" in sentence 90, "Rachel" in sentence 104, "she" in sentence 104, "Rachel" in sentence 111, "Rachel" in sentence 116, "Rachel" in sentence 117, "Rachel" in sentence 120, "Rachel" in sentence 124, "her" in sentence 124, "my" in sentence 125, "me" in sentence 125, "her" in sentence 126, "her" in sentence 128, "me" in sentence 129, "I" in sentence 129, "I" in sentence 129, "Rachel" in sentence 129, "Rachel" in sentence 131, "Rachel" in sentence 138, "she" in sentence 138, "Rachel" in sentence 141, "Rachel" in sentence 143, "her" in sentence 144, "she" in sentence 144, "her" in sentence 144, "Rachel" in sentence 153, "Rachel" in sentence 166]
+	CHAIN611-["Pheebs" in sentence 140, "Pheebs" in sentence 145]
+	CHAIN101-["them" in sentence 21, "them" in sentence 22]
+	CHAIN105-["Joey answered , grabbing some food and" in sentence 23, "his" in sentence 23]
+	CHAIN489-["surprised.Later on at the London Marriott , Joey and Chandler" in sentence 111, "their" in sentence 111, "They" in sentence 112, "they" in sentence 112, "their" in sentence 112]
+	CHAIN362-["Monica" in sentence 5, "Monica" in sentence 48, "Monica" in sentence 53, "Monica" in sentence 54, "Monica" in sentence 56, "Monica" in sentence 58, "Monica" in sentence 60, "Monica" in sentence 61, "Monica" in sentence 64, "her" in sentence 64, "Monica" in sentence 67, "Monica" in sentence 81, "her" in sentence 81, "You" in sentence 82, "you" in sentence 82, "she" in sentence 82, "Monica" in sentence 90, "Monica" in sentence 150, "Monica" in sentence 154, "Monica" in sentence 156, "Monica" in sentence 160, "she" in sentence 160, "her" in sentence 160, "Monica" in sentence 162, "Monica" in sentence 165, "her" in sentence 165, "Monica" in sentence 172, "I" in sentence 173, "my" in sentence 173, "me" in sentence 175, "Monica" in sentence 176]
+	CHAIN494-["his pocket" in sentence 71, "his pocket" in sentence 113]
+	CHAIN240-["their" in sentence 48, "them" in sentence 49, "you" in sentence 50, "You" in sentence 51]
+	CHAIN625-["he" in sentence 149, "his" in sentence 149]
+	CHAIN626-["The obsession" in sentence 147, "his obsession" in sentence 149]
+	CHAIN502-["Chandler" in sentence 3, "Chandler" in sentence 4, "Chandler" in sentence 5, "Chandler" in sentence 21, "Chandler" in sentence 22, "I" in sentence 24, "I" in sentence 24, "Chandler" in sentence 24, "He" in sentence 25, "his" in sentence 25, "him" in sentence 25, "Chandler" in sentence 31, "Chandler" in sentence 32, "Chandler" in sentence 35, "He" in sentence 36, "He" in sentence 38, "his" in sentence 38, "him" in sentence 38, "he" in sentence 38, "Chandler" in sentence 38, "Chandler" in sentence 40, "his" in sentence 40, "his" in sentence 40, "I" in sentence 40, "Chandler" in sentence 43, "his" in sentence 43, "Chandler" in sentence 78, "Chandler" in sentence 111, "I" in sentence 114, "me" in sentence 115, "Chandler" in sentence 115, "Chandler" in sentence 120, "his" in sentence 120, "my" in sentence 121, "My" in sentence 123, "Chandler" in sentence 131, "Chandler" in sentence 135, "Chandler" in sentence 136, "Chandler" in sentence 137, "his" in sentence 137, "Chandler" in sentence 143, "Chandler" in sentence 151, "Chandler" in sentence 153, "I" in sentence 157, "I" in sentence 158, "Chandler" in sentence 158, "I" in sentence 159, "Chandler" in sentence 166, "Chandler" in sentence 177, "Chandler" in sentence 179, "Chandler" in sentence 180, "his" in sentence 180, "his" in sentence 180, "Chandler" in sentence 181, "I" in sentence 182, "Chandler" in sentence 182, "Chandler" in sentence 183, "his" in sentence 183, "Chandler 's" in sentence 183, "his" in sentence 183, "him" in sentence 184, "Chandler" in sentence 188, "him" in sentence 188, "He" in sentence 189, "he" in sentence 189, "Chandler" in sentence 195, "Chandler" in sentence 197]
+	CHAIN251-["Ross" in sentence 2, "him" in sentence 2, "Ross" in sentence 8, "Ross" in sentence 14, "I" in sentence 15, "Ross" in sentence 21, "his" in sentence 21, "him" in sentence 21, "Ross" in sentence 52, "my" in sentence 52, "I" in sentence 52, "I" in sentence 52, "I" in sentence 52, "I" in sentence 53, "Ross" in sentence 95, "Ross" in sentence 102, "Ross" in sentence 105, "Ross" in sentence 109, "He" in sentence 110, "Ross" in sentence 121, "Ross" in sentence 125, "he" in sentence 125, "Ross" in sentence 128, "Ross" in sentence 144, "he" in sentence 144, "Ross" in sentence 180, "Ross" in sentence 189, "Ross" in sentence 193]
+	CHAIN125-["Ugh" in sentence 26, "it" in sentence 26]
+	CHAIN765-["the honeymoon suite" in sentence 177, "the honeymoon suite" in sentence 183]
+	CHAIN382-["Joey" in sentence 3, "Joey" in sentence 5, "Joey" in sentence 13, "him" in sentence 13, "Joey" in sentence 21, "Joey" in sentence 25, "I" in sentence 26, "I" in sentence 27, "Joey" in sentence 27, "Joey" in sentence 31, "him" in sentence 31, "I" in sentence 33, "Joey" in sentence 33, "he" in sentence 33, "his" in sentence 33, "Joey" in sentence 37, "Joey" in sentence 42, "I" in sentence 43, "I" in sentence 44, "Joey" in sentence 44, "his" in sentence 44, "He" in sentence 45, "his" in sentence 45, "He" in sentence 47, "his" in sentence 47, "Joey" in sentence 47, "him" in sentence 47, "he" in sentence 47, "He" in sentence 48, "Joey" in sentence 73, "Joey" in sentence 75, "He" in sentence 77, "Joey" in sentence 78, "Joey" in sentence 79, "you" in sentence 80, "I" in sentence 83, "Joey" in sentence 83, "I" in sentence 84, "Joey" in sentence 86, "his" in sentence 86, "Joey" in sentence 91, "Joey" in sentence 92, "I" in sentence 96, "me" in sentence 97, "Joey" in sentence 97, "his" in sentence 97, "I" in sentence 97, "Joey" in sentence 99, "I" in sentence 100, "myself" in sentence 100, "my" in sentence 100, "I" in sentence 100, "Joey" in sentence 111, "Joey" in sentence 113, "his" in sentence 113, "Joey" in sentence 115, "his" in sentence 115, "He" in sentence 116, "Joey" in sentence 118, "Joey 's" in sentence 120, "I" in sentence 133, "Joey" in sentence 133, "his" in sentence 133, "Joey" in sentence 135, "him" in sentence 135, "Joey" in sentence 137, "Joey" in sentence 144, "Joey" in sentence 153, "he" in sentence 153, "Joey" in sentence 158, "his" in sentence 158, "him" in sentence 158, "Joey" in sentence 159, "Joey" in sentence 162, "Joey" in sentence 169, "My" in sentence 170, "my" in sentence 170, "I" in sentence 171, "Joey" in sentence 177, "Joey" in sentence 177, "You" in sentence 178, "Joey" in sentence 180, "Joey 's" in sentence 182, "Joey" in sentence 183, "Joey" in sentence 184, "Joey" in sentence 197, "he" in sentence 197, "his" in sentence 197, "I" in sentence 198]
+	CHAIN766-["his arms" in sentence 180, "Chandler 's arms" in sentence 183]
+---
+sentence 1: 
+The band starts to play, and the recessional starts.
+mentions: 
+	The band [ = ]
+	the recessional [ = ]
+---
+sentence 2: 
+Ross tries to take Emily’s hand, but she snatches it away from him.
+mentions: 
+	Ross [ross = ]
+	Emily 's [emily = ]
+	Emily 's hand [ = ]
+	she [emily = ]
+	snatches it away from him [ = ]
+	it [ = ]
+	him [ross = ]
+---
+sentence 3: 
+“Well, that went well,” Joey says sarcastically standing by Chandler, “Yeah.
+mentions: 
+	Joey [joey = ]
+	Chandler [chandler = ]
+---
+sentence 4: 
+”“It could’ve been worse, he could’ve shot her,” Chandler replied sarcastically as Joey sighs.Ross and Emily make it to the lobby.Ross and Emily are in the bathroom and Emily is yelling at him.
+mentions: 
+	''`` [ = ]
+	Chandler [chandler = ]
+	Joey sighs.Ross [ = ]
+	Emily [emily = ]
+	Emily [emily = ]
+	Emily [emily = ]
+	It [ = ]
+	he [richard = ]
+	her [emily = ]
+	it [ = ]
+	to the lobby.Ross [ = ]
+	the bathroom [ = ]
+	him [richard = ]
+---
+sentence 5: 
+Rachel, Chandler, Joey, Monica and Richard are standing outside the doorway.
+mentions: 
+	Chandler [chandler = ]
+	Joey [joey = ]
+	Monica [monica = ]
+	Richard [richard = ]
+	the doorway [ = ]
+	Rachel , Chandler , Joey , Monica and Richard [ = ]
+---
+sentence 6: 
+“You’ve spoiled everything!
+mentions: 
+	You [ = ]
+	everything [ = ]
+---
+sentence 7: 
+It’s like a nightmare!”
+mentions: 
+	a nightmare [ = ]
+	It [ = ]
+---
+sentence 8: 
+Emily yelled from inside the bathroom with Ross.
+mentions: 
+	Emily [emily = ]
+	Ross [ross = ]
+	inside the bathroom [ = ]
+---
+sentence 9: 
+“My friends and family are out there!
+mentions: 
+	My [emily = ]
+	My friends and family [ = ]
+	family [ = ]
+---
+sentence 10: 
+How can I face them?!
+mentions: 
+	I [emily = ]
+	them [ = ]
+---
+sentence 11: 
+How can you do this to me?!
+mentions: 
+	you [ = ]
+	this to me [ = ]
+	me [emily = ]
+---
+sentence 12: 
+”“Hey, no matter what happens with Ross and Emily, we still get cake right?”
+mentions: 
+	''`` [ = ]
+	Emily [emily = ]
+	no [ = ]
+	no matter [ = ]
+	Ross and Emily [ = ]
+	we [ = ]
+	cake right [ = ]
+---
+sentence 13: 
+Joey asked quietly to the gang who gave him dirty looks and glares.Ross exits the bathroom.
+mentions: 
+	Joey [joey = ]
+	to the gang who gave him dirty looks and glares.Ross exits the bathroom [ = ]
+	him [joey = ]
+	dirty looks and glares.Ross exits the bathroom [ = ]
+	glares.Ross exits [ = ]
+	the bathroom [ = ]
+---
+sentence 14: 
+“That-that-that’s all right, no honey, you take your time sweetie,” Ross answered, freaked out and unable to think about how to fix this mess.
+mentions: 
+	Ross [ross = ]
+	no [ = ]
+	all right , no honey [ = ]
+	you [ = ]
+	your [ = ]
+	your time sweetie [ = ]
+	this mess [ = ]
+	That-that-that [ = ]
+	all [ = ]
+---
+sentence 15: 
+“I’ll be right out here.”
+mentions: 
+	I [ross = ]
+---
+sentence 16: 
+Emily slams the door in his face, absolutely furious.
+mentions: 
+	Emily [emily = ]
+	the door [ = ]
+	his [ = ]
+	his face [ = ]
+---
+sentence 17: 
+“She’s just fixing her makeup.
+mentions: 
+	She [emily = ]
+	her [emily = ]
+	her makeup [ = ]
+---
+sentence 18: 
+”“I hate you!”
+mentions: 
+	''`` [ = ]
+	you [emily = ]
+	I [emily = ]
+---
+sentence 19: 
+Emily screamed in both anger and devastation.
+mentions: 
+	Emily [emily = ]
+	devastation [ = ]
+	both [ = ]
+	both anger and devastation [ = ]
+---
+sentence 20: 
+“And, I love you!”
+mentions: 
+	I [ = ]
+	you [emily = ]
+---
+sentence 21: 
+Ross called back trying to lighten the tension with his wife.The gang are giving him sympathetic looks feeling awful for Ross.Later on at the wedding reception, Chandler looks around and slowly walks up beside Joey, trying to act casual so no one would catch on and question them.
+mentions: 
+	Ross [ross = ]
+	Chandler [chandler = ]
+	Joey [joey = ]
+	the tension [ = ]
+	his [ross = ]
+	his wife.The gang [ = ]
+	him [ross = ]
+	sympathetic looks [ = ]
+	Ross.Later [ = ]
+	at the wedding reception , Chandler looks around and slowly walks up beside Joey , trying to act casual so no one would catch on and question them [ = ]
+	no [ = ]
+	one [ = ]
+	them [ = ]
+---
+sentence 22: 
+“Hey,” Chandler says quietly, glancing around the room to make sure no one is looking at them.
+mentions: 
+	Chandler [chandler = ]
+	the room to make sure no one is looking at them [ = ]
+	no [ = ]
+	no one [ = ]
+	them [ = ]
+---
+sentence 23: 
+“Hey,” Joey answered, grabbing some food and put it on his plate.
+mentions: 
+	Joey answered , grabbing some food and [some = ]
+	some food and [ = ]
+	it [ = ]
+	his [some = ]
+	his plate [ = ]
+---
+sentence 24: 
+“Oh wow, I hope you don’t take this the wrong way but, I know we had plans to meet up tonight and…” Chandler begins to explain to Joey.
+mentions: 
+	Chandler [chandler = ]
+	wow [ = ]
+	I [chandler = ]
+	you [ = ]
+	this [ = ]
+	this the wrong way [ = ]
+	I [chandler = ]
+	we [ = ]
+	plans to [ = ]
+	tonight and [ = ]
+	to Joey [ = ]
+---
+sentence 25: 
+He really didn't want to cancel tonight, but his friendship with Joey means more to him, and didn’t want to lose that.
+mentions: 
+	Joey [joey = ]
+	tonight [ = ]
+	his [chandler = ]
+	his friendship with Joey [ = ]
+	him [chandler = ]
+	that [ = ]
+	He [chandler = ]
+---
+sentence 26: 
+“Ugh, I’m just kinda worried about what it might do to our friendship.
+mentions: 
+	it [ugh = ]
+	our [ = ]
+	to our friendship [ = ]
+	Ugh [ugh = ]
+	I [joey = ]
+	just kinda worried about what it might do to our friendship [ = ]
+---
+sentence 27: 
+”“I know,” Joey agrees, still looking forward, trying not to attract attention.
+mentions: 
+	''`` [ = ]
+	Joey [joey = ]
+	attention [ = ]
+	I [joey = ]
+---
+sentence 28: 
+“How could we have let this happen?
+mentions: 
+	we [ = ]
+	this [ = ]
+---
+sentence 29: 
+”“Ten times!
+mentions: 
+	''`` Ten [ = ]
+	Ten times [ = ]
+---
+sentence 30: 
+”“Ugh!
+mentions: 
+	''`` Ugh [ = ]
+---
+sentence 31: 
+Well, y’know, we were away…” Joey says but Chandler interrupts him.
+mentions: 
+	Joey [joey = ]
+	Chandler [chandler = ]
+	y’ [ = ]
+	we [ = ]
+	him [joey = ]
+---
+sentence 32: 
+“In a foreign country…” Chandler finished, sounding disappointed.
+mentions: 
+	Chandler [chandler = ]
+	a foreign country [ = ]
+	foreign country [ = ]
+---
+sentence 33: 
+“I blame London,” Joey said taking more food, not realizing he is over filling his plate.
+mentions: 
+	London [london = ]
+	Joey [joey = ]
+	I [joey = ]
+	food [ = ]
+	he [joey = ]
+	his [joey = ]
+	his plate [ = ]
+---
+sentence 34: 
+“Bad London!”
+mentions: 
+	London [london = ]
+	Bad [ = ]
+---
+sentence 35: 
+Chandler said sarcastically.
+mentions: 
+	Chandler [chandler = ]
+---
+sentence 36: 
+He takes a spoon and smacks the turkey.
+mentions: 
+	He [chandler = ]
+	a spoon [ = ]
+	the turkey [ = ]
+---
+sentence 37: 
+“So look umm, while we’re st-still in London, I mean…” Joey starts after some long minutes of awkward silence.
+mentions: 
+	London [london = ]
+	Joey [joey = ]
+	umm [ = ]
+	we [ = ]
+	I [ = ]
+	some long minutes of awkward silence [ = ]
+	awkward silence [ = ]
+---
+sentence 38: 
+He kept his voice down and gave him a sexy smirk which he knows that Chandler can't resist.
+mentions: 
+	Chandler [chandler = ]
+	He [chandler = ]
+	his [chandler = ]
+	his voice [ = ]
+	him [chandler = ]
+	a sexy smirk [ = ]
+	he [chandler = ]
+---
+sentence 39: 
+“We can keep doing it right?”
+mentions: 
+	We [ = ]
+	it [ = ]
+---
+sentence 40: 
+Chandler tried to avoid that sexy smirk and his face lightly turns into a shade of pink, casually looking down at his feet, “Well, I don’t see that we have a choice.
+mentions: 
+	Chandler [chandler = ]
+	his [chandler = ]
+	his feet [ = ]
+	I [chandler = ]
+	we [ = ]
+	a choice [ = ]
+	sexy smirk [ = ]
+	his [chandler = ]
+	his face [ = ]
+	a shade of pink [ = ]
+	pink [ = ]
+---
+sentence 41: 
+But, when we’re back home, we don’t do it.
+mentions: 
+	we [ = ]
+	we [ = ]
+	it [ = ]
+---
+sentence 42: 
+”“Only here,” Joey agrees with a nod.
+mentions: 
+	''`` [ = ]
+	Joey [joey = ]
+	a nod [ = ]
+---
+sentence 43: 
+“Y’know, I saw a wine cellar downstairs…” Chandler starts blushing even more; his face turning into a light shade of red.
+mentions: 
+	Chandler [chandler = ]
+	Y’ [ = ]
+	I [joey = ]
+	a wine cellar downstairs [ = ]
+	his [chandler = ]
+	his face turning into a light shade of red [ = ]
+	a light shade of red [ = ]
+	red [ = ]
+---
+sentence 44: 
+“I’ll meet you there in two minutes,” Joey instantly responded putting his food down.
+mentions: 
+	two minutes [ = ]
+	Joey [joey = ]
+	I [joey = ]
+	you [ = ]
+	his [joey = ]
+	his food [ = ]
+---
+sentence 45: 
+He grabbed a chicken wing and shoved it in his mouth.
+mentions: 
+	a chicken wing [ = ]
+	it [ = ]
+	his [joey = ]
+	his mouth [ = ]
+	He [joey = ]
+---
+sentence 46: 
+“K!”
+mentions: 
+	K [ = ]
+---
+sentence 47: 
+He throws down his plate and runs to the wine cellar, and Joey is about to follow him but realizes he needs some lotion or a condom.
+mentions: 
+	Joey [joey = ]
+	to the wine cellar [ = ]
+	him [joey = ]
+	he [joey = ]
+	some lotion or a condom [ = ]
+	a condom [ = ]
+	He [joey = ]
+	his [joey = ]
+	his plate [ = ]
+---
+sentence 48: 
+He runs into the next room quickly to try and find something.Richard and Monica are standing together talking with their plates of food.
+mentions: 
+	Monica [monica = ]
+	their [ = ]
+	their plates of food [ = ]
+	food [ = ]
+	He [joey = ]
+	the next room quickly [ = ]
+	something.Richard [ = ]
+---
+sentence 49: 
+Rachel walks up to them.
+mentions: 
+	Rachel [rachel = ]
+	them [ = ]
+---
+sentence 50: 
+“Mon, honey, I gotta ask you something,” Rachel said and glanced up at Richard.
+mentions: 
+	Rachel [rachel = ]
+	Richard [richard = ]
+	Mon [ = ]
+	honey [ = ]
+	I [rachel = ]
+	you [ = ]
+	you something [ = ]
+---
+sentence 51: 
+“You too, Richard.
+mentions: 
+	Richard [richard = ]
+	You [ = ]
+---
+sentence 52: 
+Ross said my name up there, I mean, come on, I just can’t pretend that didn’t happen can I?
+mentions: 
+	Ross [ross = ]
+	my [ross = ]
+	my name [ = ]
+	I [ross = ]
+	I [ross = ]
+	that [ = ]
+	I [ross = ]
+---
+sentence 53: 
+”“Honey, I don't think that meant anything,” Monica admitted.
+mentions: 
+	''`` [ = ]
+	Monica [monica = ]
+	''`` Honey [ = ]
+	I [ross = ]
+	anything [ = ]
+---
+sentence 54: 
+“He wouldn't have said my name if he didn't love me,” Rachel protested as Monica and Richard glanced at each other.
+mentions: 
+	Rachel [rachel = ]
+	Monica [monica = ]
+	Richard [richard = ]
+	He [ = ]
+	my [rachel = ]
+	my name [ = ]
+	he [ = ]
+	me [rachel = ]
+---
+sentence 55: 
+“Guys, what should I do?
+mentions: 
+	Guys , what should I do [ = ]
+	I [rachel = ]
+---
+sentence 56: 
+”“Nothing,” Monica said.
+mentions: 
+	''`` [ = ]
+	Monica [monica = ]
+	''`` Nothing [ = ]
+---
+sentence 57: 
+“What?”
+mentions: 
+---
+sentence 58: 
+Rachel asked confused about why Monica told her not to do anything.
+mentions: 
+	Rachel [rachel = ]
+	Monica [monica = ]
+	anything [ = ]
+	her [rachel = ]
+---
+sentence 59: 
+“I think I’m just gonna talk to Ross about what he think it meant.”
+mentions: 
+	he [ = ]
+	it [ = ]
+	I [rachel = ]
+	I [rachel = ]
+	to Ross [ = ]
+---
+sentence 60: 
+Rachel tried to walk away but Monica grabbed her arm and pulled her back.
+mentions: 
+	Rachel [rachel = ]
+	Monica [monica = ]
+	her [rachel = ]
+	her arm [ = ]
+	her [rachel = ]
+	her back [ = ]
+---
+sentence 61: 
+“Rachel, no, he’s married,” Monica said firmly, but yet softly.
+mentions: 
+	Rachel [rachel = ]
+	Monica [monica = ]
+	no [ = ]
+	he [ = ]
+---
+sentence 62: 
+“He’s married now,” Richard added in as Rachel looked up at him.
+mentions: 
+	Richard [richard = ]
+	Rachel [rachel = ]
+	He [ = ]
+	him [ = ]
+---
+sentence 63: 
+“If you don’t realize that, we can’t help you.
+mentions: 
+	you [ = ]
+	we [ = ]
+	you [ = ]
+---
+sentence 64: 
+”“You have to let him go, Rach,” Monica said with her voice cracking a bit.
+mentions: 
+	''`` [ = ]
+	Monica [monica = ]
+	You [ = ]
+	him [ = ]
+	Rach [ = ]
+	her [monica = ]
+	her voice [ = ]
+	a bit [ = ]
+---
+sentence 65: 
+“It’s too late.
+mentions: 
+	It [ = ]
+---
+sentence 66: 
+You need to move on.
+mentions: 
+	You [ = ]
+---
+sentence 67: 
+”“Okay, you’re right,” Rachel said holding back her tears as Monica rubbed her arm.
+mentions: 
+	Rachel [rachel = ]
+	Monica [monica = ]
+	her [rachel = ]
+	her tears [ = ]
+	her [rachel = ]
+	her arm [ = ]
+	you [ = ]
+---
+sentence 68: 
+“You’re both right.
+mentions: 
+	You [ = ]
+	both right [ = ]
+---
+sentence 69: 
+You guys can’t help me.”
+mentions: 
+	You [ = ]
+	guys [ = ]
+	me [rachel = ]
+---
+sentence 70: 
+Rachel marched away feeling a tear trickle down her cheek.Joey is running up to Chandler who emerges from the wine cellar.
+mentions: 
+	Rachel [rachel = ]
+	to Chandler who emerges from the wine cellar [ = ]
+	the wine cellar [ = ]
+	a [ = ]
+	her [rachel = ]
+	her cheek.Joey [ = ]
+---
+sentence 71: 
+He has a condom in his hand and shoves it in his pocket.
+mentions: 
+	He [ = ]
+	a condom in his hand [ = ]
+	his [ = ]
+	his hand [ = ]
+	it [ = ]
+	his [ = ]
+	his pocket [ = ]
+---
+sentence 72: 
+“We were supposed to meet in the wine cellar, why are you back?”
+mentions: 
+	We [ = ]
+	the wine cellar [ = ]
+	you [ = ]
+---
+sentence 73: 
+Joey asked impatiently tapping is foot.Chandler takes a deep breath, “Forget it, that’s off.
+mentions: 
+	Joey [joey = ]
+	foot.Chandler [ = ]
+	a deep breath [ = ]
+	it [ = ]
+	that [ = ]
+---
+sentence 74: 
+”“Why?!”
+mentions: 
+	''`` [ = ]
+	?! [ = ]
+---
+sentence 75: 
+Joey asked frustrated.Mr.
+mentions: 
+	Joey [joey = ]
+	frustrated.Mr [ = ]
+---
+sentence 76: 
+Waltham walks into the room from the wine cellar completely drunk and wasted.
+mentions: 
+	Waltham [ = ]
+	the room [ = ]
+	the wine cellar completely drunk [ = ]
+---
+sentence 77: 
+“The next tour of the wine cellar will plan in two in-in minutes…” He stuttered drunk before stumbling off.
+mentions: 
+	two [ = ]
+	The next tour of the wine cellar [ = ]
+	the wine cellar [ = ]
+	two in-in minutes [ = ]
+	He [joey = ]
+---
+sentence 78: 
+Joey and Chandler look at each other and groaned.
+mentions: 
+	Joey [joey = ]
+	Chandler [chandler = ]
+---
+sentence 79: 
+Joey grabs a piece of chicken and starts eating it instead.
+mentions: 
+	Joey [joey = ]
+	it [ = ]
+	a piece of chicken [ = ]
+	chicken [ = ]
+---
+sentence 80: 
+“Joey, what are you doing?”
+mentions: 
+	Joey , what are you doing [ = ]
+	you [joey = ]
+---
+sentence 81: 
+Monica asked walking over to the boys while Richard is talking to her parents.
+mentions: 
+	Monica [monica = ]
+	Richard [richard = ]
+	to the boys [ = ]
+	her [monica = ]
+	to her parents [ = ]
+---
+sentence 82: 
+“You promised Phoebe you wouldn’t eat meat until she has the babies!
+mentions: 
+	Phoebe [ = ]
+	You [monica = ]
+	you [monica = ]
+	meat [ = ]
+	she [monica = ]
+	the babies [ = ]
+---
+sentence 83: 
+”“Well um, I uh…” Joey said almost at a loss for words, beginning to panic.
+mentions: 
+	Joey [joey = ]
+	''`` [ = ]
+	I [joey = ]
+	a loss for words [ = ]
+	words [ = ]
+	beginning to panic [ = ]
+---
+sentence 84: 
+“I figured we’re in another country, so it doesn’t count!
+mentions: 
+	I [joey = ]
+	we [ = ]
+	another country [ = ]
+	it [ = ]
+---
+sentence 85: 
+”“The man’s got a point!”
+mentions: 
+	''`` [ = ]
+	The man 's [ = ]
+	a point [ = ]
+---
+sentence 86: 
+Chandler chims in equally as panicked as Joey nodded, forcing a smile on his face.
+mentions: 
+	Joey [joey = ]
+	Chandler chims in equally as panicked as Joey [ = ]
+	a smile [ = ]
+	his [joey = ]
+	his face [ = ]
+---
+sentence 87: 
+“We are in a foreign… romantic-- I-I mean, um, fun country!
+mentions: 
+	We [ = ]
+	I-I mean [ = ]
+	fun country [ = ]
+---
+sentence 88: 
+I-It doesn’t count, Mon!
+mentions: 
+	Mon [ = ]
+	I-It [ = ]
+---
+sentence 89: 
+So, s-stop asking so many questions!
+mentions: 
+	so many questions [ = ]
+---
+sentence 90: 
+”“Ok…” Monica said bemused after a moment of awkward silence, and walked away.Ross and Rachel meet up and talk about how saying “Rachel” at the altar didn't mean a thing and in denial of their feelings.
+mentions: 
+	''`` [ = ]
+	Monica [monica = ]
+	Rachel [rachel = ]
+	Rachel [rachel = ]
+	their feelings [ = ]
+	Ok [ = ]
+	a moment of awkward silence [ = ]
+	awkward silence [ = ]
+	away.Ross and Rachel [ = ]
+	the altar [ = ]
+	a thing [ = ]
+	denial of their feelings [ = ]
+	their [ = ]
+---
+sentence 91: 
+Joey finds them and approaches the discussion.
+mentions: 
+	Joey [joey = ]
+	them [ = ]
+	the discussion [ = ]
+---
+sentence 92: 
+“Hey, the band’s ready outside for your first dance with Emily, so…” Joey said, feeling slightly awkward.
+mentions: 
+	first [ = ]
+	Emily [emily = ]
+	Joey [joey = ]
+	the band 's [ = ]
+	your [ = ]
+	the band 's ready outside for your first dance with Emily , so [ = ]
+---
+sentence 93: 
+“Oh!
+mentions: 
+---
+sentence 94: 
+Oh-oh, the band’s ready!
+mentions: 
+	Oh-oh , the band 's ready [ = ]
+	the band 's [ = ]
+---
+sentence 95: 
+Well, I-I-we gotta do what the band says…” Ross answers sarcastically then turns to a fit of anger.
+mentions: 
+	Ross [ross = ]
+	I-I-we [ = ]
+	the band [ = ]
+	Ross answers [ = ]
+	to a fit of anger [ = ]
+	anger [ = ]
+---
+sentence 96: 
+“I don’t care about the stupid band!
+mentions: 
+	I [joey = ]
+	the stupid band [ = ]
+---
+sentence 97: 
+”“You spit on me, man,” Joey said annoyed, then wipes his face in disgust.Ross’ face softens, “Look, I’m sorry."
+mentions: 
+	''`` [ = ]
+	Joey [joey = ]
+	You [ = ]
+	me [joey = ]
+	man [ = ]
+	his [joey = ]
+	his face [ = ]
+	disgust.Ross ' face [ = ]
+	I [joey = ]
+---
+sentence 98: 
+“Emily is kinda taking a long time, huh?”
+mentions: 
+	kinda taking a long time , huh [ = ]
+	a long time , huh [ = ]
+	huh [ = ]
+	Emily [emily = ]
+---
+sentence 99: 
+Joey replied, feeling sorry for Ross.Rachel forces herself to laugh, trying to throw in some humor to loosen the awkward tension between the three of them.
+mentions: 
+	Joey [joey = ]
+	three [ = ]
+	Ross.Rachel forces [ = ]
+	herself [ = ]
+	to laugh [ = ]
+	some humor to loosen the awkward tension between the three of them [ = ]
+	the awkward tension between the three of them [ = ]
+	them [ = ]
+---
+sentence 100: 
+“Y’know when I locked myself in the bathroom at my wedding, it was because I was trying to pop the window out of the frame.
+mentions: 
+	the bathroom [ = ]
+	my [joey = ]
+	my wedding [ = ]
+	it [ = ]
+	I [joey = ]
+	the window out [ = ]
+	the window out of the frame [ = ]
+	Y’ [ = ]
+	I [joey = ]
+	myself [joey = ]
+---
+sentence 101: 
+”“Oh, right!”
+mentions: 
+	''`` [ = ]
+---
+sentence 102: 
+Ross agrees with an awkward chuckle.
+mentions: 
+	Ross [ross = ]
+	an awkward chuckle [ = ]
+---
+sentence 103: 
+“Get the hell out of there, y’know?”
+mentions: 
+	the hell [ = ]
+	y’ [ = ]
+---
+sentence 104: 
+Rachel continues with a smirk.They all start laughing, and quickly stop when they realize what she just said and run over to the bathroom.
+mentions: 
+	Rachel [rachel = ]
+	to the bathroom [ = ]
+	a smirk.They all start laughing , and quickly stop when they realize what she just said and run over to the bathroom [ = ]
+	all [ = ]
+	they [ = ]
+	she [rachel = ]
+---
+sentence 105: 
+Ross runs over to the bathroom in a panic attack, banging on the bathroom door.
+mentions: 
+	Ross [ross = ]
+	to the bathroom in a panic attack [ = ]
+	a panic attack [ = ]
+	the bathroom door [ = ]
+---
+sentence 106: 
+“Emily?
+mentions: 
+	Emily [emily = ]
+---
+sentence 107: 
+Emily?
+mentions: 
+	Emily [emily = ]
+---
+sentence 108: 
+I’m coming in!”
+mentions: 
+	I [emily = ]
+---
+sentence 109: 
+Ross shouts, freaking out.
+mentions: 
+	Ross [ross = ]
+---
+sentence 110: 
+He opens the door to reveal that the window is gone, along with Emily.
+mentions: 
+	Emily [emily = ]
+	the window [ = ]
+	He [ross = ]
+	the door to reveal that the window is gone , along with Emily [ = ]
+---
+sentence 111: 
+“Well, look at that, same thing,” Rachel says, surprised.Later on at the London Marriott, Joey and Chandler are walking to their room.
+mentions: 
+	Rachel [rachel = ]
+	London [ = ]
+	Joey [joey = ]
+	Chandler [chandler = ]
+	surprised.Later on at the London Marriott , Joey and Chandler [ = ]
+	at the London Marriott [ = ]
+	their [ = ]
+	to their room [ = ]
+	that , same thing [ = ]
+	same thing [ = ]
+---
+sentence 112: 
+They are walking down the hallway until they reach their door.
+mentions: 
+	They [ = ]
+	the hallway [ = ]
+	they [ = ]
+	their [ = ]
+	their door [ = ]
+---
+sentence 113: 
+Joey grabs the key from his pocket.
+mentions: 
+	Joey [joey = ]
+	the key [ = ]
+	his [joey = ]
+	his pocket [ = ]
+---
+sentence 114: 
+“Listen, in the middle of everything if I scream the word, "Yippee!"
+mentions: 
+	the middle of everything [ = ]
+	everything [ = ]
+	I [chandler = ]
+	the word [ = ]
+	Yippee [ = ]
+---
+sentence 115: 
+just ignore me,” Chandler explains as Joey rolls his eyes and chuckles.
+mentions: 
+	Chandler [chandler = ]
+	Joey [joey = ]
+	me [chandler = ]
+	his [joey = ]
+	his eyes [ = ]
+---
+sentence 116: 
+He opens the door to reveal Rachel sitting on a bed.
+mentions: 
+	Rachel [rachel = ]
+	a bed [ = ]
+	He [joey = ]
+	the door to reveal Rachel sitting on a bed [ = ]
+---
+sentence 117: 
+“Oh my God, Rachel!”
+mentions: 
+	Rachel [rachel = ]
+	my [ = ]
+	my God [ = ]
+---
+sentence 118: 
+Joey said surprised and starting to panic a bit, not really knowing what to say.
+mentions: 
+	Joey [joey = ]
+	a bit [ = ]
+---
+sentence 119: 
+“Hi!
+mentions: 
+---
+sentence 120: 
+”“Oh, hello Rachel,” Chandler says quietly, putting his hands on Joey’s shoulders, beginning to sweat.
+mentions: 
+	''`` [ = ]
+	Rachel [rachel = ]
+	Chandler [chandler = ]
+	Joey 's [joey = ]
+	his [chandler = ]
+	his hands [ = ]
+	Joey 's shoulders [ = ]
+---
+sentence 121: 
+“Ross said my name.
+mentions: 
+	Ross [ross = ]
+	my [chandler = ]
+	my name [ = ]
+---
+sentence 122: 
+Okay?
+mentions: 
+---
+sentence 123: 
+My name!”
+mentions: 
+	My [chandler = ]
+	name [ = ]
+---
+sentence 124: 
+Rachel said frustrated, slapping her hands on the bed and stood up.
+mentions: 
+	Rachel [rachel = ]
+	slapping her hands on the bed [ = ]
+	her [rachel = ]
+	her hands [ = ]
+	the bed [ = ]
+---
+sentence 125: 
+“Ross said my name up there that obviously means that he still loves me!”
+mentions: 
+	Ross [ross = ]
+	my [rachel = ]
+	my name [ = ]
+	he [ross = ]
+	me [rachel = ]
+---
+sentence 126: 
+The boys just stare at her, dumbstruck.
+mentions: 
+	The boys [ = ]
+	her [rachel = ]
+---
+sentence 127: 
+They are unable to think of anything to say at this point.
+mentions: 
+	They [ = ]
+	anything [ = ]
+	this point [ = ]
+---
+sentence 128: 
+But they don't believe that Ross still loves her.
+mentions: 
+	Ross [ross = ]
+	they [ = ]
+	her [rachel = ]
+---
+sentence 129: 
+“Okay, don’t believe me, I know I’m right,” Rachel finally said breaking the silence.
+mentions: 
+	Rachel [rachel = ]
+	me [rachel = ]
+	I [rachel = ]
+	I [rachel = ]
+	the silence [ = ]
+---
+sentence 130: 
+“Do you guys want to go downstairs and get a drink?
+mentions: 
+	you [ = ]
+	guys [ = ]
+	downstairs [ = ]
+	a drink [ = ]
+---
+sentence 131: 
+”“Yes, we do,” Chandler said, struggling with words that Rachel would believe.
+mentions: 
+	''`` [ = ]
+	Chandler [chandler = ]
+	Rachel [rachel = ]
+	words that Rachel would believe [ = ]
+	we [ = ]
+---
+sentence 132: 
+“But, we have to change first.
+mentions: 
+	we [ = ]
+---
+sentence 133: 
+”“Yes, I want to change,” Joey added in forcing a smile on his face.
+mentions: 
+	''`` [ = ]
+	Joey [joey = ]
+	a smile [ = ]
+	his [joey = ]
+	his face [ = ]
+	I [joey = ]
+---
+sentence 134: 
+“And why-why don’t you go down and get us a table?
+mentions: 
+	why-why [ = ]
+	you [ = ]
+	us [ = ]
+	us a table [ = ]
+---
+sentence 135: 
+”“Yeah, we’ll be down in like five minutes,” Chandler said before Joey got annoyed and elbows him really hard in the stomach.
+mentions: 
+	''`` [ = ]
+	Chandler [chandler = ]
+	Joey [joey = ]
+	elbows [ = ]
+	him [joey = ]
+	hard in the stomach [ = ]
+	we [ = ]
+	like five minutes [ = ]
+---
+sentence 136: 
+Chandler moans in slight pain.
+mentions: 
+	Chandler [chandler = ]
+	slight pain [ = ]
+---
+sentence 137: 
+“Fifteen minutes,” Joey said quickly through gritted teeth as Chandler tried to hide his red face.
+mentions: 
+	Fifteen minutes [ = ]
+	Joey [joey = ]
+	Chandler [chandler = ]
+	teeth [ = ]
+	his [chandler = ]
+	his red face [ = ]
+---
+sentence 138: 
+“Okay,” Rachel said before the the phone rings and she sits down and answers it.
+mentions: 
+	Rachel [rachel = ]
+	the [ = ]
+	the phone rings [ = ]
+	she [rachel = ]
+	it [ = ]
+---
+sentence 139: 
+“Hello?
+mentions: 
+---
+sentence 140: 
+Oh, Pheebs!”
+mentions: 
+	Pheebs [pheebs = ]
+---
+sentence 141: 
+Rachel said with excitement and faces the men.
+mentions: 
+	Rachel [rachel = ]
+	excitement [ = ]
+	the men [ = ]
+---
+sentence 142: 
+“It’s Phoebe!
+mentions: 
+	It [ = ]
+	Phoebe [ = ]
+---
+sentence 143: 
+”“Oh, yay…” Chandler said depressed but unnoticed by Rachel.
+mentions: 
+	''`` [ = ]
+	Chandler [chandler = ]
+	Rachel [rachel = ]
+	yay [ = ]
+---
+sentence 144: 
+“Great…” Joey finishes also depressed.Rachel starts to ramble on about how Ross fell in love with her and how she still thinks he loves her.
+mentions: 
+	Joey [joey = ]
+	Ross [ross = ]
+	love [ = ]
+	her [rachel = ]
+	she [rachel = ]
+	he [ross = ]
+	her [rachel = ]
+	Great [ = ]
+	finishes [ = ]
+	Joey finishes also depressed.Rachel [ = ]
+---
+sentence 145: 
+“Okay, Pheebs, y’know what, let’s look at this objectively all right?
+mentions: 
+	right [ = ]
+	Pheebs [pheebs = ]
+	y’ [ = ]
+	this [ = ]
+---
+sentence 146: 
+Ninth grade, right?
+mentions: 
+	right [ = ]
+	Ninth grade , right [ = ]
+---
+sentence 147: 
+The obsession starts.
+mentions: 
+	The obsession [ = ]
+---
+sentence 148: 
+All right?
+mentions: 
+	All right [ = ]
+---
+sentence 149: 
+The summer after ninth grade he sees me in a two-piece for the first time, his obsession begins to grow.
+mentions: 
+	ninth [ = ]
+	first [ = ]
+	The summer after ninth grade [ = ]
+	ninth grade [ = ]
+	he [ = ]
+	me [ = ]
+	the first time [ = ]
+	his [ = ]
+	his obsession [ = ]
+---
+sentence 150: 
+So then…”“Hey, listen, why don’t we go change in Monica and Richard’s room?”
+mentions: 
+	''`` [ = ]
+	Monica [monica = ]
+	Richard 's [richard = ]
+	we [ = ]
+	change in Monica [ = ]
+	room [ = ]
+---
+sentence 151: 
+Chandler says quietly to Joey.
+mentions: 
+	Chandler [chandler = ]
+	to Joey [ = ]
+---
+sentence 152: 
+“But our clothes are—ohh!”
+mentions: 
+	our [ = ]
+	our clothes [ = ]
+---
+sentence 153: 
+Joey then realizes what he means then they both leave quickly as Rachel is still rambling on.Joey opens the door slowly to see if Monica or Richard is there and after seeing that they aren’t, ushers Chandler into the room, closes the door, and the security bar.
+mentions: 
+	Joey [joey = ]
+	Rachel [rachel = ]
+	Richard [richard = ]
+	Chandler [chandler = ]
+	he [joey = ]
+	they [ = ]
+	both [ = ]
+	on.Joey [ = ]
+	the door [ = ]
+	Monica or Richard [ = ]
+	they [ = ]
+	ushers Chandler into the room [ = ]
+	the room [ = ]
+	the door [ = ]
+	the security bar [ = ]
+---
+sentence 154: 
+They both start to frantically rip each other’s clothes off, but are interrupted when Monica tries to open the door.
+mentions: 
+	Monica [monica = ]
+	the door [ = ]
+	They [ = ]
+	both [ = ]
+	each other 's clothes [ = ]
+---
+sentence 155: 
+“Hey, let me in!”
+mentions: 
+	me [ = ]
+---
+sentence 156: 
+Monica exclaimed annoyed.
+mentions: 
+	Monica [monica = ]
+---
+sentence 157: 
+“I need to get changed!
+mentions: 
+	I [chandler = ]
+---
+sentence 158: 
+”“Well, I’ve got a-a girl in here…” Chandler said in a panic tone as Joey slapped his arm and gave him a dirty look.
+mentions: 
+	Chandler [chandler = ]
+	Joey [joey = ]
+	''`` Well [ = ]
+	I [chandler = ]
+	a-a girl [ = ]
+	a panic tone [ = ]
+	his [joey = ]
+	his arm [ = ]
+	him [joey = ]
+	a dirty look [ = ]
+---
+sentence 159: 
+“No you don’t, I just saw you go in our room with Joey!”
+mentions: 
+	Joey [joey = ]
+	No [ = ]
+	you [ = ]
+	I [chandler = ]
+	you [ = ]
+	our [ = ]
+	our room [ = ]
+---
+sentence 160: 
+Monica said confused and angry that she can't get into her own room.
+mentions: 
+	Monica [monica = ]
+	she [monica = ]
+	her [monica = ]
+	her own room [ = ]
+---
+sentence 161: 
+“Well, we’re-we’re hanging out in here!”
+mentions: 
+	we [ = ]
+	we [ = ]
+---
+sentence 162: 
+Joey tried to say, really hoping that Monica would just leave.
+mentions: 
+	Joey [joey = ]
+	Monica [monica = ]
+---
+sentence 163: 
+“But, what if we’re watching a movie in here?
+mentions: 
+	we [ = ]
+	a movie in here [ = ]
+---
+sentence 164: 
+”“Why can’t you do that in your own room?”
+mentions: 
+	''`` [ = ]
+	your [ = ]
+	your own room [ = ]
+	you [ = ]
+	that in your own room [ = ]
+---
+sentence 165: 
+Monica asked standing outside her hotel room.
+mentions: 
+	Monica [monica = ]
+	her [monica = ]
+	her hotel room [ = ]
+---
+sentence 166: 
+“Rachel is in our room talking to Phoebe on the phone,” Chandler replied.
+mentions: 
+	Rachel [rachel = ]
+	Chandler [chandler = ]
+	our [ = ]
+	our room talking to Phoebe on the phone [ = ]
+	to Phoebe [ = ]
+	the phone [ = ]
+---
+sentence 167: 
+“We’re watching a movie, Mon!
+mentions: 
+	We [ = ]
+	a movie , Mon [ = ]
+	Mon [ = ]
+---
+sentence 168: 
+Come on!
+mentions: 
+---
+sentence 169: 
+”“Which we are, and-and we already paid for it,” Joey said, grabbing thw movie off the counter.
+mentions: 
+	''`` [ = ]
+	Joey [joey = ]
+	we [ = ]
+	we [ = ]
+	it [ = ]
+	thw movie [ = ]
+	the counter [ = ]
+---
+sentence 170: 
+“It’s My Giant, my favorite movie!
+mentions: 
+	It [ = ]
+	My [joey = ]
+	My Giant , my favorite movie [ = ]
+	my [joey = ]
+	my favorite movie [ = ]
+---
+sentence 171: 
+”“I don't care, guys!”
+mentions: 
+	''`` [ = ]
+	I [joey = ]
+	guys [ = ]
+---
+sentence 172: 
+Monica said angry as the men moaned.
+mentions: 
+	Monica [monica = ]
+	the men [ = ]
+---
+sentence 173: 
+“I want to get in my room!
+mentions: 
+	my [monica = ]
+	my room [ = ]
+	I [monica = ]
+---
+sentence 174: 
+Richard will be here in a minute!
+mentions: 
+	Richard [richard = ]
+	here in a minute [ = ]
+---
+sentence 175: 
+Let me in!”
+mentions: 
+	me [monica = ]
+---
+sentence 176: 
+Monica starts banging on the door.
+mentions: 
+	Monica [monica = ]
+	the door [ = ]
+---
+sentence 177: 
+Joey and Chandler look at each other and groan annoyed.Chandler and Joey are still looking for a place, so they enter the honeymoon suite.
+mentions: 
+	Joey [joey = ]
+	Chandler [chandler = ]
+	Joey [joey = ]
+	a place [ = ]
+	they [ = ]
+	the honeymoon suite [ = ]
+	annoyed.Chandler [ = ]
+---
+sentence 178: 
+“You really think this is okay, Joe?”
+mentions: 
+	Joe [ = ]
+	this [ = ]
+	You [joey = ]
+---
+sentence 179: 
+Chandler asked, blushing of how gorgeous the room is.
+mentions: 
+	Chandler [chandler = ]
+	the room [ = ]
+---
+sentence 180: 
+“Well, Ross and Emily aren’t gonna use it,” Joey explained approaching Chandler and put his hands on his arms.
+mentions: 
+	Ross [ross = ]
+	Emily [emily = ]
+	Joey [joey = ]
+	Chandler [chandler = ]
+	it [ = ]
+	his [chandler = ]
+	his hands [ = ]
+	his [chandler = ]
+	his arms [ = ]
+---
+sentence 181: 
+Chandler tried to ignore that smirk again.
+mentions: 
+	Chandler [chandler = ]
+	that smirk [ = ]
+---
+sentence 182: 
+“Y’know, I-I don’t know if I feel right about this,” Chandler said desperately restraining from kissing Joey’s lips.
+mentions: 
+	Chandler [chandler = ]
+	Joey 's [joey = ]
+	Y’ [ = ]
+	I-I [ = ]
+	I [chandler = ]
+	this [ = ]
+	Joey 's lips [ = ]
+---
+sentence 183: 
+"Oh Chandler, you are so adorable, look, his is the honeymoon suite,” Joey stated rubbing Chandler’s arms as his face turned more red.
+mentions: 
+	Chandler [chandler = ]
+	Joey [joey = ]
+	Chandler 's [chandler = ]
+	you [ = ]
+	look , his is the honeymoon suite [ = ]
+	his [chandler = ]
+	the honeymoon suite [ = ]
+	Chandler 's arms [ = ]
+	his [chandler = ]
+	his face [ = ]
+---
+sentence 184: 
+Only Joey can make him blush that hard.
+mentions: 
+	Joey [joey = ]
+	him [chandler = ]
+	that [ = ]
+---
+sentence 185: 
+“The room expects sex.
+mentions: 
+	The room [ = ]
+	sex [ = ]
+---
+sentence 186: 
+The room would be disappointed if it didn’t get sex.
+mentions: 
+	sex [ = ]
+	The room [ = ]
+	it [ = ]
+---
+sentence 187: 
+All of the other honeymoon suites would think it was a loser.
+mentions: 
+	All of the other honeymoon suites [ = ]
+	the other honeymoon suites [ = ]
+	it [ = ]
+	a loser [ = ]
+---
+sentence 188: 
+”“Okay,” Chandler said agreeing with him now.
+mentions: 
+	Chandler [chandler = ]
+	him [chandler = ]
+---
+sentence 189: 
+He didn't care about Ross or Emily, he just wanted to have sex again.
+mentions: 
+	Ross [ross = ]
+	Emily [emily = ]
+	He [chandler = ]
+	he [chandler = ]
+	sex [ = ]
+---
+sentence 190: 
+“Okay!”
+mentions: 
+---
+sentence 191: 
+They both run to rip the covers off the bed, but are interrupted by Ross bursting into the room unannounced.
+mentions: 
+	They [ = ]
+	both [ = ]
+	the covers [ = ]
+	the bed [ = ]
+	Ross bursting into the room unannounced [ = ]
+	the room unannounced [ = ]
+---
+sentence 192: 
+“Emily?!”
+mentions: 
+	Emily [emily = ]
+	Emily ?! [ = ]
+---
+sentence 193: 
+Ross shouts in a panic.
+mentions: 
+	Ross [ross = ]
+	a panic [ = ]
+---
+sentence 194: 
+“Nope, not under here!”
+mentions: 
+---
+sentence 195: 
+Chandler exclaimed.
+mentions: 
+	Chandler [chandler = ]
+---
+sentence 196: 
+“You didn’t find her?”
+mentions: 
+	You [ = ]
+	her [ = ]
+---
+sentence 197: 
+Joey asked, occasionally glancing at Chandler, trying the best he can to hide his sexual feelings.
+mentions: 
+	Joey [joey = ]
+	Chandler [chandler = ]
+	he [joey = ]
+	his [joey = ]
+	his sexual feelings [ = ]
+---
+sentence 198: 
+“No, I’ve looked everywhere!”
+mentions: 
+	No , I [ = ]
+	I [joey = ]
+coref chains with character
+	london: CHAIN161-["London" in sentence 33, "London" in sentence 34, "London" in sentence 37]
+	richard: CHAIN724-["he" in sentence 4, "him" in sentence 4, "Richard" in sentence 5, "Richard" in sentence 50, "Richard" in sentence 51, "Richard" in sentence 54, "Richard" in sentence 62, "Richard" in sentence 81, "Richard 's" in sentence 150, "Richard" in sentence 153, "Richard" in sentence 174]
+	emily: CHAIN470-["Emily 's" in sentence 2, "she" in sentence 2, "her" in sentence 4, "Emily" in sentence 4, "Emily" in sentence 4, "Emily" in sentence 4, "Emily" in sentence 8, "My" in sentence 9, "I" in sentence 10, "me" in sentence 11, "Emily" in sentence 12, "Emily" in sentence 16, "She" in sentence 17, "her" in sentence 17, "I" in sentence 18, "you" in sentence 18, "Emily" in sentence 19, "you" in sentence 20, "Emily" in sentence 92, "Emily" in sentence 98, "Emily" in sentence 106, "Emily" in sentence 107, "I" in sentence 108, "Emily" in sentence 110, "Emily" in sentence 180, "Emily" in sentence 189, "Emily" in sentence 192]
+	rachel: CHAIN606-["Rachel" in sentence 49, "I" in sentence 50, "Rachel" in sentence 50, "my" in sentence 54, "me" in sentence 54, "Rachel" in sentence 54, "I" in sentence 55, "Rachel" in sentence 58, "her" in sentence 58, "I" in sentence 59, "I" in sentence 59, "Rachel" in sentence 60, "her" in sentence 60, "her" in sentence 60, "Rachel" in sentence 61, "Rachel" in sentence 62, "Rachel" in sentence 67, "her" in sentence 67, "her" in sentence 67, "me" in sentence 69, "Rachel" in sentence 70, "her" in sentence 70, "Rachel" in sentence 90, "Rachel" in sentence 90, "Rachel" in sentence 104, "she" in sentence 104, "Rachel" in sentence 111, "Rachel" in sentence 116, "Rachel" in sentence 117, "Rachel" in sentence 120, "Rachel" in sentence 124, "her" in sentence 124, "my" in sentence 125, "me" in sentence 125, "her" in sentence 126, "her" in sentence 128, "me" in sentence 129, "I" in sentence 129, "I" in sentence 129, "Rachel" in sentence 129, "Rachel" in sentence 131, "Rachel" in sentence 138, "she" in sentence 138, "Rachel" in sentence 141, "Rachel" in sentence 143, "her" in sentence 144, "she" in sentence 144, "her" in sentence 144, "Rachel" in sentence 153, "Rachel" in sentence 166]
+	pheebs: CHAIN611-["Pheebs" in sentence 140, "Pheebs" in sentence 145]
+	some: CHAIN105-["Joey answered , grabbing some food and" in sentence 23, "his" in sentence 23]
+	monica: CHAIN362-["Monica" in sentence 5, "Monica" in sentence 48, "Monica" in sentence 53, "Monica" in sentence 54, "Monica" in sentence 56, "Monica" in sentence 58, "Monica" in sentence 60, "Monica" in sentence 61, "Monica" in sentence 64, "her" in sentence 64, "Monica" in sentence 67, "Monica" in sentence 81, "her" in sentence 81, "You" in sentence 82, "you" in sentence 82, "she" in sentence 82, "Monica" in sentence 90, "Monica" in sentence 150, "Monica" in sentence 154, "Monica" in sentence 156, "Monica" in sentence 160, "she" in sentence 160, "her" in sentence 160, "Monica" in sentence 162, "Monica" in sentence 165, "her" in sentence 165, "Monica" in sentence 172, "I" in sentence 173, "my" in sentence 173, "me" in sentence 175, "Monica" in sentence 176]
+	chandler: CHAIN502-["Chandler" in sentence 3, "Chandler" in sentence 4, "Chandler" in sentence 5, "Chandler" in sentence 21, "Chandler" in sentence 22, "I" in sentence 24, "I" in sentence 24, "Chandler" in sentence 24, "He" in sentence 25, "his" in sentence 25, "him" in sentence 25, "Chandler" in sentence 31, "Chandler" in sentence 32, "Chandler" in sentence 35, "He" in sentence 36, "He" in sentence 38, "his" in sentence 38, "him" in sentence 38, "he" in sentence 38, "Chandler" in sentence 38, "Chandler" in sentence 40, "his" in sentence 40, "his" in sentence 40, "I" in sentence 40, "Chandler" in sentence 43, "his" in sentence 43, "Chandler" in sentence 78, "Chandler" in sentence 111, "I" in sentence 114, "me" in sentence 115, "Chandler" in sentence 115, "Chandler" in sentence 120, "his" in sentence 120, "my" in sentence 121, "My" in sentence 123, "Chandler" in sentence 131, "Chandler" in sentence 135, "Chandler" in sentence 136, "Chandler" in sentence 137, "his" in sentence 137, "Chandler" in sentence 143, "Chandler" in sentence 151, "Chandler" in sentence 153, "I" in sentence 157, "I" in sentence 158, "Chandler" in sentence 158, "I" in sentence 159, "Chandler" in sentence 166, "Chandler" in sentence 177, "Chandler" in sentence 179, "Chandler" in sentence 180, "his" in sentence 180, "his" in sentence 180, "Chandler" in sentence 181, "I" in sentence 182, "Chandler" in sentence 182, "Chandler" in sentence 183, "his" in sentence 183, "Chandler 's" in sentence 183, "his" in sentence 183, "him" in sentence 184, "Chandler" in sentence 188, "him" in sentence 188, "He" in sentence 189, "he" in sentence 189, "Chandler" in sentence 195, "Chandler" in sentence 197]
+	ross: CHAIN251-["Ross" in sentence 2, "him" in sentence 2, "Ross" in sentence 8, "Ross" in sentence 14, "I" in sentence 15, "Ross" in sentence 21, "his" in sentence 21, "him" in sentence 21, "Ross" in sentence 52, "my" in sentence 52, "I" in sentence 52, "I" in sentence 52, "I" in sentence 52, "I" in sentence 53, "Ross" in sentence 95, "Ross" in sentence 102, "Ross" in sentence 105, "Ross" in sentence 109, "He" in sentence 110, "Ross" in sentence 121, "Ross" in sentence 125, "he" in sentence 125, "Ross" in sentence 128, "Ross" in sentence 144, "he" in sentence 144, "Ross" in sentence 180, "Ross" in sentence 189, "Ross" in sentence 193]
+	ugh: CHAIN125-["Ugh" in sentence 26, "it" in sentence 26]
+	joey: CHAIN382-["Joey" in sentence 3, "Joey" in sentence 5, "Joey" in sentence 13, "him" in sentence 13, "Joey" in sentence 21, "Joey" in sentence 25, "I" in sentence 26, "I" in sentence 27, "Joey" in sentence 27, "Joey" in sentence 31, "him" in sentence 31, "I" in sentence 33, "Joey" in sentence 33, "he" in sentence 33, "his" in sentence 33, "Joey" in sentence 37, "Joey" in sentence 42, "I" in sentence 43, "I" in sentence 44, "Joey" in sentence 44, "his" in sentence 44, "He" in sentence 45, "his" in sentence 45, "He" in sentence 47, "his" in sentence 47, "Joey" in sentence 47, "him" in sentence 47, "he" in sentence 47, "He" in sentence 48, "Joey" in sentence 73, "Joey" in sentence 75, "He" in sentence 77, "Joey" in sentence 78, "Joey" in sentence 79, "you" in sentence 80, "I" in sentence 83, "Joey" in sentence 83, "I" in sentence 84, "Joey" in sentence 86, "his" in sentence 86, "Joey" in sentence 91, "Joey" in sentence 92, "I" in sentence 96, "me" in sentence 97, "Joey" in sentence 97, "his" in sentence 97, "I" in sentence 97, "Joey" in sentence 99, "I" in sentence 100, "myself" in sentence 100, "my" in sentence 100, "I" in sentence 100, "Joey" in sentence 111, "Joey" in sentence 113, "his" in sentence 113, "Joey" in sentence 115, "his" in sentence 115, "He" in sentence 116, "Joey" in sentence 118, "Joey 's" in sentence 120, "I" in sentence 133, "Joey" in sentence 133, "his" in sentence 133, "Joey" in sentence 135, "him" in sentence 135, "Joey" in sentence 137, "Joey" in sentence 144, "Joey" in sentence 153, "he" in sentence 153, "Joey" in sentence 158, "his" in sentence 158, "him" in sentence 158, "Joey" in sentence 159, "Joey" in sentence 162, "Joey" in sentence 169, "My" in sentence 170, "my" in sentence 170, "I" in sentence 171, "Joey" in sentence 177, "Joey" in sentence 177, "You" in sentence 178, "Joey" in sentence 180, "Joey 's" in sentence 182, "Joey" in sentence 183, "Joey" in sentence 184, "Joey" in sentence 197, "he" in sentence 197, "his" in sentence 197, "I" in sentence 198]
