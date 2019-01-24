@@ -1,3 +1,17 @@
+# Shell script way to build and runs the coref clustering
+
+Steps:
+
+1.  Git clone the repository.
+2.  Standford jars modules are present in the location mentioned in (jar-dir).
+2.  Copy the jars to the same directory as run.sh.
+3.  Run the shell script as:  ./run.sh "InputTextFileName"
+4.  Output file with the name "InputTextFileName.coref.out" will be generated with the clustered corefs.
+
+
+
+========================================================================================================================
+
 # Stanford CoreNLP
 
 [![Build Status](https://travis-ci.org/stanfordnlp/CoreNLP.svg?branch=master)](https://travis-ci.org/stanfordnlp/CoreNLP)
