@@ -7,9 +7,11 @@ Steps:
 2.  Standford jars are present in the location mentioned in (jar-dir).
 2.  Copy the jars to the same directory as run.sh.
 3.  Run the shell script as:  ./run.sh "InputTextFileName"
-4.  Output file with the clusters ("InputTextFileName.coref.out") will be generated. 
+4.  Output file is the modified txt file with coref mentions normalized with actual characters ("InputTextFileName.coref.out")
+5.  Output file ("InputTextFileName.chars") contains the character list.
 
 
+==========================================================================================================
 
 # Stanford CoreNLP
 
