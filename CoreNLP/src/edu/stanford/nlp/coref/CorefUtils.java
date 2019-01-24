@@ -96,9 +96,9 @@ public class CorefUtils {
 //      System.out.println(m2.mentionType);
 //    }
 
-    System.out.println("cluster c1 of m1 is represented by " + c1.representative);
-    System.out.println("first mention is " + c1.getFirstMention());
-    System.out.println(c1 + "=" + c1.clusterID + "with gender" + c1.gender);
+//    System.out.println("cluster c1 of m1 is represented by " + c1.representative);
+//    System.out.println("first mention is " + c1.getFirstMention());
+//    System.out.println(c1 + "=" + c1.clusterID + "with gender" + c1.gender);
 
     CorefCluster c2 = document.corefClusters.get(m2.corefClusterID);
 
@@ -108,9 +108,9 @@ public class CorefUtils {
 //      System.out.println(m2.mentionType);
 //    }
 //
-    System.out.println("cluster c2 of m2 is represented by " + c2.representative);
-    System.out.println("first mention is " + c2.getFirstMention());
-    System.out.println(c2 + "=" + c2.clusterID + "with gender" + c2.gender);
+//    System.out.println("cluster c2 of m2 is represented by " + c2.representative);
+//    System.out.println("first mention is " + c2.getFirstMention());
+//    System.out.println(c2 + "=" + c2.clusterID + "with gender" + c2.gender);
 
 
 
@@ -141,9 +141,9 @@ public class CorefUtils {
       a = 0;
     } else if ((c1.gender.equals(Dictionaries.Gender.FEMALE) && c2.gender.equals(Dictionaries.Gender.MALE))
         || (c2.gender.equals(Dictionaries.Gender.FEMALE) && c1.gender.equals(Dictionaries.Gender.MALE))) {
-      System.out.println("wrong merging based on gender!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      System.out.println(m1 + " with gender " + m1.gender + " with cluster gender " + c1.gender);
-      System.out.println(m2 + " with gender " + m2.gender + " with cluster gender " + c2.gender);
+//      System.out.println("wrong merging based on gender!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//      System.out.println(m1 + " with gender " + m1.gender + " with cluster gender " + c1.gender);
+//      System.out.println(m2 + " with gender " + m2.gender + " with cluster gender " + c2.gender);
       a = 0;
     } else {
       CorefCluster.mergeClusters(c2, c1);

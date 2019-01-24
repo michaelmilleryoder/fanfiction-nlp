@@ -1,10 +1,7 @@
 package edu.stanford.nlp.coref;
 
 import java.io.*;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Logger;
 
 import edu.stanford.nlp.coref.data.CorefChain;
@@ -12,8 +9,10 @@ import edu.stanford.nlp.coref.data.CorefCluster;
 import edu.stanford.nlp.coref.data.Dictionaries;
 import edu.stanford.nlp.coref.data.Document;
 import edu.stanford.nlp.coref.data.DocumentMaker;
+import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.util.Generics;
+import edu.stanford.nlp.util.Pair;
 import edu.stanford.nlp.util.StringUtils;
 import edu.stanford.nlp.util.logging.Redwood;
 
@@ -140,6 +139,8 @@ public class CorefSystem {
         File file = new File(args[0]);
 
         BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(args[0] + ".coref.out")));
+        StringBuilder os = new StringBuilder();
 
         String st;
         StringBuffer sb = new StringBuffer();
@@ -158,8 +159,8 @@ public class CorefSystem {
         props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,coref");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
         pipeline.annotate(document);
-        System.out.println("---");
-        System.out.println("coref chains");
+//        System.out.println("---");
+//        System.out.println("coref chains");
 
         HashMap<Integer, String> idToCharacter = new HashMap<>();
 
@@ -172,26 +173,117 @@ public class CorefSystem {
 
         System.err.println(idToCharacter);
 
+        HashSet<String> characters = new HashSet<>();
+
         for (CoreMap sentence : document.get(CoreAnnotations.SentencesAnnotation.class)) {
             System.out.println("---");
             System.out.println("sentence " + String.valueOf(i) + ": ");
-            System.out.println(sentence);
+            System.out.println(sentence.get(CoreAnnotations.TextAnnotation.class));
+//            System.out.println(sentence);
             System.out.println("mentions: ");
+
+            if (sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class).size() == 0) {
+                os.append(sentence + " ");
+                continue;
+            }
+
+            ArrayList<String> words = null;
+            ArrayList<Pair<Pair<Integer, Integer>, String>> replacements = new ArrayList<>();
+            StringBuilder replacedSentence = new StringBuilder();
+
             for (Mention m : sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class)) {
                 int id = m.corefClusterID;
                 String character = "";
+
+                if (words == null) {
+                    words = new ArrayList<String>() {};
+                    for (CoreLabel word: m.sentenceWords) {
+                        words.add(
+                            word.get(CoreAnnotations.TextAnnotation.class)
+                        );
+                    }
+                    System.out.println(words);
+                }
 
 //                System.err.println(id);
 
                 if (idToCharacter.containsKey(id)) {
                     character = idToCharacter.get(id);
                     System.err.println(String.valueOf(id) + " - " + character);
+
+                    if (character != "") {
+                        replacements.add(new Pair<>(new Pair<>(m.startIndex, m.endIndex), character));
+                    }
                 }
 
-                System.out.println("\t" + m + " [" + character + " = ]");
+                System.out.printf("\t" + m + " (%d, %d) [" + character + " = ]", m.startIndex, m.endIndex);
             }
+
+            replacements.sort(
+                new Comparator<Pair<Pair<Integer, Integer>, String>>() {
+                    @Override
+                    public int compare(Pair<Pair<Integer, Integer>, String> o1, Pair<Pair<Integer, Integer>, String> o2) {
+                        return o1.first.first - o2.first.first;
+                    }
+                }
+            );
+
+            int currIdx = 0;
+
+            for (Pair<Pair<Integer, Integer>, String> replacement: replacements) {
+                while (currIdx < replacement.first.first) {
+                    replacedSentence.append(words.get(currIdx) + " ");
+//                    replacedSentence.append(" ");
+                    currIdx += 1;
+                }
+                if (replacement.first.first + 1 == replacement.first.second) {
+                    replacedSentence.append(words.get(replacement.first.first) + " ");
+
+//                    if (replacement.first.first > 0) {
+//                        replacedSentence.append(" ");
+//                    }
+                } else {
+                    for (int j = replacement.first.first; j < replacement.first.second; ++j) {
+                        replacedSentence.append(words.get(j));
+
+                        if (j < replacement.first.second - 1) {
+                            replacedSentence.append("_");
+                        }
+                    }
+
+                    replacedSentence.append(" ");
+                }
+                characters.add("($_" + replacement.second + ")");
+                replacedSentence.append("($_" + replacement.second + ") ");
+
+                currIdx = replacement.first.second;
+            }
+
+            while (currIdx < words.size()) {
+                replacedSentence.append(words.get(currIdx) + " ");
+//                    replacedSentence.append(" ");
+                currIdx += 1;
+            }
+
+            os.append(replacedSentence.toString());
+
+            System.out.println(replacements);
+
             i += 1;
         }
+
+        bw.write(os.toString());
+        bw.flush();
+
+        BufferedWriter cw = new BufferedWriter(new FileWriter(new File(args[0] + ".chars")));
+        StringBuilder csb = new StringBuilder();
+
+        for (String c: characters) {
+            csb.append(c + "\n");
+        }
+
+        cw.write(csb.toString());
+        cw.flush();
 
         System.out.println("coref chains with character");
         for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
