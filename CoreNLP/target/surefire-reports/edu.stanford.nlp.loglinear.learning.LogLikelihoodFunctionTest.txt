@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: edu.stanford.nlp.loglinear.learning.LogLikelihoodFunctionTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.944 sec

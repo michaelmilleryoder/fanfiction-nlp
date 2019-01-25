@@ -20,3 +20,19 @@ Location to the processed output from the Book NLP
 3. BookNLP run on original Friends Transcript (Source of transcript:https://fangj.github.io/friends/) 
 : Code for fetching and preprocessing this data, adding soon.
 /usr0/home/shefalig/FanFic/BookNLP/ProcessedOutputs/Friends_Original_Transcript
+
+--------------------------------------------------------------------------
+
+Location to the coref results from the Book NLP and Stanford CoreNLP (on misty):
+
+1. test article
+misty.lti.cs.cmu.edu/usr0/home/xuanyuey/coref/friends.test.txt
+
+2. tagged Book NLP results
+misty.lti.cs.cmu.edu/usr0/home/xuanyuey/coref/friends.test.booknlp.txt
+
+3. tagged CoreNLP results with character name constraint
+misty.lti.cs.cmu.edu/usr0/home/xuanyuey/coref/friends.test.corenlp.char.txt
+
+4. tagged CoreNLP results with character name and gender constraint
+misty.lti.cs.cmu.edu/usr0/home/xuanyuey/coref/friends.test.corenlp.char.gender.txt

@@ -1,0 +1,147 @@
+-----------------------------------------------------------------------
+antlr-runtime.jar
+
+ORIGINAL JAR NAME: antlr-runtime-3.1.2.jar
+
+VERSION: 3.1.2
+
+RELEASE DATE: Feb 21, 2009
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: ANTLR runtime, for compiled software
+
+URL: http://www.antlr.com
+
+USED BY: The Quickcheck library (not directly used in Stanford NLP code)
+
+LAST UPDATE: 2015/10/5
+
+LAST UPDATE BY: Keenon Werling
+
+-----------------------------------------------------------------------
+java-hamcrest.jar
+
+ORIGINAL JAR NAME: java-hamcrest-2.0.0.0.jar
+
+VERSION: 2.0.0.0
+
+RELEASE DATE: January 2015
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: Hamcrest shennanigans, for JUnit
+
+URL: http://www.hamcrest.org
+
+USED BY: The JUnit library (not directly used in Stanford NLP code)
+
+LAST UPDATE: 2016-04-30
+
+LAST UPDATE BY: John Bauer
+
+-----------------------------------------------------------------------
+javaruntype.jar
+
+ORIGINAL JAR NAME: javaruntype-1.2.jar
+
+VERSION: 1.2
+
+RELEASE DATE: Aug, 2010
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: Something for Quickcheck
+
+URL: http://www.javaruntype.org
+
+USED BY: The Quickcheck library (not directly used in Stanford NLP code)
+
+LAST UPDATE: 2015/10/5
+
+LAST UPDATE BY: Keenon Werling
+
+-----------------------------------------------------------------------
+junit-quickcheck-core.jar
+
+ORIGINAL JAR NAME: junit-quickcheck-core-0.4-beta-3.jar
+
+VERSION: 0.4-beta-3
+
+RELEASE DATE: Nov, 2013
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: Quickcheck, runs random inputs and validates outputs
+
+URL: https://github.com/pholser/junit-quickcheck
+
+USED BY: loglinear package tests
+
+LAST UPDATE: 2015/10/5
+
+LAST UPDATE BY: Keenon Werling
+
+-----------------------------------------------------------------------
+junit-quickcheck-generators.jar
+
+ORIGINAL JAR NAME: junit-quickcheck-generators-0.4-beta-3.jar
+
+VERSION: 0.4-beta-3
+
+RELEASE DATE: Nov, 2013
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: loglinear package tests
+
+URL: https://github.com/pholser/junit-quickcheck
+
+USED BY:
+The Quickcheck library
+
+LAST UPDATE: 2015/10/5
+
+LAST UPDATE BY: Keenon Werling
+
+-----------------------------------------------------------------------
+junit-theories.jar
+
+ORIGINAL JAR NAME: junit-theories-4.12.jar
+
+VERSION: 4.12
+
+RELEASE DATE: Dec, 2014
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: JUnit theories run JUnit against a number of inputs
+
+URL: junit.org
+
+USED BY: loglinear package tests
+
+LAST UPDATE: 2015/10/5
+
+LAST UPDATE BY: Keenon Werling
+
+-----------------------------------------------------------------------
+ognl.jar
+
+ORIGINAL JAR NAME: ognl-3.05.jar
+
+VERSION: 3.05
+
+RELEASE DATE: Apr, 2012
+
+SOURCE AVAILABLE: Maven Central
+
+DESCRIPTION: Object graph navigation library, used by Quickcheck
+
+URL: https://commons.apache.org/proper/commons-ognl/
+
+USED BY: The Quickcheck library (not directly used in Stanford NLP code)
+
+LAST UPDATE: 2015/10/5
+
+LAST UPDATE BY: Keenon Werling
