@@ -1,17 +1,45 @@
-instruction:
-	prediction:
-		run csv2txt to convert csv file to txt file:
-		`python csv2txt.py example_fandom/ example_fandom_txt/`
-		and set the following file paths in default.ini:
-		test_csv_dir = ../example_fandom/
-		test_txt_dir = ../example_fandom_txt/
+# Alternate Universe Tagger
 
-		run BM25 classifier:
-		`python BM25.py default.ini DEFAULT`
-		run naive bayers classifier:
-		`python nb.py default.ini DEFAULT`
+Three steps to tag an unlabelled fanfiction:
 
-		labels are stored in bm25_labels.txt and nb_labels.txt, format for each line:`ficid-chapterid: (assigned label, confidence score)`
+  - Define a set of alternate universe and identify keywords typical of each alternate universe
+  - Train Naive Bayers classifier 
+  - Use Naive Bayers classifier or BM25 language model to tag the unlabelled fanfiction
+
+
+### Prediction
+run csv2txt.py to convert .csv file to .txt file
+
+```sh
+python csv2txt.py example_fandom/ example_fandom_txt/
+```
+
+set the following file paths in default.ini
+
+```sh
+test_csv_dir = ../example_fandom/
+test_txt_dir = ../example_fandom_txt/
+```
+run BM25 classifier
+```sh
+python BM25.py default.ini DEFAULT
+```
+
+run Naive Bayes classifier
+```sh
+python nb.py default.ini DEFAULT
+```
+
+labels are stored in bm25_labels.txt and nb_labels.txt, format for each line:
+ficid-chapterid: (assigned label, confidence score)
+
+
+### Todos
+
+ - Refactor code for training model
+
+
+
 
 clean_labels.txt:
 	selected alternate universe labels, each line represents a group of similar alternate universes
