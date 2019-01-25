@@ -5,7 +5,6 @@ import json
 import copy
 import codecs
 import argparse
-from collections import OrderedDict
 from pprint import pprint
 
 
@@ -16,7 +15,7 @@ paragraphFeatures = []
 paragraphHasQuote = []
 paragraphQuoteTokenId = []
 paragraphNum = 0
-characters = OrderedDict()
+characters = {}
 max_name_len = 0
 characterAppearTokenId = {}
 characterNum = 0
@@ -58,7 +57,7 @@ def paragraph_quote_token_id():
         if paragraphHasQuote[i]:
             j = paragraphStartTokenId[i]
             state = False
-            while j < len(tokens) and i == tokens[j][0]:
+            while i == tokens[j][0]:
                 if tokens[j][13] != 'O' and state == False:
                     state = True
                     paragraphQuoteTokenId[i].append(j)
@@ -66,7 +65,7 @@ def paragraph_quote_token_id():
                     if tokens[j][13] == 'O':
                         state = False
                         paragraphQuoteTokenId[i].append(j - 1)
-                    elif j == len(tokens) - 1 or i != tokens[j+1][0]:
+                    elif i != tokens[j+1][0] or j == len(tokens) - 1:
                         state = False
                         paragraphQuoteTokenId[i].append(j)
                 j += 1
@@ -125,21 +124,19 @@ def read_character_file(charfile):
     global paragraphFeatures
     print "Reading Character File ... ",
     with codecs.open(charfile) as f:
-        for _line in f:
-            line = _line.strip()
-            if len(line) > 0:
-                l = line.split(';')
-                c = l[0].lower().strip()
-                cnames = []
-                cnames.append(c.split())
-                if len(c.split()) > max_name_len:
-                    max_name_len = len(c.split())
-                for name in l[2:]:
-                    nl = name.lower().strip().split()
-                    if len(nl) > max_name_len:
-                        max_name_len = len(nl)
-                    cnames.append(name.lower().strip().split())
-                characters[c] = (l[1].strip().lower(), cnames)
+        for line in f:
+            l = line.split(';')
+            c = l[0].lower().strip()
+            cnames = []
+            cnames.append(c.split())
+            if len(c.split()) > max_name_len:
+                max_name_len = len(c.split())
+            for name in l[2:]:
+                nl = name.lower().strip().split()
+                if len(nl) > max_name_len:
+                    max_name_len = len(nl)
+                cnames.append(name.lower().strip().split())
+            characters[c] = (l[1].strip().lower(), cnames)
     characterNum = len(characters)
     for i in range(paragraphNum):
         paragraphFeatures.append([])
@@ -151,12 +148,6 @@ def read_character_file(charfile):
 
 def output_svmrank_format(outputfile, features, answer=None,):
     answers = []
-
-    output_abs_path = os.path.abspath(outputfile)
-    output_father_path = os.path.abspath(os.path.dirname(output_abs_path) + os.path.sep + ".")
-    if not os.path.exists(output_father_path):
-        os.makedirs(output_father_path)
-
     if answer is not None:
         with codecs.open(answer) as f:
             for line in f:
@@ -169,7 +160,7 @@ def output_svmrank_format(outputfile, features, answer=None,):
             if paragraphHasQuote[i]:
                 qp += 1
 
-        print "(" + str(qp) + " paragraphs have quote)",
+        print qp, len(answers)
         #f.write('# ' + str(qp) + ' quote paragraphs, ' + str(characterNum) + ' characters, features: ')
         #for feature in features:
         #    f.write(feature + ' ')
@@ -185,10 +176,7 @@ def output_svmrank_format(outputfile, features, answer=None,):
         for i in range(paragraphNum):
             if paragraphHasQuote[i]:
                 ss += 1
-                f.write('# paragraph ' + str(i) + ': ' + str(paragraphStartTokenId[i]) + "--" + str(paragraphEndTokenId[i]) + ' ')
-                for quoteTokenId in paragraphQuoteTokenId[i]:
-                    f.write(str(quoteTokenId) + ' ')
-                f.write('\n')
+                f.write('# paragraph ' + str(i) + ': ' + str(paragraphStartTokenId[i]) + "--" + str(paragraphEndTokenId[i]) + '\n')
                 #print '# paragraph ' + str(i) + ': ' + str(paragraphStartTokenId[i]) + "--" + str(paragraphEndTokenId[i])
                 #print ss
                 #print len(answers)
@@ -227,18 +215,20 @@ def output_svmrank_format(outputfile, features, answer=None,):
                     #    continue
                         
                 for j in range(characterNum):
-                    if ans_char is not None and ans_char == characters.keys()[j]:
-                        f.write('1\t')
-                    else:
-                        f.write('0\t')
-                    f.write('qid:' + str(ss))
-                    for k in range(len(features)):
-                        f.write('\t' + str(k+1) + ':' + str(paragraphFeatures[i][j][features[k]]))
-                    #if ans_char == characters.keys()[j]:
-                    #    f.write('\t2:1')
-                    #else:
-                    #    f.write('\t2:0')
-                    f.write('\n')
+                    if answer is not None:
+                        if ans_char is not None:
+                            if ans_char == characters.keys()[j]:
+                                f.write('1\t')
+                            else:
+                                f.write('0\t')
+                            f.write('qid:' + str(ss))
+                            for k in range(len(features)):
+                                f.write('\t' + str(k+1) + ':' + str(paragraphFeatures[i][j][features[k]]))
+                            #if ans_char == characters.keys()[j]:
+                            #    f.write('\t2:1')
+                            #else:
+                            #    f.write('\t2:0')
+                            f.write('\n')
             
 
 def extract_feature_disttoutter():
@@ -262,8 +252,7 @@ def extract_feature_disttoutter():
                             if abs(endId - cid) < dist:
                                 dist = abs(endId - cid)
                     pid += 2
-                #paragraphFeatures[i][j]['disttoutter'] = math.log(dist+1)
-                paragraphFeatures[i][j]['disttoutter'] = 1.0 / (dist + 1)
+                paragraphFeatures[i][j]['disttoutter'] = math.log(dist+1)
             
 
 def extract_feature_spkappcnt():
@@ -278,54 +267,6 @@ def extract_feature_spkappcnt():
                 count = len(characterAppearTokenId[char])
                 paragraphFeatures[i][j]['spkappcnt'] = math.log(count+0.0001)
     
-
-def extract_feature_nameinuttr():
-    if (len(paragraphQuoteTokenId) == 0):
-        paragraph_quote_token_id()
-    if (len(characterAppearTokenId) == 0):
-        build_character_appear_token_id()
-    for i in range(paragraphNum):
-        if paragraphHasQuote[i]:
-            for j in range(characterNum):
-                char = characters.keys()[j]
-                appear = 0
-                pid = 0
-                while pid < len(paragraphQuoteTokenId[i]):
-                    startId = paragraphQuoteTokenId[i][pid]
-                    endId = paragraphQuoteTokenId[i][pid+1]
-                    for cid in characterAppearTokenId[char]:
-                        if (startId <= cid and endId >= cid):
-                            appear = 1
-                    pid += 2
-                paragraphFeatures[i][j]['nameinuttr'] = appear
-
-
-def extract_feature_spkcntpar():
-    if (len(paragraphQuoteTokenId) == 0):
-        paragraph_quote_token_id()
-    if (len(characterAppearTokenId) == 0):
-        build_character_appear_token_id()
-    for i in range(paragraphNum):
-        if paragraphHasQuote[i]:
-            parStart = paragraphStartTokenId[i]
-            parEnd = paragraphEndTokenId[i]
-            for j in range(characterNum):
-                char = characters.keys()[j]
-                parCnt = 0
-                quoCnt = 0
-                pid = 0
-                for cid in characterAppearTokenId[char]:
-                    if (parStart <= cid and parEnd >= cid):
-                        parCnt += 1
-                while pid < len(paragraphQuoteTokenId[i]):
-                    startId = paragraphQuoteTokenId[i][pid]
-                    endId = paragraphQuoteTokenId[i][pid+1]
-                    for cid in characterAppearTokenId[char]:
-                        if (startId <= cid and endId >= cid):
-                            quoCnt += 1
-                    pid += 2
-                paragraphFeatures[i][j]['spkcntpar'] = parCnt - quoCnt
-
 
 def extract_feature_neighboring_utterances(before, after):
     global paragraphFeatures
@@ -372,7 +313,7 @@ if __name__ == "__main__":
     #parser.add_argument('--outfile', help='Path to the book.id.book file', required=True)
     parser.add_argument('--charfile', help='Path to the character list file', required=True)
     parser.add_argument('--output', help='Path to the output file', required=True)
-    parser.add_argument('--features', help='A list of features to be extracted, separated using commas. \n Choices: disttoutter - Distance to Utterance; spkappcnt - Speaker Appearance Count; nameinuttr - Speaker Name in Utterance; spkcntpar - Speaker Count in the Paragraph', required=True)
+    parser.add_argument('--features', help='A list of features to be extracted, separated using commas. \n Choices: disttoutter - Distance to Utterance; spkappcnt - Speaker Appearance Count', required=True)
     parser.add_argument('--answer', help='Path to the answer file')
     #parser.add_argument('--test', action='store_true')
     opt = parser.parse_args()
@@ -400,25 +341,11 @@ if __name__ == "__main__":
         print "Extracting 'Speaker Appearance Count' ... ",
         extract_feature_spkappcnt()
         print "Done."
-    if 'nameinuttr' in features:
-        print "Extracting 'Speaker Name in Utterance' ... ",
-        extract_feature_nameinuttr()
-        print "Done."
-    if 'spkcntpar' in features:
-        print "Extracting 'Speaker Count in the Paragraph' ... ",
-        extract_feature_spkcntpar()
-        print "Done."
-
     extract_feature_neighboring_utterances(4,4)
 
     print "Output ...",
-    #output_svmrank_format(output, ['disttoutter', 'spkappcnt',
-    #                               'disttoutter-1','disttoutter-2','disttoutter-3','disttoutter-4',
-    #                               'disttoutter+1','disttoutter+2','disttoutter+3','disttoutter+4'], answer=answer)
-    output_features = list(features)
-    #for f in features:
-    #    output_features.append(f + '-1')
-    #    output_features.append(f + '+1')
-    output_svmrank_format(output, output_features, answer=answer)
+    output_svmrank_format(output, ['disttoutter', 'spkappcnt',
+                                   'disttoutter-1','disttoutter-2','disttoutter-3','disttoutter-4',
+                                   'disttoutter+1','disttoutter+2','disttoutter+3','disttoutter+4'], answer=answer)
     print "Done."
 
