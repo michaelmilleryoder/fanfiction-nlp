@@ -139,7 +139,10 @@ def read_character_file(charfile):
                     if len(nl) > max_name_len:
                         max_name_len = len(nl)
                     cnames.append(name.lower().strip().split())
-                characters[c] = (l[1].strip().lower(), cnames)
+                if len(l) > 1:
+                    characters[c] = (l[1].strip().lower(), cnames)
+                else:
+                    characters[c] = ('<UNK>', cnames)
     characterNum = len(characters)
     for i in range(paragraphNum):
         paragraphFeatures.append([])
