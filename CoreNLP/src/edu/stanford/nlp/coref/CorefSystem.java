@@ -139,7 +139,11 @@ public class CorefSystem {
         File file = new File(args[0]);
 
         BufferedReader br = new BufferedReader(new FileReader(file));
-        BufferedWriter bw = new BufferedWriter(new FileWriter(new File(args[0] + ".coref.out")));
+        BufferedWriter bw = new BufferedWriter(
+            new FileWriter(
+                new File(args[0] + ".coref.out")
+            )
+        );
         StringBuilder os = new StringBuilder();
 
         String st;
@@ -183,7 +187,17 @@ public class CorefSystem {
             System.out.println("mentions: ");
 
             if (sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class).size() == 0) {
-                os.append(sentence + " ");
+                String text = sentence.get(CoreAnnotations.TextAnnotation.class);
+
+                if (text.equals("# .")) {
+                    os.append("\n");
+                } else if (text.endsWith(" # .")) {
+                    os.append(text, 0, text.lastIndexOf(" # ."));
+                    os.append("\n");
+                } else {
+                    os.append(sentence + " ");
+                }
+
                 continue;
             }
 
@@ -211,7 +225,7 @@ public class CorefSystem {
                     character = idToCharacter.get(id);
                     System.err.println(String.valueOf(id) + " - " + character);
 
-                    if (character != "") {
+                    if (!character.equals("")) {
                         replacements.add(new Pair<>(new Pair<>(m.startIndex, m.endIndex), character));
                     }
                 }
@@ -220,24 +234,31 @@ public class CorefSystem {
             }
 
             replacements.sort(
-                new Comparator<Pair<Pair<Integer, Integer>, String>>() {
-                    @Override
-                    public int compare(Pair<Pair<Integer, Integer>, String> o1, Pair<Pair<Integer, Integer>, String> o2) {
-                        return o1.first.first - o2.first.first;
-                    }
-                }
+                Comparator.comparingInt(o -> o.first.first)
             );
 
             int currIdx = 0;
 
             for (Pair<Pair<Integer, Integer>, String> replacement: replacements) {
                 while (currIdx < replacement.first.first) {
-                    replacedSentence.append(words.get(currIdx) + " ");
+//                    if (words.get(currIdx).equals("#")) {
+//                        System.err.println(words);
+//                        System.err.println(words.get(currIdx + 1).equals("."));
+//                    }
+
+                    if (words.get(currIdx).equals("#")
+                        && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
+                        replacedSentence.append("\n");
+                        currIdx += 2;
+                    } else {
+                        replacedSentence.append(words.get(currIdx)).append(" ");
+                        currIdx += 1;
+                    }
 //                    replacedSentence.append(" ");
-                    currIdx += 1;
+//                    replacedSentence.append(words.get(currIdx) + " ");
                 }
                 if (replacement.first.first + 1 == replacement.first.second) {
-                    replacedSentence.append(words.get(replacement.first.first) + " ");
+                    replacedSentence.append(words.get(replacement.first.first)).append(" ");
 
 //                    if (replacement.first.first > 0) {
 //                        replacedSentence.append(" ");
@@ -254,20 +275,25 @@ public class CorefSystem {
                     replacedSentence.append(" ");
                 }
                 characters.add("($_" + replacement.second + ")");
-                replacedSentence.append("($_" + replacement.second + ") ");
+                replacedSentence.append("($_").append(replacement.second).append(") ");
 
                 currIdx = replacement.first.second;
             }
 
             while (currIdx < words.size()) {
-                replacedSentence.append(words.get(currIdx) + " ");
-//                    replacedSentence.append(" ");
-                currIdx += 1;
+                if (words.get(currIdx).equals("#")
+                    && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
+                    replacedSentence.append("\n");
+                    currIdx += 2;
+                } else {
+                    replacedSentence.append(words.get(currIdx)).append(" ");
+                    currIdx += 1;
+                }
             }
 
             os.append(replacedSentence.toString());
 
-            System.out.println(replacements);
+//            System.out.println(replacements);
 
             i += 1;
         }
@@ -275,7 +301,11 @@ public class CorefSystem {
         bw.write(os.toString());
         bw.flush();
 
-        BufferedWriter cw = new BufferedWriter(new FileWriter(new File(args[0] + ".chars")));
+        BufferedWriter cw = new BufferedWriter(
+            new FileWriter(
+                new File(args[0] + ".chars")
+            )
+        );
         StringBuilder csb = new StringBuilder();
 
         for (String c: characters) {
@@ -285,14 +315,14 @@ public class CorefSystem {
         cw.write(csb.toString());
         cw.flush();
 
-        System.out.println("coref chains with character");
-        for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
-            if (!cc.character.equals("")) {
-                System.out.println("\t" + cc.character + ": " + cc);
-            }
-        }
+//        System.out.println("coref chains with character");
+//        for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
+//            if (!cc.character.equals("")) {
+//                System.out.println("\t" + cc.character + ": " + cc);
+//            }
+//        }
 
-        return;
+//        return;
 
 //        Properties props = StringUtils.argsToProperties(args);
 //        CorefSystem coref = new CorefSystem(props);

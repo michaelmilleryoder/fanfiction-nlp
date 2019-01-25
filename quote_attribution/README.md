@@ -14,33 +14,31 @@ Edit `run.sh` and update the following variables (absolute path is recommended):
 
 * `SVMRANK_BASE`: the directory where SVM<sup>*rank*</sup> installed.
 * `BOOKNLP_BASE`: the directory where BookNLP installed.
-* `DATA_BASE`: the directory where you put the data. The script will also generate some temporary files in this directory.
 
 ### Data
-For each fiction, the script takes two input files: the original text file, which is just a plain text file that contains the content of the fiction, and the character list file, which contains the characters that you want for quote attribution. In the character list file, each character takes one line with the following format:
+For each fiction, the script takes two input files: the original text csv file and the character list file, which contains the characters that you want for quote attribution. In the character list file, each character takes one line with the following format:
 
 ```
-<character_name>;<gender>[;<alias_1>[;<alias_2>[...]]]
+<character_name>[;<gender>[;<alias_1>[;<alias_2>[...]]]]
 ```
 
-* `<character_name>`: the primary name of the character (chould contain spaces). This should be unique for each character.
-* `<gender>`: the gender of this character. The possible values are `M` or `F`.
-* `<alias>`: **(optional)** the other names of this character, which should be following `<gender>` and separated by semicolons.
-
-Put the data directly under the `DATA_BASE` directory (without sub-directory), for example, `DATA_BASE/myfanfic.txt` (original text file) and `DATA_BASE/myfanfic.charlist` (character list file).
+* `<character_name>`: the primary name of the character (chould contain spaces). This should be unique for each character. (For now it should be like `($_XXX_YYY)`)
+* `<gender>`: (optional) the gender of this character, either `M` or `F`.
+* `<alias>`: (optional) the other names of this character, which should be following `<gender>` and separated by semicolons.
 
 ### Command
-From the command line, run the following:
+From the command line, run the following (absolute path is recommended):
 
 ```
-bash run.sh <original_text_filename> <character_list_filename>
+bash run.sh <story_dir> <character_list_dir> <quote_output_dir>
 ```
 
-* `<original_text_filename>`: the filename of the original text file under `DATA_BASE` (without the path to `DATA_BASE`, for example, `myfanfic.txt`).
-* `<character_list_filename>`: the filename of the character list file under `DATA_BASE`.
+* `<story_dir>`: the directory that contains the story text csv files.
+* `<character_list_dir>`: the directory that contains the corresponding character lists.
+* `<quote_output_dir>`: the directory that the quotation attribution outputs will be stored.
 
 ### Output
-This script will output the quote attribution results to `<original_text_filename>.quote.json` with the format as:
+This script will output the quote attribution results to `<quote_output_dir>/<story_filename>.quote.json` with the format as:
 
 ```
 {
@@ -53,9 +51,11 @@ This script will output the quote attribution results to `<original_text_filenam
 }
 ```
 
-Meanwhile, the script will also generate some temporary files:
+Meanwhile, the script will also generate some temporary files in `tmp/<story_filename>/`:
 
-* `<original_text_filename>.predict`: the scores predicted by SVM<sup>*rank*</sup>.
-* `output/`: the outputs of BookNLP.
-* `tokens/<original_text_filename>.tokens`: the tokenization results by BookNLP.
-* `svminput/<original_text_filename>.svmrank`: the input file for SVM<sup>*rank*</sup>.
+* `booknlp_output/`: the outputs of BookNLP.
+* `<story_filename>.tmptext`: the temporary file for processing the story text.
+* `<story_filename>.tmpchar`: the temporary file for processing the character list.
+* `<story_filename>.tokens`: the tokenization results by BookNLP.
+* `<story_filename>.predict`: the scores predicted by SVM<sup>*rank*</sup>.
+* `<story_filename>.svmrank`: the input file for SVM<sup>*rank*</sup>.
