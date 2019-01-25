@@ -1,7 +1,6 @@
 #!/bin/bash
 SVMRANK_BASE="/usr0/home/huimingj/svm_rank"
 BOOKNLP_BASE="/usr0/home/huimingj/book-nlp-master"
-DATA_BASE="/usr0/home/huimingj/pipeline/example_data"
 
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 FEATURES="disttoutter,spkappcnt,nameinuttr,spkcntpar"
@@ -29,11 +28,13 @@ for file in ${filenames};do
     svmrankinput=${tmpdir}/${filename_stem}.svmrank
     predictfile=${tmpdir}/${filename_stem}.predict
     tmpcharfile=${tmpdir}/${filename_stem}.tmpchar
+    tmptextfile=${tmpdir}/${filename_stem}.tmptext
 
-    cd ${BOOKNLP_BASE}
-    ./runjava novels/BookNLP -doc $1/${file} -printHTML -p ${booknlpoutput} -tok ${tokenfile} -f -d
     cd ${SHELL_FOLDER}
-    python2 char_rename.py --charfile ${charfile} --output ${tmpcharfile}
+    python2 preprocess.py --csvinput $1/${file} --charfile ${charfile} --char_output ${tmpcharfile} --story_output ${tmptextfile}
+    cd ${BOOKNLP_BASE}
+    ./runjava novels/BookNLP -doc ${tmptextfile} -printHTML -p ${booknlpoutput} -tok ${tokenfile} -f -d
+    cd ${SHELL_FOLDER}
     python2 quotation_attribution_feature_extract.py --tokenfile ${tokenfile} --charfile ${tmpcharfile} --output ${svmrankinput} --features ${FEATURES}
     ${SVMRANK_BASE}/svm_rank_classify ${svmrankinput} ${SHELL_FOLDER}/austen.model ${predictfile}
     python2 makejson.py --svmfile ${svmrankinput} --charfile ${tmpcharfile} --tokenfile ${tokenfile} --predictfile ${predictfile} --outputfile $3/${filename_stem}.quote.json

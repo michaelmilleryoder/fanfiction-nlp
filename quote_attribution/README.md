@@ -16,7 +16,7 @@ Edit `run.sh` and update the following variables (absolute path is recommended):
 * `BOOKNLP_BASE`: the directory where BookNLP installed.
 
 ### Data
-For each fiction, the script takes two input files: the original text file, which is just a plain text file that contains the content of the fiction, and the character list file, which contains the characters that you want for quote attribution. In the character list file, each character takes one line with the following format:
+For each fiction, the script takes two input files: the original text csv file and the character list file, which contains the characters that you want for quote attribution. In the character list file, each character takes one line with the following format:
 
 ```
 <character_name>[;<gender>[;<alias_1>[;<alias_2>[...]]]]
@@ -33,7 +33,7 @@ From the command line, run the following (absolute path is recommended):
 bash run.sh <story_dir> <character_list_dir> <quote_output_dir>
 ```
 
-* `<story_dir>`: the directory that contains the story texts.
+* `<story_dir>`: the directory that contains the story text csv files.
 * `<character_list_dir>`: the directory that contains the corresponding character lists.
 * `<quote_output_dir>`: the directory that the quotation attribution outputs will be stored.
 
@@ -54,6 +54,7 @@ This script will output the quote attribution results to `<quote_output_dir>/<st
 Meanwhile, the script will also generate some temporary files in `tmp/<story_filename>/`:
 
 * `booknlp_output/`: the outputs of BookNLP.
+* `<story_filename>.tmptext`: the temporary file for processing the story text.
 * `<story_filename>.tmpchar`: the temporary file for processing the character list.
 * `<story_filename>.tokens`: the tokenization results by BookNLP.
 * `<story_filename>.predict`: the scores predicted by SVM<sup>*rank*</sup>.
