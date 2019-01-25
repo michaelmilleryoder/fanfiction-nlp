@@ -9,10 +9,6 @@ if [ ! -d $3  ];then
   mkdir -p $3
 fi
 
-if [ ! -d ${SHELL_FOLDER}/tmp  ];then
-  mkdir -p ${SHELL_FOLDER}/tmp
-fi
-
 cd $1
 filenames=$(ls *.coref.out)
 for file in ${filenames};do
@@ -20,6 +16,12 @@ for file in ${filenames};do
     farr=(${filename//./ }) 
     filename_stem=${farr[0]}
     echo Processing ${filename_stem} ...
+
+    tmpdir=${SHELL_FOLDER}/tmp/${filename_stem}
+
+    if [ ! -d ${tmpdir}  ];then
+        mkdir -p ${tmpdir}
+    fi
 
     tmpdir=${SHELL_FOLDER}/tmp/${filename_stem}
     booknlpoutput=${tmpdir}/booknlp_output
