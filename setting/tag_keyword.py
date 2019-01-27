@@ -1,8 +1,17 @@
 import pickle
 import sys
 from collections import Counter
-search_string = sys.argv[1]
-k = int(sys.argv[2])
+
+config_path = sys.argv[1]
+config_section = sys.argv[2]
+
+import ConfigParser
+config = ConfigParser.ConfigParser()
+config.readfp(open(config_path))
+
+search_string = sys.argv[3]
+k = int(sys.argv[4])
+
 import csv
 import copy
 import math
@@ -18,22 +27,26 @@ import nltk
 from nltk.corpus import stopwords
 stopwords_set=set(stopwords.words('english'))
 stopwords_set = set([str(i) for i in list(stopwords_set)])
-#print 'he' in stopwords_set
+
+stories_path = config.get(config_section,'stories_path')
+stories_dir_path = config.get(config_section,'stories_dir_path')
+tags_path = config.get(config_section,'tags_path')
+df_path = config.get(config_section,'df_path')
 
 import string
 punctuation_set = set(string.punctuation)
 
-N = 73645
 
-#exclude_set = stopwords_set.union(punctuation_set)
 
-with open('tags_rm_sw_l_.txt') as f:
+with open(tags_path) as f:
 	tags = pickle.load(f)
-with open('df_new') as f:
+with open(df_path) as f:
 	df = pickle.load(f)
 
+N = df['totalN']
+
 stories = []
-for row in csv.DictReader(open("stories.csv")):
+for row in csv.DictReader(open(stories_path)):
      stories.append(row)
 
 def lower_list(a):
@@ -50,7 +63,7 @@ def fic_story_words(fic_id,chapter_count):
 	chapter_ids = generate_chapter_id(chapter_count)
 	for chap_id in chapter_ids:
 		this_story = ""
-		fname = "stories/"+fic_id+'_'+chap_id+".csv"
+		fname = stories_dir_path+fic_id+'_'+chap_id+".csv"
 		for row in csv.DictReader(open(fname)):
 			this_story+=row["text"]
 		chap_words = story_words(this_story)
@@ -109,22 +122,16 @@ au_Counter = Counter(au_words)
 # combine the df statistics
 score ={}
 for word in au_Counter:
-	print word,' ',df[word]
-	idf = max(math.log((N-df[word]+0.5)/(df[word]+0.5)),0)
-	tf = (au_Counter[word])
+	# print word,' ',df[word]
+	idf = math.log(N/df[word])
+	tf = au_Counter[word]
 	score[word]=tf*idf
-i =0
+count = 0
 for key, value in sorted(score.iteritems(), key=lambda (k,v): (v,k),reverse=True):
-    	if i>k:
-		break
-	print "%s: %s" % (key, value)
-	i+=1
+    if count==k:
+    	break
+    print "%s: %s" % (key, value)
+    count+=1
+
 # print au_Counter.most_common(k)
-
-	
-
-
-
-
-
 

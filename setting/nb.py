@@ -6,7 +6,6 @@ import os
 # k1 = float(sys.argv[1])
 # b = float(sys.argv[2])
 
-# avg_doclen = 4364.35
 import csv
 import copy
 import math
@@ -27,7 +26,6 @@ stopwords_set = set([str(i) for i in list(stopwords_set)])
 import string
 punctuation_set = set(string.punctuation)
 
-# N = 73645
 config_path = sys.argv[1]
 config_section = sys.argv[2]
 import ConfigParser
@@ -41,7 +39,7 @@ tags_path = config.get(config_section,'tags_path')
 df_path = config.get(config_section,'df_path')
 labels_path = config.get(config_section,'labels_path')
 keywords_path = config.get(config_section,'keywords_path')
-keyword_set_path = config.get(config_section,'keyword_set_path')
+# keyword_set_path = config.get(config_section,'keyword_set_path')
 fic2idx_path = config.get(config_section,'fic2idx_path')
 idx2fic_path = config.get(config_section,'idx2fic_path')
 idx_wordcount_path = config.get(config_section,'idx_wordcount_path')
@@ -50,8 +48,6 @@ idxprob_path = config.get(config_section,'idx_prob_path')
 test_txt_dir = config.get(config_section,'test_txt_dir')
 output_path = config.get(config_section,'nb_output_path')
 
-
-avg_doclen = float(config.get(config_section,'avg_doclen'))
 
 with open(df_path) as f:
 	df = pickle.load(f)
@@ -65,22 +61,32 @@ with open(idx_wordcount_path) as f:
 	idx_wc = f.readlines()
 with open(idxprob_path) as f:
 	idxprob = pickle.load(f)
-with open(keyword_set_path) as f:
-	keyword_set = pickle.load(f)
-all_keywords = set([j for i in keyword_set for j in i])
+# with open(keyword_set_path) as f:
+# 	keyword_set = pickle.load(f)
+with open(keywords_path) as f:
+	keywords = f.readlines()
+
+keywords = [i.strip().split('\t') for i in keywords]
+
+all_keywords = []
+for i in keywords:
+	if i[0]=='':
+		continue
+	else:
+		all_keywords.extend([eval(j)[0] for j in i])
+
+all_keywords = set(all_keywords)
 
 idx_wc = [i.strip().split('\t') for i in idx_wc]
 idx_wc_dict=[]
 # idx_length=[]
 for i in idx_wc:
-	counts =[eval(j)[1] for j in i]
-	# idx_length.append(sum(counts))
 	this_dict={}
 	for k in i:
+		if len(k)==0:
+			break
 		this_dict[eval(k)[0]]=eval(k)[1]
 	idx_wc_dict.append(this_dict)
-
-
 
 
 def lower_list(a):
@@ -137,6 +143,8 @@ aus = []
 
 
 def nb_prob(story,idx):
+	if idxprob[idx]==0:
+		return float('-inf')
 	this_idx_prob = idxprob[idx]
 	this_wc = idx_wc_dict[idx]
 	total=sum([this_wc[j] for j in this_wc if j in all_keywords])

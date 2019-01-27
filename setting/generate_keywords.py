@@ -17,8 +17,11 @@ tags_path = config.get(config_section,'tags_path')
 df_path = config.get(config_section,'df_path')
 labels_path = config.get(config_section,'labels_path')
 keywords_path = config.get(config_section,'keywords_path')
-topn = int(config.get(config_section,'topn'))
-cutoff = float(config.get(config_section,'cutoff'))
+fic2idx_path = config.get(config_section,'fic2idx_path')
+idx2fic_path = config.get(config_section,'idx2fic_path')
+
+topn = int(config.get(config_section,'keyword_topn'))
+percent = float(config.get(config_section,'keyword_percent'))
 
 import csv
 import copy
@@ -67,7 +70,7 @@ for row in csv.DictReader(open(stories_path)):
 	stories.append(row)
 fic2idx = [[] for i in range(len(stories))]
 
-N = len(stories)
+N = df['totalN']
 
 def lower_list(a):
 	return [i.lower() for i in a]
@@ -172,7 +175,7 @@ for i in range(len(labels)):
 		else:
 			if len(idx2keywords[i])>topn:
 				break
-			if value<top_score*cutoff:
+			if value<top_score*percent:
 				break
 				
 			f.write(str((key,value)))
@@ -183,14 +186,10 @@ for i in range(len(labels)):
 
 	    	# print "%s: %s" % (key, value)
 f.close()
-with open('fic2idx.pkl','wb') as f:
+with open(fic2idx_path,'wb') as f:
 	pickle.dump(fic2idx,f)
+
+with open(idx2fic_path,'wb') as f:
+	pickle.dump(idx2fic,f)
 # print au_Counter.most_common(k)
-
-	
-
-
-
-
-
 

@@ -26,8 +26,6 @@ k1 = float(config.get(config_section,'bm25_k1'))
 b = float(config.get(config_section,'bm25_b'))
 cutpt = float(config.get(config_section,'bm25_cutpt'))
 percent = float(config.get(config_section,'bm25_percent'))
-avg_doclen = float(config.get(config_section,'avg_doclen'))
-N = float(config.get(config_section,'N'))
 
 import csv
 import copy
@@ -63,10 +61,16 @@ with open(idx2fic_path) as f:
 with open(keywords_path) as f:
 	keywords = f.readlines()
 
+N = df['totalN']
+avg_doclen = df['avg_doc_len']
+
 keywords = [i.strip().split('\t') for i in keywords]
 queries = []
 for i in keywords:
-	queries.append([eval(j)[0] for j in i])
+	if i[0]=='':
+		queries.append([])
+	else:
+		queries.append([eval(j)[0] for j in i])
 
 
 def lower_list(a):
@@ -120,6 +124,8 @@ out = []
 aus = []
 
 def cal_BM25(doc_c,doc_len,query):
+	if len(query)==0:
+		return float('-inf')
 	score =0
 	for w in query:
 		if w not in doc_c:
@@ -134,8 +140,6 @@ if len(test_txt_dir)==0:
 	stories = []
 	for row in csv.DictReader(open(stories_path)):
 		stories.append(row)
-
-	N = len(stories)
 
 	assign_labels=[[-1] for i in range(len(stories))]
 	for i in range(len(fic2idx)):
@@ -204,6 +208,7 @@ else:
 # with open(output_path,'wb') as f:
 # 	pickle.dump(assign_labels,f)
 	
+
 
 
 

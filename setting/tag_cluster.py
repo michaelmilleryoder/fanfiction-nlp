@@ -1,30 +1,44 @@
 import pickle
 import sys
 from collections import Counter
-search_string = sys.argv[1]
-with open('AU_all_u.txt') as f:
+
+config_path = sys.argv[1]
+config_section = sys.argv[2]
+import ConfigParser
+config = ConfigParser.ConfigParser()
+config.readfp(open(config_path))
+
+search_string = sys.argv[3]
+
+# get config parameters
+
+tags_path = config.get(config_section,'tags_path')
+aus_path = config.get(config_section,'aus_path')
+
+
+with open(aus_path) as f:
 	AU_all = pickle.load(f)
 
-with open('AU_rm_sw_l_u.txt','r') as f:
-	AU_rm_sw_l = pickle.load(f)
-
-with open('tags') as f:
+with open(tags_path) as f:
 	tags = pickle.load(f)
 
 def lower_list(a):
 	return [i.lower() for i in a]
 
+AU_words = [i.split() for i in AU_all ]
+AU_words = [j for i in AU_words for j in i]
 if search_string == 'highFreq':
-	count = sys.argv[2]
-	AU_all_words_counter = Counter(AU_rm_sw_l)
+	count = sys.argv[4]
+	AU_all_words_counter = Counter(AU_words)
 	print AU_all_words_counter.most_common(int(count))
 
 else:
 	out = []
 	for au in AU_all:
-		if search_string in lower_list(au):
+		if search_string in au:
 			out.append(au)
-	out_join = [' '.join(i) for i in out]
-	out_counter = Counter(out_join)
-	print 'total occurence:',(len(out_join))
+
+	out_counter = Counter(out)
+	print 'total occurence:',(len(out))
 	print out_counter
+
