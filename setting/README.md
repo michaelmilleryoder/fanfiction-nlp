@@ -78,11 +78,11 @@ Each line denotes one au category, with words separated by comma. If au tag A is
 
 5.generate keywords using tf-idf algorithm for each au category by running
 ```sh
-python generate_keywords.py [configuration file name] [configuration file section]`
+python generate_keywords.py [configuration file name] [configuration file section]
 ```
 6.train naive bayes classifier by running:
 ```sh
-python nb_preprocess.py [configuration file name] [configuration file section]`
+python nb_preprocess.py [configuration file name] [configuration file section]
 ```
 
 7.BM25 classifier does not require training, for usage, refer to prediction section.
