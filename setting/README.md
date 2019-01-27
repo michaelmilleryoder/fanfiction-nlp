@@ -62,7 +62,7 @@ python tag_search.py:
 use tag_keyword.py to check the keywords identified by tf-idf for each search string. For two search strings, if their identified keywords look similar, we may conclude that aus contain these search strings are similar.
 ```sh
 python tag_search.py:
- [configuration file name] [configuration file section] search_string search_string topN`
+ [configuration file name] [configuration file section] search_string search_string topN
 ```
 write the list of alternate universe labels to labels_path defined in configuration file, eg.
 
