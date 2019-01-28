@@ -17,6 +17,7 @@ Let's call this \<fandom_dir>
 *A list of characters corresponding to each fanficstoryID\_chapterID.coref.chars . Let's call this \<chars_dir> 
 
 ##Command
+
 	python extract_assertions.py <fandom_dir> <chars_dir> <output_dir>
 	
 
