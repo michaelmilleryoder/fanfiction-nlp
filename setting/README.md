@@ -41,28 +41,24 @@ python cal_df.py [configuration file name] [configuration file section]
 4.Manully select alternate universe labels.
 use tag_cluster.py to inspect high frequency words within au tags
 ```sh
-python tag_cluster.py:
- [configuration file name] [configuration file section] highFreq topN
+python tag_cluster.py [configuration file name] [configuration file section] highFreq topN
  ```
 
 then check which aus share the same high frequency word
 
 ```sh
-python tag_cluster.py:
- [configuration file name] [configuration file section] search_string
+python tag_cluster.py [configuration file name] [configuration file section] search_string
  ```
 
 use tag_search.py to specify a word, it will return the list of fictions whose au labels contain this word.
 
 ```sh
-python tag_search.py:
- [configuration file name] [configuration file section] search_string
+python tag_search.py [configuration file name] [configuration file section] search_string
 ```
 
 use tag_keyword.py to check the keywords identified by tf-idf for each search string. For two search strings, if their identified keywords look similar, we may conclude that aus contain these search strings are similar.
 ```sh
-python tag_search.py:
- [configuration file name] [configuration file section] search_string search_string topN
+python tag_search.py [configuration file name] [configuration file section] search_string search_string topN
 ```
 write the list of alternate universe labels to labels_path defined in configuration file, eg.
 
