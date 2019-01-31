@@ -5,13 +5,13 @@ NLP tools for fanfiction, based on David Bamman's BookNLP. Developed by CMU stud
 This script processes a directory of fanfiction files and extracts
  relevant text to characters, as well as fic AU metadata.
  
-The script completes:
-	* Character coreference
-	* Character feature extraction
-		* Quote attribution
-		* Assertion (facts about a character) attribution
-	* Character cooccurrence matrix
-	* Alternate universe (AU) extraction from fic metadata
+The script does:
+* Character coreference
+* Character feature extraction
+	* Quote attribution
+	* Assertion (facts about a character) attribution
+* Character cooccurrence matrix
+* Alternate universe (AU) extraction from fic metadata
 
 
 ## Input 
