@@ -19,10 +19,14 @@ nlp = spacy.load('en_core_web_sm')
 print "Model loaded"
 path = sys.argv[1]
 path = os.path.abspath(os.path.join(os.pardir, path))
+print path
 allFiles = glob.glob(path + "/*.out")
 frame = pd.DataFrame()
 text = []
 count = 0
+if len(allFiles) < 1:
+    print "No files found at the location provided"
+    exit(0)
 
 for file in allFiles:
     df = pd.read_csv(file, index_col=None, header=0)
@@ -38,7 +42,7 @@ text = ''.join(text)
 processed_text = []
 for word in text.split(" "):
     if word.startswith("($_"):
-        character_dict[word[word.find('_') + 1: word.find(')')]] = word
+        character_dict[word[word.find('_') + 1: word.find(')')].lower()] = word
         processed_text.pop()
         word = word[word.find('_') + 1: word.find(')')]
 
@@ -108,14 +112,15 @@ for key in char_dict:
     new_char_dict[key] = char_dict[key]
 
 resfile = open("cooccurence.txt", "w+")
-
 for key in new_char_dict:
     line = ""
-    line = str(key) + ": {"
+    if str(key) in character_dict:
+        line = character_dict[str(key)] + ": {"
+    else:
+        line = str(key) + ": {"
     for key1, value in sorted(new_char_dict[key].iteritems(), key=lambda (k, v): (v, k), reverse=True):
         if(value != 0):
             line += str(key1) + ":" + str(value) + "  "
     line += "}" + "\n\n\n"
     resfile.write(line)
 resfile.close()
-
