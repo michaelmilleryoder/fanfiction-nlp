@@ -19,11 +19,11 @@ Directory path to directory of fic chapter CSV files
 
 ## Output 
 * Character coreference: 
-	* a directory where fics are stored with cluster-level names appended after mentions, like this: ``she ($hermione) and harry ($_harry)''.
-	* a directory where files with cluster-level character names for each processed fic, one per line.
+	* a directory where fics are stored with cluster-level names appended after mentions, like this: "she ($\_hermione) and harry ($\_harry) walked through the woods".
+	* a directory with files with cluster-level character names for each processed fic, one per line.
 
 * Quote attribution: 
-	* a directory where for each fic, there is a JSON file with keys as cluster-level character names and values with extracted and attributed quotes.
+	* a directory with a JSON files for each fic. Each JSON file has cluster-level character names as keys and extracted and attributed quotes as keys.
 
 * Assertion attribution: 
 	* a directory where for each fic, there is a JSON file with keys as cluster-level character names and values with extracted assertions (statements or facts) about the character.
