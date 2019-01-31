@@ -11,7 +11,7 @@ fi
 
 cd $1
 #filenames=$(ls *.coref.out)
-filenames=$(ls *.csv.coref)
+filenames=$(ls *.coref.csv)
 for file in ${filenames};do
     filename=${file##*/}
     farr=(${filename//./ }) 

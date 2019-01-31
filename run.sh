@@ -34,24 +34,26 @@ ASSERTION_OUTPUT_PATH="${OUTPUT_PATH}assertion_extraction"
 mkdir -p $ASSERTION_OUTPUT_PATH
 
 # Character coref
-echo "Running character coreference..."
-python2 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
-mv ${FICS_INPUT_PATH}*.coref $COREF_STORIES_PATH # can take out line when output handled differently
+#echo "Running character coreference..."
+#python2 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+#mv ${FICS_INPUT_PATH}*.coref $COREF_STORIES_PATH # can take out line when output handled differently
 
 
 # Quote attribution
-#echo "Running quote attribution..."
-#cd quote_attribution
-#bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
+echo "Running quote attribution..."
+cd quote_attribution
+bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
+cd ..
+# Don't do tokenization again
 
 
 # Assertion attribution
-echo "Running assertion extraction..."
-python2 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
+#echo "Running assertion extraction..."
+#python2 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
 
 
 # Character cooccurrence matrix
 
 
-# AU 
+# AUs 
 # goes to JSON file at level of fic
