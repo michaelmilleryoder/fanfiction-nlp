@@ -53,13 +53,13 @@ for filename in filenames:
         #os.rename("./CoreNLP/"+filename[:-4]+".chars" , "./"+char_dir+"/"+filename[:-4]+".chars" )
         #os.rename("./CoreNLP/"+filename[:-4]+".coref.out" , "./"+char_dir+"/"+filename[:-4]+".coref.out" )
         shutil.move("./CoreNLP/"+filename[:-4]+".chars" , char_dir+"/"+filename[:-4]+".chars")
-        shutil.move("./CoreNLP/"+filename[:-4]+".coref.out" ,output_dir+"/"+filename[:-4]+".coref.out")
+        shutil.move("./CoreNLP/"+filename[:-4]+".coref.out" ,output_dir+"/"+filename[:-4]+".coref.txt")
 
 
-	f = open(output_dir+"/"+filename[:-4]+".coref.out")
+	f = open(output_dir+"/"+filename[:-4]+".coref.txt")
 	fin = open(test_csv_dir+filename,"rb")
 	reader = csv.reader(fin)
-	fout = open(test_csv_dir+filename+".coref","wb")
+	fout = open(output_dir+"/"+filename[:-4]+".coref.csv","wb")
 	writer = csv.writer(fout)
 	lines = f.readlines()
         for row,text in zip(reader, lines):
