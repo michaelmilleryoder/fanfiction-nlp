@@ -38,32 +38,38 @@ for filename in filenames:
                 this_text+=" # . "
 
         # dump the txt file
-        print ("CoreNLP/"+filename[:-4])
-        with open("CoreNLP/"+filename[:-4],'w') as f:
+	print ("CoreNLP/"+filename[:-4])
+	with open("CoreNLP/"+filename[:-4],'w') as f:
                 f.write(this_text)
         f.close()
-        os.chdir("CoreNLP")
+	os.chdir("CoreNLP")
         os.system("./run.sh "+filename[:-4])
-        os.remove(filename[:-4])
+	os.remove(filename[:-4])
         os.chdir("..")
-        if (not os.path.isdir(char_dir)):
-                os.mkdir(char_dir)
-        if (not os.path.isdir(output_dir)):
-                os.mkdir(output_dir)
+	if (not os.path.isdir(char_dir)):        
+		os.mkdir(char_dir)
+	if (not os.path.isdir(output_dir)):       
+ 		os.mkdir(output_dir)
+        #os.rename("./CoreNLP/"+filename[:-4]+".chars" , "./"+char_dir+"/"+filename[:-4]+".chars" )
+        #os.rename("./CoreNLP/"+filename[:-4]+".coref.out" , "./"+char_dir+"/"+filename[:-4]+".coref.out" )
         shutil.move("./CoreNLP/"+filename[:-4]+".chars" , char_dir+"/"+filename[:-4]+".chars")
         shutil.move("./CoreNLP/"+filename[:-4]+".coref.out" ,output_dir+"/"+filename[:-4]+".coref.out")
 
 
-        f = open(output_dir+"/"+filename[:-4]+".coref.out")
-        fin = open(test_csv_dir+filename,"rb")
-        reader = csv.reader(fin)
-        fout = open(test_csv_dir+filename+".coref","wb")
-        writer = csv.writer(fout)
-        lines = f.readlines()
+	f = open(output_dir+"/"+filename[:-4]+".coref.out")
+	fin = open(test_csv_dir+filename,"rb")
+	reader = csv.reader(fin)
+	fout = open(test_csv_dir+filename+".coref","wb")
+	writer = csv.writer(fout)
+	lines = f.readlines()
         for row,text in zip(reader, lines):
-                row[len(row)-1]= text
-                writer.writerow(row)
+		#row["paragraph"] = text
+		#print (row["paragraph"])
+		#print (text)
+		row[len(row)-1]= text
+		writer.writerow(row)
+		#print (row['paragraph'])
 
-        fin.close()
-        f.close()
-        fout.close()                                                                                                                                                                                    1,1           Top
+	fin.close()
+	f.close()
+	fout.close()
