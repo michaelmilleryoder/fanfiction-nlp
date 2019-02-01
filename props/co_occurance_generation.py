@@ -1,11 +1,12 @@
 import pandas as pd
 import glob
 import time
-from collections import Counter
+from collections import Counter, OrderedDict
 from sklearn.feature_extraction.text import TfidfTransformer
 import spacy
 import sys
 import os.path
+import json
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -19,21 +20,17 @@ nlp = spacy.load('en_core_web_sm')
 print "Model loaded"
 path = sys.argv[1]
 path = os.path.abspath(os.path.join(os.pardir, path))
-print path
-allFiles = glob.glob(path + "/*.out")
+allFiles = glob.glob(path + "/*.csv")
 frame = pd.DataFrame()
 text = []
 count = 0
 if len(allFiles) < 1:
     print "No files found at the location provided"
     exit(0)
-
 for file in allFiles:
     df = pd.read_csv(file, index_col=None, header=0)
-
-for row in df['paragraph']:
-    # print row
-    text.append(row)
+    for row in df.iloc[:, -1]:
+        text.append(row)
 
 character_dict = {}
 text = ''.join(text)
@@ -47,47 +44,38 @@ for word in text.split(" "):
         word = word[word.find('_') + 1: word.find(')')]
 
     processed_text.append(word)
-
 processed_text = ' '.join(processed_text)
-
-
+print "before nlp"
 doc = nlp(unicode(processed_text))
+
 data_list = []
 for token in doc:
+    # print token, "ss"
     if token.is_stop is False:
-        if len(token.ent_type_) > 0:
-            data_list.append({'lemma': token.lemma_, 'pos': token.pos_, 'tag': token.tag_, 'ner': token.ent_type_})
-        else:
-            data_list.append({'lemma': token.lemma_, 'pos': token.pos_, 'tag': token.tag_, 'ner': 'O'})
+        data_list.append({'text': token.text, 'pos': token.pos_, 'tag': token.tag_, 'lemma': token.lemma_})
+
 df = pd.DataFrame(data_list)
 
-# Filtering out POS tags
-pos_tags = ['POS', 'JJ', 'WP', 'NN', 'FW', 'NNS', 'NNP', 'NNPS', 'JJR']
-
-print "Subsetting the data"
-dfsub = df[["lemma", "tag", "ner"]].loc[df["tag"].isin(pos_tags)]
-tokens = dfsub["lemma"].tolist()
-dfsub = dfsub.reset_index()
-ngram = 4
 chars = {}
-
-print "Starting counter loop"
-for index, row in dfsub.iterrows():
-    if row["ner"] == "PERSON" and index + ngram < len(tokens) - 1:
-        if row["lemma"] in chars:
+index = 0
+ngram = 4
+for row in data_list:
+    if row['text'] in character_dict:
+        if row['text'] in chars:
             for i in range(1, ngram + 1):
-                if len(str(tokens[index - i])) > 2:
-                    chars[row["lemma"]].update({tokens[index - i]: 1})
-                if len(str(tokens[index + i])) > 2:
-                    chars[row["lemma"]].update({tokens[index + i]: 1})
+                if data_list[index + i]['pos'] == 'ADJ':
+                    chars[row["text"]].update({data_list[index + i]['text']: 1})
+                if data_list[index - i]['pos'] == 'ADJ':
+                    chars[row["text"]].update({data_list[index - i]['text']: 1})
         else:
-            chars[row["lemma"]] = Counter()
+            chars[row["text"]] = Counter()
             for i in range(1, ngram + 1):
-                if len(str(tokens[index - i])) > 2:
-                    chars[row["lemma"]].update({tokens[index - i]: 1})
-                if len(str(tokens[index + i])) > 2:
-                    chars[row["lemma"]].update({tokens[index + i]: 1})
-print "Ending counter loop"
+                if data_list[index + i]['pos'] == 'ADJ':
+                    chars[row["text"]].update({data_list[index + i]['text']: 1})
+                if data_list[index - i]['pos'] == 'ADJ':
+                    chars[row["text"]].update({data_list[index - i]['text']: 1})
+    index += 1
+
 
 print "Creating co-occurence"
 dfnew = pd.DataFrame.from_dict(chars, orient='index').reset_index().fillna(0)
@@ -97,7 +85,6 @@ char_list = []
 # Converting term counts to TFIDF
 for char in dfnew["index"]:
     char_list.append(char)
-
 dfnew = dfnew.drop(["index"], axis=1)
 
 tfidf = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=False)
@@ -111,16 +98,13 @@ char_dict = dffinal.to_dict('index')
 for key in char_dict:
     new_char_dict[key] = char_dict[key]
 
-resfile = open("cooccurence.txt", "w+")
+sorted_dict = OrderedDict()
 for key in new_char_dict:
-    line = ""
-    if str(key) in character_dict:
-        line = character_dict[str(key)] + ": {"
-    else:
-        line = str(key) + ": {"
+    counter_dict = OrderedDict()
     for key1, value in sorted(new_char_dict[key].iteritems(), key=lambda (k, v): (v, k), reverse=True):
-        if(value != 0):
-            line += str(key1) + ":" + str(value) + "  "
-    line += "}" + "\n\n\n"
-    resfile.write(line)
-resfile.close()
+        if (value != 0):
+            counter_dict[key1] = value
+    sorted_dict[key] = counter_dict
+
+with open('result.json', 'w') as fp:
+    json.dump(sorted_dict, fp)
