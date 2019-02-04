@@ -18,6 +18,7 @@
 
 
 # I/O
+COLLECTION_NAME="example_fandom"
 FICS_INPUT_PATH="example_fandom/" # will eventually interally come from command line
 OUTPUT_PATH="output/example_fandom/"
 mkdir -p $OUTPUT_PATH
@@ -33,6 +34,9 @@ mkdir -p $QUOTE_OUTPUT_PATH
 ASSERTION_OUTPUT_PATH="${OUTPUT_PATH}assertion_extraction"
 mkdir -p $ASSERTION_OUTPUT_PATH
 
+AU_OUTPUT_PATH="${OUTPUT_PATH}aus/"
+mkdir -p $AU_OUTPUT_PATH
+
 # Character coref
 #echo "Running character coreference..."
 #python2 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
@@ -40,10 +44,10 @@ mkdir -p $ASSERTION_OUTPUT_PATH
 
 
 # Quote attribution
-echo "Running quote attribution..."
-cd quote_attribution
-bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
-cd ..
+#echo "Running quote attribution..."
+#cd quote_attribution
+#bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
+#cd ..
 # Don't do tokenization again
 
 
@@ -56,4 +60,12 @@ cd ..
 
 
 # AUs 
-# goes to JSON file at level of fic
+echo "Running AU prediction..."
+TRAINED_MODEL_CONFIG=friends.ini
+FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
+mkdir -p $FICS_TEXT_PATH
+python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
+cd setting
+python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "../$FICS_INPUT_PATH" "../$FICS_TEXT_PATH" "../$AU_OUTPUT_PATH" # modifies config file
+python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
+python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
