@@ -39,7 +39,7 @@ mkdir -p $AU_OUTPUT_PATH
 
 # Character coref
 #echo "Running character coreference..."
-#python2 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
 #mv ${FICS_INPUT_PATH}*.coref $COREF_STORIES_PATH # can take out line when output handled differently
 
 
