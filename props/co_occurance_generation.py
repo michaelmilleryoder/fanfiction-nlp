@@ -110,6 +110,7 @@ for char in dfnew["index"]:
     char_list.append(char)
 dfnew = dfnew.drop(["index"], axis=1)
 
+
 tfidf = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=False)
 mat = tfidf.fit_transform(dfnew).toarray()
 dffinal = pd.DataFrame(mat)
@@ -130,7 +131,8 @@ for key in new_char_dict:
     sorted_dict[key] = counter_dict
 
 rel_path = sys.argv[2]
-output_path = os.path.join(script_dir, rel_path)
+output_path = os.path.join(script_dir, rel_path) + "result.json"
 
-with open('result.json', 'w') as fp:
+print "Writing JSON to " + output_path
+with open(output_path, 'w') as fp:
     json.dump(sorted_dict, fp)
