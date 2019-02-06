@@ -12,8 +12,11 @@ sys.setdefaultencoding('utf8')
 
 
 start_time = time.time()
-if len(sys.argv) < 2:
-    print "Data path missing"
+if len(sys.argv) < 4:
+    print "Wrong number of parameters!!! See correct format below:"
+    print "Argument 1: Directory with stories"
+    print "Argument 2: Output Directory"
+    print "Argument 3: Directory with characters"
     exit(0)
 
 print "Loading NLP Model"
