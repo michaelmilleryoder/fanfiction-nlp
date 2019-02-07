@@ -25,7 +25,7 @@ mkdir -p $OUTPUT_PATH
 
 COREF_STORIES_PATH="${OUTPUT_PATH}char_coref_stories"
 mkdir -p $COREF_STORIES_PATH
-COREF_CHARS_PATH="${OUTPUT_PATH}char_coref_chars"
+COREF_CHARS_PATH="${OUTPUT_PATH}char_coref_chars/"
 mkdir -p $COREF_CHARS_PATH
 
 QUOTE_OUTPUT_PATH="${OUTPUT_PATH}quote_attribution"
@@ -59,7 +59,8 @@ mkdir -p $AU_OUTPUT_PATH
 
 
 # Person entity cooccurrence matrix
-python2 props/co_occurance_generation.py "$COREF_STORIES_PATH""$COOCCURRENCE_OUTPUT_PATH" "$COREF_CHARS_PATH"
+cd props
+python2 co_occurance_generation.py "../$COREF_STORIES_PATH" "../$COOCCURRENCE_OUTPUT_PATH" "../$COREF_CHARS_PATH"
 
 
 # AUs 
