@@ -71,7 +71,6 @@ for file in allFiles:
         text.append(unicode(row, errors='ignore'))
 
     character_dict = get_char_list(ficId, chapId, charFiles)
-    print character_dict
 
     if len(character_dict) < 1:
         continue
