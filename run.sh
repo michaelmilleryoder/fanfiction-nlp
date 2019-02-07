@@ -41,35 +41,41 @@ AU_OUTPUT_PATH="${OUTPUT_PATH}aus/"
 mkdir -p $AU_OUTPUT_PATH
 
 # Character coref
-#echo "Running character coreference..."
-#/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+echo "Running character coreference..."
+/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+echo ""
 
 
 # Quote attribution
-#echo "Running quote attribution..."
-#cd quote_attribution
-#bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
-#cd ..
+echo "Running quote attribution..."
+cd quote_attribution
+bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
+cd ..
+echo ""
 # Don't do tokenization again
 
 
 # Assertion attribution
-#echo "Running assertion extraction..."
-#python2 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
+echo "Running assertion extraction..."
+python2 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
+echo ""
 
 
 # Person entity cooccurrence matrix
 cd props
 python2 co_occurance_generation.py "../$COREF_STORIES_PATH" "../$COOCCURRENCE_OUTPUT_PATH" "../$COREF_CHARS_PATH"
+cd ..
+echo ""
 
 
 # AUs 
-#echo "Running AU prediction..."
-#TRAINED_MODEL_CONFIG=friends.ini
-#FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
-#mkdir -p $FICS_TEXT_PATH
-#python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
-#cd setting
-#python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "../$FICS_INPUT_PATH" "../$FICS_TEXT_PATH" "../$AU_OUTPUT_PATH" # modifies config file
-#python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
-#python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
+echo "Running AU prediction..."
+TRAINED_MODEL_CONFIG=friends.ini
+FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
+mkdir -p $FICS_TEXT_PATH
+python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
+cd setting
+python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "../$FICS_INPUT_PATH" "../$FICS_TEXT_PATH" "../$AU_OUTPUT_PATH" # modifies config file
+python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
+python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
+#echo ""

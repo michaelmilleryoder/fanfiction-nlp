@@ -178,7 +178,7 @@ for f in files:
     #get the story_chapter name from the story file
     #for matching with the characters file 
     #fic = f.split('.coref.out')[0]
-    fic = f.split('.csv.coref')[0]
+    fic = f.split('.coref.csv')[0]
 
     #Get the fic_id and chap_id (not needed now)
     #fic_id  = fic.split('_')[0]
