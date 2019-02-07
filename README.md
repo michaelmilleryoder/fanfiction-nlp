@@ -39,7 +39,7 @@ Directory path to directory of fic chapter CSV files
 
 `<collection_name>` of fics to be processed will be extracted from the directory name of the `<input_dir_path>`.
 
-Output is automatically stored in `output/<collection_name>'.
+Output is automatically stored in `output/<collection_name>`.
 
 # Running the CoreNLP component for coreference clustering:
 
