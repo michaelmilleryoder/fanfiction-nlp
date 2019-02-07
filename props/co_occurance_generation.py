@@ -36,9 +36,11 @@ count = 0
 if len(allFiles) < 1:
     print "No files found at" + path
     exit(0)
+
 for file in allFiles:
     df = pd.read_csv(file, index_col=None, header=0)
     for row in df.iloc[:, -1]:
+        row = unicode(row, errors='ignore')
         text.append(row)
 
 character_dict = {}
