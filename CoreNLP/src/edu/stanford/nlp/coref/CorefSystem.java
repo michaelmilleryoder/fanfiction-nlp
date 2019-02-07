@@ -226,7 +226,12 @@ public class CorefSystem {
                     System.err.println(String.valueOf(id) + " - " + character);
 
                     if (!character.equals("")) {
-                        replacements.add(new Pair<>(new Pair<>(m.startIndex, m.endIndex), character));
+                        replacements.add(
+                            new Pair<>(
+                                new Pair<>(m.startIndex, m.endIndex),
+                                String.join("_", character.split(" "))
+                            )
+                        );
                     }
                 }
 
