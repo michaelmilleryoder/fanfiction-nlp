@@ -262,6 +262,9 @@ public class CorefSystem {
 //                    replacedSentence.append(" ");
 //                    replacedSentence.append(words.get(currIdx) + " ");
                 }
+
+                boolean hasApostropheS = false;
+
                 if (replacement.first.first + 1 == replacement.first.second) {
                     replacedSentence.append(words.get(replacement.first.first)).append(" ");
 
@@ -270,17 +273,26 @@ public class CorefSystem {
 //                    }
                 } else {
                     for (int j = replacement.first.first; j < replacement.first.second; ++j) {
-                        replacedSentence.append(words.get(j));
+                        if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
+                            hasApostropheS = true;
+                            break;
+                        }
 
-                        if (j < replacement.first.second - 1) {
+                        if (j > replacement.first.first) {
                             replacedSentence.append("_");
                         }
+
+                        replacedSentence.append(words.get(j));
                     }
 
                     replacedSentence.append(" ");
                 }
                 characters.add("($_" + replacement.second + ")");
                 replacedSentence.append("($_").append(replacement.second).append(") ");
+
+                if (hasApostropheS) {
+                    replacedSentence.append("'s").append(" ");
+                }
 
                 currIdx = replacement.first.second;
             }

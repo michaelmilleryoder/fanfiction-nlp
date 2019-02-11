@@ -146,7 +146,7 @@ public class CorefCluster implements Serializable {
 //      System.out.println("Mention type" + m.mentionType);
             if (m.mentionType.equals(Dictionaries.MentionType.PROPER)) {
 //        System.out.println("Character name for this cluster: " + m);
-                String mentionStr = m.toString();
+                String mentionStr = m.toString().replace(" 's", "");
 
                 if (characterCounts.containsKey(mentionStr)) {
                     characterCounts.put(mentionStr, characterCounts.get(mentionStr) + 1);
