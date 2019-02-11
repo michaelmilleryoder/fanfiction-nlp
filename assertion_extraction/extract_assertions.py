@@ -11,6 +11,7 @@ import nltk
 from sklearn.metrics.pairwise import cosine_similarity
 from __builtin__ import any
 import json
+import re
 
 """
  input: i2w            -> dictionary, key:word_index, value: word
@@ -37,6 +38,8 @@ def extract_assertion(para_dict,char_list):
         for (segment_id,segment) in segments.items():
             for character in char_list:
                 if character in segment:
+                    #Added fix for quotation removal
+                    segment = re.sub(r'".*?"', '', segment)
                     char_dict[character].append(segment)
     return char_dict
 
@@ -188,7 +191,7 @@ for f in files:
    
     #Get list of characters for each chapter
     try:
-        char_file = io.open(char_f,'r', encoding='utf-8')
+        char_file = io.open(char_f,'rb', encoding='utf-8')
         char_list = [character.rstrip() for character in char_file]
     except (IOError):
         continue
