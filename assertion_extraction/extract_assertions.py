@@ -12,6 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from __builtin__ import any
 import json
 import re
+import pdb
 
 """
  input: i2w            -> dictionary, key:word_index, value: word
@@ -179,13 +180,15 @@ for f in files:
 
     #get the story_chapter name from the story file
     #for matching with the characters file 
-    fic = f.split('.coref.out')[0]
+    #fic = f.split('.coref.out')[0]
+    fic = f.split('.coref.csv')[0]
 
     #Get the fic_id and chap_id (not needed now)
     #fic_id  = fic.split('_')[0]
     #chap_id = int(fic.split('_')[1])
 
-    char_f = chars_dir + '/' + fic + ".coref.chars"
+    #char_f = chars_dir + '/' + fic + ".coref.chars"
+    char_f = chars_dir + '/' + fic + ".chars"
     char_list = []
     para_dict = {}
    

@@ -1,2 +1,4 @@
 *.jar
 .DS_Store
+*.swp
+quote_attribution/tmp

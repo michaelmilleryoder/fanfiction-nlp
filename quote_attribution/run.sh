@@ -10,7 +10,8 @@ if [ ! -d $3  ];then
 fi
 
 cd $1
-filenames=$(ls *.coref.out)
+#filenames=$(ls *.coref.out)
+filenames=$(ls *.coref.csv)
 for file in ${filenames};do
     filename=${file##*/}
     farr=(${filename//./ }) 
@@ -26,7 +27,8 @@ for file in ${filenames};do
     tmpdir=${SHELL_FOLDER}/tmp/${filename_stem}
     booknlpoutput=${tmpdir}/booknlp_output
     tokenfile=${tmpdir}/${filename_stem}.tokens
-    charfile=$2/${filename_stem}.coref.chars
+    #charfile=$2/${filename_stem}.coref.chars
+    charfile=$2/${filename_stem}.chars
     svmrankinput=${tmpdir}/${filename_stem}.svmrank
     predictfile=${tmpdir}/${filename_stem}.predict
     tmpcharfile=${tmpdir}/${filename_stem}.tmpchar

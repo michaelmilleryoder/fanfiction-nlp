@@ -134,7 +134,9 @@ public class CorefUtils {
 
 
 
-    if (!c1.character.isEmpty() && !c2.character.isEmpty() && !c1.character.equals(c2.character)) {
+    if (!c1.character.isEmpty() && !c2.character.isEmpty()
+        && !(c1.character.contains(c2.character) || c2.character.contains(c1.character))
+    ) {
 //      System.out.println("wrong merging based on character!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 //      System.out.println("c1 with character " + c1.character);
 //      System.out.println("c2 with character " + c2.character);

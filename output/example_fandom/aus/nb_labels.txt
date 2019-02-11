@@ -1,0 +1,1 @@
+7759693-2.txt:	('fantasy,magic,medieval,royalty,dragon,fairy,tale\n', -42.13288458322843)	

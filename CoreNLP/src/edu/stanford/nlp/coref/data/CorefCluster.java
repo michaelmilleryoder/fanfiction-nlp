@@ -146,16 +146,40 @@ public class CorefCluster implements Serializable {
 //      System.out.println("Mention type" + m.mentionType);
             if (m.mentionType.equals(Dictionaries.MentionType.PROPER)) {
 //        System.out.println("Character name for this cluster: " + m);
+                String mentionStr = m.toString().replace(" 's", "");
 
-                for (CoreLabel w : m.originalSpan) {
-                    String word = w.get(CoreAnnotations.TextAnnotation.class).toLowerCase();
+                if (characterCounts.containsKey(mentionStr)) {
+                    characterCounts.put(mentionStr, characterCounts.get(mentionStr) + 1);
+                } else {
+                    boolean merged = false;
+                    for (Map.Entry<String, Integer> entry : characterCounts.entrySet()) {
+                        if (mentionStr.contains(entry.getKey())) {
+                            characterCounts.put(mentionStr, entry.getValue() + 1);
+                            merged = true;
+                            break;
+                        } else if (entry.getKey().contains(mentionStr)) {
+                            entry.setValue(entry.getValue() + 1);
+                            merged = true;
+                            break;
+                        }
+                    }
 
-                    if (characterCounts.containsKey(word)) {
-                        characterCounts.put(word, characterCounts.get(word) + 1);
-                    } else {
-                        characterCounts.put(word, 1);
+                    if (!merged) {
+                        characterCounts.put(mentionStr, 1);
                     }
                 }
+
+
+
+//                for (CoreLabel w : m.originalSpan) {
+//                    String word = w.get(CoreAnnotations.TextAnnotation.class).toLowerCase();
+//
+//                    if (characterCounts.containsKey(word)) {
+//                        characterCounts.put(word, characterCounts.get(word) + 1);
+//                    } else {
+//                        characterCounts.put(word, 1);
+//                    }
+//                }
 
 
 //        character = m.toString();
@@ -163,11 +187,13 @@ public class CorefCluster implements Serializable {
 
             }
 
-            if (genderCounts.containsKey(m.gender)) {
-                genderCounts.put(m.gender, genderCounts.get(m.gender) + 1);
-            } else {
-                genderCounts.put(m.gender, 1);
-            }
+            genderCounts.put(m.gender, genderCounts.getOrDefault(m.gender, 0) + 1);
+
+//            if (genderCounts.containsKey(m.gender)) {
+//                genderCounts.put(m.gender, genderCounts.get(m.gender) + 1);
+//            } else {
+//                genderCounts.put(m.gender, 1);
+//            }
 
             // Update representative mention, if appropriate
             if (m != representative && m.moreRepresentativeThan(representative)) {
@@ -249,18 +275,53 @@ public class CorefCluster implements Serializable {
         }
         if (from.representative.moreRepresentativeThan(to.representative)) to.representative = from.representative;
 
+//        if (!from.characterCounts.isEmpty()) {
+////      Map.Entry<String, Integer> maxEntry = null;
+//
+//            for (Map.Entry<String, Integer> entry : from.characterCounts.entrySet()) {
+//                if (to.characterCounts.containsKey(entry.getKey())) {
+//                    to.characterCounts.put(entry.getKey(), to.characterCounts.get(entry.getKey()) + entry.getValue());
+//                } else {
+//                    to.characterCounts.put(entry.getKey(), entry.getValue());
+//                }
+//
+//            }
+//        }
+
         if (!from.characterCounts.isEmpty()) {
-//      Map.Entry<String, Integer> maxEntry = null;
-
-            for (Map.Entry<String, Integer> entry : from.characterCounts.entrySet()) {
-                if (to.characterCounts.containsKey(entry.getKey())) {
-                    to.characterCounts.put(entry.getKey(), to.characterCounts.get(entry.getKey()) + entry.getValue());
+            for (Map.Entry<String, Integer> fromEntry : from.characterCounts.entrySet()) {
+                if (to.characterCounts.containsKey(fromEntry.getKey())) {
+                    to.characterCounts.put(
+                        fromEntry.getKey(),
+                        to.characterCounts.get(fromEntry.getKey()) + fromEntry.getValue()
+                    );
                 } else {
-                    to.characterCounts.put(entry.getKey(), entry.getValue());
-                }
+                    boolean merged = false;
 
+                    for (Map.Entry<String, Integer> toEntry : to.characterCounts.entrySet()) {
+                        if (fromEntry.getKey().contains(toEntry.getKey())) {
+                            to.characterCounts.put(
+                                fromEntry.getKey(),
+                                fromEntry.getValue() + toEntry.getValue()
+                            );
+                            merged = true;
+                            break;
+                        } else if (toEntry.getKey().contains(fromEntry.getKey())) {
+                            toEntry.setValue(
+                                toEntry.getValue() + fromEntry.getValue()
+                            );
+                            merged = true;
+                            break;
+                        }
+                    }
+
+                    if (!merged) {
+                        to.characterCounts.put(fromEntry.getKey(), fromEntry.getValue());
+                    }
+                }
             }
         }
+
 
         if (!to.characterCounts.isEmpty()) {
             Map.Entry<String, Integer> maxEntry = null;
@@ -278,11 +339,16 @@ public class CorefCluster implements Serializable {
 //      Map.Entry<String, Integer> maxEntry = null;
 
             for (Map.Entry<Gender, Integer> entry : from.genderCounts.entrySet()) {
-                if (to.genderCounts.containsKey(entry.getKey())) {
-                    to.genderCounts.put(entry.getKey(), to.genderCounts.get(entry.getKey()) + entry.getValue());
-                } else {
-                    to.genderCounts.put(entry.getKey(), entry.getValue());
-                }
+                to.genderCounts.put(
+                    entry.getKey(),
+                    to.genderCounts.getOrDefault(entry.getKey(), 0) + entry.getValue()
+                );
+
+//                if (to.genderCounts.containsKey(entry.getKey())) {
+//                    to.genderCounts.put(entry.getKey(), to.genderCounts.get(entry.getKey()) + entry.getValue());
+//                } else {
+//                    to.genderCounts.put(entry.getKey(), entry.getValue());
+//                }
 
             }
         }
