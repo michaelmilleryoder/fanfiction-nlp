@@ -132,6 +132,8 @@ def cal_BM25(doc_c,doc_len,query):
 			continue
 		idf = max(math.log((N-df[w]+0.5)/(df[w]+0.5)),0)
 		tf = doc_c[w]/(doc_c[w]+k1*((1-b)+b*doc_len/avg_doclen))
+#		print 'idf',idf
+#		print 'tf',tf
 		score+=idf*tf
 	return score
 
@@ -190,15 +192,17 @@ else:
 			this_doc_c = Counter(this_story)
 
 			scores =[]
+#			print queries
 			for q in queries:
 				scores.append(cal_BM25(this_doc_c,len(this_story),q))
 			max_score = max(scores)
 			if max_score<cutpt:
 				continue
-			labels = [(labels[j],scores[j]) for j in range(len(scores)) if scores[j]>max_score*percent]
-			assign_labels.append(labels)
+			#print max_score,percent
+			new_labels = [(labels[j],scores[j]) for j in range(len(scores)) if scores[j]>=max_score*percent]
+			assign_labels.append(new_labels)
 			out.write(filename+':'+'\t')
-			for label in labels:
+			for label in new_labels:
 				out.write(str(label)+'\t')
 		out.write('\n')
 		f.close()

@@ -215,11 +215,11 @@ else:
 		# print scores
 		# if max_score:
 		# 	continue
-			labels = [(labels[j],scores[j]) for j in range(len(scores)) if scores[j]==max_score]
+			new_labels = [(labels[j],scores[j]) for j in range(len(scores)) if scores[j]==max_score]
 
-			assign_labels.append(labels)
+			assign_labels.append(new_labels)
 			out.write(filename+':'+'\t')
-			for label in labels:
+			for label in new_labels:
 				out.write(str(label)+'\t')
 		out.write('\n')
 		f.close()
