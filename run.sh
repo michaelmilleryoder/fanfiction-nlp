@@ -62,6 +62,7 @@ echo ""
 
 
 # Person entity cooccurrence matrix
+echo "Running entity coocurrence..."
 cd props
 python2 co_occurance_generation.py "../$COREF_STORIES_PATH" "../$COOCCURRENCE_OUTPUT_PATH" "../$COREF_CHARS_PATH"
 cd ..
@@ -76,6 +77,6 @@ mkdir -p $FICS_TEXT_PATH
 python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
 cd setting
 python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "../$FICS_INPUT_PATH" "../$FICS_TEXT_PATH" "../$AU_OUTPUT_PATH" # modifies config file
-python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
+#python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
 python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
 #echo ""

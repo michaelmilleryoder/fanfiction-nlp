@@ -40,7 +40,7 @@ for filename in filenames:
 		else:
 			assert chap_id == row["chapter_id"]
 
-		this_text+=row["paragraph"]
+		this_text+=row["text"]
 		this_text+="\n"
 
 	# dump the txt file

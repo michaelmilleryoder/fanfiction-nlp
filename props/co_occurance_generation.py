@@ -7,6 +7,7 @@ import spacy
 import sys
 import os.path
 import json
+import pdb
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -22,13 +23,14 @@ if len(sys.argv) < 4:
 
 def get_para_chap_id(filename):
     ids = filename.split('/')[-1].split('_')
-    return (ids[0], ids[1])
+    return (ids[0], ids[1].split('.')[0])
 
 
 def get_char_list(ficId, chapId, charFiles):
     # Read all files for characters
     character_dict = {}
-    char_file_name = char_path + ficId + "_" + chapId + "_dev.chars"
+    #char_file_name = char_path + ficId + "_" + chapId + "_dev.chars"
+    char_file_name = char_path + ficId + "_" + chapId + ".chars"
     if len(charFiles) < 1:
         print "No character files found at" + char_path
         exit(0)

@@ -1,1 +1,2 @@
-7759693-2.txt:	('fantasy,magic,medieval,royalty,dragon,fairy,tale\n', -42.13288458322843)	
+9899000-6.txt:	('childhood,friend\n', -3.292126286607793)	
+7759693-2.txt:	(('childhood,friend\n', -3.292126286607793), -42.13288458322843)	
