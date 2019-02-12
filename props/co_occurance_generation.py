@@ -7,7 +7,6 @@ import spacy
 import sys
 import os.path
 import json
-import pdb
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -23,14 +22,15 @@ if len(sys.argv) < 4:
 
 def get_para_chap_id(filename):
     ids = filename.split('/')[-1].split('_')
-    return (ids[0], ids[1].split('.')[0])
+    return (ids[0], ids[1])
 
 
-def get_char_list(ficId, chapId, charFiles):
+def get_char_list(file, ficId, chapId, charFiles):
     # Read all files for characters
+    # print file.split('/')[-1].split('.')[0]
+    # # exit(0)
     character_dict = {}
-    #char_file_name = char_path + ficId + "_" + chapId + "_dev.chars"
-    char_file_name = char_path + ficId + "_" + chapId + ".chars"
+    char_file_name = char_path + file.split('/')[-1].split('.')[0] + ".chars"
     if len(charFiles) < 1:
         print "No character files found at" + char_path
         exit(0)
@@ -43,6 +43,30 @@ def get_char_list(ficId, chapId, charFiles):
     else:
         print "No character file found for " + char_file_name
     return character_dict
+
+
+def adj_matrix(character_dict, data_list):
+    chars = {}
+    index = 0
+    ngram = 8
+    for row in data_list:
+        # print row['text']
+        if row['text'] in character_dict:
+            if character_dict[row["text"]] in chars:
+                for i in range(1, ngram + 1):
+                    if data_list[index + i]['pos'] == 'ADJ':
+                        chars[character_dict[row["text"]]].update({data_list[index + i]['text']: 1})
+                    if data_list[index - i]['pos'] == 'ADJ':
+                        chars[character_dict[row["text"]]].update({data_list[index - i]['text']: 1})
+            else:
+                chars[character_dict[row["text"]]] = Counter()
+                for i in range(1, ngram + 1):
+                    if data_list[index + i]['pos'] == 'ADJ':
+                        chars[character_dict[row["text"]]].update({data_list[index + i]['text']: 1})
+                    if data_list[index - i]['pos'] == 'ADJ':
+                        chars[character_dict[row["text"]]].update({data_list[index - i]['text']: 1})
+        index += 1
+    return chars
 
 
 print "Loading NLP Model"
@@ -72,53 +96,32 @@ for file in allFiles:
     for row in df.iloc[:, -1]:
         text.append(unicode(row, errors='ignore'))
 
-    character_dict = get_char_list(ficId, chapId, charFiles)
+    character_dict = get_char_list(file, ficId, chapId, charFiles)
 
     if len(character_dict) < 1:
         continue
 
     text = ''.join(text)
-
     processed_text = []
     for word in text.split(" "):
         if word.startswith("($_"):
-            # character_dict[word[word.find('_') + 1: word.find(')')].lower()] = word
             processed_text.pop()
             word = word[word.find('_') + 1: word.find(')')]
 
-        processed_text.append(word)
+        processed_text.append(word.lower())
     processed_text = ' '.join(processed_text)
 
     doc = nlp(unicode(processed_text))
-
     data_list = []
+    count = 0
     for token in doc:
-        # print token, "ss"
         if token.is_stop is False:
             data_list.append({'text': token.text, 'pos': token.pos_, 'tag': token.tag_, 'lemma': token.lemma_})
+            count += 1
 
     df = pd.DataFrame(data_list)
 
-    chars = {}
-    index = 0
-    ngram = 4
-    for row in data_list:
-        if row['text'] in character_dict:
-            if row['text'] in chars:
-                for i in range(1, ngram + 1):
-                    if data_list[index + i]['pos'] == 'ADJ':
-                        chars[row["text"]].update({data_list[index + i]['text']: 1})
-                    if data_list[index - i]['pos'] == 'ADJ':
-                        chars[row["text"]].update({data_list[index - i]['text']: 1})
-            else:
-                chars[row["text"]] = Counter()
-                for i in range(1, ngram + 1):
-                    if data_list[index + i]['pos'] == 'ADJ':
-                        chars[row["text"]].update({data_list[index + i]['text']: 1})
-                    if data_list[index - i]['pos'] == 'ADJ':
-                        chars[row["text"]].update({data_list[index - i]['text']: 1})
-        index += 1
-
+    chars = adj_matrix(character_dict, data_list)
     print "Creating co-occurence"
     dfnew = pd.DataFrame.from_dict(chars, orient='index').reset_index().fillna(0)
     col_names = list(dfnew.columns.values)
@@ -149,7 +152,7 @@ for file in allFiles:
         sorted_dict[key] = counter_dict
 
     rel_path = os.path.join(sys.argv[2], '')
-    output_path = os.path.join(script_dir, rel_path) + ficId + "_" + chapId + "_cooccurrence.json"
+    output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_cooccurrence.json"
 
     print "Writing JSON to " + output_path
     with open(output_path, 'w') as fp:
