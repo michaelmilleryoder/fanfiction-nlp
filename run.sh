@@ -18,14 +18,16 @@
 
 
 # I/O
-COLLECTION_NAME="example_fandom"
-FICS_INPUT_PATH="example_fandom/" # will eventually interally come from command line
-OUTPUT_PATH="output/example_fandom/"
+#COLLECTION_NAME="example_fandom"
+#FICS_INPUT_PATH="example_fandom/" # will eventually interally come from command line
+COLLECTION_NAME="example_academia_100"
+FICS_INPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/example_academia_100/" # will eventually interally come from command line
+OUTPUT_PATH="output/${COLLECTION_NAME}/"
 mkdir -p $OUTPUT_PATH
 
 COREF_STORIES_PATH="${OUTPUT_PATH}char_coref_stories"
 mkdir -p $COREF_STORIES_PATH
-COREF_CHARS_PATH="${OUTPUT_PATH}char_coref_chars/"
+COREF_CHARS_PATH="${OUTPUT_PATH}char_coref_chars"
 mkdir -p $COREF_CHARS_PATH
 
 QUOTE_OUTPUT_PATH="${OUTPUT_PATH}quote_attribution"
@@ -77,6 +79,6 @@ mkdir -p $FICS_TEXT_PATH
 python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
 cd setting
 python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "../$FICS_INPUT_PATH" "../$FICS_TEXT_PATH" "../$AU_OUTPUT_PATH" # modifies config file
-#python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
+python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
 python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
 #echo ""
