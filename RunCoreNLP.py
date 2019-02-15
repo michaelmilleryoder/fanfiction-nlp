@@ -23,7 +23,7 @@ for filename in filenames:
 	this_text=''
 	fic_id = ''
 	chap_id = ''
-	#for row in csv.DictReader(open(test_csv_dir+filename, encoding='cp1250')):
+	# for row in csv.DictReader(open(test_csv_dir+filename, encoding='cp1250')):
 	for row in csv.DictReader(open(test_csv_dir+filename)):
 		if row["chapter_id"] == "chapter_id": # header
 			continue
