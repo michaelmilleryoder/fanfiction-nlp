@@ -19,10 +19,10 @@
 
 # I/O
 #COLLECTION_NAME="example_fandom"
-#FICS_INPUT_PATH="example_fandom/" # will eventually interally come from command line
+#FICS_INPUT_PATH="example_fandom/" # will eventually come from command line
 COLLECTION_NAME="example_academia_100"
-FICS_INPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/example_academia_100/" # will eventually interally come from command line
-OUTPUT_PATH="output/${COLLECTION_NAME}/"
+FICS_INPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/${COLLECTION_NAME}/fics/" # will eventually come from command line
+OUTPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/${COLLECTION_NAME}/output/"
 mkdir -p $OUTPUT_PATH
 
 COREF_STORIES_PATH="${OUTPUT_PATH}char_coref_stories"
@@ -66,7 +66,7 @@ echo ""
 # Person entity cooccurrence matrix
 echo "Running entity coocurrence..."
 cd props
-python2 co_occurance_generation.py "../$COREF_STORIES_PATH" "../$COOCCURRENCE_OUTPUT_PATH" "../$COREF_CHARS_PATH"
+python2 co_occurance_generation.py "../$COREF_STORIES_PATH" "../$COOCCURRENCE_OUTPUT_PATH" "../$COREF_CHARS_PATH/"
 cd ..
 echo ""
 

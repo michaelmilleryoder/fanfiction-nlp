@@ -2,3 +2,4 @@
 .DS_Store
 *.swp
 quote_attribution/tmp
+CoreNLP/*.tmp
