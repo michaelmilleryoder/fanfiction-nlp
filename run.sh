@@ -18,6 +18,7 @@
 
 
 # I/O
+
 #COLLECTION_NAME="example_fandom"
 #FICS_INPUT_PATH="example_fandom/" # will eventually come from command line
 COLLECTION_NAME="example_academia_100"
@@ -42,16 +43,17 @@ mkdir -p $COOCCURRENCE_OUTPUT_PATH
 AU_OUTPUT_PATH="${OUTPUT_PATH}aus/"
 mkdir -p $AU_OUTPUT_PATH
 
+
 # Character coref
-echo "Running character coreference..."
-/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
-echo ""
+#echo "Running character coreference..."
+#/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+#echo ""
 
 
 # Quote attribution
 echo "Running quote attribution..."
 cd quote_attribution
-bash run.sh "../$COREF_STORIES_PATH" "../$COREF_CHARS_PATH" "../$QUOTE_OUTPUT_PATH"
+bash run.sh "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$QUOTE_OUTPUT_PATH"
 cd ..
 echo ""
 # Don't do tokenization again
@@ -66,7 +68,7 @@ echo ""
 # Person entity cooccurrence matrix
 echo "Running entity coocurrence..."
 cd props
-python2 co_occurance_generation.py "../$COREF_STORIES_PATH" "../$COOCCURRENCE_OUTPUT_PATH" "../$COREF_CHARS_PATH/"
+python2 co_occurance_generation.py "$COREF_STORIES_PATH" "$COOCCURRENCE_OUTPUT_PATH" "$COREF_CHARS_PATH/"
 cd ..
 echo ""
 
@@ -78,7 +80,7 @@ FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
 mkdir -p $FICS_TEXT_PATH
 python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
 cd setting
-python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "../$FICS_INPUT_PATH" "../$FICS_TEXT_PATH" "../$AU_OUTPUT_PATH" # modifies config file
+python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "$FICS_INPUT_PATH" "$FICS_TEXT_PATH" "$AU_OUTPUT_PATH" # modifies config file
 python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
 python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
 #echo ""
