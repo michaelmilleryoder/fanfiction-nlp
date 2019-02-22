@@ -54,17 +54,24 @@ def adj_matrix(character_dict, data_list):
         if row['text'] in character_dict:
             if character_dict[row["text"]] in chars:
                 for i in range(1, ngram + 1):
-                    if data_list[index + i]['pos'] == 'ADJ':
-                        chars[character_dict[row["text"]]].update({data_list[index + i]['text']: 1})
-                    if data_list[index - i]['pos'] == 'ADJ':
-                        chars[character_dict[row["text"]]].update({data_list[index - i]['text']: 1})
+                    # print "                 ", index + i, len(data_list), data_list[index + i]
+                    try:
+                        if data_list[index + i]['pos'] == 'ADJ':
+                            chars[character_dict[row["text"]]].update({data_list[index + i]['text']: 1})
+                        if data_list[index - i]['pos'] == 'ADJ':
+                            chars[character_dict[row["text"]]].update({data_list[index - i]['text']: 1})
+                    except:
+                        continue
             else:
                 chars[character_dict[row["text"]]] = Counter()
                 for i in range(1, ngram + 1):
-                    if data_list[index + i]['pos'] == 'ADJ':
-                        chars[character_dict[row["text"]]].update({data_list[index + i]['text']: 1})
-                    if data_list[index - i]['pos'] == 'ADJ':
-                        chars[character_dict[row["text"]]].update({data_list[index - i]['text']: 1})
+                    try:
+                        if data_list[index + i]['pos'] == 'ADJ':
+                            chars[character_dict[row["text"]]].update({data_list[index + i]['text']: 1})
+                        if data_list[index - i]['pos'] == 'ADJ':
+                            chars[character_dict[row["text"]]].update({data_list[index - i]['text']: 1})
+                    except:
+                        continue
         index += 1
     return chars
 
@@ -78,17 +85,24 @@ def ship_matrix(character_dict, data_list):
         if row['text'] in character_dict:
             if character_dict[row["text"]] in chars:
                 for i in range(1, ngram + 1):
-                    if data_list[index + i]['text'] in character_dict and data_list[index + i]['text'] != row['text']:
-                        chars[character_dict[row["text"]]].update({character_dict[data_list[index + i]['text']]: 1})
-                    if data_list[index - i]['text'] in character_dict and data_list[index - i]['text'] != row['text']:
-                        chars[character_dict[row["text"]]].update({character_dict[data_list[index - i]['text']]: 1})
+                    try:
+                        if data_list[index + i]['text'] in character_dict and data_list[index + i]['text'] != row['text']:
+                            chars[character_dict[row["text"]]].update({character_dict[data_list[index + i]['text']]: 1})
+                        if data_list[index - i]['text'] in character_dict and data_list[index - i]['text'] != row['text']:
+                            chars[character_dict[row["text"]]].update({character_dict[data_list[index - i]['text']]: 1})
+                    except:
+                        continue
+
             else:
                 chars[character_dict[row["text"]]] = Counter()
                 for i in range(1, ngram + 1):
-                    if data_list[index + i]['text'] in character_dict and data_list[index + i]['text'] != row['text']:
-                        chars[character_dict[row["text"]]].update({character_dict[data_list[index + i]['text']]: 1})
-                    if data_list[index - i]['text'] in character_dict and data_list[index - i]['text'] != row['text']:
-                        chars[character_dict[row["text"]]].update({character_dict[data_list[index - i]['text']]: 1})
+                    try:
+                        if data_list[index + i]['text'] in character_dict and data_list[index + i]['text'] != row['text']:
+                            chars[character_dict[row["text"]]].update({character_dict[data_list[index + i]['text']]: 1})
+                        if data_list[index - i]['text'] in character_dict and data_list[index - i]['text'] != row['text']:
+                            chars[character_dict[row["text"]]].update({character_dict[data_list[index - i]['text']]: 1})
+                    except:
+                        continue
         index += 1
     return chars
 
@@ -157,6 +171,7 @@ if len(allFiles) < 1:
     exit(0)
 
 for file in allFiles:
+    print "Reading file: ", file
     text = []
     ficId, chapId = get_para_chap_id(file)
     df = pd.read_csv(file, index_col=None, header=0)
@@ -187,23 +202,26 @@ for file in allFiles:
             count += 1
 
     df = pd.DataFrame(data_list)
-
     adj_chars = adj_matrix(character_dict, data_list)
     ship_chars = ship_matrix(character_dict, data_list)
-
     print "Creating co-occurence for ", file.split('/')[-1].split('.')[0]
-    adj_frame, adj_char_list, adj_col_names = creating_cooccurence(adj_chars)
-    ship_frame, ship_char_list, shipcol_names = creating_cooccurence(ship_chars)
-
-    adj_char_dict = TFIDF_construct(adj_frame, adj_char_list, adj_col_names)
-    ship_char_dict = TFIDF_construct(ship_frame, ship_char_list, shipcol_names)
-
-    adj_sorted_dict = create_ordered_dict(adj_char_dict)
-    ship_sorted_dict = create_ordered_dict(ship_char_dict)
-
     rel_path = os.path.join(sys.argv[2], '')
     adj_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_adj_cooccurrence.json"
     ship_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_ship_cooccurrence.json"
+    try:
+        adj_frame, adj_char_list, adj_col_names = creating_cooccurence(adj_chars)
+        adj_char_dict = TFIDF_construct(adj_frame, adj_char_list, adj_col_names)
+        adj_sorted_dict = create_ordered_dict(adj_char_dict)
+        write_to_json(adj_output_path, adj_sorted_dict)
+    except:
+        print "Error creating adjective co-occurence for file: ", file
+        write_to_json(adj_output_path, {})
 
-    write_to_json(adj_output_path, adj_sorted_dict)
-    write_to_json(ship_output_path, ship_sorted_dict)
+    try:
+        ship_frame, ship_char_list, shipcol_names = creating_cooccurence(ship_chars)
+        ship_char_dict = TFIDF_construct(ship_frame, ship_char_list, shipcol_names)
+        ship_sorted_dict = create_ordered_dict(ship_char_dict)
+        write_to_json(ship_output_path, ship_sorted_dict)
+    except:
+        print "Error creating relationship co-occurence for file: ", file
+        write_to_json(ship_output_path, {})
