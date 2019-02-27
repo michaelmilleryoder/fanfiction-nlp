@@ -172,6 +172,10 @@ if len(allFiles) < 1:
 
 for file in allFiles:
     print "Reading file: ", file
+    rel_path = os.path.join(sys.argv[2], '')
+    adj_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_adj_cooccurrence.json"
+    ship_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_ship_cooccurrence.json"
+
     text = []
     ficId, chapId = get_para_chap_id(file)
     df = pd.read_csv(file, index_col=None, header=0)
@@ -181,6 +185,8 @@ for file in allFiles:
     character_dict = get_char_list(file, ficId, chapId, charFiles)
 
     if len(character_dict) < 1:
+        write_to_json(adj_output_path, {})
+        write_to_json(ship_output_path, {})
         continue
 
     text = ''.join(text)
