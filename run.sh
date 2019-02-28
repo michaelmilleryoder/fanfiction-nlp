@@ -16,7 +16,6 @@
 # Input: directory path to directory of fic chapter CSV files
 # Output:
 
-
 # I/O
 
 #COLLECTION_NAME="example_fandom"
