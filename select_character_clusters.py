@@ -12,8 +12,10 @@ def clean_character_list(chars):
 
 def main():
 
-    fic_collection = 'example_fandom'
-    data_dirpath = os.path.join('output', fic_collection, 'char_coref_chars')
+    # I/O
+    fic_collection = 'example_academia_100'
+    base_dirpath = '/usr2/mamille2/fanfiction-project/data/'
+    char_dirpath = os.path.join(base_dirpath, fic_collection, 'output', 'char_coref_chars')
 
     chars = []
 

@@ -51,12 +51,12 @@ mkdir -p $AU_OUTPUT_PATH
 
 
 # Quote attribution
-echo "Running quote attribution..."
-cd quote_attribution
-bash run.sh "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$QUOTE_OUTPUT_PATH"
-cd ..
-echo ""
-# Don't do tokenization again
+#echo "Running quote attribution..."
+#cd quote_attribution
+#bash run.sh "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$QUOTE_OUTPUT_PATH"
+#cd ..
+#echo ""
+## Don't do tokenization again
 
 
 # Assertion attribution
@@ -66,21 +66,20 @@ echo ""
 
 
 # Person entity cooccurrence matrix
-echo "Running entity coocurrence..."
-cd props
-python2 co_occurance_generation.py "$COREF_STORIES_PATH" "$COOCCURRENCE_OUTPUT_PATH" "$COREF_CHARS_PATH/"
-cd ..
-echo ""
+#echo "Running entity coocurrence..."
+#cd props
+#python2 co_occurance_generation.py "$COREF_STORIES_PATH" "$COOCCURRENCE_OUTPUT_PATH" "$COREF_CHARS_PATH/"
+#cd ..
+#echo ""
 
 
 # AUs 
-echo "Running AU prediction..."
-TRAINED_MODEL_CONFIG=friends.ini
-FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
-mkdir -p $FICS_TEXT_PATH
-python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
-cd setting
-python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "$FICS_INPUT_PATH" "$FICS_TEXT_PATH" "$AU_OUTPUT_PATH" # modifies config file
-python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
-python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
-#echo ""
+#echo "Running AU prediction..."
+#TRAINED_MODEL_CONFIG=friends.ini
+#FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
+#mkdir -p $FICS_TEXT_PATH
+#python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
+#cd setting
+#python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "$FICS_INPUT_PATH" "$FICS_TEXT_PATH" "$AU_OUTPUT_PATH" # modifies config file
+#python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
+#python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
