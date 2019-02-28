@@ -195,7 +195,7 @@ for f in files:
    
     #Get list of characters for each chapter
     try:
-        char_file = codecs.open(char_f, "r",encoding='utf-8', errors='ignore') #io.open(char_f,'r', encoding="utf-8")
+        char_file = codecs.open(char_f, "r", errors='ignore') #io.open(char_f,'r', encoding="utf-8")
         char_list = [character.rstrip() for character in char_file]
     except (IOError):
         continue
@@ -203,7 +203,7 @@ for f in files:
     #Get the segments for each paragraph in each chapter of a fic
     try:
         f = input_dir + '/' + f
-        inp_file = codecs.open(f, "r",encoding='utf-8', errors='ignore')#open(f)
+        inp_file = codecs.open(f, "r", errors='ignore')#open(f)
         csv_reader = csv.reader(inp_file, delimiter=',')
         csv_reader.next()
         for row in csv_reader:
@@ -217,7 +217,7 @@ for f in files:
     #Extract the character assertions per file.
     if para_dict is not None and char_list is not None:
         assertions = extract_assertion(para_dict,char_list)
-        j_file = codecs.open(op_dir + '/' + fic + '.json', "w",encoding='utf-8', errors='ignore')#open(op_dir + '/'+ fic + '.json','w')
+        j_file = codecs.open(op_dir + '/' + fic + '.json', "w", errors='ignore')#open(op_dir + '/'+ fic + '.json','w')
         json.dump(assertions,j_file)
 
 
