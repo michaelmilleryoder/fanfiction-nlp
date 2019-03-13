@@ -13,6 +13,7 @@ def clean_character_list(chars):
 
     for char in chars:
 
+        # Don't consider if have a comma
         if ',' in char or len(char) < 5:
             continue
 
@@ -20,6 +21,11 @@ def clean_character_list(chars):
 
         # Remove words with lowercase
         new_char = f"($_{'_'.join([w for w in char_words if w[0].isupper()])})"
+
+        # Remove stopwords
+        stopwords = ['The']
+        new_char = f"($_{'_'.join([w for w in char_words if not w in stopwords])})"
+
         if len(new_char) > 5:
             new_chars.append(new_char)
 
@@ -27,13 +33,15 @@ def clean_character_list(chars):
 
 
 def merge_chars(char_counter):
-#    first_names = defaultdict(set)
-#    last_names = defaultdict(set)
     names = defaultdict(set) # by length
-    normalized_names = defaultdict(set)
-    merged_char_counter = char_counter.copy()
+    normalized_names = defaultdict(set) # name_variant: normalized_name
 
-    for char in char_counter:
+    # Filter out characters without a minimum number of mentions
+    min_mentions = 1
+    merged_char_counter = Counter(dict([el for el in char_counter.items() if el[1] > min_mentions])) # character counter with normalized names
+
+    for char in merged_char_counter:
+
         char_words = char[3:-1].split('_')
         names[len(char_words)].add('_'.join(char_words))
 
@@ -49,15 +57,34 @@ def merge_chars(char_counter):
         if last in names[1]:
             normalized_names[last].add(full_name)
 
+    # If full names with middle names are common enough, resolve here
+
     # Create normalized list of names
     for length in names:
         for name in names[length]:
             norm_name = name
-            if name in normalized_names and len(normalized_names[name]) == 1: 
-                norm_name = list(normalized_names[name])[0]
-                merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{name})']
-                del merged_char_counter[f"($_{name})"]
-            
+            if name == 'Midoriya': pdb.set_trace()
+
+            if name in normalized_names:
+                name_options = [name for name in list(normalized_names[name]) if f"($_{name})" in merged_char_counter] # remove if already was replaced
+
+                if len(name_options) == 1:  # 1 normalization option
+                    norm_name = name_options[0]
+                    merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{name})']
+                    del merged_char_counter[f"($_{name})"]
+
+                elif len(name_options) == 2:
+                    
+                    # Surname first case (as in Japanese)
+                    name_options = sorted(name_options, key=lambda x: merged_char_counter[f"($_{x})"], reverse=True) # sort descending by frequency
+                    if name_options[0].split('_')[0] == name_options[1].split('_')[1]:
+                        norm_name = name_options[0]
+                        other_name = name_options[1]
+                        if not f"($_{norm_name})" in merged_char_counter or not f"($_{other_name})" in merged_char_counter: pdb.set_trace()
+                        merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{name})']
+                        merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{other_name})']
+                        del merged_char_counter[f"($_{name})"]
+                        del merged_char_counter[f"($_{other_name})"]
 
     return merged_char_counter
             
