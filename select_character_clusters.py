@@ -1,5 +1,6 @@
 import os
 from collections import Counter, defaultdict
+import itertools
 import pdb
 
 """ 
@@ -63,28 +64,35 @@ def merge_chars(char_counter):
     for length in names:
         for name in names[length]:
             norm_name = name
-            if name == 'Midoriya': pdb.set_trace()
+            #if name == 'Kirishima': 
+            #    pdb.set_trace()
 
             if name in normalized_names:
-                name_options = [name for name in list(normalized_names[name]) if f"($_{name})" in merged_char_counter] # remove if already was replaced
+                name_options = [name for name in list(normalized_names[name]) if f"($_{name})" in merged_char_counter]
+                name_options = sorted(name_options, key=lambda x: merged_char_counter[f"($_{x})"], reverse=True) # sort descending by frequency
 
                 if len(name_options) == 1:  # 1 normalization option
                     norm_name = name_options[0]
                     merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{name})']
                     del merged_char_counter[f"($_{name})"]
 
-                elif len(name_options) == 2:
-                    
-                    # Surname first case (as in Japanese)
-                    name_options = sorted(name_options, key=lambda x: merged_char_counter[f"($_{x})"], reverse=True) # sort descending by frequency
-                    if name_options[0].split('_')[0] == name_options[1].split('_')[1]:
+                else:
+
+                    # Check for surname first case (East Asian)
+                    combinations = list(itertools.combinations(name_options, 2))
+                    for name1, name2 in combinations:
+                        if name1.split('_')[0] == name2.split('_')[1] and name1.split('_')[1] == name2.split('_')[0]:
+
+                            if not f"($_{name1})" in merged_char_counter or not f"($_{name2})" in merged_char_counter: pdb.set_trace()
+                            merged_char_counter[f"($_{name1})"] += merged_char_counter[f'($_{name2})']
+                            del merged_char_counter[f"($_{name2})"]
+
+                    if length == 1:
+
+                        # Choose most frequent option
                         norm_name = name_options[0]
-                        other_name = name_options[1]
-                        if not f"($_{norm_name})" in merged_char_counter or not f"($_{other_name})" in merged_char_counter: pdb.set_trace()
                         merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{name})']
-                        merged_char_counter[f"($_{norm_name})"] += merged_char_counter[f'($_{other_name})']
                         del merged_char_counter[f"($_{name})"]
-                        del merged_char_counter[f"($_{other_name})"]
 
     return merged_char_counter
             
@@ -112,7 +120,7 @@ def main():
     char_counter = merge_chars(char_counter)
 
     # Take most popular characters
-    top_chars = char_counter.most_common(int(len(char_counter)/10))
+    top_chars = char_counter.most_common(int(len(char_counter)/10)) # Prints top 10% of characters in list
     for char,count in top_chars:
         print(f"{char}: {count}")
 
