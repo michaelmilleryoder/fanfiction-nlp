@@ -13,9 +13,13 @@ The script does:
 * Character cooccurrence matrix
 * Alternate universe (AU) extraction from fic metadata
 
+## Preparation
+Parts of the pipeline use Stanford CoreNLP. You'll need to download [Stanford CoreNLP 3.9.2](https://stanfordnlp.github.io/CoreNLP/download.html). Unzip the downloaded file and find the file `stanford-corenlp-3.9.2-models.jar`. Place this file within the `CoreNLP` directory.
 
 ## Input 
-Directory path to directory of fic chapter CSV files
+Directory path to directory of fic chapter CSV files. 
+
+If your input is raw text you'll need to format it like the examples in the `example_fandom` directory. [Here's](https://github.com/michaelmilleryoder/fanfiction-nlp/blob/master/example_fandom/10118594_0004.csv) an example. Eventually we'll support raw text file input.
 
 ## Output 
 * Character coreference: 
@@ -35,11 +39,15 @@ Directory path to directory of fic chapter CSV files
 	* a directory where for each fic, there is a list of predicted AU metadata tags, as well as confidence values in those predictions
 
 ## Command
+`./run.sh`
+
+<!---
 `./run.sh <input_dir_path>`
 
 `<collection_name>` of fics to be processed will be extracted from the directory name of the `<input_dir_path>`.
 
 Output is automatically stored in `output/<collection_name>`.
+--->
 
 # Running the CoreNLP component for coreference clustering:
 
