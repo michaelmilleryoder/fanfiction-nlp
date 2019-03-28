@@ -13,8 +13,12 @@ The script does:
 * Character cooccurrence matrix
 * Alternate universe (AU) extraction from fic metadata
 
-## Preparation
-Parts of the pipeline use Stanford CoreNLP. You'll need to download [Stanford CoreNLP 3.9.2](https://stanfordnlp.github.io/CoreNLP/download.html). Unzip the downloaded file and find the file `stanford-corenlp-3.9.2-models.jar`. Place this file within the `CoreNLP` directory.
+## Requirements
+* Python 2 and Python 3 (we're moving everything to Python 3 soon).
+
+* Python packages: spaCy
+
+* Parts of the pipeline use Stanford CoreNLP. You'll need to download [Stanford CoreNLP 3.9.2](https://stanfordnlp.github.io/CoreNLP/download.html). Unzip the downloaded file and find the file `stanford-corenlp-3.9.2-models.jar`. Place this file within the `CoreNLP` directory.
 
 ## Input 
 Directory path to directory of fic chapter CSV files. 
