@@ -9,6 +9,7 @@ tokens = []
 characters = []
 paragraph2quotes = []
 char2quotes = {}
+quotes = []
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -46,27 +47,51 @@ if __name__ == "__main__":
             if line[0] == '#':
                 paragraph2quotes.append([])
                 l = line.split()
+                paragraphId = int(l[2][:-1])
                 rng = l[3].split('--')
                 startId = int(rng[0])
                 endId = int(rng[1])
-                quoteTokenIds = l[4:]
+                qtype = l[4][5:]
+                quoteTokenIds = l[5:]
                 for i in range(0, len(quoteTokenIds), 2):
                     quoteStart = int(quoteTokenIds[i])
                     quoteEnd = int(quoteTokenIds[i+1])
-                    paragraph2quotes[ss].append((quoteStart, quoteEnd))
+                    paragraph2quotes[ss].append((quoteStart, quoteEnd, qtype, paragraphId, startId, endId))
                 ss += 1
 
     with codecs.open(predictfile) as f:
         scores = []
         for line in f:
             scores.append(float(line.strip()))
-    
+
     ss = 0
     for i in range(0, len(scores), character_num):
+        #print(' '.join(tokens[quoteStart: quoteEnd+1]))
+        #for j in range(character_num):
+        #    print(scores[i+j], characters[j])
         maxid = np.argmax(scores[i: i+character_num])
-        for quoteStart, quoteEnd in paragraph2quotes[ss]:
-            char2quotes[characters[maxid]].append(' '.join(tokens[quoteStart: quoteEnd+1]))
+        guess_char = characters[maxid][4:-4]
+        quote = {}
+        quote['speaker'] = guess_char
+        quote['quotes'] = []
+        for quoteStart, quoteEnd, quoteType, paragraphId, startId, endId in paragraph2quotes[ss]:
+            quote['paragraph'] = paragraphId
+            quote['type'] = quoteType
+            quote['start'] = startId
+            quote['end'] = endId
+            quote['quotes'].append({})
+            quote['quotes'][-1]['start'] = quoteStart
+            quote['quotes'][-1]['end'] = quoteEnd
+            quote['quotes'][-1]['quote'] = ' '.join(tokens[quoteStart: quoteEnd+1])
+            for c in characters:
+                quote['quotes'][-1]['quote'] = ' '.join(quote['quotes'][-1]['quote'].replace(c, '').split())
+            char2quotes[characters[maxid]].append(quote['quotes'][-1]['quote'])
+        quote['replyto'] = -1
+        if quote['type'] == 'Explicit' and len(quotes) > 0 and quote['paragraph'] - quotes[-1]['paragraph'] <= 2 and quote['start'] - quotes[-1]['end'] <= 200:
+            quote['replyto'] = quotes[-1]['paragraph']
+        quotes.append(quote)
         ss += 1
 
     with codecs.open(outputfile, 'w') as f:
-        json.dump(char2quotes, f)
+        #json.dump(char2quotes, f)
+        json.dump(quotes, f)
