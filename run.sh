@@ -44,10 +44,9 @@ mkdir -p $AU_OUTPUT_PATH
 
 
 # Character coref
-#echo "Running character coreference..."
-#/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+echo "Running character coreference..."
+/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
 #echo ""
-
 
 # Quote attribution
 #echo "Running quote attribution..."
