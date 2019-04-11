@@ -70,6 +70,7 @@ os.system("./run.sh DataDir/ "+ char_dir + output_dir)
 	#shutil.move("./CoreNLP/"+filename[:-4]+".chars" , char_dir+"/"+filename[:-4]+".chars")
 	#shutil.move("./CoreNLP/"+filename[:-4]+".coref.out" ,output_dir+"/"+filename[:-4]+".coref.txt")
 
+os.chdir("..")
 print("Processing the outputs..")
 for filename in filenames:
 
