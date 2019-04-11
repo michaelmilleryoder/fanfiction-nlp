@@ -11,6 +11,12 @@ output_dir = sys.argv[3]
 
 filenames = []
 fict_dict={}
+if (not os.path.isdir("DataDir")): 
+	os.mkdir("DataDir")  # input text file directory
+if (not os.path.isdir(char_dir)): 
+	os.mkdir(char_dir)   # output directory for characters
+if (not os.path.isdir(output_dir)): 
+	os.mkdir(output_dir) # output direcotry for corefs
 
 for filename in os.listdir(test_csv_dir):
 	if filename.endswith(".csv"):
@@ -18,6 +24,7 @@ for filename in os.listdir(test_csv_dir):
 	else:
 		continue
 
+print ("Processing inputs..")
 for filename in filenames:
 
 	this_text=''
@@ -42,25 +49,29 @@ for filename in filenames:
 		this_text+=row["text"]
 		this_text+=" # . "
 
-	# dump the txt file
-	print ("CoreNLP/"+filename[:-4])
-	with open("CoreNLP/"+filename[:-4],'w') as f:
+	# dump all the txt files in the DataDir folder 
+	#print ("DataDir/"+filename[:-4])
+	with open("DataDir/"+filename[:-4],'w') as f:
 		f.write(this_text)
-	f.close()
-	os.chdir("CoreNLP")
-	os.system("./run.sh "+filename[:-4])
-	os.remove(filename[:-4])
-	os.chdir("..")
-	if (not os.path.isdir(char_dir)):	
-		os.mkdir(char_dir)
-	if (not os.path.isdir(output_dir)):       
- 		os.mkdir(output_dir)
+		f.close()
+
+print ("Running coref..")
+os.chdir("CoreNLP")
+os.system("./run.sh DataDir/ "+ char_dir + output_dir)
+	#os.remove(filename[:-4])
+	#os.chdir("..")
+	#if (not os.path.isdir(char_dir)):	
+	#	os.mkdir(char_dir)
+	#if (not os.path.isdir(output_dir)):       
+ 	#	os.mkdir(output_dir)
 	#os.rename("./CoreNLP/"+filename[:-4]+".chars" , "./"+char_dir+"/"+filename[:-4]+".chars" )
 	#os.rename("./CoreNLP/"+filename[:-4]+".coref.out" , "./"+char_dir+"/"+filename[:-4]+".coref.out" )
 	# pdb.set_trace()
-	shutil.move("./CoreNLP/"+filename[:-4]+".chars" , char_dir+"/"+filename[:-4]+".chars")
-	shutil.move("./CoreNLP/"+filename[:-4]+".coref.out" ,output_dir+"/"+filename[:-4]+".coref.txt")
+	#shutil.move("./CoreNLP/"+filename[:-4]+".chars" , char_dir+"/"+filename[:-4]+".chars")
+	#shutil.move("./CoreNLP/"+filename[:-4]+".coref.out" ,output_dir+"/"+filename[:-4]+".coref.txt")
 
+print("Processing the outputs..")
+for filename in filenames:
 
 	f = open(output_dir+"/"+filename[:-4]+".coref.txt")
 	#fin = open(test_csv_dir+filename, encoding='cp1250')
