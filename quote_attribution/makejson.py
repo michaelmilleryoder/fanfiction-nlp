@@ -29,7 +29,7 @@ if __name__ == "__main__":
         for line in f:
             paragraphId, sentenceID, tokenId, beginOffset, endOffset, whitespaceAfter, headTokenId, originalWord, normalizedWord, lemma, pos, ner, deprel, inQuotation, characterId, supersense = line.strip().split('\t')
             tokens.append(originalWord)
-    
+
     with codecs.open(charfile) as f:
         for _line in f:
             line = _line.strip()
@@ -39,7 +39,7 @@ if __name__ == "__main__":
                 char2quotes[l[0]] = []
 
     character_num = len(characters)
-    
+
     ss = 0
     with codecs.open(svmfile) as f:
         for line in f:
@@ -60,13 +60,14 @@ if __name__ == "__main__":
         scores = []
         for line in f:
             scores.append(float(line.strip()))
-    
+
     ss = 0
-    for i in range(0, len(scores), character_num):
-        maxid = np.argmax(scores[i: i+character_num])
-        for quoteStart, quoteEnd in paragraph2quotes[ss]:
-            char2quotes[characters[maxid]].append(' '.join(tokens[quoteStart: quoteEnd+1]))
-        ss += 1
+    if len(scores) > 0 and character_num > 0:
+        for i in range(0, len(scores), character_num):
+            maxid = np.argmax(scores[i: i+character_num])
+            for quoteStart, quoteEnd in paragraph2quotes[ss]:
+                char2quotes[characters[maxid]].append(' '.join(tokens[quoteStart: quoteEnd+1]))
+            ss += 1
 
     with codecs.open(outputfile, 'w') as f:
         json.dump(char2quotes, f)
