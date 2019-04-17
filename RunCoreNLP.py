@@ -73,26 +73,33 @@ os.system("./run.sh DataDir/ " + char_dir + " " + output_dir)
 os.chdir("..")
 print("Processing the outputs..")
 for filename in filenames:
-
-	f = open(output_dir+"/"+filename[:-4]+".coref.txt")
-	#fin = open(test_csv_dir+filename, encoding='cp1250')
-	fin = open(test_csv_dir+filename)
-	reader = csv.reader(fin)
-	header = next(reader)
-	#fout = open(output_dir+"/"+filename[:-4]+".coref.csv","w", encoding='cp1250')
-	fout = open(output_dir+"/"+filename[:-4]+".coref.csv","w", encoding='utf8')
-	writer = csv.writer(fout)
-	lines = f.readlines()
-	writer.writerow(header)
 	
-	for row,text in zip(reader, lines):
+	fname = output_dir+"/"+filename[:-4]+".coref.txt"
+	exists = os.path.isfile(fname)
+	if(exists):
+		f = open(output_dir+"/"+filename[:-4]+".coref.txt")
+		#fin = open(test_csv_dir+filename, encoding='cp1250')
+		fin = open(test_csv_dir+filename)
+		reader = csv.reader(fin)
+		header = next(reader)
+		#fout = open(output_dir+"/"+filename[:-4]+".coref.csv","w", encoding='cp1250')
+		fout = open(output_dir+"/"+filename[:-4]+".coref.csv","w", encoding='utf8')
+		writer = csv.writer(fout)
+		lines = f.readlines()
+		writer.writerow(header)
+	
+		for row,text in zip(reader, lines):
 		#row["paragraph"] = text
 		#print (row["paragraph"])
 		#print (text)
-		row[len(row)-1]= text
-		writer.writerow(row)
+			row[len(row)-1]= text
+			writer.writerow(row)
 		#print (row['paragraph'])
 
-	fin.close()
-	f.close()
-	fout.close()
+		fin.close()
+		f.close()
+		fout.close()
+
+	else:
+		print (fname, " file not found")
+		continue
