@@ -18,7 +18,7 @@
 
 # I/O
 
-COLLECTION_NAME="test"
+COLLECTION_NAME="harrypotter1000"
 FICS_INPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/${COLLECTION_NAME}/fics/" # will eventually come from command line
 OUTPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/${COLLECTION_NAME}/output/"
 mkdir -p $OUTPUT_PATH
