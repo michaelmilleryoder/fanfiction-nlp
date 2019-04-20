@@ -3,3 +3,4 @@
 *.swp
 quote_attribution/tmp
 CoreNLP/*.tmp
+*.vscode
