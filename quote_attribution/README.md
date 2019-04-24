@@ -59,3 +59,16 @@ Meanwhile, the script will also generate some temporary files in `tmp/<story_fil
 * `<story_filename>.tokens`: the tokenization results by BookNLP.
 * `<story_filename>.predict`: the scores predicted by SVM<sup>*rank*</sup>.
 * `<story_filename>.svmrank`: the input file for SVM<sup>*rank*</sup>.
+
+## How it works
+Based on the following papers:
+* He et al., 2013, "Identification of speakers in novels". Data and algorithm (SVM<sup>*rank*</sup>) came from this paper.
+* Elson et al., 2010, AAAI, "Automatic attribution of quoted speech". Features mainly came from this paper.
+
+### Features
+Features for each utterance are specific to each speaker from the coreference step.
+* Distance to utterance
+* Number of times the speaker appears in whole text
+* Number of times the speaker appears in the paragraph
+* Speaker in the utterance
+* Same features, but for neighboring utterances
