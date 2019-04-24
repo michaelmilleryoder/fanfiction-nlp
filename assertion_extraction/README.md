@@ -4,7 +4,7 @@ Scripts for extracting statements with mentions of characters, given the stories
 
 ## Prerequisites
 
-* Python2 environment
+* Python3 environment
 * Numpy
 * NLTK
 * Sci-kit learn
