@@ -77,7 +77,8 @@ Output is automatically stored in `output/<collection_name>`.
 
 8. Example.fandom directory contains all the orginal csv files.
 
-The search engine (WIP) has all the data under /usr2/scratch/fanfic indexed as of 10/30/2018 . Queries can be formed and run this way-
-/path/to/search_engine/indri-5.0/runquery/IndriRunQuery -query="#uw2(Bilbo Baggins)" -count=5 -index=index
+To run coref in batches, use:
 
+python3 RunBatches.py <raw_input_dir> <char_output_dir> <coref_output_dir>
+Note, <char_output_dir> and <coref_output_dir> must be present inside the CoreNLP directory
 
