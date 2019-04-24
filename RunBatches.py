@@ -42,9 +42,13 @@ file_chunks = get_immediate_subdirectories(test_csv_dir)
 chunks = len(file_chunks)
 print ("Split into ", chunks," chunks")
 print_every = chunks//10
+print (file_chunks)
 #Call RunCoreNLP for every chunk
 for i, dir_name in enumerate(file_chunks):
+    if os.path.isdir("DataDir"):
+        shutil.rmtree("DataDir")
     run_cmd = "python3.5 RunCoreNLP.py " + test_csv_dir + dir_name + "/ " + char_dir + " " + output_dir
+    print (run_cmd)
     if 0 == i% print_every-1:
         print ("Running CoreNLP on ", str(i), "th chunk")
     os.system(run_cmd)  
