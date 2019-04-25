@@ -14,7 +14,7 @@ The script does:
 * Alternate universe (AU) extraction from fic metadata
 
 ## Requirements
-* Parts of the pipeline require [this Stanford CoreNLP models jar](nlp.stanford.edu/software/stanford-corenlp-models-current.jar). Download this file and move it to the `CoreNLP` directory.
+* Parts of the pipeline require [this Stanford CoreNLP models jar](http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar). Download this file and move it to the `CoreNLP` directory.
 
 * Python 2 and Python 3 (we're moving everything to Python 3 soon).
 
