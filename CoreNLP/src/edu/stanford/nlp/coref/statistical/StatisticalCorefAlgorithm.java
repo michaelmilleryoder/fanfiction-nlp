@@ -12,6 +12,7 @@ import java.util.Set;
 import edu.stanford.nlp.coref.CorefAlgorithm;
 import edu.stanford.nlp.coref.CorefProperties;
 import edu.stanford.nlp.coref.CorefUtils;
+import edu.stanford.nlp.coref.data.CorefCluster;
 import edu.stanford.nlp.coref.data.Dictionaries;
 import edu.stanford.nlp.coref.data.Dictionaries.MentionType;
 import edu.stanford.nlp.coref.data.Document;
@@ -92,6 +93,15 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
             }
 
             Map<Pair<Integer, Integer>, Boolean> pairs = new HashMap<>();
+
+//            System.err.println("StatisticalCorefAlgorithm-runCoref-mentions");
+//
+//            for (Mention mention: CorefUtils.getSortedMentions(document)) {
+//                System.err.println(mention + "\n");
+//            }
+
+//            System.out.println(CorefUtils.getSortedMentions(document));
+
             for (Map.Entry<Integer, List<Integer>> e : CorefUtils.heuristicFilter(
                 CorefUtils.getSortedMentions(document),
                 maxMentionDistance, maxMentionDistanceWithStringMatch).entrySet()) {

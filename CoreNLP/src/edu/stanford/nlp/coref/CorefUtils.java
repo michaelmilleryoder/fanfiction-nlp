@@ -96,9 +96,9 @@ public class CorefUtils {
 //      System.out.println(m2.mentionType);
 //    }
 
-//    System.out.println("cluster c1 of m1 is represented by " + c1.representative);
-//    System.out.println("first mention is " + c1.getFirstMention());
-//    System.out.println(c1 + "=" + c1.clusterID + "with gender" + c1.gender);
+    System.out.println("cluster c1 of m1 is represented by " + c1.representative);
+    System.out.println("first mention is " + c1.getFirstMention());
+    System.out.println(c1 + "=" + c1.clusterID + "with gender" + c1.gender);
 
     CorefCluster c2 = document.corefClusters.get(m2.corefClusterID);
 
@@ -108,9 +108,9 @@ public class CorefUtils {
 //      System.out.println(m2.mentionType);
 //    }
 //
-//    System.out.println("cluster c2 of m2 is represented by " + c2.representative);
-//    System.out.println("first mention is " + c2.getFirstMention());
-//    System.out.println(c2 + "=" + c2.clusterID + "with gender" + c2.gender);
+    System.out.println("cluster c2 of m2 is represented by " + c2.representative);
+    System.out.println("first mention is " + c2.getFirstMention());
+    System.out.println(c2 + "=" + c2.clusterID + "with gender" + c2.gender);
 
 
 
@@ -150,14 +150,16 @@ public class CorefUtils {
     } else {
       CorefCluster.mergeClusters(c2, c1);
       document.corefClusters.remove(removeId);
-//      System.out.println("after merging, c2.character = " + c2.character);
+      System.out.println("after merging, c2.character = " + c2.character + " gender = " + c2.gender);
     }
   }
 
   public static void removeSingletonClusters(Document document) {
+    System.out.println("removing singletons");
     for (CorefCluster c : new ArrayList<>(document.corefClusters.values())) {
       if (c.getCorefMentions().size() == 1) {
         document.corefClusters.remove(c.clusterID);
+        System.out.println(c);
       }
     }
   }
