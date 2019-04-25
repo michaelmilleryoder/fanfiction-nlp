@@ -56,7 +56,10 @@ for filename in filenames:
         else:
             assert chap_id == row["chapter_id"]
 
-        this_text+=row["text"]
+        # this_text+=row["text"]
+	
+        this_text += ' # . '.join(row["text"].split('\n'))
+	
         this_text+=" # . "
 
     # dump all the txt files in the DataDir folder 
@@ -67,7 +70,7 @@ for filename in filenames:
 
 print ("Running coref..")
 os.chdir("CoreNLP")
-os.system("./run.10G.sh " + data_dir +  " " + char_dir + " " + output_dir)
+os.system("./run.sh " + data_dir +  " " + char_dir + " " + output_dir)
     #os.remove(filename[:-4])
     #os.chdir("..")
     #if (not os.path.isdir(char_dir)):  
