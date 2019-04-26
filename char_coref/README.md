@@ -34,6 +34,7 @@ We use Stanford CoreNLP coreference with a few additional constraints and modifi
 The coreference works as follows, with modifications noted:
 
 1. Mention extraction
+
 	Extract mentions using CoreNLP mention extraction, only keeping mentions that have been annotated as proper nouns or pronouns. Mentions with 4 or more words are also discarded.
 	We add to these mentions named entities labeled as Person or Organization by the CoreNLP NER.
 2. Mention clustering
