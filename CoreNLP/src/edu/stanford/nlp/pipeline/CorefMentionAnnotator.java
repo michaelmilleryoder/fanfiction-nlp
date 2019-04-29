@@ -151,6 +151,7 @@ public class CorefMentionAnnotator extends TextAnnotationCreator implements Anno
     } else {
       corefProperties.setProperty("removeNestedMentions", "true");
     }
+    System.err.println("finding mentions using " + mdName);
     List<List<Mention>> mentions = md.findMentions(annotation, dictionaries, corefProperties);
     // build list of coref mentions in this document
     annotation.set(CorefCoreAnnotations.CorefMentionsAnnotation.class , new ArrayList<Mention>());

@@ -9,7 +9,7 @@ import csv
 from collections import defaultdict,Counter
 import nltk
 from sklearn.metrics.pairwise import cosine_similarity
-from __builtin__ import any
+from builtins import any
 import json
 import re
 import pdb
@@ -57,7 +57,7 @@ def get_topic_segments(para_id,para,k=1):
     # Build the vocabulary for this paragraph
     vocab = defaultdict(lambda: len(vocab))
    
-    para = para.decode('utf-8')
+    #para = para.decode('utf-8')
     # Get list of sentences in the paragraph
     sentences = nltk.sent_tokenize(para)
     
@@ -137,8 +137,12 @@ def get_topic_segments(para_id,para,k=1):
         depth[gap] = left_diff + right_diff
 
     # Compute the segment indexes (gap value indexes) from the thresholding depth scores
-    depth_scores = np.array(depth.values())
-    non_zero = [score for score in depth_scores if score > 0]
+    depth_scores = np.array(list(depth.values()))
+    #print (type(depth_scores)
+    #print (depth_scores)
+    #for score in depth_scores:
+    #    print (score)
+    non_zero = [score for score in depth_scores if score > 0.0]
     boundaries = []
     if len(non_zero) == 0:
         #print ("No non zero depth scores. Putting all the sentences in one segment")
@@ -182,37 +186,40 @@ for f in files:
     #get the story_chapter name from the story file
     #for matching with the characters file 
     #fic = f.split('.coref.out')[0]
-    fic = f.split('.coref.csv')[0]
-
+    if 'txt' not in f:
+        fic = f.split('.coref.csv')[0]
+    else:
+        continue
     #Get the fic_id and chap_id (not needed now)
     #fic_id  = fic.split('_')[0]
     #chap_id = int(fic.split('_')[1])
 
     #char_f = chars_dir + '/' + fic + ".coref.chars"
+    #print (fic)
     char_f = chars_dir + '/' + fic + ".chars"
     char_list = []
     para_dict = {}
    
     #Get list of characters for each chapter
-    try:
-        char_file = codecs.open(char_f, "r", errors='ignore') #io.open(char_f,'r', encoding="utf-8")
-        char_list = [character.rstrip() for character in char_file]
-    except (IOError):
-        continue
+    #try:
+    char_file = codecs.open(char_f, "r", errors='ignore') #io.open(char_f,'r', encoding="utf-8")
+    char_list = [character.rstrip() for character in char_file]
+    #except (IOError):
+    #    continue
     
     #Get the segments for each paragraph in each chapter of a fic
-    try:
-        f = input_dir + '/' + f
-        inp_file = codecs.open(f, "r", errors='ignore')#open(f)
-        csv_reader = csv.reader(inp_file, delimiter=',')
-        csv_reader.next()
-        for row in csv_reader:
-            para_id = row[2]
-            para    = row[3]
-            segments = get_topic_segments(para_id,para,1)
-            para_dict[para_id] = segments
-    except (IOError):
-        continue
+    #try:
+    f = input_dir + '/' + f
+    inp_file = codecs.open(f, "r", errors='ignore')#open(f)
+    csv_reader = csv.reader(inp_file, delimiter=',')
+    next(csv_reader)
+    for row in csv_reader:
+        para_id = row[2]
+        para    = row[3]
+        segments = get_topic_segments(para_id,para,1)
+        para_dict[para_id] = segments
+    #except (IOError):
+    #    continue
 
     #Extract the character assertions per file.
     if para_dict is not None and char_list is not None:

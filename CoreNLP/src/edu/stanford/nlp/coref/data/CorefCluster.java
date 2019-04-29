@@ -144,7 +144,7 @@ public class CorefCluster implements Serializable {
             }
 
 //      System.out.println("Mention type" + m.mentionType);
-            if (m.mentionType.equals(Dictionaries.MentionType.PROPER)) {
+            if (m.mentionType.equals(Dictionaries.MentionType.PROPER) && m.originalSpan.size() <= 4) {
 //        System.out.println("Character name for this cluster: " + m);
                 String mentionStr = m.toString().replace(" 's", "");
 
@@ -214,6 +214,10 @@ public class CorefCluster implements Serializable {
             if (maxEntry != null) {
                 this.character = maxEntry.getKey();
             }
+        }
+
+        if (genderCounts.containsKey(Gender.FEMALE) || genderCounts.containsKey(Gender.MALE)) {
+            genderCounts.remove(Gender.UNKNOWN);
         }
 
         if (!genderCounts.isEmpty()) {
@@ -351,6 +355,11 @@ public class CorefCluster implements Serializable {
 //                }
 
             }
+        }
+
+
+        if (to.genderCounts.containsKey(Gender.FEMALE) || to.genderCounts.containsKey(Gender.MALE)) {
+            to.genderCounts.remove(Gender.UNKNOWN);
         }
 
         if (!to.genderCounts.isEmpty()) {
