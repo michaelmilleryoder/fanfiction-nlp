@@ -29,7 +29,7 @@ for filename in filenames:
 	this_text=''
 	fic_id = ''
 	chap_id = ''
-	for row in csv.DictReader(open(test_csv_dir+filename)):
+	for row in csv.DictReader(open(test_csv_dir+filename,encoding='utf-8')):
 		if len(fic_id)==0:
 			fic_id = row["fic_id"]
 		else:
@@ -45,7 +45,7 @@ for filename in filenames:
 
 	# dump the txt file
 	with open(test_txt_dir+fic_id+'-'+chap_id+'.txt','wb') as f:
-		f.write(this_text)
+		f.write(this_text.encode())
 	f.close()
 
 

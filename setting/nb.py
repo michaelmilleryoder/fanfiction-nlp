@@ -14,8 +14,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.corpus import stopwords
@@ -28,8 +28,8 @@ punctuation_set = set(string.punctuation)
 
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 # get config parameters
@@ -49,24 +49,24 @@ test_txt_dir = config.get(config_section,'test_txt_dir')
 output_path = config.get(config_section,'nb_output_path')
 
 
-with open(df_path) as f:
+with open(df_path,'rb') as f:
 	df = pickle.load(f)
-with open(labels_path) as f:
+with open(labels_path,'rb') as f:
 	labels = f.readlines()
-with open(fic2idx_path) as f:
+with open(fic2idx_path,'rb') as f:
 	fic2idx = pickle.load(f)
-with open(idx2fic_path) as f:
+with open(idx2fic_path,'rb') as f:
 	idx2fic =pickle.load(f)
-with open(idx_wordcount_path) as f:
+with open(idx_wordcount_path,'rb') as f:
 	idx_wc = f.readlines()
-with open(idxprob_path) as f:
+with open(idxprob_path,'rb') as f:
 	idxprob = pickle.load(f)
 # with open(keyword_set_path) as f:
 # 	keyword_set = pickle.load(f)
-with open(keywords_path) as f:
+with open(keywords_path,'rb') as f:
 	keywords = f.readlines()
 
-keywords = [i.strip().split('\t') for i in keywords]
+keywords = [i.decode().strip().split('\t') for i in keywords]
 
 all_keywords = []
 for i in keywords:
@@ -77,7 +77,7 @@ for i in keywords:
 
 all_keywords = set(all_keywords)
 
-idx_wc = [i.strip().split('\t') for i in idx_wc]
+idx_wc = [i.decode().strip().split('\t') for i in idx_wc]
 idx_wc_dict=[]
 # idx_length=[]
 for i in idx_wc:
@@ -104,7 +104,7 @@ def fic_story_words(fic_id,chapter_count):
 	for chap_id in chapter_ids:
 		this_story = ""
 		fname = "stories/"+fic_id+'_'+chap_id+".csv"
-		for row in csv.DictReader(open(fname)):
+		for row in csv.DictReader(open(fname,encoding='utf-8')):
 			this_story+=row["text"]
 		chap_words = story_words(this_story)
 		fic_words.extend(chap_words)
@@ -113,7 +113,7 @@ def fic_story_words(fic_id,chapter_count):
 
 def story_words(this_story):
 	this_story = this_story.encode("ascii", "ignore")
-	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
+	this_story = ''.join(ch for ch in this_story.decode() if ch not in punctuation_set)
 	words = this_story.split()
 	#words = [i for i in words if i not in stopwords_set]
 	#print 'he' in words
@@ -125,7 +125,7 @@ def story_words(this_story):
 
 def story_words_txt(this_story):
 	this_story = [i.decode(errors="replace") for i in this_story]
-	this_story = [i.encode("ascii", "ignore") for i in this_story]
+	this_story = [i.encode("ascii", "ignore").decode() for i in this_story]
 	this_story = ''.join(this_story)
 	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
 	words = this_story.split()
@@ -163,7 +163,7 @@ def nb_prob(story,idx):
 if len(test_txt_dir)==0:
 
 	stories = []
-	for row in csv.DictReader(open("stories.csv")):
+	for row in csv.DictReader(open("stories.csv",encoding='utf-8')):
 		stories.append(row)
 # ficid2idx = [[] for i in range(len(stories))]
 	assign_labels=[[-1] for i in range(len(stories))]
@@ -218,10 +218,10 @@ else:
 			new_labels = [(labels[j],scores[j]) for j in range(len(scores)) if scores[j]==max_score]
 
 			assign_labels.append(new_labels)
-			out.write(filename+':'+'\t')
+			out.write((filename+':'+'\t').encode())
 			for label in new_labels:
-				out.write(str(label)+'\t')
-		out.write('\n')
+				out.write((str(label)+'\t').encode())
+		out.write('\n'.encode())
 		f.close()
 	out.close()
 	
