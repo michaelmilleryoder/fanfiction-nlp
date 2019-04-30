@@ -8,7 +8,7 @@ output_dir = sys.argv[5]
 
 import configparser
 config = configparser.ConfigParser()
-config.readfp(open(config_path))
+config.read(config_path)
 
 # get config parameters
 config.set(config_section,'test_csv_dir',csv_dir)
