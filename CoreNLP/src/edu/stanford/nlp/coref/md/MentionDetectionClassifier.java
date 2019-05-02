@@ -121,6 +121,7 @@ public class MentionDetectionClassifier implements Serializable {
 
       Map<Integer, Set<Mention>> headPositions = Generics.newHashMap();
       for (Mention p : predicts) {
+        // Remove mentions of length greater than 4
         if (p.originalSpan.size() > 4) {
           removedMentionsByLength.add(p);
         } else {

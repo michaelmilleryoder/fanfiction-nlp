@@ -82,6 +82,7 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
 
     @Override
     public void runCoref(Document document) {
+        // Actually Run coref
         try {
             File tempFile = new File("temp.out");
 
@@ -137,6 +138,7 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
                 MentionType mt2 = m2.mentionType;
                 if (pairwiseScores.getCount(pair) > thresholds.get(new Pair<>(mt1 == MentionType.PRONOMINAL,
                     mt2 == MentionType.PRONOMINAL))) {
+                    // The CorefUtils.mergeCoreferenceClusters is modified
                     CorefUtils.mergeCoreferenceClusters(pair, document);
                 }
             }

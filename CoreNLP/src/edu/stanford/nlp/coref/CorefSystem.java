@@ -69,46 +69,49 @@ public class CorefSystem {
         InputDoc doc = new InputDoc(ann);
         perDocNerCharacterCounts = new HashMap<>();
 
-        System.out.println("Tokens\n");
+//        System.out.println("Tokens\n");
 
-        for (CoreMap sentence : doc.annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
-
-            ArrayList<CoreLabel> tokens = new ArrayList<>();
-
-            for (CoreLabel token : sentence.get(CoreAnnotations.TokensAnnotation.class)) {
-                tokens.add(token);
-                System.out.println(
-                    token.get(CoreAnnotations.TextAnnotation.class)
-                        + " " + token.get(CoreAnnotations.NamedEntityTagAnnotation.class)
-
-                );
-            }
-
-            for (int i = 0; i < tokens.size(); ++i) {
-                CoreLabel token = tokens.get(i);
-                if (isPersonOrOrg(token)) {
-                    String mwe = "";
-                    mwe += getWord(token) + " ";
-
-                    for (int j = i + 1; j < tokens.size(); j++) {
-                        CoreLabel next = tokens.get(j);
-                        if (isPersonOrOrg(next)) {
-                            mwe += getWord(tokens.get(j)) + " ";
-                            i = j;
-                        } else {
-                            break;
-                        }
-                    }
-
-                    String name = mwe.trim();
-
-                    perDocNerCharacterCounts.put(
-                        name, perDocNerCharacterCounts.getOrDefault(name, 0) + 1
-                    );
-
-                }
-            }
-        }
+        // Extract character names based on ner tags as an addition
+        // Removed since it's tricky to directly add them the mentions for coref
+        // (which is extracted by edu.stanford.nlp.coref.md.DependencyCorefMentionFinder)
+//        for (CoreMap sentence : doc.annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
+//
+//            ArrayList<CoreLabel> tokens = new ArrayList<>();
+//
+//            for (CoreLabel token : sentence.get(CoreAnnotations.TokensAnnotation.class)) {
+//                tokens.add(token);
+//                System.out.println(
+//                    token.get(CoreAnnotations.TextAnnotation.class)
+//                        + " " + token.get(CoreAnnotations.NamedEntityTagAnnotation.class)
+//
+//                );
+//            }
+//
+//            for (int i = 0; i < tokens.size(); ++i) {
+//                CoreLabel token = tokens.get(i);
+//                if (isPersonOrOrg(token)) {
+//                    String mwe = "";
+//                    mwe += getWord(token) + " ";
+//
+//                    for (int j = i + 1; j < tokens.size(); j++) {
+//                        CoreLabel next = tokens.get(j);
+//                        if (isPersonOrOrg(next)) {
+//                            mwe += getWord(tokens.get(j)) + " ";
+//                            i = j;
+//                        } else {
+//                            break;
+//                        }
+//                    }
+//
+//                    String name = mwe.trim();
+//
+//                    perDocNerCharacterCounts.put(
+//                        name, perDocNerCharacterCounts.getOrDefault(name, 0) + 1
+//                    );
+//
+//                }
+//            }
+//        }
 
         CorefUtils.checkForInterrupt();
         corefAlgorithm.runCoref(document);
@@ -190,13 +193,12 @@ public class CorefSystem {
         System.err.println(String.valueOf(textFiles.length) + " files found");
 //        int gc_cnt = 0, max_gc_cnt = 50;
 
+        // Process all texts in textsDir
         for (File textFile : textFiles) {
             textFilename = textFile.getName();
             System.err.println("processing " + textFilename);
 
             try {
-
-
                 BufferedReader reader = new BufferedReader(new FileReader(textFile));
                 StringBuilder textBuilder = new StringBuilder();
                 String s;
@@ -206,6 +208,8 @@ public class CorefSystem {
                 }
 
                 Annotation document = new Annotation(textBuilder.toString());
+
+                // Run the annotation pipeline "tokenize,ssplit,pos,lemma,ner,parse,coref"
                 pipeline.annotate(document);
 
                 StringBuilder outputBuilder = new StringBuilder();
@@ -227,6 +231,8 @@ public class CorefSystem {
                     }
                 }
 
+
+                // Merging character names as post-processing
                 for (int i = 0; i < ids.size(); ++i) {
                     for (int j = i + 1; j < ids.size(); ++j) {
                         int id1 = ids.get(i), id2 = ids.get(j);
@@ -245,6 +251,7 @@ public class CorefSystem {
 
                 HashSet<String> characters = new HashSet<>();
 
+                // Add the $(_{CHARACTER_NAME}) to the text and process the paragraph delimiter "# ."
                 for (CoreMap sentence : document.get(CoreAnnotations.SentencesAnnotation.class)) {
                     if (sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class).size() == 0) {
                         String text = sentence.get(CoreAnnotations.TextAnnotation.class);
@@ -370,13 +377,13 @@ public class CorefSystem {
                 );
                 StringBuilder charListBuilder = new StringBuilder();
 
-                for (HashMap.Entry<String, Integer> entry : perDocNerCharacterCounts.entrySet()) {
-
-                    String name = String.join("_", entry.getKey().split(" "));
-                    name = "($_" + name + ")";
-
-                    characters.add(name);
-                }
+//                for (HashMap.Entry<String, Integer> entry : perDocNerCharacterCounts.entrySet()) {
+//
+//                    String name = String.join("_", entry.getKey().split(" "));
+//                    name = "($_" + name + ")";
+//
+//                    characters.add(name);
+//                }
 
                 for (String c : characters) {
                     charListBuilder.append(c).append("\n");

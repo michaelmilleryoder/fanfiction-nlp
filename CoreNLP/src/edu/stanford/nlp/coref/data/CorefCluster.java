@@ -142,6 +142,7 @@ public class CorefCluster implements Serializable {
                 }
             }
 
+            // Consider character name of length up to 4
             if (m.mentionType.equals(Dictionaries.MentionType.PROPER) && m.originalSpan.size() <= 4) {
                 String mentionStr = m.toString().replace(" 's", "");
 
@@ -149,6 +150,8 @@ public class CorefCluster implements Serializable {
                     characterCounts.put(mentionStr, characterCounts.get(mentionStr) + 1);
                 } else {
                     boolean merged = false;
+
+                    // Merged current character names based on substring
                     for (Map.Entry<String, Integer> entry : characterCounts.entrySet()) {
                         if (mentionStr.contains(entry.getKey())) {
                             characterCounts.put(mentionStr, entry.getValue() + 1);
@@ -178,6 +181,7 @@ public class CorefCluster implements Serializable {
             }
         }
 
+        // Decide the character name based on counts
         if (!characterCounts.isEmpty()) {
             Map.Entry<String, Integer> maxEntry = null;
 
@@ -192,10 +196,12 @@ public class CorefCluster implements Serializable {
             }
         }
 
+        // If a FEMALE/MALE is merged into the cluster, UNKNOWN is removed
         if (genderCounts.containsKey(Gender.FEMALE) || genderCounts.containsKey(Gender.MALE)) {
             genderCounts.remove(Gender.UNKNOWN);
         }
 
+        // Decide the gender based on counts
         if (!genderCounts.isEmpty()) {
             Map.Entry<Gender, Integer> maxEntry = null;
 
@@ -255,7 +261,7 @@ public class CorefCluster implements Serializable {
         }
         if (from.representative.moreRepresentativeThan(to.representative)) to.representative = from.representative;
 
-
+        // Merge the character name counter for two clusters
         if (!from.characterCounts.isEmpty()) {
             for (Map.Entry<String, Integer> fromEntry : from.characterCounts.entrySet()) {
                 if (to.characterCounts.containsKey(fromEntry.getKey())) {
@@ -290,7 +296,7 @@ public class CorefCluster implements Serializable {
             }
         }
 
-
+        // Update the character name for the merged cluster
         if (!to.characterCounts.isEmpty()) {
             Map.Entry<String, Integer> maxEntry = null;
 
@@ -303,6 +309,8 @@ public class CorefCluster implements Serializable {
             to.character = maxEntry.getKey();
         }
 
+
+        // Merge the gender counter for two clusters
         if (!from.genderCounts.isEmpty()) {
 
             for (Map.Entry<Gender, Integer> entry : from.genderCounts.entrySet()) {
@@ -319,6 +327,8 @@ public class CorefCluster implements Serializable {
             to.genderCounts.remove(Gender.UNKNOWN);
         }
 
+
+        // Update the gender for the merged cluster
         if (!to.genderCounts.isEmpty()) {
             Map.Entry<Gender, Integer> maxEntry = null;
 
