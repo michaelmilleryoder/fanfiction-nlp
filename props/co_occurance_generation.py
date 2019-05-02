@@ -21,11 +21,13 @@ if len(sys.argv) < 4:
     exit(0)
 
 
+# Get the fic ID and chapter ID
 def get_para_chap_id(filename):
     ids = filename.split('/')[-1].split('_')
     return (ids[0], ids[1])
 
 
+# Get characters from the Character coref files
 def get_char_list(file, ficId, chapId, charFiles):
     # Read all files for characters
     # print(file.split('/')[-1].split('.')[0])
@@ -46,12 +48,12 @@ def get_char_list(file, ficId, chapId, charFiles):
     return character_dict
 
 
+# Create co-occurance dictionary with adjectives occuring with entities
 def adj_matrix(character_dict, data_list):
     chars = {}
     index = 0
     ngram = 8
     for row in data_list:
-        # print(row['text'])
         if row['text'] in character_dict:
             if character_dict[row["text"]] in chars:
                 for i in range(1, ngram + 1):
@@ -77,6 +79,7 @@ def adj_matrix(character_dict, data_list):
     return chars
 
 
+# Create co-occurance dictionary with characters occuring with entities
 def ship_matrix(character_dict, data_list):
     chars = {}
     index = 0
@@ -108,6 +111,7 @@ def ship_matrix(character_dict, data_list):
     return chars
 
 
+# Convert co-occurance dict to matrix with counts as values
 def creating_cooccurence(adj_chars):
     adj_frame = pd.DataFrame.from_dict(adj_chars, orient='index').reset_index().fillna(0)
     col_names = list(adj_frame.columns.values)
@@ -120,6 +124,7 @@ def creating_cooccurence(adj_chars):
     return adj_frame, char_list, col_names
 
 
+# Rank matrix by TF-IDF
 def TFIDF_construct(data_frame, char_list, col_names):
     tfidf = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=False)
     mat = tfidf.fit_transform(data_frame).toarray()
@@ -134,6 +139,7 @@ def TFIDF_construct(data_frame, char_list, col_names):
     return new_char_dict
 
 
+# Sorting the dict by TF-IDF values
 def create_ordered_dict(char_dict):
     sorted_dict = OrderedDict()
     for key in char_dict:
@@ -167,6 +173,7 @@ char_path = os.path.join(script_dir, rel_path)
 print("Reading characters from " + path)
 charFiles = set(glob.glob(char_path + "/*"))
 
+# Exit if no fic files found
 if len(allFiles) < 1:
     print("No files found at" + path)
     exit(0)
