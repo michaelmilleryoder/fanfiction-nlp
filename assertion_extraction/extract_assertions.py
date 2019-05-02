@@ -15,6 +15,8 @@ import re
 import pdb
 import codecs
 
+csv.field_size_limit(sys.maxsize)
+
 """
  input: i2w            -> dictionary, key:word_index, value: word
         formatted_sent -> a string of word indices that needs to be decoded
@@ -28,6 +30,7 @@ def decode_sentence(i2w,formatted_sent):
     sentence = ' '.join(sentence)
     return sentence
 
+
 """
  input: para_dict -> key:paragraph ID, value: dict of segmented sentences from that para
         char_list -> a list of characters in the format $_canonical_name
@@ -36,14 +39,18 @@ output: char_dict -> key: canonical name of character, value: list of segments
 """
 def extract_assertion(para_dict,char_list):
     char_dict = defaultdict(list)
+    #For each paragraph and it's corresponding segments
     for (para_id,segments) in para_dict.items():
+        #For each segment
         for (segment_id,segment) in segments.items():
+            #For each character in character list
             for character in char_list:
                 if character in segment:
                     #Added fix for quotation removal
                     segment = re.sub(r'".*?"', '', segment)
                     char_dict[character].append(segment)
     return char_dict
+
 
 """
  input: para_id  -> int, id for the paragraph
@@ -58,6 +65,10 @@ def get_topic_segments(para_id,para,k=1):
     vocab = defaultdict(lambda: len(vocab))
    
     #para = para.decode('utf-8')
+    #The UTF-8 decode is not required if the Terminal locale is set properly using
+    #export LC_CTYPE=en_US.UTF-8
+    #export LC_ALL=en_US.UTF-8
+    
     # Get list of sentences in the paragraph
     sentences = nltk.sent_tokenize(para)
     
@@ -138,15 +149,12 @@ def get_topic_segments(para_id,para,k=1):
 
     # Compute the segment indexes (gap value indexes) from the thresholding depth scores
     depth_scores = np.array(list(depth.values()))
-    #print (type(depth_scores)
-    #print (depth_scores)
-    #for score in depth_scores:
-    #    print (score)
+    
+    #Collect only non_zero scores
     non_zero = [score for score in depth_scores if score > 0.0]
     boundaries = []
     if len(non_zero) == 0:
-        #print ("No non zero depth scores. Putting all the sentences in one segment")
-        #boundaries.append(len(formatted_sents))
+        #No non zero depth scores. Putting all the sentences in one segment
         segments[0] = para
         return segments
     else:
@@ -185,30 +193,20 @@ for f in files:
 
     #get the story_chapter name from the story file
     #for matching with the characters file 
-    #fic = f.split('.coref.out')[0]
     if 'txt' not in f:
         fic = f.split('.coref.csv')[0]
     else:
         continue
-    #Get the fic_id and chap_id (not needed now)
-    #fic_id  = fic.split('_')[0]
-    #chap_id = int(fic.split('_')[1])
-
-    #char_f = chars_dir + '/' + fic + ".coref.chars"
-    #print (fic)
+    
     char_f = chars_dir + '/' + fic + ".chars"
     char_list = []
     para_dict = {}
    
     #Get list of characters for each chapter
-    #try:
     char_file = codecs.open(char_f, "r", errors='ignore') #io.open(char_f,'r', encoding="utf-8")
     char_list = [character.rstrip() for character in char_file]
-    #except (IOError):
-    #    continue
     
     #Get the segments for each paragraph in each chapter of a fic
-    #try:
     f = input_dir + '/' + f
     inp_file = codecs.open(f, "r", errors='ignore')#open(f)
     csv_reader = csv.reader(inp_file, delimiter=',')
@@ -218,8 +216,6 @@ for f in files:
         para    = row[3]
         segments = get_topic_segments(para_id,para,1)
         para_dict[para_id] = segments
-    #except (IOError):
-    #    continue
 
     #Extract the character assertions per file.
     if para_dict is not None and char_list is not None:
