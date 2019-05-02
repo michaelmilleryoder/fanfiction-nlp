@@ -35,7 +35,7 @@ The coreference works as follows, with modifications noted:
 
 1. Mention extraction
 
-	Extract mentions using CoreNLP mention extraction, only keeping mentions that have been annotated as proper nouns or pronouns. Mentions with 4 or more words are also discarded.
+	Extract mentions using CoreNLP mention extraction, only keeping mentions that have been annotated as proper nouns or pronouns. Mentions with 5 or more words are also discarded.
 
 	We add to these mentions named entities labeled as Person or Organization by the CoreNLP NER.
 
@@ -43,9 +43,9 @@ The coreference works as follows, with modifications noted:
 
 	We cluster mentions using CoreNLP, but additionally track a cluster name and character gender for each cluster. 
 
-	To obtain a cluster name, we first merge any mentions that are substrings of other mentions, keeping the longest mention that is not longer than 4 words. We then select the most frequent mention as the cluster name (can keep pronouns?). 
+	To obtain a cluster name, we first merge any mentions which are proper nouns that are substrings of other mentions, keeping the longest mention that is not longer than 4 words. We then select the most frequent mention as the cluster name. 
 
-	Cluster gender can be 'male', 'female', or 'other'. Clusters are labeled 'other' until male or female pronouns are added to the cluster, at which point the most frequent gender of the pronouns gives the cluster gender. We do not allow merging clusters of different genders.
+	Cluster gender can be 'male', 'female', or 'unknown'. Clusters are labeled 'unknown' until male or female pronouns are added to the cluster, at which point the most frequent gender of the pronouns gives the cluster gender. We do not allow merging clusters of different genders.
 
 3. Output
 
