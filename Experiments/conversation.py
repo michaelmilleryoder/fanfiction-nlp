@@ -16,11 +16,11 @@ stop_words = set(stopwords.words('english'))
 
 sid = SentimentIntensityAnalyzer()
 
-# pipe_out_dir = "/usr0/home/prashang/DirectedStudy/new_fic_pipe/output/acad_full/"
-# stories_dir = "/usr0/home/prashang/DirectedStudy/chatbot/output/example_academia_100/"
 pipe_out_dir = sys.argv[1]
 stories_dir = sys.argv[2]
 out_dir = sys.argv[3]
+
+# List of all output file in quote attribution
 allQuoteFiles = glob.glob(pipe_out_dir + "quote_attribution" + "/*.quote.json")
 
 mapping_directory = out_dir + "mapping/"
