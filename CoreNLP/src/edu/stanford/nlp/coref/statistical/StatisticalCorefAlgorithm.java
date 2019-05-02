@@ -94,14 +94,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
 
             Map<Pair<Integer, Integer>, Boolean> pairs = new HashMap<>();
 
-//            System.err.println("StatisticalCorefAlgorithm-runCoref-mentions");
-//
-//            for (Mention mention: CorefUtils.getSortedMentions(document)) {
-//                System.err.println(mention + "\n");
-//            }
-
-//            System.out.println(CorefUtils.getSortedMentions(document));
-
             for (Map.Entry<Integer, List<Integer>> e : CorefUtils.heuristicFilter(
                 CorefUtils.getSortedMentions(document),
                 maxMentionDistance, maxMentionDistanceWithStringMatch).entrySet()) {
@@ -128,10 +120,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
 
             Set<Integer> seenAnaphors = new HashSet<>();
             for (Pair<Integer, Integer> pair : mentionPairs) {
-//                System.out.println("start merging");
-//                tempFileWriter.write(document.predictedMentionsByID.get(pair.first).toString());
-//                System.out.println(document.predictedMentionsByID.get(pair.first).toString());
-//                System.exit(0);
 
                 if (seenAnaphors.contains(pair.second)) {
                     continue;
@@ -153,7 +141,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
                 }
             }
         } catch (IOException x) {
-            System.err.println("ohhh");
             System.exit(-1);
         }
     }

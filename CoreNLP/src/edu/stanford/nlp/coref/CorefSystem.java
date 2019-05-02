@@ -72,7 +72,6 @@ public class CorefSystem {
         System.out.println("Tokens\n");
 
         for (CoreMap sentence : doc.annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
-//            mentions.add(sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class));
 
             ArrayList<CoreLabel> tokens = new ArrayList<>();
 
@@ -103,27 +102,13 @@ public class CorefSystem {
 
                     String name = mwe.trim();
 
-//                    System.out.println(name + " " + i);
-
                     perDocNerCharacterCounts.put(
                         name, perDocNerCharacterCounts.getOrDefault(name, 0) + 1
                     );
 
-//                    characterHash.add(name);
-//                    int count = 0;
-//                    if (counts.containsKey(name)) {
-//                        count = counts.get(name);
-//                    }
-//                    count++;
-//                    counts.put(name, count);
                 }
             }
         }
-
-//        for (HashMap.Entry<String, Integer> entry : perDocNerCharacterCounts.entrySet()) {
-//            System.out.println(entry);
-//        }
-
 
         CorefUtils.checkForInterrupt();
         corefAlgorithm.runCoref(document);
@@ -189,43 +174,23 @@ public class CorefSystem {
     }
 
     public static void main(String[] args) throws Exception {
-//        Annotation document = new Annotation("Barack Obama was born in Hawaii.  He is the president. Obama was elected in 2008.");
-//        Annotation document = new Annotation("Chandler tugs his scarf tighter around his neck, " +
-//            "conscious of the little red love bites Joey left on his throat the night before. " +
-//            "He loves the crisp chill of the December air in the city, the steam rising from a hot cup of coffee, " +
-//            "and the layers upon layers of clothing required to keep warm. Joey’s not a big fan of layers, " +
-//            "which Chandler absolutely approves of, because that means less work for him when they get back to the apartment " +
-//            "and undress each other with frantic hands.");
-
 
         File textsDir = new File("../" + args[0]);
-//        textsDir.mkdir();
 
         File charListsDir = new File(args[1]);
-//        charListsDir.mkdir();
 
         File outputsDir = new File(args[2]);
-//        outputsDir.mkdir();
-
-//        File file = new File(args[0]);
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,coref");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
         String textFilename;
 
-//        System.err.println(charListsDir.getName());
-//        System.err.println(charListsDir.getPath());
-//
-//        System.err.println(outputsDir.getName());
-//        System.err.println(outputsDir.getPath());
-
         File[] textFiles = textsDir.listFiles();
         System.err.println(String.valueOf(textFiles.length) + " files found");
+//        int gc_cnt = 0, max_gc_cnt = 50;
 
         for (File textFile : textFiles) {
-//            System.err.println(textFile.getName());
-//            System.err.println(textFile.getPath());
             textFilename = textFile.getName();
             System.err.println("processing " + textFilename);
 
@@ -312,14 +277,10 @@ public class CorefSystem {
                                     word.get(CoreAnnotations.TextAnnotation.class)
                                 );
                             }
-//                    System.out.println(words);
                         }
-
-//                System.err.println(id);
 
                         if (idToCharacter.containsKey(id)) {
                             character = idToCharacter.get(id);
-//                    System.err.println(String.valueOf(id) + " - " + character);
 
                             if (!character.equals("")) {
                                 replacements.add(
@@ -331,7 +292,6 @@ public class CorefSystem {
                             }
                         }
 
-//                System.out.printf("\t" + m + " (%d, %d) [" + character + " = ]", m.startIndex, m.endIndex);
                     }
 
                     replacements.sort(
@@ -342,11 +302,6 @@ public class CorefSystem {
 
                     for (Pair<Pair<Integer, Integer>, String> replacement : replacements) {
                         while (currIdx < replacement.first.first) {
-//                    if (words.get(currIdx).equals("#")) {
-//                        System.err.println(words);
-//                        System.err.println(words.get(currIdx + 1).equals("."));
-//                    }
-
                             if (words.get(currIdx).equals("#")
                                 && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
                                 replacedSentence.append("\n");
@@ -355,8 +310,6 @@ public class CorefSystem {
                                 replacedSentence.append(words.get(currIdx)).append(" ");
                                 currIdx += 1;
                             }
-//                    replacedSentence.append(" ");
-//                    replacedSentence.append(words.get(currIdx) + " ");
                         }
 
                         boolean hasApostropheS = false;
@@ -364,9 +317,6 @@ public class CorefSystem {
                         if (replacement.first.first + 1 == replacement.first.second) {
                             replacedSentence.append(words.get(replacement.first.first)).append(" ");
 
-//                    if (replacement.first.first > 0) {
-//                        replacedSentence.append(" ");
-//                    }
                         } else {
                             for (int j = replacement.first.first; j < replacement.first.second; ++j) {
                                 if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
@@ -406,8 +356,6 @@ public class CorefSystem {
 
                     outputBuilder.append(replacedSentence.toString());
 
-//            System.out.println(replacements);
-
                     i += 1;
                 }
 
@@ -423,7 +371,7 @@ public class CorefSystem {
                 StringBuilder charListBuilder = new StringBuilder();
 
                 for (HashMap.Entry<String, Integer> entry : perDocNerCharacterCounts.entrySet()) {
-//                System.out.println(entry);
+
                     String name = String.join("_", entry.getKey().split(" "));
                     name = "($_" + name + ")";
 
@@ -437,9 +385,15 @@ public class CorefSystem {
                 charListWriter.write(charListBuilder.toString());
                 charListWriter.flush();
                 charListWriter.close();
+
+//                ++gc_cnt;
+
+//                if (gc_cnt == max_gc_cnt) {
+//                    System.gc();
+//                    gc_cnt = 0;
+//                }
+
             } catch (Exception e) {
-//                System.err.println("error during running " + textFilename);
-//                System.err.println(e);
                 PrintWriter errorWriter = new PrintWriter(
                     new FileWriter(
                         new File(textFilename + ".error"), true
@@ -449,23 +403,9 @@ public class CorefSystem {
                 e.printStackTrace(errorWriter);
                 errorWriter.close();
 
-//                errorWriter.write(e.getMessage());
             }
 
         }
 
-
-//        System.out.println("coref chains with character");
-//        for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
-//            if (!cc.character.equals("")) {
-//                System.out.println("\t" + cc.character + ": " + cc);
-//            }
-//        }
-
-//        return;
-
-//        Properties props = StringUtils.argsToProperties(args);
-//        CorefSystem coref = new CorefSystem(props);
-//        coref.runOnConll(props);
     }
 }

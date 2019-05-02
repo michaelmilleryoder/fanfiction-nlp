@@ -141,7 +141,6 @@ public class MentionDetectionClassifier implements Serializable {
           for (Mention p : shares) {
             double trueProb = probabilityOf(p, shares, neStrings, dict, props);
 
-//            System.err.println(p + "  " + String.valueOf(trueProb));
 
             probs.incrementCount(p, trueProb);
           }
