@@ -21,11 +21,13 @@ if len(sys.argv) < 4:
     exit(0)
 
 
+# Get the fic ID and chapter ID
 def get_para_chap_id(filename):
     ids = filename.split('/')[-1].split('_')
     return (ids[0], ids[1])
 
 
+# Get characters from the Character coref files
 def get_char_list(file, ficId, chapId, charFiles):
     # Read all files for characters
     # print(file.split('/')[-1].split('.')[0])
@@ -42,16 +44,17 @@ def get_char_list(file, ficId, chapId, charFiles):
         for char in chars:
             character_dict[char[char.find('_') + 1: char.find(')')].lower()] = char.strip('\n')
     else:
+        # Print error if not character file found for fic
         print("No character file found for " + char_file_name)
     return character_dict
 
 
+# Create co-occurance dictionary with adjectives occuring with entities
 def adj_matrix(character_dict, data_list):
     chars = {}
     index = 0
     ngram = 8
     for row in data_list:
-        # print(row['text'])
         if row['text'] in character_dict:
             if character_dict[row["text"]] in chars:
                 for i in range(1, ngram + 1):
@@ -77,6 +80,7 @@ def adj_matrix(character_dict, data_list):
     return chars
 
 
+# Create co-occurance dictionary with characters occuring with entities
 def ship_matrix(character_dict, data_list):
     chars = {}
     index = 0
@@ -108,6 +112,7 @@ def ship_matrix(character_dict, data_list):
     return chars
 
 
+# Convert co-occurance dict to matrix with counts as values
 def creating_cooccurence(adj_chars):
     adj_frame = pd.DataFrame.from_dict(adj_chars, orient='index').reset_index().fillna(0)
     col_names = list(adj_frame.columns.values)
@@ -120,6 +125,7 @@ def creating_cooccurence(adj_chars):
     return adj_frame, char_list, col_names
 
 
+# Rank matrix by TF-IDF
 def TFIDF_construct(data_frame, char_list, col_names):
     tfidf = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=False)
     mat = tfidf.fit_transform(data_frame).toarray()
@@ -134,6 +140,7 @@ def TFIDF_construct(data_frame, char_list, col_names):
     return new_char_dict
 
 
+# Sorting the dict by TF-IDF values
 def create_ordered_dict(char_dict):
     sorted_dict = OrderedDict()
     for key in char_dict:
@@ -151,6 +158,7 @@ def write_to_json(output_path, sorted_dict):
         json.dump(sorted_dict, fp)
 
 
+# Load spacy model for POS tagging
 print("Loading NLP Model")
 nlp = spacy.load('en_core_web_sm')
 print("Model loaded")
@@ -167,10 +175,12 @@ char_path = os.path.join(script_dir, rel_path)
 print("Reading characters from " + path)
 charFiles = set(glob.glob(char_path + "/*"))
 
+# Exit if no fic files found
 if len(allFiles) < 1:
     print("No files found at" + path)
     exit(0)
 
+# Iterate over fic files
 for file in allFiles:
     print("Reading file: ", file)
     rel_path = os.path.join(sys.argv[2], '')
@@ -186,11 +196,13 @@ for file in allFiles:
 
     character_dict = get_char_list(file, ficId, chapId, charFiles)
 
+    # Write an empty file if no characters present in Coref char files
     if len(character_dict) < 1:
         write_to_json(adj_output_path, {})
         write_to_json(ship_output_path, {})
         continue
 
+    # Remove $_ from characters as spacy model is unable to identify the POS tags
     text = ''.join(text)
     processed_text = []
     for word in text.split(" "):
@@ -201,6 +213,7 @@ for file in allFiles:
         processed_text.append(word.lower())
     processed_text = ' '.join(processed_text)
 
+    # Pass through the Spacy Model and create a list of dicts
     doc = nlp(str(processed_text))
     data_list = []
     count = 0
@@ -210,12 +223,17 @@ for file in allFiles:
             count += 1
 
     df = pd.DataFrame(data_list)
+
+    # Create adjective co-occurance dict
     adj_chars = adj_matrix(character_dict, data_list)
+    # Create character co-occurance dict
     ship_chars = ship_matrix(character_dict, data_list)
     print("Creating co-occurence for ", file.split('/')[-1].split('.')[0])
     rel_path = os.path.join(sys.argv[2], '')
     adj_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_adj_cooccurrence.json"
     ship_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_ship_cooccurrence.json"
+
+    # Create adjective and character co-occurance matrices and rerank by TF-IDF
     try:
         adj_frame, adj_char_list, adj_col_names = creating_cooccurence(adj_chars)
         adj_char_dict = TFIDF_construct(adj_frame, adj_char_list, adj_col_names)

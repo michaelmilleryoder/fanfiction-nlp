@@ -1,11 +1,11 @@
-import pickle
+import _pickle
 import sys
 from collections import Counter
 
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 search_string = sys.argv[3]
@@ -21,12 +21,12 @@ from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
 
-with open(tags_path) as f:
-	tags = pickle.load(f)
+with open(tags_path,'rb') as f:
+	tags = _pickle.load(f)
 
 import csv
 stories = []
-for row in csv.DictReader(open(stories_path)):
+for row in csv.DictReader(open(stories_path,encoding='utf-8')):
      stories.append(row)
 
 def lower_list(a):
@@ -58,9 +58,9 @@ for i in range(len(tags)):
 # print out_counter
 #print 'total num of fictions:',len(out) 
 out = list(set(out))
-print 'total num of fictions:',len(out)
+print ('total num of fictions:',len(out))
 out.sort()
 for i in out:
-	print stories[i]['fic_id'],' chapter_count:',stories[i]['chapter_count'],' AU:',aus[i]
+	print (stories[i]['fic_id'],' chapter_count:',stories[i]['chapter_count'],' AU:',aus[i])
 
 

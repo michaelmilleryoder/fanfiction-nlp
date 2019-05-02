@@ -77,6 +77,15 @@ public class HybridCorefMentionFinder extends CorefMentionFinder {
   }
 
   protected static void extractNamedEntityMentions(CoreMap s, List<Mention> mentions, Set<IntPair> mentionSpanSet, Set<IntPair> namedEntitySpanSet) {
+
+//    System.err.println("extractNamedEntityMentions");
+//    System.err.println("premarked:");
+//
+//    for (Mention m: mentions) {
+//      System.err.println(m);
+//    }
+//    System.err.println("ner:");
+
     List<CoreLabel> sent = s.get(CoreAnnotations.TokensAnnotation.class);
     SemanticGraph basicDependency = s.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class);
     SemanticGraph enhancedDependency = s.get(SemanticGraphCoreAnnotations.EnhancedDependenciesAnnotation.class);
@@ -85,6 +94,8 @@ public class HybridCorefMentionFinder extends CorefMentionFinder {
     }
     String preNE = "O";
     int beginIndex = -1;
+
+
     for(CoreLabel w : sent) {
       String nerString = w.ner();
       if(!nerString.equals(preNE)) {
@@ -101,6 +112,9 @@ public class HybridCorefMentionFinder extends CorefMentionFinder {
             int dummyMentionId = -1;
             Mention m = new Mention(dummyMentionId, beginIndex, endIndex, sent, basicDependency, enhancedDependency, new ArrayList<>(sent.subList(beginIndex, endIndex)));
             mentions.add(m);
+
+//            System.err.println(m);
+
             mentionSpanSet.add(mSpan);
             namedEntitySpanSet.add(mSpan);
           }
@@ -120,6 +134,13 @@ public class HybridCorefMentionFinder extends CorefMentionFinder {
         namedEntitySpanSet.add(mSpan);
       }
     }
+
+//    System.err.println("extractNamedEntityMentions");
+//    System.err.println("ner:");
+//
+//    for (Mention m: mentions) {
+//      System.err.println(m);
+//    }
   }
 
   private static void extractNPorPRP(CoreMap s, List<Mention> mentions, Set<IntPair> mentionSpanSet, Set<IntPair> namedEntitySpanSet) {

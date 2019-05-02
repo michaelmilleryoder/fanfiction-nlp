@@ -4,6 +4,8 @@ import sys
 import csv
 import stat
 import pdb
+import time
+import datetime
 
 csv.field_size_limit(sys.maxsize)
 
@@ -11,10 +13,14 @@ test_csv_dir = sys.argv[1]
 char_dir = sys.argv[2]
 output_dir = sys.argv[3]
 
+
+timestamp = datetime.datetime.now().strftime('%m%d-%H%M%S')
+data_dir = 'data.' + timestamp
+
 filenames = []
 fict_dict={}
-if (not os.path.isdir("DataDir")): 
-    os.mkdir("DataDir")  # input text file directory
+if (not os.path.isdir(data_dir)): 
+    os.mkdir(data_dir)  # input text file directory
 if (not os.path.isdir(char_dir)): 
     os.mkdir(char_dir)   # output directory for characters
 if (not os.path.isdir(output_dir)): 
@@ -50,18 +56,21 @@ for filename in filenames:
         else:
             assert chap_id == row["chapter_id"]
 
-        this_text+=row["text"]
+        # this_text+=row["text"]
+	
+        this_text += ' # . '.join(row["text"].split('\n'))
+	
         this_text+=" # . "
 
     # dump all the txt files in the DataDir folder 
     #print ("DataDir/"+filename[:-4])
-    with open("DataDir/"+filename[:-4],'w') as f:
+    with open(data_dir + "/"+filename[:-4],'w') as f:
         f.write(this_text)
         f.close()
 
 print ("Running coref..")
 os.chdir("CoreNLP")
-os.system("./run.sh DataDir/ " + char_dir + " " + output_dir)
+os.system("./run.sh " + data_dir +  " " + char_dir + " " + output_dir)
     #os.remove(filename[:-4])
     #os.chdir("..")
     #if (not os.path.isdir(char_dir)):  

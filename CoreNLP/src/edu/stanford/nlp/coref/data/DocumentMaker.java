@@ -80,6 +80,7 @@ public class DocumentMaker {
         md.findHead(sentence, sentenceMentions);
       }
     } else {
+//      System.err.println("not useGoldMentions");
       for (CoreMap sentence : input.annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
         mentions.add(sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class));
       }

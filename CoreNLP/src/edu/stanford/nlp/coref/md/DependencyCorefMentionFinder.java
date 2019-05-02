@@ -78,6 +78,14 @@ public class DependencyCorefMentionFinder extends CorefMentionFinder  {
       mdClassifier.classifyMentions(predictedMentions, dict, props);
     }
 
+//    System.err.println("findMentions-predictedMentions:");
+//
+//    for (List<Mention> l: predictedMentions) {
+//      for (Mention m: l) {
+//        System.err.println(m);
+//      }
+//    }
+
     return predictedMentions;
   }
 

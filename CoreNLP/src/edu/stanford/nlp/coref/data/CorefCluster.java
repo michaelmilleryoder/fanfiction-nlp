@@ -117,7 +117,6 @@ public class CorefCluster implements Serializable {
 
     public CorefCluster(int ID, Set<Mention> mentions) {
         this(ID);
-//    System.err.println("public CorefCluster(int ID, Set<Mention> mentions) is called");
         // Register mentions
         corefMentions.addAll(mentions);
         // Get list of mentions in textual order
@@ -143,9 +142,7 @@ public class CorefCluster implements Serializable {
                 }
             }
 
-//      System.out.println("Mention type" + m.mentionType);
-            if (m.mentionType.equals(Dictionaries.MentionType.PROPER)) {
-//        System.out.println("Character name for this cluster: " + m);
+            if (m.mentionType.equals(Dictionaries.MentionType.PROPER) && m.originalSpan.size() <= 4) {
                 String mentionStr = m.toString().replace(" 's", "");
 
                 if (characterCounts.containsKey(mentionStr)) {
@@ -169,31 +166,10 @@ public class CorefCluster implements Serializable {
                     }
                 }
 
-
-
-//                for (CoreLabel w : m.originalSpan) {
-//                    String word = w.get(CoreAnnotations.TextAnnotation.class).toLowerCase();
-//
-//                    if (characterCounts.containsKey(word)) {
-//                        characterCounts.put(word, characterCounts.get(word) + 1);
-//                    } else {
-//                        characterCounts.put(word, 1);
-//                    }
-//                }
-
-
-//        character = m.toString();
-
-
             }
 
             genderCounts.put(m.gender, genderCounts.getOrDefault(m.gender, 0) + 1);
 
-//            if (genderCounts.containsKey(m.gender)) {
-//                genderCounts.put(m.gender, genderCounts.get(m.gender) + 1);
-//            } else {
-//                genderCounts.put(m.gender, 1);
-//            }
 
             // Update representative mention, if appropriate
             if (m != representative && m.moreRepresentativeThan(representative)) {
@@ -214,6 +190,10 @@ public class CorefCluster implements Serializable {
             if (maxEntry != null) {
                 this.character = maxEntry.getKey();
             }
+        }
+
+        if (genderCounts.containsKey(Gender.FEMALE) || genderCounts.containsKey(Gender.MALE)) {
+            genderCounts.remove(Gender.UNKNOWN);
         }
 
         if (!genderCounts.isEmpty()) {
@@ -275,18 +255,6 @@ public class CorefCluster implements Serializable {
         }
         if (from.representative.moreRepresentativeThan(to.representative)) to.representative = from.representative;
 
-//        if (!from.characterCounts.isEmpty()) {
-////      Map.Entry<String, Integer> maxEntry = null;
-//
-//            for (Map.Entry<String, Integer> entry : from.characterCounts.entrySet()) {
-//                if (to.characterCounts.containsKey(entry.getKey())) {
-//                    to.characterCounts.put(entry.getKey(), to.characterCounts.get(entry.getKey()) + entry.getValue());
-//                } else {
-//                    to.characterCounts.put(entry.getKey(), entry.getValue());
-//                }
-//
-//            }
-//        }
 
         if (!from.characterCounts.isEmpty()) {
             for (Map.Entry<String, Integer> fromEntry : from.characterCounts.entrySet()) {
@@ -336,7 +304,6 @@ public class CorefCluster implements Serializable {
         }
 
         if (!from.genderCounts.isEmpty()) {
-//      Map.Entry<String, Integer> maxEntry = null;
 
             for (Map.Entry<Gender, Integer> entry : from.genderCounts.entrySet()) {
                 to.genderCounts.put(
@@ -344,13 +311,12 @@ public class CorefCluster implements Serializable {
                     to.genderCounts.getOrDefault(entry.getKey(), 0) + entry.getValue()
                 );
 
-//                if (to.genderCounts.containsKey(entry.getKey())) {
-//                    to.genderCounts.put(entry.getKey(), to.genderCounts.get(entry.getKey()) + entry.getValue());
-//                } else {
-//                    to.genderCounts.put(entry.getKey(), entry.getValue());
-//                }
-
             }
+        }
+
+
+        if (to.genderCounts.containsKey(Gender.FEMALE) || to.genderCounts.containsKey(Gender.MALE)) {
+            to.genderCounts.remove(Gender.UNKNOWN);
         }
 
         if (!to.genderCounts.isEmpty()) {

@@ -173,6 +173,15 @@ public abstract class CorefMentionFinder  {
   }
 
   protected void removeSpuriousMentionsEn(Annotation doc, List<List<Mention>> predictedMentions, Dictionaries dict) {
+//    System.err.println("removeSpuriousMentionsEn-predictedMentions:");
+//    System.err.println("before:");
+//
+//    for (List<Mention> l: predictedMentions) {
+//      for (Mention m: l) {
+//        System.err.println(m);
+//      }
+//    }
+
     List<CoreMap> sentences = doc.get(CoreAnnotations.SentencesAnnotation.class);
 
     for(int i=0 ; i < predictedMentions.size() ; i++) {
@@ -204,6 +213,15 @@ public abstract class CorefMentionFinder  {
       }
       mentions.removeAll(remove);
     }
+
+//    System.err.println("after:");
+//
+//    for (List<Mention> l: predictedMentions) {
+//      for (Mention m: l) {
+//        System.err.println(m);
+//      }
+//    }
+
   }
 
   protected void removeSpuriousMentionsZh(Annotation doc, List<List<Mention>> predictedMentions, Dictionaries dict, boolean removeNested) {

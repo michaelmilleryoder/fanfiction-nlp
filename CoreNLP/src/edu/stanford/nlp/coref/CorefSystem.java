@@ -4,24 +4,16 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-import edu.stanford.nlp.coref.data.CorefChain;
-import edu.stanford.nlp.coref.data.CorefCluster;
-import edu.stanford.nlp.coref.data.Dictionaries;
-import edu.stanford.nlp.coref.data.Document;
-import edu.stanford.nlp.coref.data.DocumentMaker;
+import edu.stanford.nlp.coref.data.*;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.util.Generics;
 import edu.stanford.nlp.util.Pair;
-import edu.stanford.nlp.util.StringUtils;
 import edu.stanford.nlp.util.logging.Redwood;
 
 
-import edu.stanford.nlp.coref.CorefCoreAnnotations;
 import edu.stanford.nlp.coref.data.CorefChain;
-import edu.stanford.nlp.coref.data.Mention;
 import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
@@ -35,6 +27,7 @@ public class CorefSystem {
     private final CorefAlgorithm corefAlgorithm;
     private final boolean removeSingletonClusters;
     private final boolean verbose;
+    private static HashMap<String, Integer> perDocNerCharacterCounts;
 
     public CorefSystem(Properties props) {
         try {
@@ -56,12 +49,65 @@ public class CorefSystem {
         this.verbose = verbose;
     }
 
+    Boolean isPersonOrOrg(CoreLabel token) {
+        String ne = token.get(CoreAnnotations.NamedEntityTagAnnotation.class);
+        return ne.equals("PERSON") || ne.equals("ORGANIZATION");
+    }
+
+    String getWord(CoreLabel token) {
+        return token.get(CoreAnnotations.TextAnnotation.class);
+    }
+
     public void annotate(Annotation ann) {
         Document document;
         try {
             document = docMaker.makeDocument(ann);
         } catch (Exception e) {
             throw new RuntimeException("Error making document", e);
+        }
+
+        InputDoc doc = new InputDoc(ann);
+        perDocNerCharacterCounts = new HashMap<>();
+
+        System.out.println("Tokens\n");
+
+        for (CoreMap sentence : doc.annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
+
+            ArrayList<CoreLabel> tokens = new ArrayList<>();
+
+            for (CoreLabel token : sentence.get(CoreAnnotations.TokensAnnotation.class)) {
+                tokens.add(token);
+                System.out.println(
+                    token.get(CoreAnnotations.TextAnnotation.class)
+                        + " " + token.get(CoreAnnotations.NamedEntityTagAnnotation.class)
+
+                );
+            }
+
+            for (int i = 0; i < tokens.size(); ++i) {
+                CoreLabel token = tokens.get(i);
+                if (isPersonOrOrg(token)) {
+                    String mwe = "";
+                    mwe += getWord(token) + " ";
+
+                    for (int j = i + 1; j < tokens.size(); j++) {
+                        CoreLabel next = tokens.get(j);
+                        if (isPersonOrOrg(next)) {
+                            mwe += getWord(tokens.get(j)) + " ";
+                            i = j;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    String name = mwe.trim();
+
+                    perDocNerCharacterCounts.put(
+                        name, perDocNerCharacterCounts.getOrDefault(name, 0) + 1
+                    );
+
+                }
+            }
         }
 
         CorefUtils.checkForInterrupt();
@@ -128,221 +174,238 @@ public class CorefSystem {
     }
 
     public static void main(String[] args) throws Exception {
-//        Annotation document = new Annotation("Barack Obama was born in Hawaii.  He is the president. Obama was elected in 2008.");
-//        Annotation document = new Annotation("Chandler tugs his scarf tighter around his neck, " +
-//            "conscious of the little red love bites Joey left on his throat the night before. " +
-//            "He loves the crisp chill of the December air in the city, the steam rising from a hot cup of coffee, " +
-//            "and the layers upon layers of clothing required to keep warm. Joey’s not a big fan of layers, " +
-//            "which Chandler absolutely approves of, because that means less work for him when they get back to the apartment " +
-//            "and undress each other with frantic hands.");
 
-        File file = new File(args[0]);
+        File textsDir = new File("../" + args[0]);
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        BufferedWriter bw = new BufferedWriter(
-            new FileWriter(
-                new File(args[0] + ".coref.out")
-            )
-        );
-        StringBuilder os = new StringBuilder();
+        File charListsDir = new File(args[1]);
 
-        String st;
-        StringBuffer sb = new StringBuffer();
-        while ((st = br.readLine()) != null) {
-//            System.out.println(st);
-            sb.append(st);
-        }
-//    }
+        File outputsDir = new File(args[2]);
 
-//        Annotation document = new Annotation("They make their way through the rest of the presents—homemade brownies from Monica, oatmeal cookies and therapeutic bath salts from Phoebe (Chandler wonders if Joey let it slip to Phoebe about their, uh, shared bathtime). Ross gives Joey a ridiculously large shark pillow that’s clearly from the museum gift shop, and Chandler a Star Trek pajama set—complete with Tribble slippers. Rachel gifts Chandler a set of teas and coffee blends from Central Perk, and Joey gets gift passes to various restaurants.\n" +
-//            "Joey’s practically vibrating with anticipation as Chandler slides the final two gifts over to him. “Open the big one first,” Chandler says, and Joey is not going to argue with that. He rips open the paper like Wolverine on a bad day, then his face goes through a complicated series of emotions when he sees what’s inside: a Sony PlayStation.\n" +
-//            "Chandler doesn’t have time to decode all the various expressions on Joey’s face, because Joey’s pulling him in and kissing his mouth over and over. “Oh, man, I have the best boyfriend ever! You’re amazing, and I’m so sorry I ever said you were crappy!”");
-
-        Annotation document = new Annotation(sb.toString());
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,coref");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-        pipeline.annotate(document);
-//        System.out.println("---");
-//        System.out.println("coref chains");
+        String textFilename;
 
-        HashMap<Integer, String> idToCharacter = new HashMap<>();
+        File[] textFiles = textsDir.listFiles();
+        System.err.println(String.valueOf(textFiles.length) + " files found");
+//        int gc_cnt = 0, max_gc_cnt = 50;
 
-        for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
-            System.out.println("\t" + cc);
-            idToCharacter.put(cc.getChainID(), cc.character);
-        }
+        for (File textFile : textFiles) {
+            textFilename = textFile.getName();
+            System.err.println("processing " + textFilename);
 
-        int i = 1;
+            try {
 
-        System.err.println(idToCharacter);
 
-        HashSet<String> characters = new HashSet<>();
+                BufferedReader reader = new BufferedReader(new FileReader(textFile));
+                StringBuilder textBuilder = new StringBuilder();
+                String s;
 
-        for (CoreMap sentence : document.get(CoreAnnotations.SentencesAnnotation.class)) {
-            System.out.println("---");
-            System.out.println("sentence " + String.valueOf(i) + ": ");
-            System.out.println(sentence.get(CoreAnnotations.TextAnnotation.class));
-//            System.out.println(sentence);
-            System.out.println("mentions: ");
-
-            if (sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class).size() == 0) {
-                String text = sentence.get(CoreAnnotations.TextAnnotation.class);
-
-                if (text.equals("# .")) {
-                    os.append("\n");
-                } else if (text.endsWith(" # .")) {
-                    os.append(text, 0, text.lastIndexOf(" # ."));
-                    os.append("\n");
-                } else {
-                    os.append(sentence + " ");
+                while ((s = reader.readLine()) != null) {
+                    textBuilder.append(s);
                 }
 
-                continue;
-            }
+                Annotation document = new Annotation(textBuilder.toString());
+                pipeline.annotate(document);
 
-            ArrayList<String> words = null;
-            ArrayList<Pair<Pair<Integer, Integer>, String>> replacements = new ArrayList<>();
-            StringBuilder replacedSentence = new StringBuilder();
+                StringBuilder outputBuilder = new StringBuilder();
 
-            for (Mention m : sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class)) {
-                int id = m.corefClusterID;
-                String character = "";
+                BufferedWriter outputWriter = new BufferedWriter(
+                    new FileWriter(
+                        new File(outputsDir.getPath() + "/" + textFilename + ".coref.txt")
+                    )
+                );
 
-                if (words == null) {
-                    words = new ArrayList<String>() {};
-                    for (CoreLabel word: m.sentenceWords) {
-                        words.add(
-                            word.get(CoreAnnotations.TextAnnotation.class)
-                        );
-                    }
-                    System.out.println(words);
-                }
+                HashMap<Integer, String> idToCharacter = new HashMap<>();
+                ArrayList<Integer> ids = new ArrayList<>();
 
-//                System.err.println(id);
 
-                if (idToCharacter.containsKey(id)) {
-                    character = idToCharacter.get(id);
-                    System.err.println(String.valueOf(id) + " - " + character);
-
-                    if (!character.equals("")) {
-                        replacements.add(
-                            new Pair<>(
-                                new Pair<>(m.startIndex, m.endIndex),
-                                String.join("_", character.split(" "))
-                            )
-                        );
+                for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
+                    if (!cc.character.equals("")) {
+                        idToCharacter.put(cc.getChainID(), cc.character);
+                        ids.add(cc.getChainID());
                     }
                 }
 
-                System.out.printf("\t" + m + " (%d, %d) [" + character + " = ]", m.startIndex, m.endIndex);
-            }
+                for (int i = 0; i < ids.size(); ++i) {
+                    for (int j = i + 1; j < ids.size(); ++j) {
+                        int id1 = ids.get(i), id2 = ids.get(j);
+                        String character1 = idToCharacter.get(id1), character2 = idToCharacter.get(id2);
 
-            replacements.sort(
-                Comparator.comparingInt(o -> o.first.first)
-            );
-
-            int currIdx = 0;
-
-            for (Pair<Pair<Integer, Integer>, String> replacement: replacements) {
-                while (currIdx < replacement.first.first) {
-//                    if (words.get(currIdx).equals("#")) {
-//                        System.err.println(words);
-//                        System.err.println(words.get(currIdx + 1).equals("."));
-//                    }
-
-                    if (words.get(currIdx).equals("#")
-                        && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
-                        replacedSentence.append("\n");
-                        currIdx += 2;
-                    } else {
-                        replacedSentence.append(words.get(currIdx)).append(" ");
-                        currIdx += 1;
+                        if (character1.contains(character2)) {
+                            idToCharacter.put(id2, character1);
+                        } else if (character2.contains(character1)) {
+                            idToCharacter.put(id1, character2);
+                        }
                     }
-//                    replacedSentence.append(" ");
-//                    replacedSentence.append(words.get(currIdx) + " ");
                 }
 
-                boolean hasApostropheS = false;
+                int i = 1;
 
-                if (replacement.first.first + 1 == replacement.first.second) {
-                    replacedSentence.append(words.get(replacement.first.first)).append(" ");
 
-//                    if (replacement.first.first > 0) {
-//                        replacedSentence.append(" ");
-//                    }
-                } else {
-                    for (int j = replacement.first.first; j < replacement.first.second; ++j) {
-                        if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
-                            hasApostropheS = true;
-                            break;
+                HashSet<String> characters = new HashSet<>();
+
+                for (CoreMap sentence : document.get(CoreAnnotations.SentencesAnnotation.class)) {
+                    if (sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class).size() == 0) {
+                        String text = sentence.get(CoreAnnotations.TextAnnotation.class);
+
+                        if (text.equals("# .")) {
+                            outputBuilder.append("\n");
+                        } else if (text.endsWith(" # .")) {
+                            outputBuilder.append(text, 0, text.lastIndexOf(" # ."));
+                            outputBuilder.append("\n");
+                        } else {
+                            outputBuilder.append(sentence).append(" ");
                         }
 
-                        if (j > replacement.first.first) {
-                            replacedSentence.append("_");
-                        }
-
-                        replacedSentence.append(words.get(j));
+                        continue;
                     }
 
-                    replacedSentence.append(" ");
-                }
-                characters.add("($_" + replacement.second + ")");
-                replacedSentence.append("($_").append(replacement.second).append(") ");
+                    ArrayList<String> words = null;
+                    ArrayList<Pair<Pair<Integer, Integer>, String>> replacements = new ArrayList<>();
+                    StringBuilder replacedSentence = new StringBuilder();
 
-                if (hasApostropheS) {
-                    replacedSentence.append("'s").append(" ");
+                    for (Mention m : sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class)) {
+                        int id = m.corefClusterID;
+                        String character = "";
+
+                        if (words == null) {
+                            words = new ArrayList<String>() {
+                            };
+                            for (CoreLabel word : m.sentenceWords) {
+                                words.add(
+                                    word.get(CoreAnnotations.TextAnnotation.class)
+                                );
+                            }
+                        }
+
+                        if (idToCharacter.containsKey(id)) {
+                            character = idToCharacter.get(id);
+
+                            if (!character.equals("")) {
+                                replacements.add(
+                                    new Pair<>(
+                                        new Pair<>(m.startIndex, m.endIndex),
+                                        String.join("_", character.split(" "))
+                                    )
+                                );
+                            }
+                        }
+
+                    }
+
+                    replacements.sort(
+                        Comparator.comparingInt(o -> o.first.first)
+                    );
+
+                    int currIdx = 0;
+
+                    for (Pair<Pair<Integer, Integer>, String> replacement : replacements) {
+                        while (currIdx < replacement.first.first) {
+                            if (words.get(currIdx).equals("#")
+                                && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
+                                replacedSentence.append("\n");
+                                currIdx += 2;
+                            } else {
+                                replacedSentence.append(words.get(currIdx)).append(" ");
+                                currIdx += 1;
+                            }
+                        }
+
+                        boolean hasApostropheS = false;
+
+                        if (replacement.first.first + 1 == replacement.first.second) {
+                            replacedSentence.append(words.get(replacement.first.first)).append(" ");
+
+                        } else {
+                            for (int j = replacement.first.first; j < replacement.first.second; ++j) {
+                                if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
+                                    hasApostropheS = true;
+                                    break;
+                                }
+
+                                if (j > replacement.first.first) {
+                                    replacedSentence.append("_");
+                                }
+
+                                replacedSentence.append(words.get(j));
+                            }
+
+                            replacedSentence.append(" ");
+                        }
+                        characters.add("($_" + replacement.second + ")");
+                        replacedSentence.append("($_").append(replacement.second).append(") ");
+
+                        if (hasApostropheS) {
+                            replacedSentence.append("'s").append(" ");
+                        }
+
+                        currIdx = replacement.first.second;
+                    }
+
+                    while (currIdx < words.size()) {
+                        if (words.get(currIdx).equals("#")
+                            && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
+                            replacedSentence.append("\n");
+                            currIdx += 2;
+                        } else {
+                            replacedSentence.append(words.get(currIdx)).append(" ");
+                            currIdx += 1;
+                        }
+                    }
+
+                    outputBuilder.append(replacedSentence.toString());
+
+                    i += 1;
                 }
 
-                currIdx = replacement.first.second;
+                outputWriter.write(outputBuilder.toString());
+                outputWriter.flush();
+                outputWriter.close();
+
+                BufferedWriter charListWriter = new BufferedWriter(
+                    new FileWriter(
+                        new File(charListsDir.getPath() + "/" + textFilename + ".chars")
+                    )
+                );
+                StringBuilder charListBuilder = new StringBuilder();
+
+                for (HashMap.Entry<String, Integer> entry : perDocNerCharacterCounts.entrySet()) {
+
+                    String name = String.join("_", entry.getKey().split(" "));
+                    name = "($_" + name + ")";
+
+                    characters.add(name);
+                }
+
+                for (String c : characters) {
+                    charListBuilder.append(c).append("\n");
+                }
+
+                charListWriter.write(charListBuilder.toString());
+                charListWriter.flush();
+                charListWriter.close();
+
+//                ++gc_cnt;
+
+//                if (gc_cnt == max_gc_cnt) {
+//                    System.gc();
+//                    gc_cnt = 0;
+//                }
+
+            } catch (Exception e) {
+                PrintWriter errorWriter = new PrintWriter(
+                    new FileWriter(
+                        new File(textFilename + ".error"), true
+                    )
+                );
+
+                e.printStackTrace(errorWriter);
+                errorWriter.close();
+
             }
 
-            while (currIdx < words.size()) {
-                if (words.get(currIdx).equals("#")
-                    && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
-                    replacedSentence.append("\n");
-                    currIdx += 2;
-                } else {
-                    replacedSentence.append(words.get(currIdx)).append(" ");
-                    currIdx += 1;
-                }
-            }
-
-            os.append(replacedSentence.toString());
-
-//            System.out.println(replacements);
-
-            i += 1;
         }
 
-        bw.write(os.toString());
-        bw.flush();
-
-        BufferedWriter cw = new BufferedWriter(
-            new FileWriter(
-                new File(args[0] + ".chars")
-            )
-        );
-        StringBuilder csb = new StringBuilder();
-
-        for (String c: characters) {
-            csb.append(c + "\n");
-        }
-
-        cw.write(csb.toString());
-        cw.flush();
-
-//        System.out.println("coref chains with character");
-//        for (CorefChain cc : document.get(CorefCoreAnnotations.CorefChainAnnotation.class).values()) {
-//            if (!cc.character.equals("")) {
-//                System.out.println("\t" + cc.character + ": " + cc);
-//            }
-//        }
-
-//        return;
-
-//        Properties props = StringUtils.argsToProperties(args);
-//        CorefSystem coref = new CorefSystem(props);
-//        coref.runOnConll(props);
     }
 }

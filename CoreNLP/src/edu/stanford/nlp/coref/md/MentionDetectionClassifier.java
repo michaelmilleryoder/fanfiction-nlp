@@ -102,6 +102,8 @@ public class MentionDetectionClassifier implements Serializable {
   }
 
   public void classifyMentions(List<List<Mention>> predictedMentions, Dictionaries dict, Properties props) {
+//    System.err.println("classifyMentions");
+
     Set<String> neStrings = Generics.newHashSet();
     for (List<Mention> predictedMention : predictedMentions) {
       for (Mention m : predictedMention) {
@@ -115,10 +117,20 @@ public class MentionDetectionClassifier implements Serializable {
     }
 
     for (List<Mention> predicts : predictedMentions) {
+      Set<Mention> removedMentionsByLength = Generics.newHashSet();
+
       Map<Integer, Set<Mention>> headPositions = Generics.newHashMap();
       for (Mention p : predicts) {
-        if (!headPositions.containsKey(p.headIndex)) headPositions.put(p.headIndex, Generics.newHashSet());
-        headPositions.get(p.headIndex).add(p);
+        if (p.originalSpan.size() > 4) {
+          removedMentionsByLength.add(p);
+        } else {
+          if (!headPositions.containsKey(p.headIndex)) headPositions.put(p.headIndex, Generics.newHashSet());
+          headPositions.get(p.headIndex).add(p);
+        }
+      }
+
+      for (Mention r : removedMentionsByLength) {
+        predicts.remove(r);
       }
 
       Set<Mention> remove = Generics.newHashSet();
@@ -128,6 +140,8 @@ public class MentionDetectionClassifier implements Serializable {
           Counter<Mention> probs = new ClassicCounter<>();
           for (Mention p : shares) {
             double trueProb = probabilityOf(p, shares, neStrings, dict, props);
+
+
             probs.incrementCount(p, trueProb);
           }
 

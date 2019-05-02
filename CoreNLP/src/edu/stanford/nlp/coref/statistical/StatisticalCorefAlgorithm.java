@@ -12,6 +12,7 @@ import java.util.Set;
 import edu.stanford.nlp.coref.CorefAlgorithm;
 import edu.stanford.nlp.coref.CorefProperties;
 import edu.stanford.nlp.coref.CorefUtils;
+import edu.stanford.nlp.coref.data.CorefCluster;
 import edu.stanford.nlp.coref.data.Dictionaries;
 import edu.stanford.nlp.coref.data.Dictionaries.MentionType;
 import edu.stanford.nlp.coref.data.Document;
@@ -92,6 +93,7 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
             }
 
             Map<Pair<Integer, Integer>, Boolean> pairs = new HashMap<>();
+
             for (Map.Entry<Integer, List<Integer>> e : CorefUtils.heuristicFilter(
                 CorefUtils.getSortedMentions(document),
                 maxMentionDistance, maxMentionDistanceWithStringMatch).entrySet()) {
@@ -118,10 +120,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
 
             Set<Integer> seenAnaphors = new HashSet<>();
             for (Pair<Integer, Integer> pair : mentionPairs) {
-//                System.out.println("start merging");
-//                tempFileWriter.write(document.predictedMentionsByID.get(pair.first).toString());
-//                System.out.println(document.predictedMentionsByID.get(pair.first).toString());
-//                System.exit(0);
 
                 if (seenAnaphors.contains(pair.second)) {
                     continue;
@@ -143,7 +141,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
                 }
             }
         } catch (IOException x) {
-            System.err.println("ohhh");
             System.exit(-1);
         }
     }
