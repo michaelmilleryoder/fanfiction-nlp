@@ -4,3 +4,5 @@
 quote_attribution/tmp
 CoreNLP/*.tmp
 *.vscode
+*.pyc
+__pycache__/
