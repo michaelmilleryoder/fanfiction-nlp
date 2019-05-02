@@ -5,8 +5,8 @@ import os
 
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 # get config parameters
@@ -35,8 +35,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.corpus import stopwords
@@ -50,21 +50,21 @@ punctuation_set = set(string.punctuation)
 
 # with open(tags_path) as f:
 # 	tags = pickle.load(f)
-with open(df_path) as f:
+with open(df_path,'rb') as f:
 	df = pickle.load(f)
-with open(labels_path) as f:
+with open(labels_path,'rb') as f:
 	labels = f.readlines()
-with open(fic2idx_path) as f:
+with open(fic2idx_path,'rb') as f:
 	fic2idx = pickle.load(f)
-with open(idx2fic_path) as f:
+with open(idx2fic_path,'rb') as f:
 	idx2fic =pickle.load(f)
-with open(keywords_path) as f:
+with open(keywords_path,'rb') as f:
 	keywords = f.readlines()
 
 N = df['totalN']
 avg_doclen = df['avg_doc_len']
 
-keywords = [i.strip().split('\t') for i in keywords]
+keywords = [i.decode().strip().split('\t') for i in keywords]
 queries = []
 for i in keywords:
 	if i[0]=='':
@@ -88,7 +88,7 @@ def fic_story_words(fic_id,chapter_count):
 	for chap_id in chapter_ids:
 		this_story = ""
 		fname = stories_dir_path+fic_id+'_'+chap_id+".csv"
-		for row in csv.DictReader(open(fname)):
+		for row in csv.DictReader(open(fname,encoding='utf-8')):
 			this_story+=row["text"]
 		chap_words = story_words(this_story)
 		fic_words.extend(chap_words)
@@ -97,7 +97,7 @@ def fic_story_words(fic_id,chapter_count):
 
 def story_words(this_story):
 	this_story = this_story.encode("ascii", "ignore")
-	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
+	this_story = ''.join(ch for ch in this_story.encode() if ch not in punctuation_set)
 	words = this_story.split()
 	#words = [i for i in words if i not in stopwords_set]
 	#print 'he' in words
@@ -109,7 +109,7 @@ def story_words(this_story):
 
 def story_words_txt(this_story):
 	this_story = [i.decode(errors="replace") for i in this_story]
-	this_story = [i.encode("ascii", "ignore") for i in this_story]
+	this_story = [i.encode("ascii", "ignore").decode() for i in this_story]
 	this_story = ''.join(this_story)
 	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
 	words = this_story.split()
@@ -201,10 +201,10 @@ else:
 			#print max_score,percent
 			new_labels = [(labels[j],scores[j]) for j in range(len(scores)) if scores[j]>=max_score*percent]
 			assign_labels.append(new_labels)
-			out.write(filename+':'+'\t')
+			out.write((filename+':'+'\t').encode())
 			for label in new_labels:
-				out.write(str(label)+'\t')
-		out.write('\n')
+				out.write((str(label)+'\t').encode())
+		out.write('\n'.encode())
 		f.close()
 	out.close()
 

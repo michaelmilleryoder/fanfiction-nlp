@@ -1,4 +1,4 @@
-import pickle
+import _pickle
 import sys
 from collections import Counter
 
@@ -6,8 +6,8 @@ import csv
 import copy
 import sys  
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.stem import WordNetLemmatizer 
@@ -25,8 +25,8 @@ punctuation_set = set(string.punctuation)
 
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 # get config parameters
@@ -37,7 +37,7 @@ stories_dir_path = config.get(config_section,'stories_dir_path')
 df_path = config.get(config_section,'df_path')
 
 stories = []
-for row in csv.DictReader(open(stories_path)):
+for row in csv.DictReader(open(stories_path,encoding='utf-8')):
      stories.append(row)
 
 def lower_list(a):
@@ -56,7 +56,7 @@ def fic_story_words(fic_id,chapter_count):
 	for chap_id in chapter_ids:
 		this_story = ""
 		fname = stories_dir_path+fic_id+'_'+chap_id+".csv"
-		for row in csv.DictReader(open(fname)):
+		for row in csv.DictReader(open(fname,encoding='utf-8')):
 			this_story+=row["text"]
 		chap_words,word_count = story_words(this_story)
 		all_word_count+=word_count
@@ -64,7 +64,7 @@ def fic_story_words(fic_id,chapter_count):
 	return fic_words,all_word_count
 
 def story_words(this_story):
-	this_story = this_story.encode("ascii", "ignore")
+	this_story = str(this_story.encode("ascii", "ignore"))
 	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
 	words = this_story.split()
 	#words = [i for i in words if i not in stopwords_set]
@@ -96,11 +96,11 @@ word_counter['totalN']=N
 word_counter['avg_doc_len']=sum(word_counts)/float(len(word_counts))
 
 f = open(df_path,'wb')
-pickle.dump(word_counter,f)
+_pickle.dump(word_counter,f)
 f.close()
 
-print 'total num:',N
-print 'avg_doc_len:',word_counter['avg_doc_len']
+print ('total num:',N)
+print ('avg_doc_len:',word_counter['avg_doc_len'])
 
 
 

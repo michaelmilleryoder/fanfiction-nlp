@@ -13,8 +13,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.corpus import stopwords
@@ -28,8 +28,8 @@ punctuation_set = set(string.punctuation)
 # N = 73645
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 # get config parameters
@@ -49,18 +49,18 @@ idx_prob_path = config.get(config_section,'idx_prob_path')
 
 # with open('tags_rm_sw_l_.txt') as f:
 # 	tags = pickle.load(f)
-with open(df_path) as f:
+with open(df_path,'rb') as f:
 	df = pickle.load(f)
 # with open('clean_labels.txt') as f:
 # 	labels = f.readlines()
-with open(fic2idx_path) as f:
+with open(fic2idx_path,'rb') as f:
 	fic2idx = pickle.load(f)
-with open(idx2fic_path) as f:
+with open(idx2fic_path,'rb') as f:
 	idx2fic =pickle.load(f)
 
 
 stories = []
-for row in csv.DictReader(open(stories_path)):
+for row in csv.DictReader(open(stories_path,encoding='utf-8')):
 	stories.append(row)
 
 N = len(stories)
@@ -80,7 +80,7 @@ def fic_story_words(fic_id,chapter_count):
 	for chap_id in chapter_ids:
 		this_story = ""
 		fname = stories_dir_path+fic_id+'_'+chap_id+".csv"
-		for row in csv.DictReader(open(fname)):
+		for row in csv.DictReader(open(fname,encoding='utf-8')):
 			this_story+=row["text"]
 		chap_words = story_words(this_story)
 		fic_words.extend(chap_words)
@@ -89,7 +89,7 @@ def fic_story_words(fic_id,chapter_count):
 
 def story_words(this_story):
 	this_story = this_story.encode("ascii", "ignore")
-	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
+	this_story = ''.join(ch for ch in this_story.decode() if ch not in punctuation_set)
 	words = this_story.split()
 	#words = [i for i in words if i not in stopwords_set]
 	#print 'he' in words
@@ -113,9 +113,9 @@ for i in range(len(idx2fic)):
 
 	this_au_c = Counter(au_words)
 	for w,c in this_au_c.most_common():
-		f.write(str((w,c)))
-		f.write('\t')
-	f.write('\n')
+		f.write(str((w,c)).encode())
+		f.write('\t'.encode())
+	f.write('\n'.encode())
 
 f.close()
 

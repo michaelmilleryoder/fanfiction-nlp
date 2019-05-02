@@ -1,12 +1,12 @@
-import pickle
+import _pickle
 import sys
 from collections import Counter
 
 config_path = sys.argv[1]
 config_section = sys.argv[2]
 
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 search_string = sys.argv[3]
@@ -20,8 +20,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.corpus import stopwords
@@ -38,15 +38,15 @@ punctuation_set = set(string.punctuation)
 
 
 
-with open(tags_path) as f:
-	tags = pickle.load(f)
-with open(df_path) as f:
-	df = pickle.load(f)
+with open(tags_path,'rb') as f:
+	tags = _pickle.load(f)
+with open(df_path,'rb') as f:
+	df = _pickle.load(f)
 
 N = df['totalN']
 
 stories = []
-for row in csv.DictReader(open(stories_path)):
+for row in csv.DictReader(open(stories_path,encoding='utf-8')):
      stories.append(row)
 
 def lower_list(a):
@@ -64,14 +64,14 @@ def fic_story_words(fic_id,chapter_count):
 	for chap_id in chapter_ids:
 		this_story = ""
 		fname = stories_dir_path+fic_id+'_'+chap_id+".csv"
-		for row in csv.DictReader(open(fname)):
+		for row in csv.DictReader(open(fname,encoding='utf-8')):
 			this_story+=row["text"]
 		chap_words = story_words(this_story)
 		fic_words.extend(chap_words)
 	return list(set(fic_words))
 
 def story_words(this_story):
-	this_story = this_story.encode("ascii", "ignore")
+	this_story = str(this_story.encode("ascii", "ignore"))
 	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
 	words = this_story.split()
 	#words = [i for i in words if i not in stopwords_set]
@@ -108,7 +108,7 @@ for i in range(len(tags)):
 # print out_counter
 #print 'total num of fictions:',len(out) 
 out = list(set(out))
-print 'total num of fictions:',len(out)
+print('total num of fictions:',len(out))
 out.sort()
 au_words =[]
 for i in out:
@@ -127,10 +127,12 @@ for word in au_Counter:
 	tf = au_Counter[word]
 	score[word]=tf*idf
 count = 0
-for key, value in sorted(score.iteritems(), key=lambda (k,v): (v,k),reverse=True):
+s = sorted(score.items(),key=lambda x:x[1],reverse=True)
+#for key, value in sorted(score., key=lambda (k,v): (v,k),reverse=True):
+for key,value in s:
     if count==k:
     	break
-    print "%s: %s" % (key, value)
+    print ("%s: %s" % (key, value))
     count+=1
 
 # print au_Counter.most_common(k)

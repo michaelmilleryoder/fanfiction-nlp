@@ -6,8 +6,8 @@ from collections import Counter
 # cutoff = float(sys.argv[2])
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 # get config parameters
@@ -31,8 +31,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.corpus import stopwords
@@ -46,14 +46,14 @@ punctuation_set = set(string.punctuation)
 
 #exclude_set = stopwords_set.union(punctuation_set)
 
-with open(tags_path) as f:
+with open(tags_path,'rb') as f:
 	tags = pickle.load(f)
-with open(df_path) as f:
+with open(df_path,'rb') as f:
 	df = pickle.load(f)
-with open(labels_path) as f:
+with open(labels_path,'rb') as f:
 	labels = f.readlines()
 
-split_labels = [i.strip().split(',') for i in labels]
+split_labels = [i.decode().strip().split(',') for i in labels]
 idx2fic = [[] for i in range(len(labels))]
 
 
@@ -66,7 +66,7 @@ for i in range(len(split_labels)):
 		label2idx[j]=i
 
 stories = []
-for row in csv.DictReader(open(stories_path)):
+for row in csv.DictReader(open(stories_path,encoding='utf-8')):
 	stories.append(row)
 fic2idx = [[] for i in range(len(stories))]
 
@@ -89,7 +89,7 @@ def fic_story_words(fic_id,chapter_count):
 		# fname = "stories/"+fic_id+'_'+chap_id+".csv"
 		fname = stories_dir_path+fic_id+'_'+chap_id+".csv"
 
-		for row in csv.DictReader(open(fname)):
+		for row in csv.DictReader(open(fname,encoding='utf-8')):
 			this_story+=row["text"]
 		chap_words = story_words(this_story)
 		fic_words.extend(chap_words)
@@ -97,7 +97,7 @@ def fic_story_words(fic_id,chapter_count):
 
 def story_words(this_story):
 	this_story = this_story.encode("ascii", "ignore")
-	this_story = ''.join(ch for ch in this_story if ch not in punctuation_set)
+	this_story = ''.join(ch for ch in this_story.decode() if ch not in punctuation_set)
 	words = this_story.split()
 	#words = [i for i in words if i not in stopwords_set]
 	#print 'he' in words
@@ -159,18 +159,20 @@ for i in range(len(labels)):
 # combine the df statistics
 	score ={}
 	for word in au_Counter:
-		# print word,' ',df[word]
-		idf = math.log(N/df[word])
+	#	print(word,' ',df[word])
+		idf = math.log(N/max(df[word],1))
 		tf = au_Counter[word]
 		score[word]=tf*idf
 	top = False
 	top_score = 0
-	for key, value in sorted(score.iteritems(), key=lambda (k,v): (v,k),reverse=True):
+	s = sorted(score.items(), key=lambda x: x[1], reverse=True)
+	for key,value in s:
+#	for key, value in sorted(score.iteritems(), key=lambda (k,v): (v,k),reverse=True):
 		if top==False:
 			top_score = value
 			top = True
-			f.write(str((key,value)))
-			f.write('\t')
+			f.write(str((key,value)).encode())
+			f.write(('\t').encode())
 			idx2keywords[i].append((key,value))
 		else:
 			if len(idx2keywords[i])>topn:
@@ -178,10 +180,10 @@ for i in range(len(labels)):
 			if value<top_score*percent:
 				break
 				
-			f.write(str((key,value)))
+			f.write(str((key,value)).encode())
 			idx2keywords[i].append((key,value))			
-			f.write('\t')
-	f.write('\n')
+			f.write('\t'.encode())
+	f.write('\n'.encode())
 			# idx2keywords[i].append((key,value))
 
 	    	# print "%s: %s" % (key, value)

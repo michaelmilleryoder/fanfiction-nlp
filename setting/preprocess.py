@@ -1,10 +1,10 @@
 import sys
-import pickle
+import _pickle
 from collections import Counter
 config_path = sys.argv[1]
 config_section = sys.argv[2]
-import ConfigParser
-config = ConfigParser.ConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.readfp(open(config_path))
 
 # get config parameters
@@ -24,8 +24,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 lemmatizer = WordNetLemmatizer()
 # lemmatizer.lemmatize("power bank")
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import nltk
 from nltk.corpus import stopwords
@@ -40,7 +40,7 @@ def lower_list(a):
 	return [i.lower() for i in a]
 
 stories = []
-for row in csv.DictReader(open(stories_path)):
+for row in csv.DictReader(open(stories_path,encoding='utf-8')):
 	stories.append(row)
 
 tags =[]
@@ -52,8 +52,10 @@ for i in range(len(stories)):
 for i in tags:
 	this_tag = []
 	for j in eval(i):
-		j = j.encode("ascii", "ignore")
-		j = ''.join(ch for ch in j if ch not in punctuation_set)
+		j = str(j.encode("ascii", "ignore"))
+#		print(i,j)
+#		print([ch for ch in j if ch not in punctuation_set])
+		j = ''.join([ch for ch in j if ch not in punctuation_set])
 		j = j.split()
 
 		j = lower_list(j)
@@ -66,12 +68,12 @@ for i in tags:
 	tags_out.append(this_tag)
 
 with open(tags_path,'wb') as f:
-	pickle.dump(tags_out,f)
+	_pickle.dump(tags_out,f)
 f.close()
 
 aus_c = Counter(aus)
 with open(aus_path,'wb') as f:
-	pickle.dump(aus,f)
+	_pickle.dump(aus,f)
 f.close()
 # extract aus from tags
 
