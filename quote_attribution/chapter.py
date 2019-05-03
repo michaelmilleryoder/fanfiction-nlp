@@ -19,10 +19,6 @@ class Chapter(object):
 
     def __init__(self):
         super(Chapter, self).__init__()
-        
-        self.paragraph_quote_token_id = []
-        
-        self.find_paragraph_quote_token_id()
 
     @classmethod
     def read_with_booknlp(cls, story_file, char_file, book_nlp, tmp='tmp'):
@@ -248,17 +244,16 @@ class Chapter(object):
             i += 1
         print('Done. ({} mentions)'.format(mentions))
 
-    def quote_attribution_svmrank(self, features, model_path, svm_rank, tmp='tmp'):
+    def quote_attribution_svmrank(self, feature_extracters, model_path, svm_rank, tmp='tmp'):
         """Do quote_attribution using svm-rank.
 
         Should do tokenization and read character list first.
 
         Args:
-            features: A sequence of features to be extracted and used in quote 
-                      attribution. The features will be extracted in the 
-                      iteration order of this argument. This argument should 
-                      correspond to the features in the pre-trained svm-rank 
-                      model.
+            feature_extracters: A sequence of feature extracters to be apply. 
+                                Features will be extracted in the same order as 
+                                the extracters. The features should correspond 
+                                to the pre-trained svm-rank model.
             svm_rank: Path to svm-rank.
             model_path: Path to pre-trained svm-rank model.
             tmp: A temporary directory to save intermediate results. It will be
@@ -271,13 +266,22 @@ class Chapter(object):
         # temporary file paths
         svm_rank_input = os.path.join(tmp, 'svmrank_input.txt')
         svm_predict_file = os.path.join(tmp, 'svmrank_predict.txt')
+
+        # Find the quotes in paragraphs
+        self.find_paragraph_quote_token_id()
+
+        # Extract features given feature extracters
+        quote_features = self.extract_features(feature_extracters)
+
+
+
         
         
 
     def find_paragraph_quote_token_id(self):
-        """
-        Find the quotes in paragraphs
-        """
+        """Find the quotes in paragraphs."""
+
+        self.paragraph_quote_token_id = []
         print("Find quotes in paragraphs ... ")
         num_quote = 0
         for i in range(self.paragraph_num):
@@ -301,11 +305,19 @@ class Chapter(object):
                     j += 1
         print("Done. ({} quotes)".format(num_quote))
 
-    def extract_features(self, args, features):
-        print('Extracting features ... ')
+    def extract_features(self, feature_extracters):
+        """Extract features given feature extracters."""
+        
+        print("Extracting features ... ")
+    
+        ret = []
+        for i in range(self.paragraph_num):
+            ret.append([])
+            for j in range(self.character_num):
+                ret[-1].append(OrderedDict())
+
         input = {
             'tokens': self.tokens,
-            'args': args,
             'paragraph_num': self.paragraph_num,
             'paragraph_start_token_id': self.paragraph_start_token_id,
             'paragraph_end_token_id': self.paragraph_end_token_id,
@@ -316,8 +328,12 @@ class Chapter(object):
             'character_num': self.character_num,
             'characters': self.characters
         } 
-        self.quote_features = extract_features(features, input)
-        print('Done.')
+
+        for extracter in feature_extracters:
+            extracter.extract(ret, **input)
+
+        print("Done.")
+        return ret
 
     def output_svmrank_format(self, outputfile, answer=None):
         print('Writing svmrank input file to {} ...'.format(outputfile))

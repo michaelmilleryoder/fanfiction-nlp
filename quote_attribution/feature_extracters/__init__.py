@@ -9,8 +9,12 @@ from .base_feature_extracter import BaseFeatureExtracter
 EXTRACTER_REGISTRY = {}
 
 
-def build_feature_extracter(args):
-    
+def build_feature_extracters(args):
+    """Build feature extracters from registered extracters."""
+    features = []
+    for feat in args.features:
+        features.append(EXTRACTER_REGISTRY[feat].build_extracter(args))
+    return features
 
 
 def extract_features(features, input):

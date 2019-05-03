@@ -11,15 +11,16 @@ def single_predict(inp):
     """Do quote attribution prediction on single process
     
     Args:
-        inp: A tuple as (args, story_filename), where `args' is the parsed
-             argument object from run.py, and `story_filename' is the file name
-             of coreference resolved story file.
+        inp: A tuple as (args, feat_extracters, story_filename), where `args' is 
+             the parsed CLI arguments object, `feat_extracters' is a list of 
+             feature extracters, and `story_filename' is the base file name of 
+             the coreference resolved story file.
     
     Returns:
         A tuple as (story_filename, success). If `success' is False, it means
         that the processing failed.
     """
-    args, story_filename = inp
+    args, feat_extracters, story_filename = inp
     name = multiprocessing.current_process().name
     filestem = story_filename[:-len(args.story_suffix)]
     print('### {} processing {} ###'.format(name, filestem))
@@ -33,9 +34,6 @@ def single_predict(inp):
     
     json_filename = filestem + '.quote.json'
     json_output_path = os.path.join(args.output_path, json_filename)
-
-    # parse features
-    features = args.features
 
     # read chapter
     #try:
@@ -96,16 +94,13 @@ def predict(args):
     args.model_path = os.path.abspath(args.model_path)
 
     # build feature extracters
-    feat_extracters = []
-    for feat in args.features:
-        
-
+    feat_extracters = feature_extracters.build_feature_extracters(args)
 
     # build multi-process inputs
     single_predict_inputs = []
     for filename in args.story_files:
         if filename.endswith(args.story_suffix):
-            single_predict_inputs.append((args, filename))
+            single_predict_inputs.append((args, feat_extracters, filename))
     num_tasks = len(single_predict_inputs)
     print("{} files to preocess ... ".format(num_tasks))
     
