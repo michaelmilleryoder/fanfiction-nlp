@@ -7,8 +7,8 @@ from . import BaseFeatureExtracter, register_extracter
 class SpkCntParFeatureExtracter(BaseFeatureExtracter):
     """Speaker mention count in paragraph feature extracter."""
     
-    def __init__(self):
-        super(SpkCntParFeatureExtracter, self).__init__()
+    def __init__(self, **kargs):
+        super(SpkCntParFeatureExtracter, self).__init__(**kargs)
 
     @classmethod
     def extract(self, ret, paragraph_num, paragraph_has_quote, 
@@ -23,7 +23,7 @@ class SpkCntParFeatureExtracter(BaseFeatureExtracter):
                 parStart = paragraph_start_token_id[i]
                 parEnd = paragraph_end_token_id[i]
                 for j in range(character_num):
-                    char = characters.keys()[j]
+                    char = list(characters.keys())[j]
                     parCnt = 0
                     quoCnt = 0
                     pid = 0
@@ -38,3 +38,8 @@ class SpkCntParFeatureExtracter(BaseFeatureExtracter):
                                 quoCnt += 1
                         pid += 2
                     ret[i][j]['spkcntpar'] = parCnt - quoCnt
+
+    @classmethod
+    def build_extracter(cls, args):
+        """Build a new SpkCntParFeatureExtracter instance."""
+        return cls()

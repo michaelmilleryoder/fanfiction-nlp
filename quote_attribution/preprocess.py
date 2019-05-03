@@ -5,6 +5,7 @@ import codecs
 import argparse
 
 if __name__ == "__main__":
+    """Preprocess the input files"""
     parser = argparse.ArgumentParser()
     parser.add_argument('--csvinput', help='Path to the csv story file', required=True)
     parser.add_argument('--charfile', help='Path to the character list file', required=True)

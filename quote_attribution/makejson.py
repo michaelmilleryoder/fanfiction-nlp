@@ -11,6 +11,7 @@ paragraph2quotes = []
 char2quotes = {}
 
 if __name__ == "__main__":
+    """Make output json file"""
     parser = argparse.ArgumentParser()
     parser.add_argument('--svmfile', help='Path to the svm input file', required=True)
     parser.add_argument('--charfile', help='Path to the character list file', required=True)

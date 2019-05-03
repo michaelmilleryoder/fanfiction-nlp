@@ -8,6 +8,11 @@ from .base_feature_extracter import BaseFeatureExtracter
 
 EXTRACTER_REGISTRY = {}
 
+
+def build_feature_extracter(args):
+    
+
+
 def extract_features(features, input):
     paragraph_num = input['paragraph_num']
     character_num = input['character_num']

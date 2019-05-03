@@ -7,10 +7,9 @@ from . import BaseFeatureExtracter, register_extracter
 class NameInUttrFeatureExtracter(BaseFeatureExtracter):
     """Name in utterance feature extracter."""
     
-    def __init__(self):
-        super(NameInUttrFeatureExtracter, self).__init__()
+    def __init__(self, **kargs):
+        super(NameInUttrFeatureExtracter, self).__init__(**kargs)
 
-    @classmethod
     def extract(self, ret, paragraph_num, paragraph_has_quote, 
                 paragraph_quote_token_id, character_appear_token_id, 
                 character_num, characters, **kargs):
@@ -20,7 +19,7 @@ class NameInUttrFeatureExtracter(BaseFeatureExtracter):
         for i in range(paragraph_num):
             if paragraph_has_quote[i]:
                 for j in range(character_num):
-                    char = characters.keys()[j]
+                    char = list(characters.keys())[j]
                     appear = 0
                     pid = 0
                     while pid < len(paragraph_quote_token_id[i]):
@@ -31,3 +30,8 @@ class NameInUttrFeatureExtracter(BaseFeatureExtracter):
                                 appear = 1
                         pid += 2
                     ret[i][j]['nameinuttr'] = appear
+
+    @classmethod
+    def build_extracter(cls, args):
+        """Build a new NameInUttrFeatureExtracter instance."""
+        return cls()

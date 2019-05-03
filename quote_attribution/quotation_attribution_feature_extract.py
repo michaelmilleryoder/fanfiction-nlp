@@ -23,6 +23,7 @@ characterNum = 0
 
 
 def build_character_appear_token_id():
+    """"""
     global max_name_len
     global characterAppearTokenId
     for c in characters:
