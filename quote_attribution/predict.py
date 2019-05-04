@@ -55,7 +55,7 @@ def predict(args):
     svm-rank, and write results into args.output_path.
     """
 
-    # check and process data path arguments
+    # Check and process data path arguments
     if not hasattr(args, 'output_path') or args.output_path is None:
         raise ValueError("--output-path should be set in predicting")
     if os.path.isdir(args.story_path):
@@ -63,7 +63,7 @@ def predict(args):
         if not os.path.isdir(args.char_path):
             raise ValueError("--story-path and --char-path should be directories "
                              "at the same time")
-        # build data paths
+        # Build data paths
         args.story_dir = os.path.abspath(args.story_path)
         args.story_files = os.listdir(args.story_path)
         args.char_dir = os.path.abspath(args.char_path)
@@ -77,7 +77,7 @@ def predict(args):
     else:
         raise ValueError("Invalid path: {}".format(args.story_path))
 
-    # build paths
+    # Build paths
     args.output_path = os.path.abspath(args.output_path)
     if not os.path.exists(args.output_path):
         os.makedirs(args.output_path)
@@ -86,10 +86,10 @@ def predict(args):
     args.svmrank = os.path.abspath(args.svmrank)
     args.model_path = os.path.abspath(args.model_path)
 
-    # build feature extracters
+    # Build feature extracters
     feat_extracters = feature_extracters.build_feature_extracters(args)
 
-    # build multi-process inputs
+    # Build multi-process inputs
     single_predict_inputs = []
     for filename in args.story_files:
         if filename.endswith(args.story_suffix):
@@ -97,11 +97,11 @@ def predict(args):
     num_tasks = len(single_predict_inputs)
     print("{} files to preocess ... ".format(num_tasks))
     
-    # check and process multiprocessing arguments
+    # Check and process multiprocessing arguments
     if not isinstance(args.threads, int) or args.threads <= 0:
         raise ValueError("--threads should be a valid integer")
     try:
-        print('Initializng {} workers'.format(args.threads))
+        print("Initializng {} workers".format(args.threads))
         pool = multiprocessing.Pool(processes=args.threads)
         # For the sake of KeyboardInterrupt, we use map_async with timeout
         # TODO: add progress bar

@@ -12,18 +12,17 @@ from feature_extracters import extract_features
 
 
 class Chapter(object):
-    """
-    Class for storing a chapter with tokenized paragraphs, character list, 
-    extracted features, and quote attributions, etc.
-    """
+    """Class for storing a chapter with tokenized paragraphs, character list, and quote attributions, etc."""
 
     def __init__(self):
         super(Chapter, self).__init__()
 
     @classmethod
     def read_with_booknlp(cls, story_file, char_file, book_nlp, tmp='tmp'):
-        """Preprocess and tokenize the story file using book-nlp, and read it 
-           into a Chapter object
+        """Read a chapter using book-nlp.
+        
+        The factory function to preprocess and tokenize the story file using 
+        book-nlp, and read it into a Chapter object and return.
 
         Args:
             story_file: Path to the story file.
@@ -65,9 +64,8 @@ class Chapter(object):
         return chapter
 
     def read_characters(self, char_file, tmp_file='tmp/char_tmp.txt'):
-        """
-        Read and preprocess character list file.
-
+        """Read and preprocess character list file.
+        
         For the sake of tokenization, it will change the coreference annotation
         marks to ccc_CHARACTER_ccc.
 
@@ -78,6 +76,7 @@ class Chapter(object):
         TODO: Relieve the need for the changing of annotation by trying to use 
               customized dictionary in tokenization
         """
+
         print("Reading Character File ... ")
         self.max_name_len = 0
         self.characters = OrderedDict()
@@ -134,7 +133,7 @@ class Chapter(object):
             tmp_file: Path to save the temporary file.
 
         TODO: Relieve the need for the changing of annotation by trying to use 
-              customized dictionary in tokenization
+              customized dictionary in tokenization.
         """
 
         if not hasattr(self, 't_characters') or not hasattr(self, 'ciph_characters'):
@@ -181,7 +180,7 @@ class Chapter(object):
                 paragraph_id =int(paragraph_id)
                 token_id = int(token_id)
 
-                # Save token
+                # Store token
                 self.tokens.append(Token(paragraph_id, sentence_id, token_id, 
                                          begin_offset, end_offset, 
                                          whitespace_after, head_token_id, 
@@ -214,7 +213,7 @@ class Chapter(object):
 
         if not hasattr(self, 'tokens') or not hasattr(self, 'max_name_len') or \
             not hasattr(self, 'characters'):
-            print("Should call `read_characters', `preprocess_story' and read tokens first.")
+            raise ValueError("Should call `read_characters', `preprocess_story' and read tokens first.")
 
         print("Find character mention token ids ... ")
         for c in self.characters:
@@ -285,7 +284,17 @@ class Chapter(object):
         self.read_svmrank_pred(svmrank_predict_file)
 
     def prepare_svmrank(self, feature_extracters, svmrank_input_file, answer=None):
-        """Generate input file for svm-rank"""
+        """Generate input file for svm-rank.
+        
+        Detect all quotations in this chapter and do quote features extraction
+        using the feature extracters, and save features into `svmrank_input_file'
+        
+        Args:
+            feature_extracters: A sequence of feature extracters to be apply. 
+            svmrank_input_file: Path to save svm-rank input file.
+            answer: Path to the quote attribution golden answers file (useful in 
+                    training)
+        """
 
         # Find the quotes in paragraphs
         self.find_paragraph_quote_token_id()
@@ -324,7 +333,18 @@ class Chapter(object):
         print("Done. ({} quotes)".format(num_quote))
 
     def extract_features(self, feature_extracters):
-        """Extract features given feature extracters."""
+        """Extract features given feature extracters.
+        
+        Some feature extracters may edit the property of the chapter object, 
+        such as `paragraph_quote_type'
+
+        Args:
+            feature_extracters: A sequence of feature extracters to be apply.
+
+        Return:
+            Extracted features, a 2-D list of dictionaries indicates the 
+            features at paragraph i for character j.
+        """
 
         print("Extracting features ... ")
     
@@ -354,7 +374,14 @@ class Chapter(object):
         return ret
 
     def output_svmrank_format(self, outputfile, quote_features, answer=None):
-        """Output features to svm-rank input file."""
+        """Output features to svm-rank input file.
+        
+        Args:
+            outputfile: Path to output svm-rank input file.
+            quote_features: Extracted features.
+            answer: Path to the quote attribution golden answers file (useful in 
+                    training)
+        """
 
         print("Writing svmrank input file to {} ...".format(outputfile))
         answers = []
@@ -436,6 +463,17 @@ class Chapter(object):
         print("Done.")
 
     def read_svmrank_pred(self, predictfile):
+        """Read svm-rank output file and organize into quote attributions
+        
+        The function will pick the character with highest score as the guessed
+        speaker, and try to guess conversation flow. Two quotes will be 
+        considered as in a conversation flow if the latter's type is `Explicit'
+        and they are close enough.
+
+        Args:
+            predictfile: Path to svm-rank output file.
+        """
+
         print("Reand svm-rank prediction output ... ")
         self.char2quotes = {}
         self.quotes = []
@@ -490,5 +528,10 @@ class Chapter(object):
         print('Done.')
 
     def dump_quote_json(self, json_path):
+        """Dump quote attributions.
+        
+        Args:
+            json_path: Path to dump quotes.
+        """
         with codecs.open(json_path, 'w') as f:
             json.dump(self.quotes, f)
