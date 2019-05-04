@@ -32,7 +32,7 @@ class UttrDistFeatureExtracter(BaseFeatureExtracter):
                                     dist = abs(startId - cid)
                                 if abs(endId - cid) < dist:
                                     dist = abs(endId - cid)
-                                if tokens[cid][0] == i and cid > endId and cid - endId <= 3:
+                                if tokens[cid].paragraph_id == i and cid > endId and cid - endId <= 3:
                                     paragraph_quote_type[i] = "Explicit"
                                 else:
                                     if paragraph_quote_type[i] == "None":

@@ -18,7 +18,7 @@ class Token(object):
         self.token_id = int(token_id)
         self.begin_offset = int(begin_offset)
         self.end_offset = int(end_offset)
-        self.whitespace_after = int(whitespace_after)
+        self.whitespace_after = whitespace_after
         self.head_token_id = int(head_token_id)
         self.original_word = original_word
         self.normalized_word = normalized_word

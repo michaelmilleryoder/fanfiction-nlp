@@ -23,7 +23,7 @@ def single_predict(inp):
     args, feat_extracters, story_filename = inp
     name = multiprocessing.current_process().name
     filestem = story_filename[:-len(args.story_suffix)]
-    print('### {} processing {} ###'.format(name, filestem))
+    print("\n### {} processing {} ###".format(name, filestem))
 
     # process file names
     tmp_dir = os.path.join(args.tmp, filestem)
@@ -43,13 +43,14 @@ def single_predict(inp):
     #    return (filestem, False)
     chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, tmp=tmp_dir)
 
-    chapter.extract_features(args, features) 
-    chapter.output_svmrank_format(svm_rank_input)
+    chapter.quote_attribution_svmrank(feat_extracters, args.model_path, args.svmrank, tmp=tmp_dir)
+    #chapter.extract_features(args, features) 
+    #chapter.output_svmrank_format(svm_rank_input)
     # run svm-rnk
-    os.system('sh run-svmrank.sh {} {} {} {}'.format(args.svmrank, 
-        svm_rank_input, model_file, svm_predict_file))
-    chapter.read_svmrank_pred(svm_predict_file)
-    chapter.dump_quote_json(json_output_path)
+    #os.system('sh run-svmrank.sh {} {} {} {}'.format(args.svmrank, 
+    #    svm_rank_input, model_file, svm_predict_file))
+    #chapter.read_svmrank_pred(svm_predict_file)
+    #chapter.dump_quote_json(json_output_path)
 
     return (story_filename, True)
 

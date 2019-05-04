@@ -6,7 +6,7 @@ import json
 import numpy as np
 import csv
 import codecs
-from token import Token
+from tokens import Token
 from collections import OrderedDict
 from feature_extracters import extract_features
 
@@ -59,6 +59,8 @@ class Chapter(object):
         
         # read tokens from book-nlp output
         chapter.read_booknlp_tokens_file(token_tmp)
+
+        chapter.find_character_appear_token_id()
 
         return chapter
 
@@ -176,6 +178,9 @@ class Chapter(object):
             for line in f:
                 paragraph_id, sentence_id, token_id, begin_offset, end_offset, whitespace_after, head_token_id, original_word, normalized_word, lemma, pos, ner, deprel, in_quotation, character_id, supersense = line.strip().split('\t')
 
+                paragraph_id =int(paragraph_id)
+                token_id = int(token_id)
+
                 # Save token
                 self.tokens.append(Token(paragraph_id, sentence_id, token_id, 
                                          begin_offset, end_offset, 
@@ -245,7 +250,7 @@ class Chapter(object):
         print('Done. ({} mentions)'.format(mentions))
 
     def quote_attribution_svmrank(self, feature_extracters, model_path, svm_rank, tmp='tmp'):
-        """Do quote_attribution using svm-rank.
+        """Predict quote_attribution using svm-rank.
 
         Should do tokenization and read character list first.
 
@@ -264,8 +269,14 @@ class Chapter(object):
             os.mkdir(tmp)
 
         # temporary file paths
-        svm_rank_input = os.path.join(tmp, 'svmrank_input.txt')
-        svm_predict_file = os.path.join(tmp, 'svmrank_predict.txt')
+        svmrank_input_file = os.path.join(tmp, 'svmrank_input.txt')
+        svmrank_predict_file = os.path.join(tmp, 'svmrank_predict.txt')
+
+        # Generate input file for svm-rank
+        self.prepare_svmrank(feature_extracters, svmrank_input_file, answer=None)
+
+    def prepare_svmrank(self, feature_extracters, svmrank_input_file, answer=None):
+        """Generate input file for svm-rank"""
 
         # Find the quotes in paragraphs
         self.find_paragraph_quote_token_id()
@@ -273,10 +284,8 @@ class Chapter(object):
         # Extract features given feature extracters
         quote_features = self.extract_features(feature_extracters)
 
-
-
-        
-        
+        # Output features to svm-rank input file
+        self.output_svmrank_format(svmrank_input_file, quote_features, answer=answer)
 
     def find_paragraph_quote_token_id(self):
         """Find the quotes in paragraphs."""
@@ -289,16 +298,16 @@ class Chapter(object):
             if self.paragraph_has_quote[i]:
                 j = self.paragraph_start_token_id[i]
                 state = False
-                while j < len(self.tokens) and i == self.tokens[j][0]:
-                    if self.tokens[j][13] != 'O' and state == False:
+                while j < len(self.tokens) and i == self.tokens[j].paragraph_id:
+                    if self.tokens[j].in_quotation != 'O' and state == False:
                         state = True
                         self.paragraph_quote_token_id[i].append(j)
                     if state == True:
-                        if self.tokens[j][13] == 'O':
+                        if self.tokens[j].in_quotation == 'O':
                             state = False
                             self.paragraph_quote_token_id[i].append(j - 1)
                             num_quote += 1
-                        elif j == len(self.tokens) - 1 or i != self.tokens[j+1][0]:
+                        elif j == len(self.tokens) - 1 or i != self.tokens[j+1].paragraph_id:
                             state = False
                             self.paragraph_quote_token_id[i].append(j)
                             num_quote += 1
@@ -307,7 +316,7 @@ class Chapter(object):
 
     def extract_features(self, feature_extracters):
         """Extract features given feature extracters."""
-        
+
         print("Extracting features ... ")
     
         ret = []
@@ -335,10 +344,13 @@ class Chapter(object):
         print("Done.")
         return ret
 
-    def output_svmrank_format(self, outputfile, answer=None):
-        print('Writing svmrank input file to {} ...'.format(outputfile))
+    def output_svmrank_format(self, outputfile, quote_features, answer=None):
+        """Output features to svm-rank input file."""
+
+        print("Writing svmrank input file to {} ...".format(outputfile))
         answers = []
 
+        # Build output directory if not exist
         output_abs_path = os.path.abspath(outputfile)
         output_father_path = os.path.abspath(os.path.dirname(output_abs_path) + os.path.sep + ".")
         if not os.path.exists(output_father_path):
@@ -356,16 +368,22 @@ class Chapter(object):
                 if self.paragraph_has_quote[i]:
                     qp += 1
 
-            print("(" + str(qp) + " paragraphs have quote)")
+            print("({} paragraphs have quote)".format(qp))
             
             ss = 0
             for i in range(self.paragraph_num):
                 if self.paragraph_has_quote[i]:
                     ss += 1
-                    f.write('# paragraph ' + str(i) + ': ' + str(self.paragraph_start_token_id[i]) + "--" + str(self.paragraph_end_token_id[i]) + ' ' + 'type:' + self.paragraph_quote_type[i] + ' ')
-                    for quoteTokenId in self.paragraph_quote_token_id[i]:
-                        f.write(str(quoteTokenId) + ' ')
-                    f.write('\n')
+                    f.write("# paragraph {}: {}--{} type:{} ".format(
+                        i, 
+                        self.paragraph_start_token_id[i], 
+                        self.paragraph_end_token_id[i], 
+                        self.paragraph_quote_type[i]
+                    ))
+
+                    for quoteToken_id in self.paragraph_quote_token_id[i]:
+                        f.write("{} ".format(quoteToken_id))
+                    f.write("\n")
 
                     ans_char = None
                     if answer is not None:
@@ -375,9 +393,9 @@ class Chapter(object):
                         c = answers[ss-1][0]
                         sent = answers[ss-1][1].split()
 
-                        lll = len(self.tokens[self.paragraph_quote_token_id[i][0]+1][7])
+                        lll = len(self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word)
                         ans = sent[0][:lll]
-                        now = self.tokens[self.paragraph_quote_token_id[i][0]+1][7].lower()
+                        now = self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word.lower()
 
                         if ans != now:
                             ss -= 1
@@ -399,14 +417,14 @@ class Chapter(object):
                             
                     for j in range(self.character_num):
                         if ans_char is not None and ans_char == self.characters.keys()[j]:
-                            f.write('1\t')
+                            f.write("1\t")
                         else:
-                            f.write('0\t')
-                        f.write('qid:' + str(ss))
-                        for k, feature in enumerate(list(self.quote_features[i][j].keys())):
-                            f.write('\t' + str(k+1) + ':' + str(self.quote_features[i][j][feature]))
-                        f.write('\n')
-        print('Done.')
+                            f.write("0\t")
+                        f.write("qid:{}".format(ss))
+                        for k, feature in enumerate(list(quote_features[i][j].keys())):
+                            f.write("\t{}:{}".format(k+1, quote_features[i][j][feature]))
+                        f.write("\n")
+        print("Done.")
 
     def read_svmrank_pred(self, predictfile):
         print('Reand svm-rank prediction output ... ')

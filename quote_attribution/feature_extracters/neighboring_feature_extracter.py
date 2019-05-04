@@ -13,9 +13,7 @@ class NeighboringFeatureExtracter(BaseFeatureExtracter):
         self.neighboring_before = neighboring_before
         self.neighboring_after = neighboring_after
 
-    def extract(cls, ret, tokens, paragraph_num, paragraph_has_quote, 
-                paragraph_quote_token_id, character_appear_token_id, 
-                character_num, characters, **kargs):
+    def extract(self, ret, paragraph_has_quote, **kargs):
         """
         Extract neighboring feature
         """
