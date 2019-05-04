@@ -180,7 +180,7 @@ class Chapter(object):
         self.paragraph_end_token_id = []
         # Whether the paragraph contains a quote
         self.paragraph_has_quote = []
-        # The type of quote in the paragraph. Could be `None', `Implicit', or `Explicit'
+        # The type of quotes in the paragraph. Could be `None', `Implicit', or `Explicit'
         self.paragraph_quote_type = []
         print("Reading Book-nlp Tokens File ... {}".format(token_file))
         with codecs.open(token_file) as f:
@@ -320,7 +320,7 @@ class Chapter(object):
     def find_paragraph_quote_token_id(self):
         """Find the quotes in paragraphs."""
 
-        # Start and end token IDs of quotes in paragraphs
+        # Start and end token IDs of quotes in paragraphs. Stored alternatively by start and end ids
         self.paragraph_quote_token_id = []
         print("Find quotes in paragraphs ... ")
         num_quote = 0

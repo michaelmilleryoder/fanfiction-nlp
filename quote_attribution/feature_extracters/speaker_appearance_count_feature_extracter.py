@@ -6,7 +6,12 @@ from . import BaseFeatureExtracter, register_extracter
 
 @register_extracter('spkappcnt')
 class SpkAppCntFeatureExtracter(BaseFeatureExtracter):
-    """Speaker appearance count feature extracter."""
+    """`Speaker appearance count' feature extracter.
+    
+    Speaker Appearance Count. This feature is the count of the mention of the 
+    character in the text, which could be considered as the prior probability 
+    that the character speaks.
+    """
     
     def __init__(self, **kargs):
         super(SpkAppCntFeatureExtracter, self).__init__(**kargs)
@@ -14,8 +19,15 @@ class SpkAppCntFeatureExtracter(BaseFeatureExtracter):
     @classmethod
     def extract(self, ret, paragraph_num, paragraph_has_quote, 
                 character_appear_token_id, character_num, characters, **kargs):
-        """
-        Extract speaker appearance count features
+        """Extract `speaker appearance count' features for a chapter.
+        
+        Args:
+            ret: 2-D list of directories to save features.
+            paragraph_num: Number of paragraphs.
+            paragraph_has_quote: Whether the paragraph contains a quote.
+            character_appear_token_id: The token IDs of character mentions.
+            character_num: Number of characters.
+            characters: Characters of the chapter
         """
         for i in range(paragraph_num):
             if paragraph_has_quote[i]:

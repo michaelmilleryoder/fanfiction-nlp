@@ -6,7 +6,13 @@ from . import BaseFeatureExtracter, register_extracter
 
 @register_extracter('neighboring')
 class NeighboringFeatureExtracter(BaseFeatureExtracter):
-    """Neighboring feature extracter."""
+    """`Neighboring' feature extracter.
+    
+    The above features of the same character with regard to neighboring 
+    utterances are also incorporated. The intuition of this feature is the 
+    nature of ``conversation chain'' that neighboring utterances is not likely 
+    to be spoken by the same character without additional cue.
+    """
     
     def __init__(self, neighboring_before, neighboring_after, **kargs):
         super(NeighboringFeatureExtracter, self).__init__(**kargs)
@@ -14,8 +20,11 @@ class NeighboringFeatureExtracter(BaseFeatureExtracter):
         self.neighboring_after = neighboring_after
 
     def extract(self, ret, paragraph_has_quote, **kargs):
-        """
-        Extract neighboring feature
+        """Extract `neighboring' featurefor a chapter.
+        
+        Args:
+            ret: 2-D list of directories to save features.
+            paragraph_has_quote: Whether the paragraph contains a quote.
         """
         before = self.neighboring_before
         after = self.neighboring_after
@@ -62,7 +71,7 @@ class NeighboringFeatureExtracter(BaseFeatureExtracter):
 
     @staticmethod
     def add_args(parser):
-        """Add model-specific arguments to the parser."""
+        """Add feature-extracter-specific arguments to the parser."""
         # fmt: off
         parser.add_argument('--neighboring-before', type=int, default=0,
                             help='number of utterances before the current one '
