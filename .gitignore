@@ -6,5 +6,5 @@ CoreNLP/*.tmp
 *.vscode
 *.pyc
 __pycache__/
-tmpout/
+quote_attribution/tmpout/
 
