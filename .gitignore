@@ -6,3 +6,5 @@ CoreNLP/*.tmp
 *.vscode
 *.pyc
 __pycache__/
+tmpout/
+
