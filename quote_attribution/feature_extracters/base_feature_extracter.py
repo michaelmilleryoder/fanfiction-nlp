@@ -8,6 +8,11 @@ class BaseFeatureExtracter(object):
         super(BaseFeatureExtracter, self).__init__(**kargs)
 
     def extract(self, ret, **kargs):
+        """Extract features by paragraphs and characters, and store into `ret'.
+
+        Args:
+            ret: 2-D list of directories to store extracted features.
+        """
         raise NotImplementedError('FeatureExtracters must implement the extract method')
 
     @classmethod

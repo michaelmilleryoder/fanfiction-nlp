@@ -6,6 +6,8 @@ class Token(object):
     """Class for tokens.
 
     Specialized for book-nlp.
+
+    TODO: Scalability.
     """
 
     def __init__(self, paragraph_id, sentence_id, token_id, begin_offset, 

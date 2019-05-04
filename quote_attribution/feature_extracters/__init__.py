@@ -10,29 +10,18 @@ EXTRACTER_REGISTRY = {}
 
 
 def build_feature_extracters(args):
-    """Build feature extracters from registered extracters."""
+    """Build feature extracters from registered extracters.
+    
+    Args:
+        args: The parsed CLI arguments object.
+
+    Return:
+        A sequence of feature extracters.
+    """
     features = []
     for feat in args.features:
         features.append(EXTRACTER_REGISTRY[feat].build_extracter(args))
     return features
-
-
-def extract_features(features, input):
-    paragraph_num = input['paragraph_num']
-    character_num = input['character_num']
-    ret = []
-    for i in range(paragraph_num):
-        ret.append([])
-        for j in range(character_num):
-            ret[-1].append(OrderedDict())
-    for feat in features:
-        print('Extracting {} ...'.format(feat))
-        if feat not in EXTRACTER_REGISTRY:
-            print('Feature {} do not exist!!!!!!!'.format(feat))
-            continue
-        EXTRACTER_REGISTRY[feat].extract(ret, **input)
-        print('Done')
-    return ret
 
 
 def register_extracter(name):
@@ -61,6 +50,11 @@ def register_extracter(name):
 
 
 def add_extracter_args(parser):
+    """Add arguments of registerd extracters to the parser.
+
+    Args:
+        parser: The CLI parser.
+    """
     for extracter_name in EXTRACTER_REGISTRY:
         group_args = parser.add_argument_group('Arguments for feature extracter: {}'.format(extracter_name))
         EXTRACTER_REGISTRY[extracter_name].add_args(group_args)
@@ -71,4 +65,3 @@ for file in os.listdir(os.path.dirname(__file__)):
     if file.endswith('.py') and not file.startswith('_'):
         extracter_name = file[:file.find('.py')]
         extracter = importlib.import_module('feature_extracters.' + extracter_name)
-

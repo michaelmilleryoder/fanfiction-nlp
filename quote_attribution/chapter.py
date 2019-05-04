@@ -78,10 +78,15 @@ class Chapter(object):
         """
 
         print("Reading Character File ... ")
+        # Maximum length of separated name
         self.max_name_len = 0
+        # Characters of the chapter
         self.characters = OrderedDict()
+        # Number of characters
         self.character_num = 0
+        # Temporary dictionary to save ciphered character names (name to ciphered name)
         self.t_characters = {}
+        # Temporary dictionary to save ciphered character names (ciphered name to name)
         self.ciph_characters = {}
         with codecs.open(tmp_file, 'w') as outf:
             with codecs.open(char_file) as f:
@@ -165,11 +170,17 @@ class Chapter(object):
         Args:
             token_file: Book-nlp tokens output file.
         """
+        # List of tokens
         self.tokens = []
+        # Number of paragraphs
         self.paragraph_num = 0
+        # IDs of paragraph start tokens
         self.paragraph_start_token_id = []
+        # IDs of paragraph end tokens
         self.paragraph_end_token_id = []
+        # Whether the paragraph contains a quote
         self.paragraph_has_quote = []
+        # The type of quote in the paragraph. Could be `None', `Implicit', or `Explicit'
         self.paragraph_quote_type = []
         print("Reading Book-nlp Tokens File ... {}".format(token_file))
         with codecs.open(token_file) as f:
@@ -209,6 +220,7 @@ class Chapter(object):
         
         Should call `read_characters', `preprocess_story' and read tokens first.
         """
+        # The token IDs of character mentions
         self.character_appear_token_id = {}
 
         if not hasattr(self, 'tokens') or not hasattr(self, 'max_name_len') or \
@@ -308,6 +320,7 @@ class Chapter(object):
     def find_paragraph_quote_token_id(self):
         """Find the quotes in paragraphs."""
 
+        # Start and end token IDs of quotes in paragraphs
         self.paragraph_quote_token_id = []
         print("Find quotes in paragraphs ... ")
         num_quote = 0
@@ -348,6 +361,7 @@ class Chapter(object):
 
         print("Extracting features ... ")
     
+        # Extracted features will be stored in `ret'
         ret = []
         for i in range(self.paragraph_num):
             ret.append([])
@@ -475,7 +489,9 @@ class Chapter(object):
         """
 
         print("Reand svm-rank prediction output ... ")
+        # Character to quotes
         self.char2quotes = {}
+        # List of quotes in the chapter
         self.quotes = []
         for c in self.characters:
             self.char2quotes[c] = []
