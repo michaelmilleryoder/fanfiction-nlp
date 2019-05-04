@@ -275,6 +275,15 @@ class Chapter(object):
         # Generate input file for svm-rank
         self.prepare_svmrank(feature_extracters, svmrank_input_file, answer=None)
 
+        # Run svm-rank
+        os.system('sh run-svmrank.sh {} {} {} {}'.format(svm_rank, 
+                                                         svmrank_input_file, 
+                                                         model_path, 
+                                                         svmrank_predict_file))
+
+        # Read svm-rank output and build quote attributions
+        self.read_svmrank_pred(svmrank_predict_file)
+
     def prepare_svmrank(self, feature_extracters, svmrank_input_file, answer=None):
         """Generate input file for svm-rank"""
 
@@ -427,7 +436,7 @@ class Chapter(object):
         print("Done.")
 
     def read_svmrank_pred(self, predictfile):
-        print('Reand svm-rank prediction output ... ')
+        print("Reand svm-rank prediction output ... ")
         self.char2quotes = {}
         self.quotes = []
         for c in self.characters:
@@ -438,14 +447,14 @@ class Chapter(object):
         for i in range(self.paragraph_num):
             if self.paragraph_has_quote[i]:
                 paragraph2quotes.append([])
-                startId = self.paragraph_start_token_id[i]
-                endId = self.paragraph_end_token_id[i]
-                paragraphId = i
+                start_id = self.paragraph_start_token_id[i]
+                end_id = self.paragraph_end_token_id[i]
+                paragraph_id = i
                 qtype = self.paragraph_quote_type[i]
                 for j in range(0, len(self.paragraph_quote_token_id[i]), 2):
-                    quoteStart = int(self.paragraph_quote_token_id[i][j])
-                    quoteEnd = int(self.paragraph_quote_token_id[i][j+1])
-                    paragraph2quotes[ss].append((quoteStart, quoteEnd, qtype, paragraphId, startId, endId))
+                    quote_start = int(self.paragraph_quote_token_id[i][j])
+                    quote_end = int(self.paragraph_quote_token_id[i][j+1])
+                    paragraph2quotes[ss].append((quote_start, quote_end, qtype, paragraph_id, start_id, end_id))
                 ss += 1
 
         with codecs.open(predictfile) as f:
@@ -460,15 +469,15 @@ class Chapter(object):
             quote = {}
             quote['speaker'] = guess_char
             quote['quotes'] = []
-            for quoteStart, quoteEnd, quoteType, paragraphId, startId, endId in paragraph2quotes[ss]:
-                quote['paragraph'] = paragraphId
-                quote['type'] = quoteType
-                quote['start'] = startId
-                quote['end'] = endId
+            for quote_start, quote_end, quote_type, paragraph_id, start_id, end_id in paragraph2quotes[ss]:
+                quote['paragraph'] = paragraph_id
+                quote['type'] = quote_type
+                quote['start'] = start_id
+                quote['end'] = end_id
                 quote['quotes'].append({})
-                quote['quotes'][-1]['start'] = quoteStart
-                quote['quotes'][-1]['end'] = quoteEnd
-                t_tokens = [token[7] for token in self.tokens[quoteStart: quoteEnd+1]]
+                quote['quotes'][-1]['start'] = quote_start
+                quote['quotes'][-1]['end'] = quote_end
+                t_tokens = [token.original_word for token in self.tokens[quote_start: quote_end+1]]
                 quote['quotes'][-1]['quote'] = ' '.join(t_tokens)
                 for c in self.characters:
                     quote['quotes'][-1]['quote'] = ' '.join(quote['quotes'][-1]['quote'].replace(c, '').split())

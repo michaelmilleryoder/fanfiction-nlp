@@ -17,8 +17,8 @@ def single_predict(inp):
              the coreference resolved story file.
     
     Returns:
-        A tuple as (story_filename, success). If `success' is False, it means
-        that the processing failed.
+        A tuple as (story_filename, success). `success' will be False if 
+        processing failed.
     """
     args, feat_extracters, story_filename = inp
     name = multiprocessing.current_process().name
@@ -30,27 +30,19 @@ def single_predict(inp):
     story_file = os.path.join(args.story_dir, story_filename)
     char_filename = filestem + args.char_suffix
     char_file = os.path.join(args.char_dir, char_filename)
- 
-    
     json_filename = filestem + '.quote.json'
     json_output_path = os.path.join(args.output_path, json_filename)
 
-    # read chapter
-    #try:
-    #    chapter = Chapter(story_file, char_file, tmp_dir, args.booknlp)
-    #except Exception as err:
-    #    print(err)
-    #    return (filestem, False)
-    chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, tmp=tmp_dir)
-
-    chapter.quote_attribution_svmrank(feat_extracters, args.model_path, args.svmrank, tmp=tmp_dir)
-    #chapter.extract_features(args, features) 
-    #chapter.output_svmrank_format(svm_rank_input)
-    # run svm-rnk
-    #os.system('sh run-svmrank.sh {} {} {} {}'.format(args.svmrank, 
-    #    svm_rank_input, model_file, svm_predict_file))
-    #chapter.read_svmrank_pred(svm_predict_file)
-    #chapter.dump_quote_json(json_output_path)
+    try:
+        # Read chapter
+        chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, tmp=tmp_dir)
+        # Predict quote attribution
+        chapter.quote_attribution_svmrank(feat_extracters, args.model_path, args.svmrank, tmp=tmp_dir)
+        # Dump
+        chapter.dump_quote_json(json_output_path)
+    except Exception as err:
+        print(err)
+        return (filestem, False)
 
     return (story_filename, True)
 
