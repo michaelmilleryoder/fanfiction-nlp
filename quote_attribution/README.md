@@ -161,49 +161,110 @@ In the character list file, each character takes one line with the following for
 <character_name>[;<gender>[;<alias_1>[;<alias_2>[...]]]]
 ```
 
-* `<character_name>`: the primary name of the character (chould contain spaces). This should be unique for each character. (If it is from coreference resolution, it should be like `($_XXX_YYY)`)
-* `<gender>`: (optional) the gender of this character, either `M` or `F`.
-* `<alias>`: (optional) the other names of this character, which should be following `<gender>` and separated by semicolons.
+* `<character_name>`: the primary name of the character (chould contain spaces); this should be unique for each character (if it is from coreference resolution, it should be like `($_XXX_YYY)`)
+* `<gender>`: (optional) the gender of this character, either `M` or `F`
+* `<alias>`: (optional) the other names of this character, which should be following `<gender>` and separated by semicolons
 
 `example_train_data/pride_prejudice.chars` is an example of character list (not from coreference resolution).
 
 #### Gold answer
 
-#### Customized tokenization .
+The gold answer files are required in the `prepare-train` mode. The gold answer file contains the correct speakers and their utterances, and follows the following format:
+
+```
+<chapter_id>	<character_name>	<paragraph>
+```
+where `<chapter_id>`, `<character_name>`, and `<paragraph>` are tabs (`\t`) separated.
+
+* `<chapter_id>`: chapter ID of the utterance (not actually used)
+* `<character_name>`: the primary name of the character (should be corresponding to the character list file).
+* `<paragraph>`: the utterance contents in the paragraph (assuming that one paragraph has only one speaker); non-utterance content should be replaced by `[x]`.
+
+`example_train_data/pride_prejudice.chars` is an example of gold answer file.
+
+
+#### Customized tokenization
+
+The customized tokenization files are optional. The script uses BookNLP to tokenize input text, however, there might be mistakes in tokenization results. If you want to use customized tokenization or fix mistakes in BookNLP results, you could provide tokenization files with the command-line argument `--tok-path`. Tokenization files should be in the format of BoolNLP tokenization results.
+
+`example_train_data/pride_prejudice.tok` is an example of tokenization file.
 
 ### Output
-This script will output the quote attribution results to `<quote_output_dir>/<story_filename>.quote.json` with the format as:
+This script will output the quote attribution results to `<quote_output_dir>/<story_filename>.quote.json` (when `--story-path` pointing to a directory) or to the file `--output-path` point to (when `--story-path` pointing to a file) with the format as:
 
 ```
-{
-	<character_name_1> : [
-		<quote_1>,
-		<quote_2>,
-		......
-	],
-	......
-}
+[
+    {
+        "speaker": <character_name>,
+        "quotes": [
+            {
+                "start": <quote_start_token_id>,
+                "end": <quote_end_token_id>,
+                "quote": <quote_content>
+            },
+            ...
+        ],
+        "paragraph": <paragraph_id>,
+        "type": <quote_type>,
+        "start": <paragraph_start_token_id>,
+        "end": <paragraph_end_token_id>,
+        "replyto": <reply_to_paragraph_id>
+    },
+    ...
+]
 ```
 
-Meanwhile, the script will also generate some temporary files in `tmp/<story_filename>/`:
+The output json file is organized by paragraphs. In summary, the output json file contains a list of paragraph quote attributions (assuming that each paragraph has only one speaker) represented as key-value directories.
 
-* `booknlp_output/`: the outputs of BookNLP.
-* `<story_filename>.tmptext`: the temporary file for processing the story text.
-* `<story_filename>.tmpchar`: the temporary file for processing the character list.
-* `<story_filename>.tokens`: the tokenization results by BookNLP.
-* `<story_filename>.predict`: the scores predicted by SVM<sup>*rank*</sup>.
-* `<story_filename>.svmrank`: the input file for SVM<sup>*rank*</sup>.
+* `speaker`: the primary character name corresponding to the character list file.
+* `quotes`: a list of quotes in the paragraph, with start token IDs, end token IDs, and quote contents
+* `paragraph`: the paragraph ID
+* `type`: either "Explicit" or "Implicit"; quote attribution has higher confidence with "Explicit" quotes
+* `start`: paragraph start token ID
+* `end`: paragraph end token ID
+* `replyto`: quote attribution will guess the conversation chain and try to guess the ID of the paragraph that this paragragh's quotes are replying to
+
+Meanwhile, the script will also generate some temporary files in `<tmp>/<story_filename>/`:
+
+* `booknlp_output/`: the outputs of BookNLP
+* `booknlp.log`: BookNLP log output
+* `story_tmp.txt`: the temporary file for processing the story text
+* `char_tmp.txt`: the temporary file for processing the character list
+* `token_tmp.txt`: the tokenization results by BookNLP
+* `svmrank_input.txt`: the input file for SVM<sup>*rank*</sup>
+* `svmrank_predict.txt`: the scores predicted by SVM<sup>*rank*</sup>
 
 ## Scalability
+
+The script contains five feature extracters: `spkappcnt`, `nameinuttr`, `neighboring`, `disttoutter`, and `spkcntpar`. You can create new feature extracters by extending the `BaseFeatureExtracter` class. New feature extracter can be added to quote attribution with the decorator `register_extracter`, for example: 
+
+```
+@register_extracter('extracter_name')
+class YourFeatureExtracter(BaseFeatureExtracter):
+    (...)
+```
+
+Registered feature extracters will be automatically added to the choices of the `--features` argument.
+
+It is required to implement the `extract(self, ret, **kargs)` function and the `build_extracter(cls, args)` functions for feature extracters. You can also implement the `add_args(parser)` function if you want to Add feature-extracter-specific arguments to the command line parser.
 
 ## How it works
 Based on the following papers:
 * He et al., 2013, "Identification of speakers in novels". Data and algorithm (SVM<sup>*rank*</sup>) came from this paper.
 * Elson et al., 2010, AAAI, "Automatic attribution of quoted speech". Features mainly came from this paper.
 
-### Features
-Features for each utterance are specific to each speaker from the coreference step.
-* Distance to utterance
+This quote attribution script assumes each paragraph has only one speaker, and will conduct the following operations:
+
+1. Preprocess the character list and story text. For the sake of tokenization, the script will cipher the characters' name if `--no-cipher-char` is not selected.
+2. Do tokenization using BookNLP.
+3. Extract features in the same order as the argument `--features`.
+4. Output features into SVM<sup>*rank*</sup> input format and use SVM<sup>*rank*</sup> to predict speakers.
+5. Read the SVM<sup>*rank*</sup> output file, guess conversation chain, and output to the destination json file.
+
+### Built-in Features
+The features extracters will extract quote attribution features for each character on each paragraph. The following are the built-in features in the script:
+
+* **Distance to utterance**: This feature captures the distance between the mention of the character and the utterance. The intuition is that near character is likely to be the speaker. This feature will be represented as $1 / (dist + 1)$. 
 * Number of times the speaker appears in whole text
 * Number of times the speaker appears in the paragraph
 * Speaker in the utterance
