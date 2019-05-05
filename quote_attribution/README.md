@@ -35,7 +35,7 @@ usage: run.py [-h] {predict,prepare-train}
 <table >
 <thead>
 <tr>
-<th width=230>Argument</th>
+<th width=240>Argument</th>
 <th>Description</th>
 </tr>
 </thead>
