@@ -95,6 +95,9 @@ def predict(args):
         if os.path.isdir(args.output_path):
             raise ValueError("--output-path already exists and is a directory "
                              "instead of a file when --story-path is a directory")
+        output_parent_dir = os.path.abspath(os.path.dirname(args.output_path))
+        if not os.path.exists(output_parent_dir):
+            os.makedirs(output_parent_dir)
         # Build data paths
         story_files.append(os.path.abspath(args.story_path))
         char_files.append(os.path.abspath(args.char_path))
@@ -138,3 +141,5 @@ def predict(args):
         print("Normal termination")
         pool.close()
     pool.join()
+
+    print("Done.")

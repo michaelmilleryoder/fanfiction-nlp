@@ -19,8 +19,8 @@ def single_train_organize(inp):
              and `tmp_dir' is the path to save temporary files.
     
     Returns:
-        A tuple as (story_filename, svmrank_input_file, success). `success' 
-        will be False if processing failed.
+        A tuple as (story_file, svmrank_input_file, success). `success' will be 
+        False if processing failed.
     """
     args, feat_extracters, story_file, char_file, ans_file, tmp_dir = inp
     name = multiprocessing.current_process().name
@@ -30,23 +30,19 @@ def single_train_organize(inp):
     # Process file names
     svmrank_input_file = os.path.join(tmp_dir, 'svmrank_input.txt')
     
-    #try:
-    #    # Read chapter
-    #    chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, no_cipher=args.no_cipher_char, tmp=tmp_dir)
-    #    # Generate input file for svm-rank
-    #    chapter.prepare_svmrank(feat_extracters, svmrank_input_file, answer=ans_file)
-    #except Exception as err:
-    #    print(err)
-    #    return (filestem, None, False)
-    # Read chapter
-    chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, 
-                                        coref_story=(not args.no_coref_story), 
-                                        no_cipher=args.no_cipher_char, 
-                                        tmp=tmp_dir)
-    # Generate input file for svm-rank
-    chapter.prepare_svmrank(feat_extracters, svmrank_input_file, answer=ans_file)
+    try:
+        # Read chapter
+        chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, 
+                                            coref_story=(not args.no_coref_story), 
+                                            no_cipher=args.no_cipher_char, 
+                                            tmp=tmp_dir)
+        # Generate input file for svm-rank
+        chapter.prepare_svmrank(feat_extracters, svmrank_input_file, answer=ans_file)
+    except Exception as err:
+        print(err)
+        return (story_file, None, False)
     
-    return (story_filename, svmrank_input_file, True)
+    return (story_file, svmrank_input_file, True)
 
 
 def prepare_train(args):
@@ -65,6 +61,9 @@ def prepare_train(args):
         raise ValueError("--output-path already exists and is a directory. "
                          "--output-path should be a path to file when "
                          "prepare-train.")
+    output_parent_dir = os.path.abspath(os.path.dirname(args.output_path))
+    if not os.path.exists(output_parent_dir):
+            os.makedirs(output_parent_dir)
 
     story_files = []
     char_files = []
@@ -143,9 +142,9 @@ def prepare_train(args):
         pool.close()
     pool.join()
 
-    print(success_files)
-    # TODO
+    with open(args.output_path, 'w') as f_o:
+        for svm_input_file in success_files:
+            with open(svm_input_file) as f_i:
+                f_o.write(f_i.read())
 
-
-    pass
-    
+    print("Done.")
