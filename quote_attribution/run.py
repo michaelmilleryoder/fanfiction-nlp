@@ -29,78 +29,78 @@ def main():
     # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('mode', choices=('predict', 'prepare-train'),
-                        help="Running mode. If `predict', the program will "
+                        help="running mode; if `predict', the program will "
                              "predict quote attributions and output to json "
-                             "files. If `prepare-train', the program will "
-                             "prepare training data for svm-rank.")
+                             "files; if `prepare-train', the program will "
+                             "prepare training data for svm-rank")
     parser.add_argument('--story-path', required=True,
-                        help="Path to the (coreference resolved) story csv file "
+                        help="path to the (coreference resolved) story csv file "
                              "or the directory that contains the story csv files "
-                             "to be processed. If this argument is a directory, "
+                             "to be processed; if this argument is a directory, "
                              "--char-path, --output-path, and --gold-path should "
                              "also be directories")
     parser.add_argument('--char-path', required=True, 
-                        help="Path to the (coreference resolved) character list "
+                        help="path to the (coreference resolved) character list "
                              "file or the directory that contains the character "
                              "list files")
     parser.add_argument('--ans-path',
-                        help="Path to the golden answer quote attribution file "
+                        help="path to the golden answer quote attribution file "
                              "or the directory that contains the golden answer "
                              "quote attribution files")
     parser.add_argument('--output-path', required=True, 
-                        help="(In `predict') path to save the output results; "
+                        help="(in `predict') path to save the output results; "
                              "(in `prepare-train') path to save gathered "
                              "training data")
     parser.add_argument('--model-path', default='austen.model', 
-                        help="Path to read pre-trained svm-rank model. This "
+                        help="path to read pre-trained svm-rank model; this "
                              "model should be corresponding to the features you "
                              "select")
     parser.add_argument('--features', required=True, nargs='*', 
                         choices=list(EXTRACTER_REGISTRY.keys()),
-                        help="A list of features to be extracted. The features"
+                        help="a list of features to be extracted; the features"
                              "will be extracted in the same order as this "
                              "argument")
     parser.add_argument('--gold-path', 
-                        help="Path to the gold answer file or the directory "
-                             "that contains gold answer files. This option is "
+                        help="path to the gold answer file or the directory "
+                             "that contains gold answer files; this option is "
                              "used to generate training data for learning a new "
                              "model")
     parser.add_argument('--tok-path', 
-                        help="Path to the tokenization file or the directory "
+                        help="path to the tokenization file or the directory "
                              "that contains tokenization files (in book-nlp "
-                             "format). As there might be mistakes in "
+                             "format); as there might be mistakes in "
                              "tokenization and probability you want to manually "
                              "fix them, this option is useful when you want to "
                              "designate tokenizations results instead of doing "
                              "tokenization automatically.")
     parser.add_argument('--tmp', default='tmp', 
-                        help="Path to the directory to store temporary files")
+                        help="path to the directory to store temporary files")
     parser.add_argument('--threads', type=int, default=1, 
-                        help="Number of threads")
+                        help="number of threads")
     parser.add_argument('--story-suffix', type=str, default='.coref.csv', 
-                        help="(Needed when input path is a directory) suffix of "
+                        help="(needed when input path is a directory) suffix of "
                              "story csv filenames")
     parser.add_argument('--char-suffix', type=str, default='.chars', 
-                        help="(Needed when input path is a directory) suffix of "
+                        help="(needed when input path is a directory) suffix of "
                              "character list filenames")
     parser.add_argument('--ans-suffix', type=str, default='.ans', 
-                        help="(Needed when input path is a directory) suffix of "
+                        help="(needed when input path is a directory) suffix of "
                              "golden answer quote attribution filenames")
     parser.add_argument('--tok-suffix', type=str, default='.tok', 
-                        help="(Needed when input path is a directory and "
+                        help="(needed when input path is a directory and "
                              "--tok-path is set) suffix of tokenization "
                              "filenames")
     parser.add_argument('--no-cipher-char', action='store_true', default=False,
-                        help="Do not cipher character name")
+                        help="do not cipher character name")
     parser.add_argument('--no-coref-story', action='store_true', default=False,
-                        help="Story files are not coreference resolved (useful "
+                        help="story files are not coreference resolved (useful "
                              "when you want to train a new model and use golden "
                              "character list; sometimes coreference resolution "
                              "cannot retrieve all correct characters)")
     parser.add_argument('--booknlp', type=str,
-                        help="Path to book-nlp")
+                        help="path to book-nlp")
     parser.add_argument('--svmrank', type=str,
-                        help="Path to svm-rank")
+                        help="path to svm-rank")
     add_extracter_args(parser)
     args = parser.parse_args()
 

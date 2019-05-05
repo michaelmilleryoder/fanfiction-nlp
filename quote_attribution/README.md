@@ -32,35 +32,25 @@ usage: run.py [-h] {predict,prepare-train}
 
 #### Named Arguments
 
-| Argument 				| Description |
-| :-------------------- | :---------- |
-| `{predict, prepare-train}` | Running mode. If "predict", the program will predict quote attributions and output to json files. If "prepare-train", the program will prepare training data for svm-rank. |
-
 <table >
 <thead>
 <tr>
-<th width=250>Argument</th>
+<th width=210>Argument</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>{predict, prepare-train}</code></td>
-<td>The top level directory that contains your app. If this option is used then
-it assumed your scripts are in</td>
+<td>running mode; if "predict", the program will predict quote attributions and output to json files; if "prepare-train", the program will prepare training data for svm-rank</td>
 </tr>
 <tr>
-<td>baseUrl</td>
-<td>By default, all modules are located relative to this path. If baseUrl is not
-explicitly set, then all modules are loaded relative to the directory that holds
-the build file. If appDir is set, then baseUrl should be specified as relative
-to the appDir.</td>
+<td><code>-h, --help</code></td>
+<td>show the help message and exit</td>
 </tr>
 <tr>
-<td>dir</td>
-<td>The directory path to save the output. If not specified, then the path will
-default to be a directory called "build" as a sibling to the build file. All
-relative paths are relative to the build file.</td>
+<td><code>--story-path</code></td>
+<td>path to the (coreference resolved) story csv file or the directory that contains the story csv files to be processed; if this argument is a directory, --char-path, --output-path, and --gold-path should also be directories</td>
 </tr>
 <tr>
 <td>modules</td>
