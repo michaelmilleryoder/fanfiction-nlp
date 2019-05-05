@@ -130,19 +130,47 @@ Default: .tok</td>
 <td><code>--svmrank</code></td>
 <td>path to svm-rank</td>
 </tr>
+<tr>
+<td><code>--neighboring-before</code></td>
+<td>number of utterances before the current one to be incorporated in neighboring feature
+
+Default: 1</td>
+</tr>
+<tr>
+<td><code>--neighboring-before</code></td>
+<td>number of utterances after the current one to be incorporated in neighboring feature
+
+Default: 1</td>
+</tr>
 </tbody>
 </table>
 
-### Data
-For each fiction, the script takes two primary input files: the original text csv file and the character list file, which contains the characters that you want for quote attribution. In the character list file, each character takes one line with the following format:
+### Data Format
+For each fiction, the script takes two primary input files: the coreference resolved or raw text csv file and the character list file, which contains the characters that you want for quote attribution. You may also need gold answer files (in "prepare-train") and tokenization files.
+
+#### Text csv
+
+The text csv file should has three columns and multiple rows, where the first row is the header, the first column is the chapter ID, the second column are the paragraph IDs, and the third column is the text.
+
+`example_train_data/pride_prejudice.csv` is an example of raw text csv file.
+
+#### Character list
+
+In the character list file, each character takes one line with the following format:
 
 ```
 <character_name>[;<gender>[;<alias_1>[;<alias_2>[...]]]]
 ```
 
-* `<character_name>`: the primary name of the character (chould contain spaces). This should be unique for each character. (For now it should be like `($_XXX_YYY)`)
+* `<character_name>`: the primary name of the character (chould contain spaces). This should be unique for each character. (If it is from coreference resolution, it should be like `($_XXX_YYY)`)
 * `<gender>`: (optional) the gender of this character, either `M` or `F`.
 * `<alias>`: (optional) the other names of this character, which should be following `<gender>` and separated by semicolons.
+
+`example_train_data/pride_prejudice.chars` is an example of character list (not from coreference resolution).
+
+#### Gold answer
+
+#### Customized tokenization .
 
 ### Output
 This script will output the quote attribution results to `<quote_output_dir>/<story_filename>.quote.json` with the format as:

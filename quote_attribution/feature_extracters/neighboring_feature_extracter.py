@@ -74,8 +74,10 @@ class NeighboringFeatureExtracter(BaseFeatureExtracter):
         """Add feature-extracter-specific arguments to the parser."""
         # fmt: off
         parser.add_argument('--neighboring-before', type=int, default=1,
-                            help='number of utterances before the current one '
-                                 'to be incorporated in neighboring (default: 1)')
+                            help="number of utterances before the current one "
+                                 "to be incorporated in neighboring feature "
+                                 "(default: 1)")
         parser.add_argument('--neighboring-after', type=int, default=1,
-                            help='number of utterances after the current one '
-                                 'to be incorporated in neighboring (default: 1)')
+                            help="number of utterances after the current one "
+                                 "to be incorporated in neighboring feature "
+                                 "(default: 1)")
