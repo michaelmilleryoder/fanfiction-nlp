@@ -37,10 +37,13 @@ usage: run.py [-h] {predict,prepare-train}
 | `{predict, prepare-train}` | Running mode. If "predict", the program will predict quote attributions and output to json files. If "prepare-train", the program will prepare training data for svm-rank. |
 
 <table >
+<thead>
 <tr>
-<th width=200>Argument</th>
+<th width=250>Argument</th>
 <th>Description</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td><code>{predict, prepare-train}</code></td>
 <td>The top level directory that contains your app. If this option is used then
@@ -66,6 +69,7 @@ dependencies will be included in the module's file when the build is done. If
 that module or any of its dependencies includes i18n bundles, only the root
 bundles will be included unless the locale: section is set above.</td>
 </tr>
+</tbody>
 </table>
 
 From the command line, run the following (absolute path is recommended):
