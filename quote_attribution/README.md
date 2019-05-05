@@ -17,9 +17,9 @@ The script has two running modes: "predict" or "prepare-train". In the "predict"
 
 ```
 usage: run.py [-h] {predict,prepare-train}
-              --story-path STORY_PATH --char-path CHAR_PATH
-              [--ans-path ANS_PATH] --output-path OUTPUT_PATH
-              [--model-path MODEL_PATH] --features
+              --story-path STORY_PATH --char-path CHAR_PATH --output-path
+              OUTPUT_PATH [--ans-path ANS_PATH] [--model-path MODEL_PATH]
+              --features
               [{spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar} [{spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar} ...]]
               [--gold-path GOLD_PATH] [--tok-path TOK_PATH] [--tmp TMP]
               [--threads THREADS] [--story-suffix STORY_SUFFIX]
@@ -27,7 +27,7 @@ usage: run.py [-h] {predict,prepare-train}
               [--tok-suffix TOK_SUFFIX] [--no-cipher-char] [--no-coref-story]
               [--booknlp BOOKNLP] [--svmrank SVMRANK]
               [--neighboring-before NEIGHBORING_BEFORE]
-              [--neighboring-after NEIGHBORING_AFTER]
+              [--neighboring-after NEIGHBORING_AFTER]  
 ```
 
 #### Named Arguments
@@ -35,7 +35,7 @@ usage: run.py [-h] {predict,prepare-train}
 <table >
 <thead>
 <tr>
-<th width=210>Argument</th>
+<th width=230>Argument</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -53,24 +53,85 @@ usage: run.py [-h] {predict,prepare-train}
 <td>path to the (coreference resolved) story csv file or the directory that contains the story csv files to be processed; if this argument is a directory, --char-path, --output-path, and --gold-path should also be directories</td>
 </tr>
 <tr>
-<td>modules</td>
-<td>List the modules that will be optimized. All their immediate and deep
-dependencies will be included in the module's file when the build is done. If
-that module or any of its dependencies includes i18n bundles, only the root
-bundles will be included unless the locale: section is set above.</td>
+<td><code>--char-path</code></td>
+<td>path to the (coreference resolved) character list file or the directory that contains the character list files</td>
+</tr>
+<tr>
+<td><code>--output-path</code></td>
+<td>(in "predict") path to save the output results; (in "prepare-train") path to save gathered training data</td>
+</tr>
+<tr>
+<td><code>--ans-path</code></td>
+<td>(useful in "prepare-train") path to the golden answer quote attribution file or the directory that contains the golden answer quote attribution files</td>
+</tr>
+<tr>
+<td><code>--model-path</code></td>
+<td>(useful in `predict') path to read pre-trained svm-rank model; the model should be corresponding to the features you select
+
+Default: austen.model</td>
+</tr>
+<tr>
+<td><code>--features</code></td>
+<td>a list of features to be extracted; the features will be extracted in the same order as this argument</td>
+</tr>
+<tr>
+<td><code>--tok-path</code></td>
+<td>path to the tokenization file or the directory that contains tokenization files (in book-nlp format); as there might be mistakes in tokenization and probability you want to manually fix them, this option is useful when you want to designate tokenizations results instead of doing tokenization automatically</td>
+</tr>
+<tr>
+<td><code>--tmp</code></td>
+<td>path to the directory to store temporary files
+
+Default: tmp</td>
+</tr>
+<tr>
+<td><code>--threads</code></td>
+<td>number of threads
+
+Default: 1</td>
+</tr>
+<tr>
+<td><code>--story-suffix</code></td>
+<td>(needed when input path is a directory) suffix of story csv filenames
+
+Default: .coref.csv</td>
+</tr>
+<tr>
+<td><code>--char-suffix</code></td>
+<td>(needed when input path is a directory) suffix of character list filenames
+
+Default: .chars</td>
+</tr>
+<tr>
+<td><code>--ans-suffix</code></td>
+<td>(needed when input path is a directory) suffix of golden answer quote attribution filenames
+
+Default: .ans</td>
+</tr>
+<tr>
+<td><code>--tok-suffix</code></td>
+<td>(needed when input path is a directory and --tok-path is set) suffix of tokenization filenames
+
+Default: .tok</td>
+</tr>
+<tr>
+<td><code>--no-cipher-char</code></td>
+<td>do not cipher character name; for the sake of tokenization, the script will change the coreference character annotation marks to ccc_CHARACTER_ccc if this argument is not selected</td>
+</tr>
+<tr>
+<td><code>--no-coref-story</code></td>
+<td>story files are not coreference resolved (useful when you want to train a new model and use golden character list; sometimes coreference resolution cannot retrieve all correct characters)</td>
+</tr>
+<tr>
+<td><code>--booknlp</code></td>
+<td>path to book-nlp</td>
+</tr>
+<tr>
+<td><code>--svmrank</code></td>
+<td>path to svm-rank</td>
 </tr>
 </tbody>
 </table>
-
-From the command line, run the following (absolute path is recommended):
-
-```
-bash run.sh <story_dir> <character_list_dir> <quote_output_dir>
-```
-
-* `<story_dir>`: the directory that contains the story text csv files.
-* `<character_list_dir>`: the directory that contains the corresponding character lists.
-* `<quote_output_dir>`: the directory that the quotation attribution outputs will be stored.
 
 ### Data
 For each fiction, the script takes two primary input files: the original text csv file and the character list file, which contains the characters that you want for quote attribution. In the character list file, each character takes one line with the following format:

@@ -43,28 +43,24 @@ def main():
                         help="path to the (coreference resolved) character list "
                              "file or the directory that contains the character "
                              "list files")
-    parser.add_argument('--ans-path',
-                        help="path to the golden answer quote attribution file "
-                             "or the directory that contains the golden answer "
-                             "quote attribution files")
     parser.add_argument('--output-path', required=True, 
                         help="(in `predict') path to save the output results; "
                              "(in `prepare-train') path to save gathered "
                              "training data")
+    parser.add_argument('--ans-path',
+                        help="(useful in `prepare-train') path to the golden "
+                             "answer quote attribution file or the directory "
+                             "that contains the golden answer quote attribution "
+                             "files")
     parser.add_argument('--model-path', default='austen.model', 
-                        help="path to read pre-trained svm-rank model; this "
-                             "model should be corresponding to the features you "
-                             "select")
+                        help="(useful in `predict') path to read pre-trained "
+                             "svm-rank model; the model should be corresponding "
+                             "to the features you select (default: austen.model)")
     parser.add_argument('--features', required=True, nargs='*', 
                         choices=list(EXTRACTER_REGISTRY.keys()),
-                        help="a list of features to be extracted; the features"
+                        help="a list of features to be extracted; the features "
                              "will be extracted in the same order as this "
                              "argument")
-    parser.add_argument('--gold-path', 
-                        help="path to the gold answer file or the directory "
-                             "that contains gold answer files; this option is "
-                             "used to generate training data for learning a new "
-                             "model")
     parser.add_argument('--tok-path', 
                         help="path to the tokenization file or the directory "
                              "that contains tokenization files (in book-nlp "
@@ -72,26 +68,30 @@ def main():
                              "tokenization and probability you want to manually "
                              "fix them, this option is useful when you want to "
                              "designate tokenizations results instead of doing "
-                             "tokenization automatically.")
+                             "tokenization automatically")
     parser.add_argument('--tmp', default='tmp', 
-                        help="path to the directory to store temporary files")
+                        help="path to the directory to store temporary files (default: tmp)")
     parser.add_argument('--threads', type=int, default=1, 
-                        help="number of threads")
+                        help="number of threads (default: 1)")
     parser.add_argument('--story-suffix', type=str, default='.coref.csv', 
                         help="(needed when input path is a directory) suffix of "
-                             "story csv filenames")
+                             "story csv filenames (default: .coref.csv)")
     parser.add_argument('--char-suffix', type=str, default='.chars', 
                         help="(needed when input path is a directory) suffix of "
-                             "character list filenames")
+                             "character list filenames (default: .chars)")
     parser.add_argument('--ans-suffix', type=str, default='.ans', 
                         help="(needed when input path is a directory) suffix of "
-                             "golden answer quote attribution filenames")
+                             "golden answer quote attribution filenames "
+                             "(default: .ans)")
     parser.add_argument('--tok-suffix', type=str, default='.tok', 
                         help="(needed when input path is a directory and "
                              "--tok-path is set) suffix of tokenization "
-                             "filenames")
+                             "filenames (default: .tok)")
     parser.add_argument('--no-cipher-char', action='store_true', default=False,
-                        help="do not cipher character name")
+                        help="do not cipher character name; for the sake of "
+                             "tokenization, the script will change the "
+                             "coreference character annotation marks to "
+                             "ccc_CHARACTER_ccc if this argument is not selected")
     parser.add_argument('--no-coref-story', action='store_true', default=False,
                         help="story files are not coreference resolved (useful "
                              "when you want to train a new model and use golden "
