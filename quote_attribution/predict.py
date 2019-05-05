@@ -31,13 +31,14 @@ def single_predict(inp):
 
     try:
         # Read chapter
-        chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, 
+        chapter = Chapter.read_with_booknlp(story_file, char_file, 
+                                            getattr(args, 'booknlp', None), 
                                             tok_file=tok_file,
                                             coref_story=(not args.no_coref_story), 
                                             no_cipher=args.no_cipher_char, 
                                             tmp=tmp_dir)
         # Predict quote attribution
-        chapter.quote_attribution_svmrank(feat_extracters, args.model_path, args.svmrank, tmp=tmp_dir)
+        chapter.quote_attribution_svmrank(feat_extracters, args.model_path, getattr(args, 'svmrank', None), tmp=tmp_dir)
         # Dump
         chapter.dump_quote_json(output_file)
     except Exception as err:
@@ -57,8 +58,10 @@ def predict(args):
 
     # Check and process data path arguments
     args.tmp = os.path.abspath(args.tmp)
-    args.booknlp = os.path.abspath(args.booknlp)
-    args.svmrank = os.path.abspath(args.svmrank)
+    if getattr(args, 'booknlp', None) is not None:
+        args.booknlp = os.path.abspath(args.booknlp)
+    if getattr(args, 'svmrank', None) is not None:
+        args.svmrank = os.path.abspath(args.svmrank)
     args.model_path = os.path.abspath(args.model_path)
     if not os.path.exists(args.model_path):
         raise ValueError("Invalid model path.")

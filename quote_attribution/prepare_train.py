@@ -34,7 +34,8 @@ def single_train_organize(inp):
     
     try:
         # Read chapter
-        chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, 
+        chapter = Chapter.read_with_booknlp(story_file, char_file, 
+                                            getattr(args, 'booknlp', None), 
                                             tok_file=tok_file,
                                             coref_story=(not args.no_coref_story), 
                                             no_cipher=args.no_cipher_char, 
@@ -58,8 +59,10 @@ def prepare_train(args):
 
     # Check and process data path arguments
     args.tmp = os.path.abspath(args.tmp)
-    args.booknlp = os.path.abspath(args.booknlp)
-    args.svmrank = os.path.abspath(args.svmrank)
+    if getattr(args, 'booknlp', None) is not None:
+        args.booknlp = os.path.abspath(args.booknlp)
+    if getattr(args, 'svmrank', None) is not None:
+        args.svmrank = os.path.abspath(args.svmrank)
     if os.path.exists(args.output_path) and os.path.isdir(args.output_path):
         raise ValueError("--output-path already exists and is a directory. "
                          "--output-path should be a path to file when "

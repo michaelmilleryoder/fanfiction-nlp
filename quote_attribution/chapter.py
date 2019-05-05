@@ -59,6 +59,8 @@ class Chapter(object):
             chapter.read_booknlp_tokens_file(tok_file)
         else:
             print("No or invalid external tokenization file; do tokenization with book-nlp.")
+            if book_nlp is None:
+                raise ValueError("Invalid book-nlp path.")
             # preprocess story file with ciphered character names 
             chapter.preprocess_story(story_file, coref_story=coref_story, tmp_file=story_tmp)
             # run book-nlp
@@ -298,6 +300,9 @@ class Chapter(object):
 
         if not os.path.exists(tmp):
             os.mkdir(tmp)
+
+        if svm_rank is None:
+            raise ValueError("Invalid svm-rank path.")
 
         # temporary file paths
         svmrank_input_file = os.path.join(tmp, 'svmrank_input.txt')

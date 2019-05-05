@@ -97,9 +97,9 @@ def main():
                              "when you want to train a new model and use golden "
                              "character list; sometimes coreference resolution "
                              "cannot retrieve all correct characters)")
-    parser.add_argument('--booknlp', type=str, required=True,
+    parser.add_argument('--booknlp', type=str,
                         help="Path to book-nlp")
-    parser.add_argument('--svmrank', type=str, required=True,
+    parser.add_argument('--svmrank', type=str,
                         help="Path to svm-rank")
     add_extracter_args(parser)
     args = parser.parse_args()
