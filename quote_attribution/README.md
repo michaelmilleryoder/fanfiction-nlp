@@ -16,7 +16,8 @@ Current version uses [BookNLP](https://github.com/dbamman/book-nlp) for tokeniza
 The script has two running modes: "predict" or "prepare-train". In the "predict" mode, the script will take the input data to predict quote attributions and output results to json files. In the "prepare-train" mode, the script will the input data as well as the answer files to generate training data for SVM<sup>*rank*</sup>. You should further use SVM<sup>*rank*</sup> to learn the final model.
 
 ```
-usage: run.py [-h] --story-path STORY_PATH --char-path CHAR_PATH
+usage: run.py [-h] {predict,prepare-train}
+              --story-path STORY_PATH --char-path CHAR_PATH
               [--ans-path ANS_PATH] --output-path OUTPUT_PATH
               [--model-path MODEL_PATH] --features
               [{spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar} [{spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar} ...]]
@@ -27,8 +28,13 @@ usage: run.py [-h] --story-path STORY_PATH --char-path CHAR_PATH
               [--booknlp BOOKNLP] [--svmrank SVMRANK]
               [--neighboring-before NEIGHBORING_BEFORE]
               [--neighboring-after NEIGHBORING_AFTER]
-              {predict,prepare-train}
 ```
+
+#### Named Arguments
+
+| Argument | Description |
+| :------- | :---------- |
+| {predict, prepare-train} | Running mode. If "predict", the program will predict quote attributions and output to json files. If "prepare-train", the program will prepare training data for svm-rank. |
 
 
 
