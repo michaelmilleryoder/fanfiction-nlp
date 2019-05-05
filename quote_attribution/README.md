@@ -1,8 +1,8 @@
 # Quote Attribution
 
-The scripts for predicting the speaker of quotations in a fiction chapter given the raw or coreference resolved text and the character list, and output to a json file.
+The scripts for predicting the speaker of quotations in a fiction chapter given the raw or coreference resolved text and the character list, and outputing to a json file.
 
-Current version uses [BookNLP](https://github.com/dbamman/book-nlp) for tokenization and [SVM<sup>*rank*</sup>](https://www.cs.cornell.edu/people/tj/svm_light/svm_rank.html) for prediction. This version also supports multi-processing.
+The current version uses [BookNLP](https://github.com/dbamman/book-nlp) for tokenization and [SVM<sup>*rank*</sup>](https://www.cs.cornell.edu/people/tj/svm_light/svm_rank.html) for prediction. This version also supports multi-processing.
 
 ## How To Run
 ### Preliminaries
@@ -13,7 +13,7 @@ Current version uses [BookNLP](https://github.com/dbamman/book-nlp) for tokeniza
 
 ### Command
 
-The script has two running modes: "predict" or "prepare-train". In the "predict" mode, the script will take the input data to predict quote attributions and output results to json files. In the "prepare-train" mode, the script will the input data as well as the answer files to generate training data for SVM<sup>*rank*</sup>. You should further use SVM<sup>*rank*</sup> to learn the final model.
+The script has two running modes: "predict" or "prepare-train". In the "predict" mode, the script will take the input data to predict quote attributions and output results to json files. In the "prepare-train" mode, the script will use the input data as well as the answer files to generate training data for SVM<sup>*rank*</sup>. You should further use SVM<sup>*rank*</sup> to learn the final model.
 
 ```
 usage: run.py [-h] {predict,prepare-train} 
@@ -149,7 +149,7 @@ For each fiction, the script takes two primary input files: the coreference reso
 
 #### Text csv
 
-The text csv file should has three columns and multiple rows, where the first row is the header, the first column is the chapter ID, the second column are the paragraph IDs, and the third column is the text.
+The text csv file should have three columns and multiple rows, where the first row is the header, the first column is the chapter ID, the second column are the paragraph IDs, and the third column is the text.
 
 `example_train_data/pride_prejudice.csv` is an example of raw text csv file.
 
