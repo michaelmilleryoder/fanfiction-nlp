@@ -12,17 +12,19 @@ def single_train_organize(inp):
     
     Args:
         inp: A tuple as (args, feat_extracters, story_file, char_file, ans_file, 
-             tmp_dir), where `args' is the parsed CLI arguments object, 
+             tok_file, tmp_dir), where `args' is the parsed CLI arguments object, 
              `feat_extracters' is a list of feature extracters, `story_file' is 
              the path to the story file, `char_file' is the path to the 
-             character list file, `ans_file' is the path to the gold answer file
-             and `tmp_dir' is the path to save temporary files.
+             character list file, `ans_file' is the path to the gold answer 
+             file, `tok_file' is the path to tokenization file (could be None or 
+             invalid, if so, no external tokenization will be load), and 
+             `tmp_dir' is the path to save temporary files.
     
     Returns:
         A tuple as (story_file, svmrank_input_file, success). `success' will be 
         False if processing failed.
     """
-    args, feat_extracters, story_file, char_file, ans_file, tmp_dir = inp
+    args, feat_extracters, story_file, char_file, ans_file, tok_file, tmp_dir = inp
     name = multiprocessing.current_process().name
     story_filename = os.path.basename(story_file)
     print("\n### {} processing {} ###".format(name, story_filename))
@@ -33,6 +35,7 @@ def single_train_organize(inp):
     try:
         # Read chapter
         chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, 
+                                            tok_file=tok_file,
                                             coref_story=(not args.no_coref_story), 
                                             no_cipher=args.no_cipher_char, 
                                             tmp=tmp_dir)
@@ -68,6 +71,7 @@ def prepare_train(args):
     story_files = []
     char_files = []
     ans_files = []
+    tok_files = []
     tmp_dirs = []
     if not hasattr(args, 'ans_path') or args.ans_path is None:
         raise ValueError("--ans-path should be set in training")
@@ -80,6 +84,10 @@ def prepare_train(args):
         args.story_dir = os.path.abspath(args.story_path)
         args.char_dir = os.path.abspath(args.char_path)
         args.ans_dir = os.path.abspath(args.ans_path)
+        if not hasattr(args, 'tok_path') or args.tok_path is None:
+            args.tok_dir = None
+        else:
+            args.tok_dir = os.path.abspath(args.tok_path)
         for filename in os.listdir(args.story_dir):
             if filename.endswith(args.story_suffix):
                 filestem = filename[:-len(args.story_suffix)]
@@ -88,6 +96,11 @@ def prepare_train(args):
                 char_files.append(os.path.join(args.char_dir, char_filename))
                 ans_filename = filestem + args.ans_suffix
                 ans_files.append(os.path.join(args.ans_dir, ans_filename))
+                if args.tok_dir is None:
+                    tok_files.append(None)
+                else:
+                    tok_filename = filestem + args.tok_suffix
+                    tok_files.append(os.path.join(args.tok_dir, tok_filename))
                 tmp_dirs.append(os.path.join(args.tmp, filestem))
     elif os.path.isfile(args.story_path):
         print("Read input files")
@@ -99,6 +112,10 @@ def prepare_train(args):
         story_files.append(os.path.abspath(args.story_path))
         char_files.append(os.path.abspath(args.char_path))
         ans_files.append(os.path.abspath(args.ans_path))
+        if not hasattr(args, 'tok_path') or args.tok_path is None:
+            tok_files.append(None)
+        else:
+            tok_files.append(os.path.abspath(args.tok_path))
         tmp_dirs.append(os.path.join(args.tmp, os.path.basename(args.story_path)))
     else:
         raise ValueError("Invalid path: {}".format(args.story_path))
@@ -108,8 +125,8 @@ def prepare_train(args):
 
     # Build multi-process inputs
     single_train_inputs = []
-    for story_file, char_file, ans_file, tmp_dir in zip(story_files, char_files, ans_files, tmp_dirs):
-        single_train_inputs.append((args, feat_extracters, story_file, char_file, ans_file, tmp_dir))
+    for story_file, char_file, ans_file, tok_file, tmp_dir in zip(story_files, char_files, ans_files, tok_files, tmp_dirs):
+        single_train_inputs.append((args, feat_extracters, story_file, char_file, ans_file, tok_file, tmp_dir))
     num_tasks = len(single_train_inputs)
     print("{} files to preocess ... ".format(num_tasks))
 

@@ -17,7 +17,7 @@ class Chapter(object):
         super(Chapter, self).__init__()
 
     @classmethod
-    def read_with_booknlp(cls, story_file, char_file, book_nlp, coref_story=True, no_cipher=False, tmp='tmp'):
+    def read_with_booknlp(cls, story_file, char_file, book_nlp, tok_file=None, coref_story=True, no_cipher=False, tmp='tmp'):
         """Read a chapter using book-nlp.
         
         The factory function to preprocess and tokenize the story file using 
@@ -27,6 +27,8 @@ class Chapter(object):
             story_file: Path to the story file.
             char_file: Path to the character list file.
             book_nlp: Path to book-nlp.
+            tok_file: External tokenization file to be loaded. If it is None or 
+                      invalid, no external tokenization will be load.
             coref_story: Story files are coreference resolved.
             no_cipher: Do not cipher character names.
             tmp: A temporary directory to save intermediate results. It will be
@@ -50,16 +52,22 @@ class Chapter(object):
 
         # read character list from char_file
         chapter.read_characters(char_file, coref_story=coref_story, no_cipher=no_cipher, tmp_file=char_tmp)
-        # preprocess story file with ciphered character names 
-        chapter.preprocess_story(story_file, coref_story=coref_story, tmp_file=story_tmp)
 
-        # run book-nlp
-        os.system('sh run-booknlp.sh {} {} {} {} {}'.format(book_nlp, 
-            story_tmp, booknlp_tmp, token_tmp, booknlp_log))
-        
-        # read tokens from book-nlp output
-        chapter.read_booknlp_tokens_file(token_tmp)
+        if tok_file is not None and isinstance(tok_file, str) and os.path.exists(tok_file) and os.path.isfile(tok_file):
+            print("Read external tokenizations.")
+            # read tokens from external tokenization
+            chapter.read_booknlp_tokens_file(tok_file)
+        else:
+            print("No or invalid external tokenization file; do tokenization with book-nlp.")
+            # preprocess story file with ciphered character names 
+            chapter.preprocess_story(story_file, coref_story=coref_story, tmp_file=story_tmp)
+            # run book-nlp
+            os.system('sh run-booknlp.sh {} {} {} {} {}'.format(book_nlp, 
+                story_tmp, booknlp_tmp, token_tmp, booknlp_log))
+            # read tokens from book-nlp output
+            chapter.read_booknlp_tokens_file(token_tmp)
 
+        # Find character mentions
         chapter.find_character_appear_token_id()
 
         return chapter

@@ -12,17 +12,19 @@ def single_predict(inp):
     
     Args:
         inp: A tuple as (args, feat_extracters, story_file, char_file, 
-             output_file, tmp_dir), where `args' is the parsed CLI arguments 
-             object, `feat_extracters' is a list of feature extracters, 
+             output_file, tok_file, tmp_dir), where `args' is the parsed CLI 
+             arguments object, `feat_extracters' is a list of feature extracters, 
              `story_file' is the path to the story file, `char_file' is the path
              to the character list file, `output_file' is the path to save
-             results, and `tmp_dir' is the path to save temporary files.
+             results, `tok_file' is the path to tokenization file (could be 
+             None or invalid, if so, no external tokenization will be load), and 
+             `tmp_dir' is the path to save temporary files.
     
     Returns:
         A tuple as (story_file, success). `success' will be False if 
         processing failed.
     """
-    args, feat_extracters, story_file, char_file, output_file, tmp_dir = inp
+    args, feat_extracters, story_file, char_file, output_file, tok_file, tmp_dir = inp
     name = multiprocessing.current_process().name
     story_filename = os.path.basename(story_file)
     print("\n### {} processing {} ###".format(name, story_filename))
@@ -30,6 +32,7 @@ def single_predict(inp):
     try:
         # Read chapter
         chapter = Chapter.read_with_booknlp(story_file, char_file, args.booknlp, 
+                                            tok_file=tok_file,
                                             coref_story=(not args.no_coref_story), 
                                             no_cipher=args.no_cipher_char, 
                                             tmp=tmp_dir)
@@ -63,6 +66,7 @@ def predict(args):
     story_files = []
     char_files = []
     output_files = []
+    tok_files = []
     tmp_dirs = []
     if os.path.isdir(args.story_path):
         print("Read input directories")
@@ -78,6 +82,10 @@ def predict(args):
         args.story_dir = os.path.abspath(args.story_path)
         args.char_dir = os.path.abspath(args.char_path)
         args.output_dir = os.path.abspath(args.output_path)
+        if not hasattr(args, 'tok_path') or args.tok_path is None:
+            args.tok_dir = None
+        else:
+            args.tok_dir = os.path.abspath(args.tok_path)
         for filename in os.listdir(args.story_dir):
             if filename.endswith(args.story_suffix):
                 filestem = filename[:-len(args.story_suffix)]
@@ -86,6 +94,11 @@ def predict(args):
                 char_files.append(os.path.join(args.char_dir, char_filename))
                 output_filename = filestem + '.quote.json'
                 output_files.append(os.path.join(args.output_dir, output_filename))
+                if args.tok_dir is None:
+                    tok_files.append(None)
+                else:
+                    tok_filename = filestem + args.tok_suffix
+                    tok_files.append(os.path.join(args.tok_dir, tok_filename))
                 tmp_dirs.append(os.path.join(args.tmp, filestem))
     elif os.path.isfile(args.story_path):
         print("Read input files")
@@ -102,6 +115,10 @@ def predict(args):
         story_files.append(os.path.abspath(args.story_path))
         char_files.append(os.path.abspath(args.char_path))
         output_files.append(os.path.abspath(args.output_path))
+        if not hasattr(args, 'tok_path') or args.tok_path is None:
+            tok_files.append(None)
+        else:
+            tok_files.append(os.path.abspath(args.tok_path))
         tmp_dirs.append(os.path.join(args.tmp, os.path.basename(args.story_path)))
     else:
         raise ValueError("Invalid path: {}".format(args.story_path))
@@ -111,8 +128,8 @@ def predict(args):
 
     # Build multi-process inputs
     single_predict_inputs = []
-    for story_file, char_file, output_file, tmp_dir in zip(story_files, char_files, output_files, tmp_dirs):
-        single_predict_inputs.append((args, feat_extracters, story_file, char_file, output_file, tmp_dir))
+    for story_file, char_file, output_file, tok_file, tmp_dir in zip(story_files, char_files, output_files, tok_files, tmp_dirs):
+        single_predict_inputs.append((args, feat_extracters, story_file, char_file, output_file, tok_file, tmp_dir))
     num_tasks = len(single_predict_inputs)
     print("{} files to preocess ... ".format(num_tasks))
     

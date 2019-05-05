@@ -65,6 +65,14 @@ def main():
                              "that contains gold answer files. This option is "
                              "used to generate training data for learning a new "
                              "model")
+    parser.add_argument('--tok-path', 
+                        help="Path to the tokenization file or the directory "
+                             "that contains tokenization files (in book-nlp "
+                             "format). As there might be mistakes in "
+                             "tokenization and probability you want to manually "
+                             "fix them, this option is useful when you want to "
+                             "designate tokenizations results instead of doing "
+                             "tokenization automatically.")
     parser.add_argument('--tmp', default='tmp', 
                         help="Path to the directory to store temporary files")
     parser.add_argument('--threads', type=int, default=1, 
@@ -78,6 +86,10 @@ def main():
     parser.add_argument('--ans-suffix', type=str, default='.ans', 
                         help="(Needed when input path is a directory) suffix of "
                              "golden answer quote attribution filenames")
+    parser.add_argument('--tok-suffix', type=str, default='.tok', 
+                        help="(Needed when input path is a directory and "
+                             "--tok-path is set) suffix of tokenization "
+                             "filenames")
     parser.add_argument('--no-cipher-char', action='store_true', default=False,
                         help="Do not cipher character name")
     parser.add_argument('--no-coref-story', action='store_true', default=False,
