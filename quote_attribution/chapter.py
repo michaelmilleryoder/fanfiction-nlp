@@ -418,6 +418,7 @@ class Chapter(object):
         if not os.path.exists(output_father_path):
             os.makedirs(output_father_path)
 
+        # Get answer speaker and utterance
         if answer is not None:
             with codecs.open(answer) as f:
                 for line in f:
@@ -436,36 +437,44 @@ class Chapter(object):
             for i in range(self.paragraph_num):
                 if self.paragraph_has_quote[i]:
                     ss += 1
+
+                    # Save paragraph information into comment lines
                     f.write("# paragraph {}: {}--{} type:{} ".format(
                         i, 
                         self.paragraph_start_token_id[i], 
                         self.paragraph_end_token_id[i], 
                         self.paragraph_quote_type[i]
                     ))
-
                     for quoteToken_id in self.paragraph_quote_token_id[i]:
                         f.write("{} ".format(quoteToken_id))
                     f.write("\n")
 
                     ans_char = None
                     if answer is not None:
+                        # More quotes extracted than gold answers. Skip
+                        # redundant quotes.
                         if ss > len(answers):
                             break
 
-                        c = answers[ss-1][0]
-                        sent = answers[ss-1][1].split()
+                        t_ans_char = answers[ss-1][0]  # answer speaker
+                        t_ans_sent = answers[ss-1][1].split()  # answer utterance
 
-                        lll = len(self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word)
-                        ans = sent[0][:lll]
-                        now = self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word.lower()
+                        # Simply check whether the answer utterance is current
+                        # sentence or not by try to match the first word.
+                        first_word_len = len(self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word)
+                        ans_first_word = t_ans_sent[0][:first_word_len]
+                        now_first_word = self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word.lower()
 
-                        if ans != now:
+                        # Mismatch, back to last answer
+                        if ans_first_word != now_first_word:
                             ss -= 1
                             continue
                         
+                        # Check whether there is only one character matches to
+                        # the answer character
                         nn = 0
                         for tc in self.characters:
-                            if tc == c:
+                            if tc == t_ans_char:
                                 nn += 1
                         '''
                         if nn < 1:
@@ -475,8 +484,9 @@ class Chapter(object):
                             print "More char found!"
                         '''
                         if nn == 1:
-                            ans_char = c
-                            
+                            ans_char = t_ans_char
+                    
+                    # Output svm-rank training sample
                     for j in range(self.character_num):
                         if ans_char is not None and ans_char == list(self.characters.keys())[j]:
                             f.write("1\t")
