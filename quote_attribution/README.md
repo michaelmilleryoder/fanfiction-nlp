@@ -264,8 +264,8 @@ This quote attribution script assumes each paragraph has only one speaker, and w
 ### Built-in Features
 The features extracters will extract quote attribution features for each character on each paragraph. The following are the built-in features in the script:
 
-* **Distance to utterance**: This feature captures the distance between the mention of the character and the utterance. The intuition is that near character is likely to be the speaker. This feature will be represented as $1 / (dist + 1)$. 
-* Number of times the speaker appears in whole text
-* Number of times the speaker appears in the paragraph
-* Speaker in the utterance
-* Same features, but for neighboring utterances
+* **Distance to utterance** (`disttoutter`): This feature captures the distance between the mention of the character and the utterance. The intuition is that near character is likely to be the speaker. This feature will be represented as 1 / (dist + 1). 
+* **Speaker mention count** (`spkappcnt`): This feature is the count of the mention of the character in the text (represented as frequency), which could be considered as the prior probability that the character speaks.
+* **Speaker mention count in paragraph** (`spkcntpar`): This feature counts the number of appearance of the character in the paragraph of the utterance but not in the utterance. Although the character in the utterance may not be the speaker, the character appears frequently in the same paragraph of the quotation is likely to be the speaker, which means the character is locally active. This feature is original.
+* **Name in utterance** (`nameinuttr`): This binary feature represents whether the name of the character appears in the sentence of the utterance. Except for some rare scenarios (e.g., "My name is ..." or using selfs name as the replacement of "I" in utterances), the characters appear in the utterance are usually not the speaker, for example, "How are you, Kate?".
+* **Neighboring** (`neighboring`): The above features of the same character with regard to neighboring utterances are also incorporated. The intuition of this feature is the nature of "conversation chain" that neighboring utterances is not likely to be spoken by the same character without additional cue.

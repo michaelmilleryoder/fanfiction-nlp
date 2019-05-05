@@ -6,9 +6,9 @@ from . import BaseFeatureExtracter, register_extracter
 
 @register_extracter('spkappcnt')
 class SpkAppCntFeatureExtracter(BaseFeatureExtracter):
-    """`Speaker appearance count' feature extracter.
+    """`Speaker mention count' feature extracter.
     
-    Speaker Appearance Count (represented as frequency). This feature is the 
+    Speaker Mention Count (represented as frequency). This feature is the 
     count of the mention of the character in the text, which could be considered 
     as the prior probability that the character speaks.
     """
