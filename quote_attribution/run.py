@@ -47,6 +47,15 @@ def main():
                         help="(in `predict') path to save the output results; "
                              "(in `prepare-train') path to save gathered "
                              "training data")
+    parser.add_argument('--features', required=True, nargs='*', 
+                        choices=list(EXTRACTER_REGISTRY.keys()),
+                        help="a list of features to be extracted; the features "
+                             "will be extracted in the same order as this "
+                             "argument")
+    parser.add_argument('--booknlp', type=str,
+                        help="path to book-nlp")
+    parser.add_argument('--svmrank', type=str,
+                        help="path to svm-rank")
     parser.add_argument('--ans-path',
                         help="(useful in `prepare-train') path to the golden "
                              "answer quote attribution file or the directory "
@@ -56,11 +65,6 @@ def main():
                         help="(useful in `predict') path to read pre-trained "
                              "svm-rank model; the model should be corresponding "
                              "to the features you select (default: austen.model)")
-    parser.add_argument('--features', required=True, nargs='*', 
-                        choices=list(EXTRACTER_REGISTRY.keys()),
-                        help="a list of features to be extracted; the features "
-                             "will be extracted in the same order as this "
-                             "argument")
     parser.add_argument('--tok-path', 
                         help="path to the tokenization file or the directory "
                              "that contains tokenization files (in book-nlp "
@@ -97,10 +101,6 @@ def main():
                              "when you want to train a new model and use golden "
                              "character list; sometimes coreference resolution "
                              "cannot retrieve all correct characters)")
-    parser.add_argument('--booknlp', type=str,
-                        help="path to book-nlp")
-    parser.add_argument('--svmrank', type=str,
-                        help="path to svm-rank")
     add_extracter_args(parser)
     args = parser.parse_args()
 

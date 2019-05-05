@@ -61,6 +61,18 @@ usage: run.py [-h] {predict,prepare-train}
 <td>(in "predict") path to save the output results; (in "prepare-train") path to save gathered training data</td>
 </tr>
 <tr>
+<td><code>--features</code></td>
+<td>a list of features to be extracted; the features will be extracted in the same order as this argument</td>
+</tr>
+<tr>
+<td><code>--booknlp</code></td>
+<td>path to book-nlp</td>
+</tr>
+<tr>
+<td><code>--svmrank</code></td>
+<td>path to svm-rank</td>
+</tr>
+<tr>
 <td><code>--ans-path</code></td>
 <td>(useful in "prepare-train") path to the golden answer quote attribution file or the directory that contains the golden answer quote attribution files</td>
 </tr>
@@ -69,10 +81,6 @@ usage: run.py [-h] {predict,prepare-train}
 <td>(useful in `predict') path to read pre-trained svm-rank model; the model should be corresponding to the features you select
 
 Default: austen.model</td>
-</tr>
-<tr>
-<td><code>--features</code></td>
-<td>a list of features to be extracted; the features will be extracted in the same order as this argument</td>
 </tr>
 <tr>
 <td><code>--tok-path</code></td>
@@ -121,14 +129,6 @@ Default: .tok</td>
 <tr>
 <td><code>--no-coref-story</code></td>
 <td>story files are not coreference resolved (useful when you want to train a new model and use golden character list; sometimes coreference resolution cannot retrieve all correct characters)</td>
-</tr>
-<tr>
-<td><code>--booknlp</code></td>
-<td>path to book-nlp</td>
-</tr>
-<tr>
-<td><code>--svmrank</code></td>
-<td>path to svm-rank</td>
 </tr>
 <tr>
 <td><code>--neighboring-before</code></td>
@@ -194,6 +194,8 @@ Meanwhile, the script will also generate some temporary files in `tmp/<story_fil
 * `<story_filename>.tokens`: the tokenization results by BookNLP.
 * `<story_filename>.predict`: the scores predicted by SVM<sup>*rank*</sup>.
 * `<story_filename>.svmrank`: the input file for SVM<sup>*rank*</sup>.
+
+## Scalability
 
 ## How it works
 Based on the following papers:
