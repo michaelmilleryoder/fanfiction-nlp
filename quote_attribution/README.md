@@ -16,18 +16,17 @@ Current version uses [BookNLP](https://github.com/dbamman/book-nlp) for tokeniza
 The script has two running modes: "predict" or "prepare-train". In the "predict" mode, the script will take the input data to predict quote attributions and output results to json files. In the "prepare-train" mode, the script will the input data as well as the answer files to generate training data for SVM<sup>*rank*</sup>. You should further use SVM<sup>*rank*</sup> to learn the final model.
 
 ```
-usage: run.py [-h] {predict,prepare-train}
-              --story-path STORY_PATH --char-path CHAR_PATH --output-path
-              OUTPUT_PATH [--ans-path ANS_PATH] [--model-path MODEL_PATH]
-              --features
+usage: run.py [-h] {predict,prepare-train} 
+              --story-path STORY_PATH --char-path CHAR_PATH 
+              --output-path OUTPUT_PATH --features
               [{spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar} [{spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar} ...]]
-              [--gold-path GOLD_PATH] [--tok-path TOK_PATH] [--tmp TMP]
+              [--booknlp BOOKNLP] [--svmrank SVMRANK] [--ans-path ANS_PATH]
+              [--model-path MODEL_PATH] [--tok-path TOK_PATH] [--tmp TMP]
               [--threads THREADS] [--story-suffix STORY_SUFFIX]
               [--char-suffix CHAR_SUFFIX] [--ans-suffix ANS_SUFFIX]
               [--tok-suffix TOK_SUFFIX] [--no-cipher-char] [--no-coref-story]
-              [--booknlp BOOKNLP] [--svmrank SVMRANK]
               [--neighboring-before NEIGHBORING_BEFORE]
-              [--neighboring-after NEIGHBORING_AFTER]  
+              [--neighboring-after NEIGHBORING_AFTER]
 ```
 
 #### Named Arguments
