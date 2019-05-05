@@ -250,8 +250,8 @@ It is required to implement the `extract(self, ret, **kargs)` function and the `
 
 ## How it works
 Based on the following papers:
-* He et al., 2013, "Identification of speakers in novels". Data and algorithm (SVM<sup>*rank*</sup>) came from this paper.
-* Elson et al., 2010, AAAI, "Automatic attribution of quoted speech". Features mainly came from this paper.
+* He et al., 2013, "Identification of speakers in novels". Data and algorithm (SVM<sup>*rank*</sup>) come from this paper.
+* Elson et al., 2010, AAAI, "Automatic attribution of quoted speech". Features mainly come from this paper.
 
 This quote attribution script assumes each paragraph has only one speaker, and will conduct the following operations:
 
