@@ -121,6 +121,7 @@ public class MentionDetectionClassifier implements Serializable {
 
       Map<Integer, Set<Mention>> headPositions = Generics.newHashMap();
       for (Mention p : predicts) {
+        // Remove mentions of length greater than 4
         if (p.originalSpan.size() > 4) {
           removedMentionsByLength.add(p);
         } else {
@@ -141,7 +142,6 @@ public class MentionDetectionClassifier implements Serializable {
           for (Mention p : shares) {
             double trueProb = probabilityOf(p, shares, neStrings, dict, props);
 
-//            System.err.println(p + "  " + String.valueOf(trueProb));
 
             probs.incrementCount(p, trueProb);
           }

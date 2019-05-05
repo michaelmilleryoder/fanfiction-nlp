@@ -82,6 +82,7 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
 
     @Override
     public void runCoref(Document document) {
+        // Actually Run coref
         try {
             File tempFile = new File("temp.out");
 
@@ -93,14 +94,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
             }
 
             Map<Pair<Integer, Integer>, Boolean> pairs = new HashMap<>();
-
-//            System.err.println("StatisticalCorefAlgorithm-runCoref-mentions");
-//
-//            for (Mention mention: CorefUtils.getSortedMentions(document)) {
-//                System.err.println(mention + "\n");
-//            }
-
-//            System.out.println(CorefUtils.getSortedMentions(document));
 
             for (Map.Entry<Integer, List<Integer>> e : CorefUtils.heuristicFilter(
                 CorefUtils.getSortedMentions(document),
@@ -128,10 +121,6 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
 
             Set<Integer> seenAnaphors = new HashSet<>();
             for (Pair<Integer, Integer> pair : mentionPairs) {
-//                System.out.println("start merging");
-//                tempFileWriter.write(document.predictedMentionsByID.get(pair.first).toString());
-//                System.out.println(document.predictedMentionsByID.get(pair.first).toString());
-//                System.exit(0);
 
                 if (seenAnaphors.contains(pair.second)) {
                     continue;
@@ -149,11 +138,11 @@ public class StatisticalCorefAlgorithm implements CorefAlgorithm {
                 MentionType mt2 = m2.mentionType;
                 if (pairwiseScores.getCount(pair) > thresholds.get(new Pair<>(mt1 == MentionType.PRONOMINAL,
                     mt2 == MentionType.PRONOMINAL))) {
+                    // The CorefUtils.mergeCoreferenceClusters is modified
                     CorefUtils.mergeCoreferenceClusters(pair, document);
                 }
             }
         } catch (IOException x) {
-            System.err.println("ohhh");
             System.exit(-1);
         }
     }

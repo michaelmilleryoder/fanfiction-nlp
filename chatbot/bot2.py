@@ -61,7 +61,7 @@ while True:
 	sims = model.docvecs.most_similar([inferred_vector], topn=top)
 #	print sims
 	# retrieved = sent2vec_vec.most_similar(positive=query_vec.sents, topn=20)
-	print 'finished retrieving '+str(top)+' sentences similar to query'
+	print('finished retrieving '+str(top)+' sentences similar to query')
 	max_sick_score = 0
 	max_sick_sent = "EOF"
 
@@ -95,15 +95,15 @@ while True:
 	# max_sick_score = max(sick_scores)
 	# max_idx = sick_scores.index(max_sick_score)
 	for i in range(len(qs)):
-		print qs[i],sick_scores[i]
+		print(qs[i],sick_scores[i])
 	sort_idx = np.argsort(-sick_scores)
 	max_idx = sort_idx[0]
 	max_sick_sent = nos[max_idx]
-	print 'matched q:',q_file_lines[max_sick_sent]
-	print 'para:',q_para_lines[max_sick_sent]
-	print 'best reply:',a_file_lines[max_sick_sent]
-	print 'speaker:',a_speaker_lines[max_sick_sent]
-	print 'para:',a_para_lines[max_sick_sent]
+	print('matched q:',q_file_lines[max_sick_sent])
+	print('para:',q_para_lines[max_sick_sent])
+	print('best reply:',a_file_lines[max_sick_sent])
+	print('speaker:',a_speaker_lines[max_sick_sent])
+	print('para:',a_para_lines[max_sick_sent])
 	# iterate the list to check the speaker
 	for i in sort_idx:
 		if speaker.lower() in a_speaker_lines[nos[i]].lower():
@@ -112,14 +112,14 @@ while True:
 
 	if max_sick_sent!=max_sick_sent_speaker:
 		if max_sick_sent_speaker=='':
-			print 'no reply retrieved for speaker',speaker
+			print('no reply retrieved for speaker',speaker)
 		else:
-			print 'matched q by '+speaker+':'+q_file_lines[max_sick_sent_speaker]
-			print 'para',q_para_lines[max_sick_sent_speaker]
-			print 'best reply by '+speaker+':'+a_file_lines[max_sick_sent_speaker]
-			print 'speaker:',a_speaker_lines[max_sick_sent_speaker]
-			print 'para',a_para_lines[max_sick_sent_speaker]
+			print('matched q by '+speaker+':'+q_file_lines[m0ax_sick_sent_speaker])
+			print('para:'+q_para_lines[max_sick_sent_speaker])
+			print('best reply by '+speaker+':'+a_file_lines[max_sick_sent_speaker])
+			print('speaker:'+a_speaker_lines[max_sick_sent_speaker])
+			print('para:'+a_para_lines[max_sick_sent_speaker])
 	# print 'max_sick_score:',max_sick_score
-	print 'elapsed time:',time.time()-start
+	print('elapsed time:',time.time()-start)
 
 
