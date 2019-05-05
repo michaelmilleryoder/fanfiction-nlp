@@ -10,6 +10,8 @@ class UttrDistFeatureExtracter(BaseFeatureExtracter):
     This feature captures the distance between the mention of the character and 
     the utterance. The intuition is that near character is likely to be the 
     speaker.
+
+    This feature will be represented as $1 / (dist + 1)$.
     """
     
     def __init__(self, **kargs):
@@ -42,7 +44,7 @@ class UttrDistFeatureExtracter(BaseFeatureExtracter):
                         startId = paragraph_quote_token_id[i][pid]
                         endId = paragraph_quote_token_id[i][pid+1]
                         for cid in character_appear_token_id[char]:
-                            if (not(startId <= cid and endId >= cid)):
+                            if tokens[cid].in_quotation == 'O':
                                 if abs(startId - cid) < dist:
                                     dist = abs(startId - cid)
                                 if abs(endId - cid) < dist:

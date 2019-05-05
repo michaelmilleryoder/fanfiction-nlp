@@ -8,7 +8,6 @@ import csv
 import codecs
 from tokens import Token
 from collections import OrderedDict
-from feature_extracters import extract_features
 
 
 class Chapter(object):
@@ -18,7 +17,7 @@ class Chapter(object):
         super(Chapter, self).__init__()
 
     @classmethod
-    def read_with_booknlp(cls, story_file, char_file, book_nlp, tmp='tmp'):
+    def read_with_booknlp(cls, story_file, char_file, book_nlp, coref_story=True, no_cipher=False, tmp='tmp'):
         """Read a chapter using book-nlp.
         
         The factory function to preprocess and tokenize the story file using 
@@ -28,6 +27,8 @@ class Chapter(object):
             story_file: Path to the story file.
             char_file: Path to the character list file.
             book_nlp: Path to book-nlp.
+            coref_story: Story files are coreference resolved.
+            no_cipher: Do not cipher character names.
             tmp: A temporary directory to save intermediate results. It will be
                  created if not exist.
         
@@ -48,9 +49,9 @@ class Chapter(object):
         booknlp_log = os.path.join(tmp, 'booknlp.log')
 
         # read character list from char_file
-        chapter.read_characters(char_file, tmp_file=char_tmp)
+        chapter.read_characters(char_file, coref_story=coref_story, no_cipher=no_cipher, tmp_file=char_tmp)
         # preprocess story file with ciphered character names 
-        chapter.preprocess_story(story_file, tmp_file=story_tmp)
+        chapter.preprocess_story(story_file, coref_story=coref_story, tmp_file=story_tmp)
 
         # run book-nlp
         os.system('sh run-booknlp.sh {} {} {} {} {}'.format(book_nlp, 
@@ -63,14 +64,16 @@ class Chapter(object):
 
         return chapter
 
-    def read_characters(self, char_file, tmp_file='tmp/char_tmp.txt'):
+    def read_characters(self, char_file, coref_story=True, no_cipher=False, tmp_file='tmp/char_tmp.txt'):
         """Read and preprocess character list file.
         
         For the sake of tokenization, it will change the coreference annotation
-        marks to ccc_CHARACTER_ccc.
+        marks to ccc_CHARACTER_ccc if `no_cipher' is False.
 
         Args:
             char_file: Path to the character list file.
+            coref_story: Story files are coreference resolved.
+            no_cipher: Do not cipher character names.
             tmp_file: Path to save the temporary file.
 
         TODO: Relieve the need for the changing of annotation by trying to use 
@@ -95,7 +98,13 @@ class Chapter(object):
                     if len(line) > 0:
                         l = line.split(';')
                         # new coreference annotation mark
-                        ciph_char = 'ccc_' + l[0][3:-1] + '_ccc'
+                        if not no_cipher:
+                            if coref_story:
+                                ciph_char = 'ccc_' + l[0][3:-1] + '_ccc'
+                            else:
+                                ciph_char = 'ccc_' + l[0] + '_ccc'
+                        else:
+                            ciph_char = l[0]
                         self.t_characters[l[0]] = ciph_char
                         self.ciph_characters[ciph_char] = l[0]
                         l[0] = ciph_char
@@ -128,7 +137,7 @@ class Chapter(object):
         self.character_num = len(self.characters)
         print("Done. ({} characters)".format(self.character_num))
 
-    def preprocess_story(self, story_file, tmp_file='tmp/story_tmp.txt'):
+    def preprocess_story(self, story_file, coref_story=True, tmp_file='tmp/story_tmp.txt'):
         """Replace the original text with ciphered coreference annotation marks
         
         Should call `read_characters' first.
@@ -150,19 +159,22 @@ class Chapter(object):
                 headers = next(f_csv)
                 for line in f_csv:
                     text = line[3]
+
                     # annotate with new marks
                     for c in self.t_characters:
                         text = text.replace(c, self.t_characters[c])
                     text_split = text.split()
                     
-                    # remove the mention before the coreference annotation marks
-                    new_text_split = []
-                    for i, t in enumerate(text_split[:-1]):
-                        if text_split[i+1] not in self.ciph_characters:
-                            new_text_split.append(t)
+                    if coref_story:
+                        # remove the mention before the coreference annotation marks
+                        new_text_split = []
+                        for i, t in enumerate(text_split[:-1]):
+                            if text_split[i+1] not in self.ciph_characters:
+                                new_text_split.append(t)
+                        text_split = new_text_split
 
                     # save into the temporary file
-                    outf.write(' '.join(new_text_split)+'\n\n')
+                    outf.write(' '.join(text_split)+'\n\n')
 
     def read_booknlp_tokens_file(self, token_file): 
         """Read book-nlp tokens output file
@@ -466,7 +478,7 @@ class Chapter(object):
                             ans_char = c
                             
                     for j in range(self.character_num):
-                        if ans_char is not None and ans_char == self.characters.keys()[j]:
+                        if ans_char is not None and ans_char == list(self.characters.keys())[j]:
                             f.write("1\t")
                         else:
                             f.write("0\t")
@@ -488,7 +500,7 @@ class Chapter(object):
             predictfile: Path to svm-rank output file.
         """
 
-        print("Reand svm-rank prediction output ... ")
+        print("Read svm-rank prediction output ... ")
         # Character to quotes
         self.char2quotes = {}
         # List of quotes in the chapter
@@ -519,7 +531,7 @@ class Chapter(object):
         ss = 0
         for i in range(0, len(scores), self.character_num):
             maxid = np.argmax(scores[i: i+self.character_num])
-            guess_char = self.characters[list(self.characters.keys())[maxid]][4:-4]
+            guess_char = list(self.characters.keys())[maxid][4:-4]
             quote = {}
             quote['speaker'] = guess_char
             quote['quotes'] = []
@@ -550,4 +562,4 @@ class Chapter(object):
             json_path: Path to dump quotes.
         """
         with codecs.open(json_path, 'w') as f:
-            json.dump(self.quotes, f)
+            f.write(json.dumps(self.quotes) + '\n')
