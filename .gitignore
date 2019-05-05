@@ -7,4 +7,5 @@ CoreNLP/*.tmp
 *.pyc
 __pycache__/
 quote_attribution/tmpout/
+*.svmrank
 
