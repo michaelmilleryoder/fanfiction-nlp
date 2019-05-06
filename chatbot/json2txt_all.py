@@ -1,4 +1,4 @@
-# usage: python json2txt.py [json_dir] [txt_dir] [max_len], output filename would be a merge of all quotes 
+# usage: python json2txt.py [json_dir] [txt_dir], output filename would be a merge of all quotes 
 import os
 import sys
 import json
@@ -18,7 +18,7 @@ import re
 test_json_dir = sys.argv[1]
 test_txt_dir = sys.argv[2]
 # speaker = sys.argv[3]
-max_len = int(sys.argv[3])
+#max_len = int(sys.argv[3])
 speaker = 'all'
 
 filenames = []
@@ -51,7 +51,7 @@ q_para = ''
 a_para = ''
 
 for filename in filenames:
-	with open(test_json_dir+filename) as f:
+	with open(test_json_dir+filename,'r') as f:
 		data = json.load(f)
 		para_dict = {}
 		para_text = {}
@@ -67,6 +67,7 @@ for filename in filenames:
 			line = re.sub('``','',q['quote'])
 			line = line.replace("''",'')
 			line = line.encode("ascii", "ignore")
+			line = line.decode()
 
 			# 	print filename
 			# 	print i
@@ -113,10 +114,10 @@ for filename in filenames:
 
 
 	# dump the txt file
-with open(test_txt_dir+speaker+'_a.txt','wb') as f:
+with open(test_txt_dir+speaker+'_a.txt','w') as f:
 	f.write(atext)
 f.close()
-with open(test_txt_dir+speaker+'_q.txt','wb') as f:
+with open(test_txt_dir+speaker+'_q.txt','w') as f:
 	f.write(qtext)
 f.close()
 
@@ -128,10 +129,10 @@ with open(test_txt_dir+speaker+'_q_speaker.txt','w') as f:
 	f.write(qspeaker)
 f.close()
 
-with open(test_txt_dir+speaker+'_a_paragraph.txt','w') as f:
+with open(test_txt_dir+speaker+'_a_paragraph.txt','w',encoding='utf8') as f:
 	f.write(a_para)
 f.close()
 
-with open(test_txt_dir+speaker+'_q_paragraph.txt','w') as f:
+with open(test_txt_dir+speaker+'_q_paragraph.txt','w',encoding='utf8') as f:
 	f.write(q_para)
 f.close()
