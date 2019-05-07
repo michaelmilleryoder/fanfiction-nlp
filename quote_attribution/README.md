@@ -4,6 +4,37 @@ The scripts for predicting the speaker of quotations in a fiction chapter given 
 
 The current version uses [BookNLP](https://github.com/dbamman/book-nlp) for tokenization and [SVM<sup>*rank*</sup>](https://www.cs.cornell.edu/people/tj/svm_light/svm_rank.html) for prediction. This version also supports multi-processing.
 
+## File Structure
+
+```
+quote_attribution
+├── example_train_data                                  (organized example training data of Pride and Prejudice (Austen. 1813))
+│   ├── README.txt
+│   ├── pride_prejudice.ans                             (manually annotated Pride and Prejudice quote attribution)
+│   ├── pride_prejudice.chars                           (character list of Pride and Prejudice)
+│   ├── pride_prejudice.csv                             (Pride and Prejudice raw story csv)
+│   ├── pride_prejudice.tok                             (Pride and Prejudice tokenization in BookNLP format)
+│   └── pride_prejudice.txt                             (Pride and Prejudice raw text)
+├── feature_extracters                                  (feature extracter modules; new extracters should also be set in this directory)
+│   ├── __init__.py                                     (necessary helper functions)
+│   ├── base_feature_extracter.py                       (base class for feature extracters)
+│   ├── name_in_utterance_feature_extracter.py          (`nameinuttr' feature extracter)
+│   ├── neighboring_feature_extracter.py                (`neighboring' feature extracter)
+│   ├── speaker_appearance_count_feature_extracter.py   (`spkappcnt' feature extracter)
+│   ├── speaker_count_in_paragraph_feature_extracter.py (`spkcntpar' feature extracter)
+│   └── utterance_distance_feature_extracter.py         (`disttoutter' feature extracter)
+├── README.md
+├── austen.model                                        (svm-rank model pre-trained with the Pride and Prejudice corpus using feature `disttoutter', `spkappcnt', `nameinuttr', and `spkcntpar')
+├── chapter.py                                          (class to process chapters)
+├── predict.py                                          (code for `predict' mode)
+├── prepare_train.py                                    (code for `prepare-train' mode)
+├── run-booknlp.sh                                      (helper shell script to run BookNLP)
+├── run-svmrank.sh                                      (helper shell script to run SVM-Rank)
+├── run.py                                              (main python script you will run)
+├── tokens.py                                           (class to process tokens)
+└── train_pride_prejudice.sh                            (example shell script to prepare SVM-Rank input file to train the `austen.model' using the Pride and Prejudice corpus)
+```
+
 ## How To Run
 ### Preliminaries
 

@@ -7,7 +7,7 @@ Three steps to build the retrieval based chatbot:
   - During retrieval, we firstly retrieve k-nearest neighbours of user input based on sentence embeddings from doc2vec, then we utilize the skipthought semantic relatedness classifier to choose the response that has the highest semantic relatedness score
 
 ### Build Chatbot
-1.preprocessed .json data should be saved in data/
+1.preprocessed .json data should be saved in data/, or it should be set to the -output--path from quote attribution.
 2.preprare model files and word embeddings used for skipthoughts package. These files are quite large(>2GB). You may refer to the README in skipthoughts/ to check the required package.
 ```sh
 cd skipthoughts/params
@@ -43,12 +43,12 @@ When we test the chatbot, we find that the "question" and "answer" pair do not f
 
 1.split the paragraph into sentences
 ```sh
-python flatten.py dialogs/all_q.txt```
-python flatten.py dialogs/all_a.txt```
+python flatten.py dialogs/all_q.txt
+python flatten.py dialogs/all_a.txt
 ```
 2.count the mappings between sentences
 ```sh
-python count.py dialogs/all```
+python count.py dialogs/all
 ```
 
 2.generate new q and a file based on the mappings
@@ -65,7 +65,8 @@ python train_doc2vec.py dialogs/all_q.txt.flat.filter
 ```sh
 python bot3.py dialogs/all 10
 ```
-bot3.py is similar to bot2.py, except that it is based on the template dialogs
+bot3.py is similar to bot2.py, except that it is based on the template dialogs.
+We do not need to specify the speaker name when using bot3.py. Since the template is based on counting the occurrences of some specific pair , I didn't include the speaker information for counting. Therefore the template does not have the information for speaker. So bot3.py retrieves the closest match regardless of speaker.
 
 
 
