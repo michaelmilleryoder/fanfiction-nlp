@@ -22,14 +22,14 @@ set_session(tf.Session(config=config))
 
 prefix = sys.argv[1]
 
-q_file = prefix+'_q.txt'
-a_file = prefix+'_a.txt'
-q_speaker = prefix+'_q_speaker.txt'
-a_speaker = prefix+'_a_speaker.txt'
-speaker = sys.argv[2]
-top = int(sys.argv[3])
-q_para_file = prefix+'_q_paragraph.txt'
-a_para_file = prefix+'_a_paragraph.txt'
+q_file = prefix+'_q.txt.flat.filter'
+a_file = prefix+'_a.txt.flat.filter'
+#q_speaker = prefix+'_q_speaker.txt'
+#a_speaker = prefix+'_a_speaker.txt'
+#speaker = sys.argv[2]
+top = int(sys.argv[2])
+#q_para_file = prefix+'_q_paragraph.txt'
+#a_para_file = prefix+'_a_paragraph.txt'
 
 with open(q_file,'r') as f:
 	q_file_lines = f.readlines()
@@ -37,7 +37,7 @@ f.close()
 with open(a_file,'r') as f:
 	a_file_lines = f.readlines()
 f.close()
-
+'''
 with open(a_speaker,'r') as f:
 	a_speaker_lines = f.readlines()
 f.close()
@@ -49,6 +49,7 @@ f.close()
 with open(a_para_file,'rb') as f:
 	a_para_lines = f.readlines()
 f.close()
+'''
 #preload the model
 bestlrmodel = load_model('skipthoughts/skipthought-best')
 model = gensim.models.doc2vec.Doc2Vec.load(q_file+'.doc2vec.model')
@@ -104,9 +105,10 @@ while True:
 	print('matched q:',q_file_lines[max_sick_sent])
 #	print('para:',q_para_lines[max_sick_sent])
 	print('best reply:',a_file_lines[max_sick_sent])
-	print('speaker:',a_speaker_lines[max_sick_sent])
+#	print('speaker:',a_speaker_lines[max_sick_sent])
 #	print('para:',a_para_lines[max_sick_sent])
 	# iterate the list to check the speaker
+	'''
 	for i in sort_idx:
 		if speaker.lower() in a_speaker_lines[nos[i]].lower():
 			max_sick_sent_speaker = nos[i]
@@ -122,6 +124,7 @@ while True:
 			print('speaker:'+a_speaker_lines[max_sick_sent_speaker])
 #			print('para:'+a_para_lines[max_sick_sent_speaker])
 	# print 'max_sick_score:',max_sick_score
+	'''
 	print('elapsed time:',time.time()-start)
 
 
