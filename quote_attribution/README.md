@@ -32,7 +32,7 @@ quote_attribution
 ├── run-svmrank.sh                                      (helper shell script to run SVM-Rank)
 ├── run.py                                              (main python script you will run)
 ├── tokens.py                                           (class to process tokens)
-└── train_pride_prejudice.sh                            (example shell script to train the `austen.model' using the Pride and Prejudice corpus)
+└── train_pride_prejudice.sh                            (example shell script to prepare SVM-Rank input file to train the `austen.model' using the Pride and Prejudice corpus)
 ```
 
 ## How To Run
