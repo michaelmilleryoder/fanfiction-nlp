@@ -43,12 +43,12 @@ When we test the chatbot, we find that the "question" and "answer" pair do not f
 
 1.split the paragraph into sentences
 ```sh
-python flatten.py dialogs/all_q.txt```
-python flatten.py dialogs/all_a.txt```
+python flatten.py dialogs/all_q.txt
+python flatten.py dialogs/all_a.txt
 ```
 2.count the mappings between sentences
 ```sh
-python count.py dialogs/all```
+python count.py dialogs/all
 ```
 
 2.generate new q and a file based on the mappings
