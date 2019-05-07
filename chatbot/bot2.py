@@ -49,7 +49,7 @@ f.close()
 with open(a_para_file,'rb') as f:
 	a_para_lines = f.readlines()
 f.close()
-#preload the model
+#preload the model for skipthoughts and doc2vec
 bestlrmodel = load_model('skipthoughts/skipthought-best')
 model = gensim.models.doc2vec.Doc2Vec.load(q_file+'.doc2vec.model')
 

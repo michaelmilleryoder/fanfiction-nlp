@@ -21,6 +21,7 @@ with open(a_file+'.flat') as f:
 q_flat = [i.strip() for i in q_flat]
 a_flat = [i.strip() for i in a_flat]
 
+#index mapping
 q_sent2idx={}
 for i in range(len(q_flat)):
 	q_sent2idx[q_flat[i]]=i

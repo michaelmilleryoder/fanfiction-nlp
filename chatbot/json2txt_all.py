@@ -22,7 +22,7 @@ test_txt_dir = sys.argv[2]
 speaker = 'all'
 
 filenames = []
-
+'''
 char_dict={}
 
 char_dict['Hank_Anderson'] = 'Hank'
@@ -34,7 +34,7 @@ char_dict['Kara_Wonderland'] = 'Kara'
 char_dict['Hanks'] = 'Hank'
 char_dict['The_Hank'] = 'Hank'
 char_dict['Captain_Fowler'] = 'Fowler'
-
+'''
 
 
 for filename in os.listdir(test_json_dir):
@@ -51,11 +51,13 @@ q_para = ''
 a_para = ''
 
 for filename in filenames:
+	# load json file
 	with open(test_json_dir+filename,'r') as f:
 		data = json.load(f)
 		para_dict = {}
 		para_text = {}
 	for i in data:
+		# store the paragraph using paragraph idx as key
 		para_dict[i['paragraph']]=i
 		# this_speaker = i['speaker']
 		# if speaker in i['speaker']:
@@ -74,7 +76,7 @@ for filename in filenames:
 			# 	break
 			this_text.append(line)
 
-		# store it into the dict
+		# store the quote text into the dict
 		para_text[i['paragraph']] = this_text
 
 		# identify whether it is question or answer
