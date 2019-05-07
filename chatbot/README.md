@@ -65,7 +65,8 @@ python train_doc2vec.py dialogs/all_q.txt.flat.filter
 ```sh
 python bot3.py dialogs/all 10
 ```
-bot3.py is similar to bot2.py, except that it is based on the template dialogs
+bot3.py is similar to bot2.py, except that it is based on the template dialogs.
+We do not need to specify the speaker name when using bot3.py. Since the template is based on counting the occurrences of some specific pair , I didn't include the speaker information for counting. Therefore the template does not have the information for speaker. So bot3.py retrieves the closest match regardless of speaker.
 
 
 
