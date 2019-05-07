@@ -7,7 +7,7 @@ Three steps to build the retrieval based chatbot:
   - During retrieval, we firstly retrieve k-nearest neighbours of user input based on sentence embeddings from doc2vec, then we utilize the skipthought semantic relatedness classifier to choose the response that has the highest semantic relatedness score
 
 ### Build Chatbot
-1.preprocessed .json data should be saved in data/
+1.preprocessed .json data should be saved in data/, or it should be set to the -output--path from quote attribution.
 2.preprare model files and word embeddings used for skipthoughts package. These files are quite large(>2GB). You may refer to the README in skipthoughts/ to check the required package.
 ```sh
 cd skipthoughts/params
