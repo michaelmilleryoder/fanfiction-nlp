@@ -24,9 +24,9 @@ if (not os.path.isdir(data_dir)):
 if (not os.path.isdir(char_dir)): 
     os.mkdir(char_dir)   # output directory for characters
 if (not os.path.isdir(output_dir)): 
-    os.mkdir(output_dir) # output direcotry for corefs
+    os.mkdir(output_dir) # output directory for corefs
 
-for filename in os.listdir(test_csv_dir):
+for filename in sorted(os.listdir(test_csv_dir)):
     if filename.endswith(".csv"):
         filenames.append(filename)
     else:
@@ -38,7 +38,7 @@ for filename in filenames:
 
     this_text=''
     fic_id = ''
-    chap_id = ''
+    #chap_id = ''
     #print (test_csv_dir+filename)
     # for row in csv.DictReader(open(test_csv_dir+filename, encoding='cp1250'))
     for row in csv.DictReader(open(test_csv_dir+filename)):
@@ -51,10 +51,10 @@ for filename in filenames:
                 pdb.set_trace()
             assert fic_id == row["fic_id"]
 
-        if len(chap_id)==0:
-            chap_id = row["chapter_id"]
-        else:
-            assert chap_id == row["chapter_id"]
+       # if len(chap_id)==0:
+       #     chap_id = row["chapter_id"]
+       # else:
+       #     assert chap_id == row["chapter_id"]
 
         # this_text+=row["text"]
 	
