@@ -18,9 +18,10 @@
 
 # I/O
 
-COLLECTION_NAME="harrypotter1000"
-FICS_INPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/${COLLECTION_NAME}/fics/" # will eventually come from command line
-OUTPUT_PATH="/usr0/home/mamille2/fanfiction-project/data/${COLLECTION_NAME}/output/"
+#COLLECTION_NAME="emnlp_dataset_6k"
+COLLECTION_NAME=$1 # command-line argument
+FICS_INPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/emnlp_dataset_6k_splits/${COLLECTION_NAME}/fics/" # will eventually come from command line
+OUTPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/emnlp_dataset_6k_splits/${COLLECTION_NAME}/output/"
 mkdir -p $OUTPUT_PATH
 
 COREF_STORIES_PATH="${OUTPUT_PATH}char_coref_stories"
@@ -28,17 +29,17 @@ mkdir -p $COREF_STORIES_PATH
 COREF_CHARS_PATH="${OUTPUT_PATH}char_coref_chars"
 mkdir -p $COREF_CHARS_PATH
 
-QUOTE_OUTPUT_PATH="${OUTPUT_PATH}quote_attribution"
-mkdir -p $QUOTE_OUTPUT_PATH
+#QUOTE_OUTPUT_PATH="${OUTPUT_PATH}quote_attribution"
+#mkdir -p $QUOTE_OUTPUT_PATH
 
 ASSERTION_OUTPUT_PATH="${OUTPUT_PATH}assertion_extraction"
 mkdir -p $ASSERTION_OUTPUT_PATH
 
-COOCCURRENCE_OUTPUT_PATH="${OUTPUT_PATH}cooccurrence"
-mkdir -p $COOCCURRENCE_OUTPUT_PATH
+#COOCCURRENCE_OUTPUT_PATH="${OUTPUT_PATH}cooccurrence"
+#mkdir -p $COOCCURRENCE_OUTPUT_PATH
 
-AU_OUTPUT_PATH="${OUTPUT_PATH}aus/"
-mkdir -p $AU_OUTPUT_PATH
+#AU_OUTPUT_PATH="${OUTPUT_PATH}aus/"
+#mkdir -p $AU_OUTPUT_PATH
 
 
 # Character coref
@@ -53,30 +54,29 @@ echo ""
 #bash run.sh "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$QUOTE_OUTPUT_PATH"
 #cd ..
 #echo ""
-### Don't do tokenization again
-#
-#
-## Assertion attribution
-#echo "Running assertion extraction..."
-#python2 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
-#echo ""
-#
-#
-## Person entity cooccurrence matrix
+ 
+ 
+### Assertion attribution
+echo "Running assertion extraction..."
+python3 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
+echo ""
+ 
+ 
+### Person entity cooccurrence matrix
 #echo "Running entity coocurrence..."
 #cd props
-#python2 co_occurance_generation.py "$COREF_STORIES_PATH" "$COOCCURRENCE_OUTPUT_PATH" "$COREF_CHARS_PATH/"
+#python3 co_occurance_generation.py "$COREF_STORIES_PATH" "$COOCCURRENCE_OUTPUT_PATH" "$COREF_CHARS_PATH/"
 #cd ..
 #echo ""
-#
-#
+
+
 ## AUs 
 #echo "Running AU prediction..."
 #TRAINED_MODEL_CONFIG=friends.ini
 #FICS_TEXT_PATH="${FICS_INPUT_PATH::-1}_txt/" # text from CSV
 #mkdir -p $FICS_TEXT_PATH
-#python2 csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
+#python csv2txt.py $FICS_INPUT_PATH $FICS_TEXT_PATH # convert fic to txt
 #cd setting
-#python2 config.py $TRAINED_MODEL_CONFIG DEFAULT "$FICS_INPUT_PATH" "$FICS_TEXT_PATH" "$AU_OUTPUT_PATH" # modifies config file
-#python2 BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
-#python2 nb.py $TRAINED_MODEL_CONFIG DEFAULT 
+#python config.py $TRAINED_MODEL_CONFIG DEFAULT "$FICS_INPUT_PATH" "$FICS_TEXT_PATH" "$AU_OUTPUT_PATH" # modifies config file
+#python BM25.py $TRAINED_MODEL_CONFIG DEFAULT 
+#python nb.py $TRAINED_MODEL_CONFIG DEFAULT 
