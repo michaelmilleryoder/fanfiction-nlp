@@ -43,23 +43,23 @@ mkdir -p $ASSERTION_OUTPUT_PATH
 
 
 # Character coref
-echo "Running character coreference..."
-/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
-echo ""
+#echo "Running character coreference..."
+#/usr/bin/python3 RunCoreNLP.py "$FICS_INPUT_PATH" "$COREF_CHARS_PATH" "$COREF_STORIES_PATH"   # takes about 10G RAM
+#echo ""
 
 
 # Quote attribution
-#echo "Running quote attribution..."
-#cd quote_attribution
-#bash run.sh "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$QUOTE_OUTPUT_PATH"
+echo "Running quote attribution..."
+cd quote_attribution
+python3 run.py predict --story-path "$COREF_STORIES_PATH" --char-path "$COREF_CHARS_PATH" --output-path "$QUOTE_OUTPUT_PATH" --threads 5 --features spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar
 #cd ..
 #echo ""
  
  
 ### Assertion attribution
-echo "Running assertion extraction..."
-python3 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
-echo ""
+#echo "Running assertion extraction..."
+#python3 assertion_extraction/extract_assertions.py "$COREF_STORIES_PATH" "$COREF_CHARS_PATH" "$ASSERTION_OUTPUT_PATH"
+#echo ""
  
  
 ### Person entity cooccurrence matrix
