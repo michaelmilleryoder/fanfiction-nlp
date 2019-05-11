@@ -18,10 +18,12 @@
 
 # I/O
 
-#COLLECTION_NAME="emnlp_dataset_6k"
-COLLECTION_NAME=$1 # command-line argument
-FICS_INPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/emnlp_dataset_6k_splits/${COLLECTION_NAME}/fics/" # will eventually come from command line
-OUTPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/emnlp_dataset_6k_splits/${COLLECTION_NAME}/output/"
+COLLECTION_NAME="emnlp_dataset_6k"
+FICS_INPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/${COLLECTION_NAME}/fics/" # will eventually come from command line
+OUTPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/${COLLECTION_NAME}/output/"
+#COLLECTION_NAME=$1 # command-line argument
+#FICS_INPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/emnlp_dataset_6k_splits/${COLLECTION_NAME}/fics/" # will eventually come from command line
+#OUTPUT_PATH="/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/harrypotter/emnlp_dataset_6k_splits/${COLLECTION_NAME}/output/"
 mkdir -p $OUTPUT_PATH
 
 COREF_STORIES_PATH="${OUTPUT_PATH}char_coref_stories"
@@ -29,11 +31,11 @@ mkdir -p $COREF_STORIES_PATH
 COREF_CHARS_PATH="${OUTPUT_PATH}char_coref_chars"
 mkdir -p $COREF_CHARS_PATH
 
-#QUOTE_OUTPUT_PATH="${OUTPUT_PATH}quote_attribution"
-#mkdir -p $QUOTE_OUTPUT_PATH
+QUOTE_OUTPUT_PATH="${OUTPUT_PATH}quote_attribution"
+mkdir -p $QUOTE_OUTPUT_PATH
 
-ASSERTION_OUTPUT_PATH="${OUTPUT_PATH}assertion_extraction"
-mkdir -p $ASSERTION_OUTPUT_PATH
+#ASSERTION_OUTPUT_PATH="${OUTPUT_PATH}assertion_extraction"
+#mkdir -p $ASSERTION_OUTPUT_PATH
 
 #COOCCURRENCE_OUTPUT_PATH="${OUTPUT_PATH}cooccurrence"
 #mkdir -p $COOCCURRENCE_OUTPUT_PATH
@@ -51,7 +53,7 @@ mkdir -p $ASSERTION_OUTPUT_PATH
 # Quote attribution
 echo "Running quote attribution..."
 cd quote_attribution
-python3 run.py predict --story-path "$COREF_STORIES_PATH" --char-path "$COREF_CHARS_PATH" --output-path "$QUOTE_OUTPUT_PATH" --threads 5 --features spkappcnt,nameinuttr,neighboring,disttoutter,spkcntpar
+python3 run.py predict --story-path "$COREF_STORIES_PATH" --char-path "$COREF_CHARS_PATH" --output-path "$QUOTE_OUTPUT_PATH" --threads 15 --features spkappcnt nameinuttr neighboring disttoutter spkcntpar --booknlp /usr0/home/huimingj/book-nlp-master/
 #cd ..
 #echo ""
  
