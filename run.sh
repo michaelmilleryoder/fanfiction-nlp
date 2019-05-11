@@ -53,7 +53,7 @@ mkdir -p $QUOTE_OUTPUT_PATH
 # Quote attribution
 echo "Running quote attribution..."
 cd quote_attribution
-python3 run.py predict --story-path "$COREF_STORIES_PATH" --char-path "$COREF_CHARS_PATH" --output-path "$QUOTE_OUTPUT_PATH" --threads 15 --features spkappcnt nameinuttr neighboring disttoutter spkcntpar --booknlp /usr0/home/huimingj/book-nlp-master/
+python3 run.py predict --story-path "$COREF_STORIES_PATH" --char-path "$COREF_CHARS_PATH" --output-path "$QUOTE_OUTPUT_PATH" --threads 15 --features spkappcnt nameinuttr neighboring disttoutter spkcntpar --booknlp /usr0/home/huimingj/book-nlp-master/ --svmrank /usr0/home/huimingj/svm_rank
 #cd ..
 #echo ""
  
