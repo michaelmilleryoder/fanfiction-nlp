@@ -36,6 +36,7 @@ def single_predict(inp):
                                             tok_file=tok_file,
                                             coref_story=(not args.no_coref_story), 
                                             no_cipher=args.no_cipher_char, 
+                                            fix_inv_char=args.fix_inv_char,
                                             tmp=tmp_dir)
         # Predict quote attribution
         chapter.quote_attribution_svmrank(feat_extracters, args.model_path, getattr(args, 'svmrank', None), tmp=tmp_dir)
