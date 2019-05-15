@@ -176,6 +176,7 @@ class Chapter(object):
                 f_csv = csv.reader(f)
                 headers = next(f_csv)
                 for line in f_csv:
+                    print(line)
                     text = line[3]
 
                     # annotate with new marks
