@@ -17,7 +17,7 @@ class Chapter(object):
         super(Chapter, self).__init__()
 
     @classmethod
-    def read_with_booknlp(cls, story_file, char_file, book_nlp, tok_file=None, coref_story=True, no_cipher=False, tmp='tmp'):
+    def read_with_booknlp(cls, story_file, char_file, book_nlp, tok_file=None, coref_story=True, no_cipher=False, fix_inv_char=False, tmp='tmp'):
         """Read a chapter using book-nlp.
         
         The factory function to preprocess and tokenize the story file using 
@@ -31,6 +31,7 @@ class Chapter(object):
                       invalid, no external tokenization will be load.
             coref_story: Story files are coreference resolved.
             no_cipher: Do not cipher character names.
+            fix_inv_char: Fix invalid character name (such as comma in name)
             tmp: A temporary directory to save intermediate results. It will be
                  created if not exist.
         
@@ -51,7 +52,7 @@ class Chapter(object):
         booknlp_log = os.path.join(tmp, 'booknlp.log')
 
         # read character list from char_file
-        chapter.read_characters(char_file, coref_story=coref_story, no_cipher=no_cipher, tmp_file=char_tmp)
+        chapter.read_characters(char_file, coref_story=coref_story, no_cipher=no_cipher, fix_inv_char=fix_inv_char, tmp_file=char_tmp)
 
         if tok_file is not None and isinstance(tok_file, str) and os.path.exists(tok_file) and os.path.isfile(tok_file):
             print("Read external tokenizations.")
@@ -74,7 +75,11 @@ class Chapter(object):
 
         return chapter
 
-    def read_characters(self, char_file, coref_story=True, no_cipher=False, tmp_file='tmp/char_tmp.txt'):
+    def _fix_char_name(self, name):
+        """"Remove comma in name"""
+        return name.replace('_,_', '_')
+
+    def read_characters(self, char_file, coref_story=True, no_cipher=False, fix_inv_char=False, tmp_file='tmp/char_tmp.txt'):
         """Read and preprocess character list file.
         
         For the sake of tokenization, it will change the coreference annotation
@@ -84,6 +89,7 @@ class Chapter(object):
             char_file: Path to the character list file.
             coref_story: Story files are coreference resolved.
             no_cipher: Do not cipher character names.
+            fix_inv_char: Fix invalid character name (such as comma in name)
             tmp_file: Path to save the temporary file.
 
         TODO: Relieve the need for the changing of annotation by trying to use 
@@ -115,6 +121,8 @@ class Chapter(object):
                                 ciph_char = 'ccc_' + l[0] + '_ccc'
                         else:
                             ciph_char = l[0]
+                        if fix_inv_char:
+                            ciph_char = self._fix_char_name(ciph_char)
                         self.t_characters[l[0]] = ciph_char
                         self.ciph_characters[ciph_char] = l[0]
                         l[0] = ciph_char

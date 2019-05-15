@@ -101,6 +101,8 @@ def main():
                              "when you want to train a new model and use golden "
                              "character list; sometimes coreference resolution "
                              "cannot retrieve all correct characters)")
+    parser.add_argument('--fix-inv-char', action='store_true', default=False,
+                        help="fix invalid character name (such as comma in name)")
     add_extracter_args(parser)
     args = parser.parse_args()
 
