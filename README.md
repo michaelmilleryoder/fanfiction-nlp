@@ -1,5 +1,5 @@
 # fanfiction-nlp
-NLP tools for fanfiction, based on David Bamman's BookNLP. Developed by CMU students beginning 2018.
+NLP tools for fanfiction, based on David Bamman's BookNLP beginning 2018. Contact Michael Miller Yoder <michaelmilleryoder [at] gmail.com> with questions.
 
 # Running the pipeline
 This script processes a directory of fanfiction files and extracts
@@ -24,6 +24,8 @@ The script does:
 Directory path to directory of fic chapter CSV files. 
 
 If your input is raw text you'll need to format it like the examples in the `example_fandom` directory. [Here's](https://github.com/michaelmilleryoder/fanfiction-nlp/blob/master/example_fandom/10118594_0004.csv) an example. Eventually we'll support raw text file input.
+
+No tokenization or other preprocessing is necessary: that is completed in the pipeline.
 
 ## Output 
 * Character coreference: 
