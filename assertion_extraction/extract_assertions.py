@@ -14,6 +14,7 @@ import json
 import re
 import pdb
 import codecs
+from tqdm import tqdm
 
 csv.field_size_limit(sys.maxsize)
 
@@ -189,7 +190,7 @@ op_dir    = str(sys.argv[3])
 
 files =      [f for f in listdir(input_dir) if isfile(join(input_dir, f))]
 
-for f in files:
+for f in tqdm(files, ncols=50):
 
     #get the story_chapter name from the story file
     #for matching with the characters file 
