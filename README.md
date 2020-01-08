@@ -1,5 +1,5 @@
 # fanfiction-nlp
-NLP tools for fanfiction, based on David Bamman's BookNLP beginning 2018. Contact Michael Miller Yoder <yoder [at] cs.cmu.edu> with questions.
+NLP tools for fanfiction, based on David Bamman's [BookNLP](https://github.com/dbamman/book-nlp). Contact Michael Miller Yoder <yoder [at] cs.cmu.edu> with questions.
 
 # Running the pipeline
 This script processes a directory of fanfiction files and extracts
@@ -11,7 +11,7 @@ The script does:
 	* [Quote attribution](quote_attribution)
 	* [Assertion attribution](assertion_extraction) (narrative and evaluation about a character)
 * [Character cooccurrence matrix](cooccurrence)
-* [Alternate universe (AU) extraction](alternate_universe) from fanfiction story metadata
+* [Alternate universe (AU) extraction](alternate_universes) from fanfiction story metadata
 
 ## Requirements
 * Parts of the pipeline require [this Stanford CoreNLP models jar](http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar). Download this file and move it to the `CoreNLP` directory.
@@ -19,6 +19,10 @@ The script does:
 * Python 3
 
 * Python packages: [spaCy](https://spacy.io/usage)
+
+* For quote attribution, you will need to install:
+	* [BookNLP](https://github.com/dbamman/book-nlp). Make sure this is working properly by running the test described in their README.
+	* [SVMRank](https://www.cs.cornell.edu/people/tj/svm_light/svm_rank.html). Download the binary file appropriate for your OS. Then follow their instructions to unpack and install this tool.
 
 ## Input 
 Directory path to directory of fanfiction story (fic) chapter CSV files. 
@@ -45,7 +49,7 @@ No tokenization or other preprocessing is necessary: that is completed in the pi
 	* a directory where for each fic, there is a list of predicted AU metadata tags, as well as confidence values in those predictions.
 
 ## Settings
-To use the pipeline, modify the input and output settings in `run.sh`. Commands within this shell script will likely not need to be modified.
+To use the pipeline, modify the input and output settings in `run.sh`. You'll also need to add paths to BookNLP and SVMRank if you are running quote attribution. Comment out any modules that you are not running. Commands within this shell script will likely not need to be modified.
 
 ## Command
 `./run.sh`
