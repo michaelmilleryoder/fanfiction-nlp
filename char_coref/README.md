@@ -1,33 +1,3 @@
-# Running the CoreNLP component for coreference clustering:
-
-1. Git clone the repository.
-
-2. Standford jars are present in the location mentioned in CoreNLP/jar-dir.
-
-3. Copy the jars to the CoreNLP directory
-
-4. Come back to the parent directory to run the RunCoreNLP.py file. The command runs the CoreNLP code over all the csv files    present in the folder specified and generate the formatted csv and txt files with coref resolution done.
-
-5. Example Command: python RunCoreNLP.py example.fandom/ CharsOutputDir CorefOutputDir
-
-   example.fandom/ : Directory containing all the csv files to be processed.
-   
-   CharsOutputDir  : Output Directory for all the characters files.
-   
-   CorefOutputDir  : Output Directory for all the coref resolution outputs (txt and csv ) files. 
-
-6. CharOutputDir Directory contains the Character names (InputTextFileName.chars)
-
-7. CorefOutputDir Directory contains the Coref resolution for the files (txt and csv format). ("InputTextFileName.coref.txt", InputTextFileName.coref.csv")
-
-8. Example.fandom directory contains all the orginal csv files.
-
-To run coref in batches, use:
-
-python3 RunBatches.py <raw_input_dir> <char_output_dir> <coref_output_dir>
-Note, <char_output_dir> and <coref_output_dir> must be present inside the CoreNLP directory
-
-
 # How it works
 We use Stanford CoreNLP coreference with a few additional constraints and modifications. 
 
@@ -63,3 +33,34 @@ The coreference works as follows, with modifications noted:
 	When merge cluster, check to make sure gender is not different in the same cluster
 	Decides a character name (highest frequency after merge names that are subsets) and character gender for each cluster (majority male or female pronouns, unk if no gendered pronouns are used)
 * Checks if character name too long (consider strings of 3 or fewer words for cluster-level character name)
+
+# Running the CoreNLP component for coreference clustering:
+
+1. Git clone the repository.
+
+2. Stanford jars are present in the location mentioned in CoreNLP/jar-dir.
+
+3. Copy the jars to the CoreNLP directory
+
+4. Come back to the parent directory to run the RunCoreNLP.py file. The command runs the CoreNLP code over all the csv files    present in the folder specified and generate the formatted csv and txt files with coref resolution done.
+
+5. Example Command: python RunCoreNLP.py example.fandom/ CharsOutputDir CorefOutputDir
+
+   example.fandom/ : Directory containing all the csv files to be processed.
+   
+   CharsOutputDir  : Output Directory for all the characters files.
+   
+   CorefOutputDir  : Output Directory for all the coref resolution outputs (txt and csv ) files. 
+
+6. CharOutputDir Directory contains the Character names (InputTextFileName.chars)
+
+7. CorefOutputDir Directory contains the Coref resolution for the files (txt and csv format). ("InputTextFileName.coref.txt", InputTextFileName.coref.csv")
+
+8. Example.fandom directory contains all the orginal csv files.
+
+To run coref in batches, use:
+
+python3 RunBatches.py <raw_input_dir> <char_output_dir> <coref_output_dir>
+Note, <char_output_dir> and <coref_output_dir> must be present inside the CoreNLP directory
+
+
