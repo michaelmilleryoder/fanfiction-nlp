@@ -2,10 +2,10 @@
 NLP tools for fanfiction, based on David Bamman's [BookNLP](https://github.com/dbamman/book-nlp). Contact Michael Miller Yoder <yoder [at] cs.cmu.edu> with questions.
 
 # Running the pipeline
-This script processes a directory of fanfiction files and extracts
+This pipeline processes a directory of fanfiction files and extracts
  text that is relevant for each character.
  
-The script does:
+The pipeline does:
 * [Character coreference](char_coref)
 * Character feature extraction
 	* [Quote attribution](quote_attribution)
