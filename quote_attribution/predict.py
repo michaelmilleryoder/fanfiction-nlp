@@ -6,6 +6,7 @@ import multiprocessing
 import time
 from chapter import Chapter
 import feature_extracters
+import pdb
 
 def single_predict(inp):
     """Do quote attribution prediction on single process
@@ -72,6 +73,15 @@ def predict(args):
     output_files = []
     tok_files = []
     tmp_dirs = []
+
+    # Check for relative/abs output path
+    if not args.story_path.startswith('/'): # relative path
+        args.story_path = '../' + args.story_path
+    if not args.char_path.startswith('/'): # relative path
+        args.char_path = '../' + args.char_path
+    if not args.output_path.startswith('/'):
+        args.output_path = '../' + args.output_path
+
     if os.path.isdir(args.story_path):
         print("Read input directories")
         if not os.path.isdir(args.char_path):
@@ -135,7 +145,7 @@ def predict(args):
     for story_file, char_file, output_file, tok_file, tmp_dir in zip(story_files, char_files, output_files, tok_files, tmp_dirs):
         single_predict_inputs.append((args, feat_extracters, story_file, char_file, output_file, tok_file, tmp_dir))
     num_tasks = len(single_predict_inputs)
-    print("{} files to preocess ... ".format(num_tasks))
+    print("{} files to process ... ".format(num_tasks))
     
     # Check and process multiprocessing arguments
     if not isinstance(args.threads, int) or args.threads <= 0:
