@@ -7,6 +7,7 @@ import spacy
 import sys
 import os.path
 import json
+import pdb
 from importlib import reload
 reload(sys)
 # sys.setdefaultencoding('utf8')
@@ -166,13 +167,21 @@ path = sys.argv[1]
 script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
 
 rel_path = os.path.join(sys.argv[1], '')
-path = os.path.join(script_dir, rel_path)
+#path = os.path.join(script_dir, rel_path)
+
+input_dir = sys.argv[1]
+if not input_dir.startswith('/'):
+    path = '../'+input_dir
 print("Reading file from " + path)
 allFiles = glob.glob(path + "/*.csv")
 
 rel_path = sys.argv[3]
-char_path = os.path.join(script_dir, rel_path)
-print("Reading characters from " + path)
+#char_path = os.path.join(script_dir, rel_path)
+if not rel_path.startswith('/'):
+    char_path = '../'+rel_path
+else:
+    char_path = rel_path
+print("Reading characters from " + char_path)
 charFiles = set(glob.glob(char_path + "/*"))
 
 # Exit if no fic files found
@@ -185,7 +194,12 @@ for file in allFiles:
     print("Reading file: ", file)
     rel_path = os.path.join(sys.argv[2], '')
     adj_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_adj_cooccurrence.json"
+    if not adj_output_path.startswith('/'):
+        adj_output_path = '../' + adj_output_path
+
     ship_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_ship_cooccurrence.json"
+    if not ship_output_path.startswith('/'):
+        ship_output_path = '../' + ship_output_path
 
     text = []
     ficId, chapId = get_para_chap_id(file)
@@ -231,7 +245,11 @@ for file in allFiles:
     print("Creating co-occurence for ", file.split('/')[-1].split('.')[0])
     rel_path = os.path.join(sys.argv[2], '')
     adj_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_adj_cooccurrence.json"
+    if not adj_output_path.startswith('/'):
+        adj_output_path = '../' + adj_output_path
     ship_output_path = os.path.join(script_dir, rel_path) + file.split('/')[-1].split('.')[0] + "_ship_cooccurrence.json"
+    if not ship_output_path.startswith('/'):
+        ship_output_path = '../' + ship_output_path
 
     # Create adjective and character co-occurance matrices and rerank by TF-IDF
     try:

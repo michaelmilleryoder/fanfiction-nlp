@@ -11,14 +11,13 @@ The pipeline does:
 	* [Quote attribution](quote_attribution)
 	* [Assertion attribution](assertion_extraction) (narrative and evaluation about a character)
 * [Character cooccurrence matrix](cooccurrence)
-* [Alternate universe (AU) extraction](alternate_universes) from fanfiction story metadata
 
 ## Requirements
 * Parts of the pipeline require [this Stanford CoreNLP models jar](http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar). Download this file and move it to the `CoreNLP` directory.
 
 * Python 3
 
-* Python packages: [spaCy](https://spacy.io/usage)
+* Python packages: [spaCy](https://spacy.io/usage), [nltk](https://www.nltk.org/install.html) with the `punkt` resource downloaded.
 
 * For quote attribution, you will need to install:
 	* [BookNLP](https://github.com/dbamman/book-nlp). Make sure this is working properly by running the test described in their README.
@@ -44,9 +43,6 @@ No tokenization or other preprocessing is necessary: that is completed in the pi
 
 * Character cooccurrence matrix: 
 	* a directory with 2 JSON files for each fic, 1 titled `{fic_name}_adj_cooccurrence.json` and the other `{fic_name}_ship_cooccurrence.json`. In each, keys are coreferenced character cluster names and values are adjectives (for the `adj` file) or other character names (for the `ship`, or "relationship", file). A cooccurrence measure is given for each adjective or character name that is between 0 and 1.
-
-* Alternative universe (AU) extraction:
-	* a directory where for each fic, there is a list of predicted AU metadata tags, as well as confidence values in those predictions.
 
 ## Settings
 To use the pipeline, modify the input and output settings in `run.sh`. You'll also need to add paths to BookNLP and SVMRank if you are running quote attribution. Comment out any modules that you are not running. Commands within this shell script will likely not need to be modified.
