@@ -186,6 +186,7 @@ public class CorefSystem {
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,coref");
+		props.setProperty("tokenize.whitespace", "true");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
         String textFilename;
 
@@ -209,7 +210,7 @@ public class CorefSystem {
 
                 Annotation document = new Annotation(textBuilder.toString());
 
-                // Run the annotation pipeline "tokenize,ssplit,pos,lemma,ner,parse,coref"
+                // Run the annotation pipeline
                 pipeline.annotate(document);
 
                 StringBuilder outputBuilder = new StringBuilder();
@@ -270,7 +271,7 @@ public class CorefSystem {
 
                     ArrayList<String> words = null;
                     ArrayList<Pair<Pair<Integer, Integer>, String>> replacements = new ArrayList<>();
-                    StringBuilder replacedSentence = new StringBuilder();
+                    StringBuilder replacedSentence = new StringBuilder(); // new sentence with modifications
 
                     for (Mention m : sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class)) {
                         int id = m.corefClusterID;
@@ -293,7 +294,8 @@ public class CorefSystem {
                                 replacements.add(
                                     new Pair<>(
                                         new Pair<>(m.startIndex, m.endIndex),
-                                        String.join("_", character.split(" "))
+                                        //String.join("_", character.split(" "))
+                                        String.join("_", character.split(" ")).replaceAll("\\W", "").replaceAll("_+", "_").replaceAll("_$", "")
                                     )
                                 );
                             }
@@ -304,6 +306,10 @@ public class CorefSystem {
                     replacements.sort(
                         Comparator.comparingInt(o -> o.first.first)
                     );
+
+					if (textFilename.contains("teenwolf") && words.contains("hurting")) {
+					System.out.println(replacements);
+					}
 
                     int currIdx = 0;
 
@@ -318,11 +324,12 @@ public class CorefSystem {
                                 currIdx += 1;
                             }
                         }
-
+						
+						// Add <character name=name>mention</character> tags (apostrophe s exclude from mention)
                         boolean hasApostropheS = false;
-
+						replacedSentence.append("<character name=\"" + replacement.second + "\">");
                         if (replacement.first.first + 1 == replacement.first.second) {
-                            replacedSentence.append(words.get(replacement.first.first)).append(" ");
+                            replacedSentence.append(words.get(replacement.first.first));
 
                         } else {
                             for (int j = replacement.first.first; j < replacement.first.second; ++j) {
@@ -331,25 +338,55 @@ public class CorefSystem {
                                     break;
                                 }
 
-                                if (j > replacement.first.first) {
-                                    replacedSentence.append("_");
-                                }
-
                                 replacedSentence.append(words.get(j));
-                            }
 
-                            replacedSentence.append(" ");
+								if (j < replacement.first.second - 1 && !(j == replacement.first.second - 2 && words.get(j+1).equals("'s"))) {
+									replacedSentence.append(" ");
+								}
+                            }
                         }
-                        characters.add("($_" + replacement.second + ")");
-                        replacedSentence.append("($_").append(replacement.second).append(") ");
+						replacedSentence.append("</character> ");
+                        characters.add(replacement.second);
 
                         if (hasApostropheS) {
                             replacedSentence.append("'s").append(" ");
                         }
 
                         currIdx = replacement.first.second;
+
+						// Add underscores and annotate characters
+//                        boolean hasApostropheS = false;
+//
+//                        if (replacement.first.first + 1 == replacement.first.second) {
+//                            replacedSentence.append(words.get(replacement.first.first)).append(" ");
+//
+//                        } else {
+//                            for (int j = replacement.first.first; j < replacement.first.second; ++j) {
+//                                if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
+//                                    hasApostropheS = true;
+//                                    break;
+//                                }
+//
+//                                if (j > replacement.first.first) {
+//                                    replacedSentence.append("_");
+//                                }
+//
+//                                replacedSentence.append(words.get(j));
+//                            }
+//
+//                            replacedSentence.append(" ");
+//                        }
+//                        characters.add("($_" + replacement.second + ")");
+//                        replacedSentence.append("($_").append(replacement.second).append(") ");
+//
+//                        if (hasApostropheS) {
+//                            replacedSentence.append("'s").append(" ");
+//                        }
+//
+//                        currIdx = replacement.first.second;
                     }
 
+					// # to paragraph breaks
                     while (currIdx < words.size()) {
                         if (words.get(currIdx).equals("#")
                             && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {

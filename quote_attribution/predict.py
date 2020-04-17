@@ -4,6 +4,9 @@
 import os
 import multiprocessing
 import time
+import traceback
+import pdb
+
 from chapter import Chapter
 import feature_extracters
 
@@ -40,10 +43,14 @@ def single_predict(inp):
                                             tmp=tmp_dir)
         # Predict quote attribution
         chapter.quote_attribution_svmrank(feat_extracters, args.model_path, getattr(args, 'svmrank', None), tmp=tmp_dir)
+
         # Dump
         chapter.dump_quote_json(output_file)
+
     except Exception as err:
-        print(err)
+        #print(err)
+        track = traceback.format_exc()
+        print(track)
         return (story_file, False)
 
     return (story_file, True)
@@ -82,6 +89,7 @@ def predict(args):
                              "of a directory when --story-path is a directory")
         if not os.path.exists(args.output_path):
             os.makedirs(args.output_path)
+
         # Build data paths
         args.story_dir = os.path.abspath(args.story_path)
         args.char_dir = os.path.abspath(args.char_path)
@@ -104,6 +112,7 @@ def predict(args):
                     tok_filename = filestem + args.tok_suffix
                     tok_files.append(os.path.join(args.tok_dir, tok_filename))
                 tmp_dirs.append(os.path.join(args.tmp, filestem))
+
     elif os.path.isfile(args.story_path):
         print("Read input files")
         if os.path.isdir(args.char_path):
@@ -115,6 +124,7 @@ def predict(args):
         output_parent_dir = os.path.abspath(os.path.dirname(args.output_path))
         if not os.path.exists(output_parent_dir):
             os.makedirs(output_parent_dir)
+
         # Build data paths
         story_files.append(os.path.abspath(args.story_path))
         char_files.append(os.path.abspath(args.char_path))
@@ -124,6 +134,7 @@ def predict(args):
         else:
             tok_files.append(os.path.abspath(args.tok_path))
         tmp_dirs.append(os.path.join(args.tmp, os.path.basename(args.story_path)))
+
     else:
         raise ValueError("Invalid path: {}".format(args.story_path))
 
@@ -143,11 +154,17 @@ def predict(args):
 
     # Do multi-processing
     try:
-        print("Initializng {} workers".format(args.threads))
+        print("Initializing {} workers".format(args.threads))
         pool = multiprocessing.Pool(processes=args.threads)
         # For the sake of KeyboardInterrupt, we use map_async with timeout
         # TODO: add progress bar
-        res = pool.map_async(single_predict, single_predict_inputs).get(9999999)
+
+        # debug mode for pdb
+        res = []
+        for inp in single_predict_inputs:
+            res.append(single_predict(inp))
+
+        #res = pool.map_async(single_predict, single_predict_inputs).get(9999999)
         failed = []
         for story_file, success in res:
             if not success:

@@ -6,8 +6,10 @@ import json
 import numpy as np
 import csv
 import codecs
+import re
 from tokens import Token
 from collections import OrderedDict
+import pdb
 
 
 class Chapter(object):
@@ -17,7 +19,7 @@ class Chapter(object):
         super(Chapter, self).__init__()
 
     @classmethod
-    def read_with_booknlp(cls, story_file, char_file, book_nlp, tok_file=None, coref_story=True, no_cipher=False, fix_inv_char=False, tmp='tmp'):
+    def read_with_booknlp(cls, story_file, char_file, book_nlp, tok_file=None, coref_story=True, no_cipher=True, fix_inv_char=False, tmp='tmp'):
         """Read a chapter using book-nlp.
         
         The factory function to preprocess and tokenize the story file using 
@@ -46,7 +48,7 @@ class Chapter(object):
 
         # temporary file paths
         char_tmp = os.path.join(tmp, 'char_tmp.txt')
-        story_tmp = os.path.join(tmp, 'story_tmp.txt')
+        story_tmp = os.path.join(tmp, 'story_tmp.csv')
         token_tmp = os.path.join(tmp, 'token_tmp.txt')
         booknlp_tmp = os.path.join(tmp, 'booknlp_output')
         booknlp_log = os.path.join(tmp, 'booknlp.log')
@@ -54,24 +56,28 @@ class Chapter(object):
         # read character list from char_file
         chapter.read_characters(char_file, coref_story=coref_story, no_cipher=no_cipher, fix_inv_char=fix_inv_char, tmp_file=char_tmp)
 
-        if tok_file is not None and isinstance(tok_file, str) and os.path.exists(tok_file) and os.path.isfile(tok_file):
-            print("Read external tokenizations.")
-            # read tokens from external tokenization
-            chapter.read_booknlp_tokens_file(tok_file)
-        else:
-            print("No or invalid external tokenization file; do tokenization with book-nlp.")
-            if book_nlp is None:
-                raise ValueError("Invalid book-nlp path.")
-            # preprocess story file with ciphered character names 
-            chapter.preprocess_story(story_file, coref_story=coref_story, tmp_file=story_tmp)
-            # run book-nlp
-            os.system('sh run-booknlp.sh {} {} {} {} {}'.format(book_nlp, 
-                story_tmp, booknlp_tmp, token_tmp, booknlp_log))
-            # read tokens from book-nlp output
-            chapter.read_booknlp_tokens_file(token_tmp)
+        # read chapter from coref csv, extracts quotes and character mentions
+        chapter.read_coref_output(story_file)
+
+        #if tok_file is not None and isinstance(tok_file, str) and os.path.exists(tok_file) and os.path.isfile(tok_file):
+        #    print("Read external tokenizations.")
+        #    # read tokens from external tokenization
+        #    chapter.read_booknlp_tokens_file(tok_file)
+
+        #else:
+        #    print("No or invalid external tokenization file; do tokenization with book-nlp.")
+        #    if book_nlp is None:
+        #        raise ValueError("Invalid book-nlp path.")
+        #    # preprocess story file with ciphered character names 
+        #    chapter.preprocess_story(story_file, coref_story=coref_story, tmp_file=story_tmp)
+        #    # run book-nlp
+        #    os.system('sh run-booknlp.sh {} {} {} {} {}'.format(book_nlp, 
+        #        story_tmp, booknlp_tmp, token_tmp, booknlp_log))
+        #    # read tokens from book-nlp output
+        #    chapter.read_booknlp_tokens_file(token_tmp)
 
         # Find character mentions
-        chapter.find_character_appear_token_id()
+        #chapter.find_character_appear_token_id()
 
         return chapter
 
@@ -79,7 +85,73 @@ class Chapter(object):
         """"Remove comma in name"""
         return name.replace('_,_', '_')
 
-    def read_characters(self, char_file, coref_story=True, no_cipher=False, fix_inv_char=False, tmp_file='tmp/char_tmp.txt'):
+    def is_start_quote(self, token):
+        start_quote_chars = ['“', '``', '"', '«']
+        return token in start_quote_chars
+
+    def is_end_quote(self, token):
+        end_quote_chars = ['”', "''", '"', '»']
+        return token in end_quote_chars
+
+    def in_quotation(self, tokens):
+        """ Return BIO for quotations """
+    
+        start_quote_chars = ['“', '``', '"', '«']
+        end_quote_chars = ['”', "''", '"', '»']
+        
+        result = []
+        state = 'O' # Beginning, inside, end, outside
+        transform_state = {
+            'B': 'B',
+            'I': 'I',
+            'E': 'I',
+            'O': 'O'
+        }
+        
+        for tok in tokens:
+            if (state == 'O' or state == 'E') and tok in start_quote_chars:
+                state = 'B'
+                
+            elif state == 'B' and not tok in end_quote_chars:
+                state = 'I'
+                
+            elif (state == 'B' or state == 'I') and tok in end_quote_chars:
+                state = 'E'
+                
+            elif state == 'E' and not tok in start_quote_chars:
+                state = 'O'
+                
+                
+            result.append(transform_state[state])
+                
+        return result
+
+    def extract_quotes(self):
+        """ Quote extraction for tokens file, to be used instead of BookNLP quote extraction """
+
+        tokens = [tok.word for tok in self.tokens]
+        bio_quotes = self.in_quotation(tokens)
+
+        for tok, bio in zip(self.tokens, bio_quotes):
+            tok.in_quotation = bio
+
+        # Calculate whether each paragraph contains a quote
+        self.paragraph_has_quote = []
+
+        current_paragraph = -1
+
+        for tok in self.tokens:
+            if tok.paragraph_id > current_paragraph: # new paragraph
+                self.paragraph_has_quote.append(False)
+                current_paragraph = tok.paragraph_id
+
+            if tok.in_quotation != 'O':
+                self.paragraph_has_quote[-1] = True
+
+        if len(self.paragraph_has_quote) != self.paragraph_num:
+            pdb.set_trace()
+
+    def read_characters(self, char_file, coref_story=True, no_cipher=True, fix_inv_char=False, tmp_file='tmp/char_tmp.txt'):
         """Read and preprocess character list file.
         
         For the sake of tokenization, it will change the coreference annotation
@@ -152,6 +224,7 @@ class Chapter(object):
                         
                         # Store character name and gender
                         self.characters[c] = (gender, cnames)
+
         self.character_num = len(self.characters)
         print("Done. ({} characters)".format(self.character_num))
 
@@ -164,8 +237,6 @@ class Chapter(object):
             story_file: Path to the story file.
             tmp_file: Path to save the temporary file.
 
-        TODO: Relieve the need for the changing of annotation by trying to use 
-              customized dictionary in tokenization.
         """
 
         if not hasattr(self, 't_characters') or not hasattr(self, 'ciph_characters'):
@@ -178,7 +249,8 @@ class Chapter(object):
                 for line in f_csv:
                     if len(line) < 4:
                         continue
-                    text = line[3]
+                    #text = line[3] # for 'text' column
+                    text = line[-1] # for 'text_tokenized' column
 
                     # annotate with new marks
                     for c in self.t_characters:
@@ -196,6 +268,133 @@ class Chapter(object):
                     # save into the temporary file
                     outf.write(' '.join(text_split)+'\n\n')
 
+
+    def read_coref_output(self, coref_file): 
+        """Read coref output file, already tokenized
+        
+        Args:
+            coref_file: path to coref output file (csv)
+        """
+
+        # Chapter IDs for every paragraph
+        self.paragraph_chapter_id = []
+        # List of tokens
+        self.tokens = []
+        # Number of paragraphs
+        self.paragraph_num = 0
+        # IDs of paragraph start tokens: needed for feature extracters
+        self.paragraph_start_token_id = []
+        # IDs of paragraph end tokens: needed for feature extracters
+        self.paragraph_end_token_id = []
+        # The token IDs of character mentions: needed for feature extracters
+        self.character_appear_token_id = {}
+        # Start and end story token IDs of quotes for each paragraph. Stored alternatively by start and end ids. [[start0, end0, start1, end1, ...], [], ...]
+        self.story_quote_token_id = []
+        # Start and end paragraph token IDs of quotes for each paragraph. Stored alternatively by start and end ids. [[start0, end0, start1, end1, ...], [], ...]
+        self.paragraph_quote_token_id = []
+        # Whether each paragraph contains a quote
+        self.paragraph_has_quote = []
+        # The type of quotes in the paragraph. Could be `None', `Implicit', or `Explicit'. Will be filled later by SVMrank output
+        self.paragraph_quote_type = []
+
+        print("Reading coref output file ... {}".format(coref_file))
+
+        story_token_id = 0
+
+        with open(coref_file) as coref_csv:
+            reader = csv.reader(coref_csv) # fic_id, chapter_id, para_id, text, text_tokenized
+            header = next(reader) # skip header
+
+            for line in reader:
+                paragraph_token_id = 1 # start with 1 to match annotations
+                paragraph_has_quote = False
+
+                chapter_id = int(line[1])
+                paragraph_id = int(line[2])
+                tokens = line[-1].split()
+
+                if 'teenwolf' in coref_file and paragraph_id == 44:
+                    pdb.set_trace()
+
+                self.paragraph_start_token_id.append(story_token_id)
+                self.story_quote_token_id.append([])
+                self.paragraph_quote_token_id.append([])
+
+                # Store tokens
+                character_name = ''
+                in_quote = False
+                end_character = False
+                end_quote = False
+
+                for i, token in enumerate(tokens):
+                    token_text = token
+
+                    # Check for end of a start tag with attributes
+                    if token.endswith('">'):
+                        continue # don't advance token counters
+
+                    # Check for end tag
+                    if '</' in token:
+                        tag = re.search(r'</.*?>', token_text)
+                        if tag is None: pdb.set_trace()
+                        if tag.group() == '</character>':
+                            end_character = True
+                        else:
+                            pdb.set_trace()
+
+                        token_text = re.search(r'(?:.*?">)?(.*)</.*>', token_text).group(1)
+
+                    # Check for start tag
+                    elif token.startswith('<'): # might have to watch out for normal carets
+                        tag = re.match(r'<.*', token_text) # assuming has attributes
+                        if tag is None: pdb.set_trace()
+                        if tag.group().startswith('<character'):
+                            attr = tokens[i+1]
+                            character_name = re.search(r'name="(.*)"', attr).group(1).lower()
+
+                            # Store character mention token ID
+                            if not character_name in self.character_appear_token_id:
+                                self.character_appear_token_id[character_name] = []
+                            self.character_appear_token_id[character_name].append(story_token_id)
+
+                        else:
+                            pdb.set_trace()
+
+                        continue # don't advance token counters
+
+                    # Check for quotes
+                    if self.is_start_quote(token_text):
+                        self.story_quote_token_id[-1].append(story_token_id)
+                        self.paragraph_quote_token_id[-1].append(paragraph_token_id)
+                        in_quote = True
+                        paragraph_has_quote = True
+                    elif self.is_end_quote(token_text):
+                        self.story_quote_token_id[-1].append(story_token_id)
+                        self.paragraph_quote_token_id[-1].append(paragraph_token_id)
+                        end_quote = True
+
+                    self.tokens.append(Token(chapter_id, paragraph_id, story_token_id, paragraph_token_id, token_text, in_quote, character_name))
+
+                    if end_quote:
+                        in_quote = False
+                        end_quote = False
+
+                    if end_character:
+                        character_name = ''
+                        end_character = False
+
+                    story_token_id += 1
+                    paragraph_token_id += 1
+
+                self.paragraph_chapter_id.append(chapter_id)
+                self.paragraph_has_quote.append(paragraph_has_quote)
+                self.paragraph_quote_type.append('None')
+                self.paragraph_end_token_id.append(story_token_id)
+                self.paragraph_num += 1
+
+        print("Done. ({} paragraphs)".format(self.paragraph_num))
+
+
     def read_booknlp_tokens_file(self, token_file): 
         """Read book-nlp tokens output file
         
@@ -211,7 +410,7 @@ class Chapter(object):
         # IDs of paragraph end tokens
         self.paragraph_end_token_id = []
         # Whether the paragraph contains a quote
-        self.paragraph_has_quote = []
+        #self.paragraph_has_quote = []
         # The type of quotes in the paragraph. Could be `None', `Implicit', or `Explicit'
         self.paragraph_quote_type = []
         print("Reading Book-nlp Tokens File ... {}".format(token_file))
@@ -232,15 +431,15 @@ class Chapter(object):
                                          character_id, supersense))
 
                 # Get the paragraph start and end token id
-                if paragraph_id >= len(self.paragraph_start_token_id):
+                if paragraph_id >= len(self.paragraph_start_token_id): # new paragraph
                     self.paragraph_start_token_id.append(token_id)
                     self.paragraph_end_token_id.append(token_id)
-                    self.paragraph_has_quote.append(False)
+                    #self.paragraph_has_quote.append(False)
                     self.paragraph_quote_type.append('None')
 
                 # Check whether the paragraph contains quotes
-                if in_quotation != 'O':
-                    self.paragraph_has_quote[-1] = True
+                #if in_quotation != 'O':
+                #    self.paragraph_has_quote[-1] = True
 
                 self.paragraph_end_token_id[-1] = token_id
 
@@ -343,8 +542,8 @@ class Chapter(object):
                     training)
         """
 
-        # Find the quotes in paragraphs
-        self.find_paragraph_quote_token_id()
+        # Find the quotes in paragraphs (now done in read_coref_output)
+        #self.find_paragraph_quote_token_id()
 
         # Extract features given feature extracters
         quote_features = self.extract_features(feature_extracters)
@@ -360,24 +559,30 @@ class Chapter(object):
         print("Find quotes in paragraphs ... ")
         num_quote = 0
         for i in range(self.paragraph_num):
-            self.paragraph_quote_token_id.append([])
-            if self.paragraph_has_quote[i]:
-                j = self.paragraph_start_token_id[i]
-                state = False
-                while j < len(self.tokens) and i == self.tokens[j].paragraph_id:
-                    if self.tokens[j].in_quotation != 'O' and state == False:
-                        state = True
-                        self.paragraph_quote_token_id[i].append(j)
-                    if state == True:
-                        if self.tokens[j].in_quotation == 'O':
-                            state = False
-                            self.paragraph_quote_token_id[i].append(j - 1)
-                            num_quote += 1
-                        elif j == len(self.tokens) - 1 or i != self.tokens[j+1].paragraph_id:
-                            state = False
+
+            try:
+                self.paragraph_quote_token_id.append([])
+                if self.paragraph_has_quote[i]:
+                    j = self.paragraph_start_token_id[i]
+                    state = False
+                    while j < len(self.tokens) and i == self.tokens[j].paragraph_id:
+                        if self.tokens[j].in_quotation != 'O' and state == False:
+                            state = True
                             self.paragraph_quote_token_id[i].append(j)
-                            num_quote += 1
-                    j += 1
+                        if state == True:
+                            if self.tokens[j].in_quotation == 'O':
+                                state = False
+                                self.paragraph_quote_token_id[i].append(j - 1)
+                                num_quote += 1
+                            elif j == len(self.tokens) - 1 or i != self.tokens[j+1].paragraph_id:
+                                state = False
+                                self.paragraph_quote_token_id[i].append(j)
+                                num_quote += 1
+                        j += 1
+
+            except:
+                pdb.set_trace()
+
         print("Done. ({} quotes)".format(num_quote))
 
     def extract_features(self, feature_extracters):
@@ -409,7 +614,7 @@ class Chapter(object):
             'paragraph_start_token_id': self.paragraph_start_token_id,
             'paragraph_end_token_id': self.paragraph_end_token_id,
             'paragraph_has_quote': self.paragraph_has_quote,
-            'paragraph_quote_token_id': self.paragraph_quote_token_id,
+            'paragraph_quote_token_id': self.story_quote_token_id,
             'paragraph_quote_type': self.paragraph_quote_type,
             'character_appear_token_id': self.character_appear_token_id,
             'character_num': self.character_num,
@@ -468,7 +673,7 @@ class Chapter(object):
                         self.paragraph_end_token_id[i], 
                         self.paragraph_quote_type[i]
                     ))
-                    for quoteToken_id in self.paragraph_quote_token_id[i]:
+                    for quoteToken_id in self.story_quote_token_id[i]:
                         f.write("{} ".format(quoteToken_id))
                     f.write("\n")
 
@@ -484,9 +689,9 @@ class Chapter(object):
 
                         # Simply check whether the answer utterance is current
                         # sentence or not by try to match the first word.
-                        first_word_len = len(self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word)
+                        first_word_len = len(self.tokens[self.story_quote_token_id[i][0]+1].word)
                         ans_first_word = t_ans_sent[0][:first_word_len]
-                        now_first_word = self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word.lower()
+                        now_first_word = self.tokens[self.story_quote_token_id[i][0]+1].word.lower()
 
                         # Mismatch, back to last answer
                         if ans_first_word != now_first_word:
@@ -548,12 +753,15 @@ class Chapter(object):
                 paragraph2quotes.append([])
                 start_id = self.paragraph_start_token_id[i]
                 end_id = self.paragraph_end_token_id[i]
-                paragraph_id = i
+                paragraph_id = i + 1
+                chapter_id = self.paragraph_chapter_id[i]
                 qtype = self.paragraph_quote_type[i]
                 for j in range(0, len(self.paragraph_quote_token_id[i]), 2):
-                    quote_start = int(self.paragraph_quote_token_id[i][j])
-                    quote_end = int(self.paragraph_quote_token_id[i][j+1])
-                    paragraph2quotes[ss].append((quote_start, quote_end, qtype, paragraph_id, start_id, end_id))
+                    story_quote_start = int(self.story_quote_token_id[i][j])
+                    story_quote_end = int(self.story_quote_token_id[i][j+1])
+                    paragraph_quote_start = int(self.paragraph_quote_token_id[i][j])
+                    paragraph_quote_end = int(self.paragraph_quote_token_id[i][j+1])
+                    paragraph2quotes[ss].append((story_quote_start, story_quote_end, paragraph_quote_start, paragraph_quote_end, qtype, chapter_id, paragraph_id, start_id, end_id))
                 ss += 1
 
         with codecs.open(predictfile) as f:
@@ -564,22 +772,26 @@ class Chapter(object):
         ss = 0
         for i in range(0, len(scores), self.character_num):
             maxid = np.argmax(scores[i: i+self.character_num])
-            guess_char = list(self.characters.keys())[maxid][4:-4]
+            #guess_char = list(self.characters.keys())[maxid][4:-4]
+            guess_char = list(self.characters.keys())[maxid]
             quote = {}
             quote['speaker'] = guess_char
             quote['quotes'] = []
-            for quote_start, quote_end, quote_type, paragraph_id, start_id, end_id in paragraph2quotes[ss]:
+            for story_quote_start, story_quote_end, paragraph_quote_start, paragraph_quote_end, quote_type, chapter_id, paragraph_id, start_id, end_id in paragraph2quotes[ss]:
+                quote['chapter'] = chapter_id
                 quote['paragraph'] = paragraph_id
                 quote['type'] = quote_type
                 quote['start'] = start_id
                 quote['end'] = end_id
                 quote['quotes'].append({})
-                quote['quotes'][-1]['start'] = quote_start
-                quote['quotes'][-1]['end'] = quote_end
-                t_tokens = [token.original_word for token in self.tokens[quote_start: quote_end+1]]
+                quote['quotes'][-1]['start_story_token_id'] = story_quote_start
+                quote['quotes'][-1]['end_story_token_id'] = story_quote_end
+                quote['quotes'][-1]['start_paragraph_token_id'] = paragraph_quote_start
+                quote['quotes'][-1]['end_paragraph_token_id'] = paragraph_quote_end
+                t_tokens = [token.word for token in self.tokens[story_quote_start: story_quote_end+1]]
                 quote['quotes'][-1]['quote'] = ' '.join(t_tokens)
                 for c in self.characters:
-                    quote['quotes'][-1]['quote'] = ' '.join(quote['quotes'][-1]['quote'].replace(c, '').split())
+                   quote['quotes'][-1]['quote'] = ' '.join(quote['quotes'][-1]['quote'].replace(c, '').split())
                 self.char2quotes[list(self.characters.keys())[maxid]].append(quote['quotes'][-1]['quote'])
             quote['replyto'] = -1
             if quote['type'] == 'Explicit' and len(self.quotes) > 0 and quote['paragraph'] - self.quotes[-1]['paragraph'] <= 2 and quote['start'] - self.quotes[-1]['end'] <= 200:

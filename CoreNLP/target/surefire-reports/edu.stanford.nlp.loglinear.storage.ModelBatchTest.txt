@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: edu.stanford.nlp.loglinear.storage.ModelBatchTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.789 sec

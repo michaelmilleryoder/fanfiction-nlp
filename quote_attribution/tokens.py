@@ -1,8 +1,28 @@
 #!/usr/bin/env python3 -u
 # -*- coding: utf-8 -*-
 
-
 class Token(object):
+    """Class for tokens.
+
+    Args:
+        chapter_id, paragraph_id, token_id: should match annotations. Token IDs restart every paragraph.
+
+    """
+
+    def __init__(self, chapter_id, paragraph_id, 
+                story_token_id, paragraph_token_id, word, 
+                 in_quotation, character):
+        super(Token, self).__init__()
+        self.chapter_id = int(chapter_id)
+        self.paragraph_id = int(paragraph_id)
+        self.story_token_id = int(story_token_id) 
+        self.paragraph_token_id = int(paragraph_token_id) 
+        self.word = word
+        self.in_quotation = in_quotation
+        self.character = character
+
+
+class Token_BookNLP(object):
     """Class for tokens.
 
     Specialized for book-nlp.
@@ -28,6 +48,6 @@ class Token(object):
         self.pos = pos
         self.ner = ner
         self.deprel = deprel
-        self.in_quotation = in_quotation
+        self.in_quotation_booknlp = in_quotation
         self.character_id = int(character_id)
         self.supersense = supersense

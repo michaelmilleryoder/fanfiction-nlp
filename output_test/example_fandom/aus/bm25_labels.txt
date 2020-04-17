@@ -1,0 +1,3 @@
+11467887-1.txt:	('fantasy,magic,medieval,royalty,dragon,fairy,tale\n', 0)	('college/university,college,university,school\n', 0)	('coffee\n', 0)	('supernatural,vampire,zombie,apocalypse,werewolf,monster\n', 0)	('rock,band\n', 0)	('childhood,friend\n', 0)	('demon,daemon,guardian,angel\n', 0)	
+7759693-2.txt:	('fantasy,magic,medieval,royalty,dragon,fairy,tale\n', 2.4665748101744596)	('coffee\n', 2.144074336345676)	
+10118594-4.txt:	('fantasy,magic,medieval,royalty,dragon,fairy,tale\n', 0)	('college/university,college,university,school\n', 0)	('coffee\n', 0)	('supernatural,vampire,zombie,apocalypse,werewolf,monster\n', 0)	('rock,band\n', 0)	('childhood,friend\n', 0)	('demon,daemon,guardian,angel\n', 0)	

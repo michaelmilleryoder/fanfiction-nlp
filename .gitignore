@@ -1,11 +1,13 @@
 *.jar
+*.class
 .DS_Store
 *.swp
 quote_attribution/tmp
 CoreNLP/*.tmp
+CoreNLP/target/
 *.vscode
 *.pyc
 __pycache__/
 quote_attribution/tmpout/
 *.svmrank
-
+tmp/

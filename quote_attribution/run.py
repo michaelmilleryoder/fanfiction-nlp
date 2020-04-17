@@ -91,7 +91,7 @@ def main():
                         help="(needed when input path is a directory and "
                              "--tok-path is set) suffix of tokenization "
                              "filenames (default: .tok)")
-    parser.add_argument('--no-cipher-char', action='store_true', default=False,
+    parser.add_argument('--no-cipher-char', action='store_true', default=True,
                         help="do not cipher character name; for the sake of "
                              "tokenization, the script will change the "
                              "coreference character annotation marks to "
