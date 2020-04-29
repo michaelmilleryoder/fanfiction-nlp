@@ -252,7 +252,7 @@ public class CorefSystem {
 
                 HashSet<String> characters = new HashSet<>();
 
-                // Add the $(_{CHARACTER_NAME}) to the text and process the paragraph delimiter "# ."
+                // Add the character tags to the text and process the paragraph delimiter "# ."
                 for (CoreMap sentence : document.get(CoreAnnotations.SentencesAnnotation.class)) {
                     if (sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class).size() == 0) {
                         String text = sentence.get(CoreAnnotations.TextAnnotation.class);
@@ -271,7 +271,7 @@ public class CorefSystem {
 
                     ArrayList<String> words = null;
                     ArrayList<Pair<Pair<Integer, Integer>, String>> replacements = new ArrayList<>();
-                    StringBuilder replacedSentence = new StringBuilder(); // new sentence with modifications
+//                    StringBuilder replacedSentence = new StringBuilder(); // new sentence with modifications
 
                     for (Mention m : sentence.get(CorefCoreAnnotations.CorefMentionsAnnotation.class)) {
                         int id = m.corefClusterID;
@@ -307,58 +307,67 @@ public class CorefSystem {
                         Comparator.comparingInt(o -> o.first.first)
                     );
 
-					if (textFilename.contains("teenwolf") && words.contains("hurting")) {
+					if (textFilename.contains("teenwolf") && words.contains("Maaan")) {
 					System.out.println(replacements);
 					}
 
-                    int currIdx = 0;
+                    List<String> replacedWords = new ArrayList<>(words); // new sentence tokens with modifications, joined to a string at end
 
                     for (Pair<Pair<Integer, Integer>, String> replacement : replacements) {
-                        while (currIdx < replacement.first.first) {
-                            if (words.get(currIdx).equals("#")
-                                && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
-                                replacedSentence.append("\n");
-                                currIdx += 2;
-                            } else {
-                                replacedSentence.append(words.get(currIdx)).append(" ");
-                                currIdx += 1;
-                            }
-                        }
-						
+                    	
+                    		String begin_tag = "<character name=\"" + replacement.second + "\">"; 
+                    		String end_tag = "</character>"; 
+                    		
+                    		String taggedWord = ""; // placeholder for word to add
+                    	
 						// Add <character name=name>mention</character> tags (apostrophe s exclude from mention)
-                        boolean hasApostropheS = false;
-						replacedSentence.append("<character name=\"" + replacement.second + "\">");
-                        if (replacement.first.first + 1 == replacement.first.second) {
-                            replacedSentence.append(words.get(replacement.first.first));
+                        if (replacement.first.first + 1 == replacement.first.second) { // 1-word mention
+                        		taggedWord = begin_tag + replacedWords.get(replacement.first.first) + end_tag;
+                        		replacedWords.set(replacement.first.first, taggedWord);
 
-                        } else {
-                            for (int j = replacement.first.first; j < replacement.first.second; ++j) {
-                                if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
-                                    hasApostropheS = true;
-                                    break;
-                                }
+                        } else { // multi-word mention
+                        	
+                        	// begin-tag first word
+                        	taggedWord = begin_tag + replacedWords.get(replacement.first.first);
+                        	replacedWords.set(replacement.first.first, taggedWord);
+                        	
+                        	// end-tag after last word
+                        if (words.get(replacement.first.second - 1).equals("'s")) {
+                        		taggedWord = replacedWords.get(replacement.first.second - 2) + end_tag;
+                            replacedWords.set(replacement.first.second - 2, taggedWord);
 
-                                replacedSentence.append(words.get(j));
+                         } else {
+                        		taggedWord = replacedWords.get(replacement.first.second - 1) + end_tag;
+                            replacedWords.set(replacement.first.second - 1, taggedWord);
+                         }
 
-								if (j < replacement.first.second - 1 && !(j == replacement.first.second - 2 && words.get(j+1).equals("'s"))) {
-									replacedSentence.append(" ");
-								}
-                            }
                         }
-						replacedSentence.append("</character> ");
+
                         characters.add(replacement.second);
 
-                        if (hasApostropheS) {
-                            replacedSentence.append("'s").append(" ");
-                        }
+                    }
 
-                        currIdx = replacement.first.second;
-
-						// Add underscores and annotate characters
-//                        boolean hasApostropheS = false;
+//                    int currIdx = 0;
 //
+//                    for (Pair<Pair<Integer, Integer>, String> replacement : replacements) {
+//                    	
+//                    		// Handle newlines in between replacements
+//                        while (currIdx < replacement.first.first) {
+//                            if (words.get(currIdx).equals("#")
+//                                && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
+//                                replacedSentence.append("\n");
+//                                currIdx += 2;
+//                            } else {
+//                                replacedSentence.append(words.get(currIdx)).append(" ");
+//                                currIdx += 1;
+//                            }
+//                        }
+//						
+//						// Add <character name=name>mention</character> tags (apostrophe s exclude from mention)
+//                        boolean hasApostropheS = false;
+//						replacedSentence.append("<character name=\"" + replacement.second + "\">");
 //                        if (replacement.first.first + 1 == replacement.first.second) {
-//                            replacedSentence.append(words.get(replacement.first.first)).append(" ");
+//                            replacedSentence.append(words.get(replacement.first.first));
 //
 //                        } else {
 //                            for (int j = replacement.first.first; j < replacement.first.second; ++j) {
@@ -367,36 +376,39 @@ public class CorefSystem {
 //                                    break;
 //                                }
 //
-//                                if (j > replacement.first.first) {
-//                                    replacedSentence.append("_");
-//                                }
-//
 //                                replacedSentence.append(words.get(j));
-//                            }
 //
-//                            replacedSentence.append(" ");
+//								if (j < replacement.first.second - 1 && !(j == replacement.first.second - 2 && words.get(j+1).equals("'s"))) {
+//									replacedSentence.append(" ");
+//								}
+//                            }
 //                        }
-//                        characters.add("($_" + replacement.second + ")");
-//                        replacedSentence.append("($_").append(replacement.second).append(") ");
+//						replacedSentence.append("</character> ");
+//                        characters.add(replacement.second);
 //
 //                        if (hasApostropheS) {
 //                            replacedSentence.append("'s").append(" ");
 //                        }
 //
 //                        currIdx = replacement.first.second;
-                    }
-
-					// # to paragraph breaks
-                    while (currIdx < words.size()) {
-                        if (words.get(currIdx).equals("#")
-                            && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
-                            replacedSentence.append("\n");
-                            currIdx += 2;
-                        } else {
-                            replacedSentence.append(words.get(currIdx)).append(" ");
-                            currIdx += 1;
-                        }
-                    }
+//
+//                    }
+//
+//					// # to paragraph breaks at the end of going through all the replacements
+//                    while (currIdx < words.size()) {
+//                        if (words.get(currIdx).equals("#")
+//                            && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
+//                            replacedSentence.append("\n");
+//                            currIdx += 2;
+//                        } else {
+//                            replacedSentence.append(words.get(currIdx)).append(" ");
+//                            currIdx += 1;
+//                        }
+//                    }
+                    
+                    String replacedSentence = String.join(" ", replacedWords) + " ";
+                    // Replace # . to paragraph breaks
+                    replacedSentence = replacedSentence.replaceAll("# \\.", "\n");
 
                     outputBuilder.append(replacedSentence.toString());
 
