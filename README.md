@@ -13,7 +13,9 @@ The pipeline does:
 * [Character cooccurrence matrix](cooccurrence)
 
 ## Requirements
-* Parts of the pipeline require [this Stanford CoreNLP models jar](http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar). Download this file and move it to the `CoreNLP` directory.
+* Download an external Stanford CoreNLP models jar file
+	* Download Stanford CoreNLP 3.9.2 here: [http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip)
+	* Unzip this file and copy `stanford-corenlp-3.9.2.-models.jar` to the `CoreNLP` directory.
 
 * Python 3
 
