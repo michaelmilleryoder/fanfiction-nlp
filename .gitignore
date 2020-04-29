@@ -11,3 +11,8 @@ __pycache__/
 quote_attribution/tmpout/
 *.svmrank
 tmp/
+run.sh
+CoreNLP/.classpath
+CoreNLP/.project
+CoreNLP/.settings/
+CoreNLP/coref.temp
