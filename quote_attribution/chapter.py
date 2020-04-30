@@ -7,7 +7,7 @@ import numpy as np
 import csv
 import codecs
 import re
-from tokens import Token
+from tokens import Token, Mention, CharacterMentionParser
 from collections import OrderedDict
 import pdb
 
@@ -311,77 +311,51 @@ class Chapter(object):
 
                 chapter_id = int(line[1])
                 paragraph_id = int(line[2])
-                tokens = line[-1].split()
-
-                if 'teenwolf' in coref_file and paragraph_id == 44:
-                    pdb.set_trace()
+                text = line[-1]
 
                 self.paragraph_start_token_id.append(story_token_id)
                 self.story_quote_token_id.append([])
                 self.paragraph_quote_token_id.append([])
 
+                # Extract character spans
+                parser = CharacterMentionParser()
+                parser.feed(text)
+                tokens = parser.get_tokens()
+                character_tokens = parser.get_character_tokens()
+
                 # Store tokens
-                character_name = ''
                 in_quote = False
-                end_character = False
                 end_quote = False
 
                 for i, token in enumerate(tokens):
-                    token_text = token
+                    token_chars = character_tokens.get(i, [])
 
-                    # Check for end of a start tag with attributes
-                    if token.endswith('">'):
-                        continue # don't advance token counters
-
-                    # Check for end tag
-                    if '</' in token:
-                        tag = re.search(r'</.*?>', token_text)
-                        if tag is None: pdb.set_trace()
-                        if tag.group() == '</character>':
-                            end_character = True
-                        else:
-                            pdb.set_trace()
-
-                        token_text = re.search(r'(?:.*?">)?(.*)</.*>', token_text).group(1)
-
-                    # Check for start tag
-                    elif token.startswith('<'): # might have to watch out for normal carets
-                        tag = re.match(r'<.*', token_text) # assuming has attributes
-                        if tag is None: pdb.set_trace()
-                        if tag.group().startswith('<character'):
-                            attr = tokens[i+1]
-                            character_name = re.search(r'name="(.*)"', attr).group(1).lower()
-
-                            # Store character mention token ID
-                            if not character_name in self.character_appear_token_id:
-                                self.character_appear_token_id[character_name] = []
-                            self.character_appear_token_id[character_name].append(story_token_id)
-
-                        else:
-                            pdb.set_trace()
-
-                        continue # don't advance token counters
+                    # Store character mention token ID
+                    for character in token_chars:
+                        character_name = character.lower()
+                        if not character_name in self.character_appear_token_id:
+                            self.character_appear_token_id[character_name] = []
+                        self.character_appear_token_id[character_name].append(story_token_id)
 
                     # Check for quotes
-                    if self.is_start_quote(token_text):
+                    if (not in_quote) and (self.is_start_quote(token)):
                         self.story_quote_token_id[-1].append(story_token_id)
                         self.paragraph_quote_token_id[-1].append(paragraph_token_id)
                         in_quote = True
                         paragraph_has_quote = True
-                    elif self.is_end_quote(token_text):
+                    elif self.is_end_quote(token):
                         self.story_quote_token_id[-1].append(story_token_id)
                         self.paragraph_quote_token_id[-1].append(paragraph_token_id)
                         end_quote = True
 
-                    self.tokens.append(Token(chapter_id, paragraph_id, story_token_id, paragraph_token_id, token_text, in_quote, character_name))
+#                    if 'teenwolf_114' in coref_file and paragraph_id == 33 and token == '"':
+#                        pdb.set_trace()
+
+                    self.tokens.append(Token(chapter_id, paragraph_id, story_token_id, paragraph_token_id, token, in_quote, token_chars))
 
                     if end_quote:
                         in_quote = False
                         end_quote = False
-
-                    if end_character:
-                        character_name = ''
-                        end_character = False
 
                     story_token_id += 1
                     paragraph_token_id += 1
@@ -447,7 +421,8 @@ class Chapter(object):
         print("Done. ({} tokens, {} paragraphs)".format(len(self.tokens), self.paragraph_num))
 
     def find_character_appear_token_id(self):
-        """Find the token ids of character mentions.
+        """ NOT CALLED ANYMORE--integrated into read_coref_output
+        Find the token ids of character mentions.
         
         Should call `read_characters', `preprocess_story' and read tokens first.
         """
