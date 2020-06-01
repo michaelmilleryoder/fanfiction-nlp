@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from html.parser import HTMLParser
+import pdb
 
 class Token(object):
     """Class for tokens.
@@ -20,7 +21,7 @@ class Token(object):
         self.story_token_id = int(story_token_id) 
         self.paragraph_token_id = int(paragraph_token_id) 
         self.word = word
-        self.in_quotation = in_quotation
+        self.in_quotation = in_quotation # {O, B-QUOTE, I-Quote}
         self.characters = characters # list
 
 
@@ -84,6 +85,8 @@ class CharacterMentionParser(HTMLParser):
         
     def handle_endtag(self, tag):
         
+        if len(self.start_token_ids) == 0:
+            pdb.set_trace()
         start_id = self.start_token_ids.pop()
         exclusive_end_id = self.current_token_id
         character = self.current_characters.pop()

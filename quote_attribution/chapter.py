@@ -270,7 +270,7 @@ class Chapter(object):
 
 
     def read_coref_output(self, coref_file): 
-        """Read coref output file, already tokenized
+        """Read pipeline coref output file, already tokenized
         
         Args:
             coref_file: path to coref output file (csv)
@@ -278,6 +278,8 @@ class Chapter(object):
 
         # Chapter IDs for every paragraph
         self.paragraph_chapter_id = []
+        # Paragraph IDs (restarting at chapters) for every paragraph
+        self.paragraph_paragraph_id = []
         # List of tokens
         self.tokens = []
         # Number of paragraphs
@@ -326,6 +328,8 @@ class Chapter(object):
                 # Store tokens
                 in_quote = False
                 end_quote = False
+                current_story_start_quote_id = None
+                current_paragraph_start_quote_id = None
 
                 for i, token in enumerate(tokens):
                     token_chars = character_tokens.get(i, [])
@@ -339,19 +343,25 @@ class Chapter(object):
 
                     # Check for quotes
                     if (not in_quote) and (self.is_start_quote(token)):
-                        self.story_quote_token_id[-1].append(story_token_id)
-                        self.paragraph_quote_token_id[-1].append(paragraph_token_id)
+                        current_story_start_quote_id = story_token_id
+                        current_paragraph_start_quote_id = paragraph_token_id
                         in_quote = True
-                        paragraph_has_quote = True
                     elif self.is_end_quote(token):
-                        self.story_quote_token_id[-1].append(story_token_id)
-                        self.paragraph_quote_token_id[-1].append(paragraph_token_id)
-                        end_quote = True
+                        if current_story_start_quote_id is not None:
+                            self.story_quote_token_id[-1].append(current_story_start_quote_id)
+                            self.paragraph_quote_token_id[-1].append(current_paragraph_start_quote_id)
+                            self.story_quote_token_id[-1].append(story_token_id)
+                            self.paragraph_quote_token_id[-1].append(paragraph_token_id)
+                            paragraph_has_quote = True
+                            end_quote = True
 
-#                    if 'teenwolf_114' in coref_file and paragraph_id == 33 and token == '"':
-#                        pdb.set_trace()
-
-                    self.tokens.append(Token(chapter_id, paragraph_id, story_token_id, paragraph_token_id, token, in_quote, token_chars))
+                    if in_quote and current_story_start_quote_id == paragraph_token_id:
+                        in_quotation = 'B-QUOTE'
+                    elif in_quote and current_story_start_quote_id != paragraph_token_id:
+                        in_quotation = 'I-QUOTE' 
+                    else:
+                        in_quotation = 'O'
+                    self.tokens.append(Token(chapter_id, paragraph_id, story_token_id, paragraph_token_id, token, in_quotation, token_chars))
 
                     if end_quote:
                         in_quote = False
@@ -361,6 +371,7 @@ class Chapter(object):
                     paragraph_token_id += 1
 
                 self.paragraph_chapter_id.append(chapter_id)
+                self.paragraph_paragraph_id.append(paragraph_id)
                 self.paragraph_has_quote.append(paragraph_has_quote)
                 self.paragraph_quote_type.append('None')
                 self.paragraph_end_token_id.append(story_token_id)
@@ -511,7 +522,7 @@ class Chapter(object):
         using the feature extracters, and save features into `svmrank_input_file'
         
         Args:
-            feature_extracters: A sequence of feature extracters to be apply. 
+            feature_extracters: A sequence of feature extracters to be applied. 
             svmrank_input_file: Path to save svm-rank input file.
             answer: Path to the quote attribution golden answers file (useful in 
                     training)
@@ -728,7 +739,8 @@ class Chapter(object):
                 paragraph2quotes.append([])
                 start_id = self.paragraph_start_token_id[i]
                 end_id = self.paragraph_end_token_id[i]
-                paragraph_id = i + 1
+                #paragraph_id = i + 1
+                paragraph_id = self.paragraph_paragraph_id[i]
                 chapter_id = self.paragraph_chapter_id[i]
                 qtype = self.paragraph_quote_type[i]
                 for j in range(0, len(self.paragraph_quote_token_id[i]), 2):
