@@ -36,11 +36,10 @@ class SpkAppCntFeatureExtracter(BaseFeatureExtracter):
         for i in range(paragraph_num):
             if paragraph_has_quote[i]:
                 for j in range(character_num):
-                    char = list(characters.keys())[j]
-                    if not char in character_appear_token_id:
-                        pdb.set_trace()
+                    char = sorted(characters.keys())[j]
                     count = len(character_appear_token_id[char])
                     ret[i][j]['spkappcnt'] = float(count) / float(sum_count)
+                    #ret[i][j]['spkappcnt'] = 0
 
     @classmethod
     def build_extracter(cls, args):

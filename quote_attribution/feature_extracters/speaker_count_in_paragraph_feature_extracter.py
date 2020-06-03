@@ -40,7 +40,7 @@ class SpkCntParFeatureExtracter(BaseFeatureExtracter):
                 parStart = paragraph_start_token_id[i]
                 parEnd = paragraph_end_token_id[i]
                 for j in range(character_num):
-                    char = list(characters.keys())[j]
+                    char = sorted(characters.keys())[j]
                     parCnt = 0
                     quoCnt = 0
                     pid = 0
@@ -54,7 +54,8 @@ class SpkCntParFeatureExtracter(BaseFeatureExtracter):
                             if (startId <= cid and endId >= cid):
                                 quoCnt += 1
                         pid += 2
-                    ret[i][j]['spkcntpar'] = parCnt - quoCnt
+                    #ret[i][j]['spkcntpar'] = parCnt - quoCnt
+                    ret[i][j]['spkcntpar'] = 0
 
     @classmethod
     def build_extracter(cls, args):

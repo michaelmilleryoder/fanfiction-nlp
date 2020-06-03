@@ -5,6 +5,7 @@ import os
 import multiprocessing
 from chapter import Chapter
 import feature_extracters
+import traceback
 
 
 def single_train_organize(inp):
@@ -40,11 +41,13 @@ def single_train_organize(inp):
                                             coref_story=(not args.no_coref_story), 
                                             no_cipher=args.no_cipher_char, 
                                             fix_inv_char=args.fix_inv_char,
-                                            tmp=tmp_dir)
+                                            tmp=tmp_dir,
+                                            use_booknlp=True)
         # Generate input file for svm-rank
-        chapter.prepare_svmrank(feat_extracters, svmrank_input_file, answer=ans_file)
+        chapter.prepare_svmrank(feat_extracters, svmrank_input_file, answer=ans_file, original=True)
     except Exception as err:
-        print(err)
+        #print(err)
+        print(traceback.format_exc())
         return (story_file, None, False)
     
     return (story_file, svmrank_input_file, True)
@@ -141,11 +144,16 @@ def prepare_train(args):
     # Do multi-processing training data organizing
     success_files = []
     try:
-        print("Initializng {} workers".format(args.threads))
+        print("Initializing {} workers".format(args.threads))
         pool = multiprocessing.Pool(processes=args.threads)
+
+        # debug mode for pdb
+        res = []
+        for inp in single_train_inputs:
+            res.append(single_train_organize(inp))
+
         # For the sake of KeyboardInterrupt, we use map_async with timeout
-        # TODO: add progress bar
-        res = pool.map_async(single_train_organize, single_train_inputs).get(9999999)
+        #res = pool.map_async(single_train_organize, single_train_inputs).get(9999999)
         failed = []
         for filename, single_train_file, success in res:
             if success:

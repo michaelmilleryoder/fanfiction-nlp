@@ -16,8 +16,8 @@ class Token(object):
                 story_token_id, paragraph_token_id, word, 
                  in_quotation, characters):
         super(Token, self).__init__()
-        self.chapter_id = int(chapter_id)
-        self.paragraph_id = int(paragraph_id)
+        self.chapter_id = int(chapter_id) # starts with 1, since read from coref output file
+        self.paragraph_id = int(paragraph_id) # starts with 1, since read from coref output file
         self.story_token_id = int(story_token_id) 
         self.paragraph_token_id = int(paragraph_token_id) 
         self.word = word
@@ -37,7 +37,7 @@ class Token_BookNLP(object):
                  end_offset, whitespace_after, head_token_id, original_word, 
                  normalized_word, lemma, pos, ner, deprel, in_quotation, 
                  character_id, supersense):
-        super(Token, self).__init__()
+        super(Token_BookNLP, self).__init__()
         self.paragraph_id = int(paragraph_id)
         self.sentence_id = int(sentence_id)
         self.token_id = int(token_id)
@@ -51,7 +51,7 @@ class Token_BookNLP(object):
         self.pos = pos
         self.ner = ner
         self.deprel = deprel
-        self.in_quotation_booknlp = in_quotation
+        self.in_quotation = in_quotation
         self.character_id = int(character_id)
         self.supersense = supersense
 
