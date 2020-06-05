@@ -44,6 +44,7 @@ class UttrDistFeatureExtracter(BaseFeatureExtracter):
                     while pid < len(paragraph_quote_token_id[i]):
                         startId = paragraph_quote_token_id[i][pid]
                         endId = paragraph_quote_token_id[i][pid+1]
+                        if not char in character_appear_token_id: pdb.set_trace()
                         for cid in character_appear_token_id[char]:
                             if tokens[cid].in_quotation == 'O':
                                 if abs(startId - cid) < dist:
@@ -57,8 +58,8 @@ class UttrDistFeatureExtracter(BaseFeatureExtracter):
                                         paragraph_quote_type[i] = "Implicit"
                         pid += 2
                     #ret[i][j]['disttoutter'] = math.log(dist+1)
-                    #ret[i][j]['disttoutter'] = 1.0 / (dist + 1)
-                    ret[i][j]['disttoutter'] = 0
+                    ret[i][j]['disttoutter'] = 1.0 / (dist + 1)
+                    #ret[i][j]['disttoutter'] = 0
 
     @classmethod
     def build_extracter(cls, args):

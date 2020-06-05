@@ -290,12 +290,15 @@ public class CorefSystem {
                         if (idToCharacter.containsKey(id)) {
                             character = idToCharacter.get(id);
 
+							String processedChar = String.join("_", character.split(" ")).replaceAll("[,\\.\\!\\?\\ \\h'’]", "").replaceAll("_+", "_").replaceAll("^_", "").replaceAll("_$", "").replaceAll("_s$", "");
+
                             if (!character.equals("")) {
                                 replacements.add(
                                     new Pair<>(
                                         new Pair<>(m.startIndex, m.endIndex),
                                         //String.join("_", character.split(" "))
-                                        String.join("_", character.split(" ")).replaceAll("\\W", "").replaceAll("_+", "_").replaceAll("_$", "")
+                                        //String.join("_", character.split(" ")).replaceAll("\\W", "").replaceAll("_+", "_").replaceAll("_$", "")
+                                       processedChar 
                                     )
                                 );
                             }

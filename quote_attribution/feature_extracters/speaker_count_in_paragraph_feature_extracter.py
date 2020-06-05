@@ -54,8 +54,8 @@ class SpkCntParFeatureExtracter(BaseFeatureExtracter):
                             if (startId <= cid and endId >= cid):
                                 quoCnt += 1
                         pid += 2
-                    #ret[i][j]['spkcntpar'] = parCnt - quoCnt
-                    ret[i][j]['spkcntpar'] = 0
+                    ret[i][j]['spkcntpar'] = parCnt - quoCnt
+                    #ret[i][j]['spkcntpar'] = 0
 
     @classmethod
     def build_extracter(cls, args):

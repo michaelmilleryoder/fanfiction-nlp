@@ -209,7 +209,8 @@ class Chapter(object):
                         # Some times the name might be space separated. Store 
                         # splited name lists to handle this situation for the 
                         # sake of processing the tokens
-                        c = l[0].lower().strip()
+                        #c = l[0].lower().strip()
+                        c = l[0].strip()
                         cnames = []
                         cnames.append(c.split())
                         if len(c.split()) > self.max_name_len:
@@ -340,7 +341,8 @@ class Chapter(object):
 
                     # Store character mention token ID
                     for character in token_chars:
-                        character_name = character.lower()
+                        #character_name = character.lower()
+                        character_name = character
                         if not character_name in self.character_appear_token_id:
                             self.character_appear_token_id[character_name] = []
                         self.character_appear_token_id[character_name].append(story_token_id)
