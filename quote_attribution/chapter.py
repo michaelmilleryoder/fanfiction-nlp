@@ -651,7 +651,8 @@ class Chapter(object):
             with codecs.open(answer) as f:
                 for line in f:
                     l = line.split('\t')
-                    answers.append((l[1].lower(), l[2].lower()))
+                    #answers.append((l[1].lower(), l[2].lower()))
+                    answers.append((l[1], l[2]))
 
         with codecs.open(outputfile, 'w') as f:
             qp = 0
@@ -694,10 +695,10 @@ class Chapter(object):
                         # Simply check whether the answer utterance is current
                         # sentence or not by try to match the first word.
                         first_word_len = len(self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word)
-                        ans_first_word = t_ans_sent[0][:first_word_len]
+                        ans_first_word = t_ans_sent[0][:first_word_len].lower()
                         now_first_word = self.tokens[self.paragraph_quote_token_id[i][0]+1].original_word.lower()
 
-                        # Mismatch, back to last answer
+                        # Mismatch, back to last answer to check next paragraph
                         if ans_first_word != now_first_word:
                             ss -= 1
                             continue

@@ -243,7 +243,9 @@ public class CorefSystem {
                             idToCharacter.put(id2, character1);
                         } else if (character2.contains(character1)) {
                             idToCharacter.put(id1, character2);
-                        }
+                        } else if (character1.toLowerCase().equals(character2.toLowerCase())) {
+							idToCharacter.put(id2, character1);
+						}
                     }
                 }
 
