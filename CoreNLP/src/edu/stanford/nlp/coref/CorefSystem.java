@@ -201,7 +201,7 @@ public class CorefSystem {
             // Check if the file is already processed
             File charListOutput = new File(charListsDir.getPath() + "/" + textFilename + ".chars");
             if (charListOutput.exists()) {
-            	System.out.println("Already processed" + textFilename);
+            	System.err.println("Already processed" + textFilename);
             	continue;
             }
 

@@ -3,6 +3,11 @@
 *.class
 .DS_Store
 *.swp
+*BASE*
+*REMOTE*
+*LOCAL*
+*BACKUP*
+*.orig
 quote_attribution/tmp
 CoreNLP/*.tmp
 CoreNLP/target/
