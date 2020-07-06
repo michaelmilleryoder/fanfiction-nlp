@@ -1,4 +1,5 @@
 *.jar
+.nfs*
 *.class
 .DS_Store
 *.swp

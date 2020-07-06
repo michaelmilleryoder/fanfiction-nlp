@@ -211,7 +211,7 @@ where `<chapter_id>`, `<character_name>`, and `<paragraph>` are tabs (`\t`) sepa
 * `<character_name>`: the primary name of the character (should be corresponding to the character list file).
 * `<paragraph>`: the utterance contents in the paragraph (assuming that one paragraph has only one speaker); non-utterance content should be replaced by `[x]`.
 
-`example_train_data/pride_prejudice.chars` is an example of gold answer file.
+`example_train_data/pride_prejudice.ans` is an example of gold answer file.
 
 
 #### Customized tokenization

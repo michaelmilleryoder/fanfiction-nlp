@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import pdb
+
 from . import BaseFeatureExtracter, register_extracter
 
 
@@ -34,7 +36,7 @@ class NameInUttrFeatureExtracter(BaseFeatureExtracter):
         for i in range(paragraph_num):
             if paragraph_has_quote[i]:
                 for j in range(character_num):
-                    char = list(characters.keys())[j]
+                    char = sorted(characters.keys())[j]
                     appear = 0
                     pid = 0
                     while pid < len(paragraph_quote_token_id[i]):
@@ -45,6 +47,7 @@ class NameInUttrFeatureExtracter(BaseFeatureExtracter):
                                 appear = 1
                         pid += 2
                     ret[i][j]['nameinuttr'] = appear
+                    #ret[i][j]['nameinuttr'] = 0
 
     @classmethod
     def build_extracter(cls, args):

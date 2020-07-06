@@ -20,7 +20,7 @@ class NeighboringFeatureExtracter(BaseFeatureExtracter):
         self.neighboring_after = neighboring_after
 
     def extract(self, ret, paragraph_has_quote, **kargs):
-        """Extract `neighboring' featurefor a chapter.
+        """Extract `neighboring' feature for a chapter.
         
         Args:
             ret: 2-D list of directories to save features.
