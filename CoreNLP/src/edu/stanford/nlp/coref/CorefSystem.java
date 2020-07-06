@@ -183,7 +183,7 @@ public class CorefSystem {
         File charListsDir = new File(args[1]);
 
         File outputsDir = new File(args[2]);
-
+        
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,coref");
 		props.setProperty("tokenize.whitespace", "true");
@@ -197,6 +197,15 @@ public class CorefSystem {
         // Process all texts in textsDir
         for (File textFile : textFiles) {
             textFilename = textFile.getName();
+
+            // Check if the file is already processed
+            File charListOutput = new File(charListsDir.getPath() + "/" + textFilename + ".chars");
+            if (charListOutput.exists()) {
+            	System.out.println("Already processed" + textFilename);
+            	continue;
+            }
+
+            // If not, process
             System.err.println("processing " + textFilename);
 
             try {
@@ -243,6 +252,8 @@ public class CorefSystem {
                             idToCharacter.put(id2, character1);
                         } else if (character2.contains(character1)) {
                             idToCharacter.put(id1, character2);
+                        } else if (character1.toLowerCase().equals(character2.toLowerCase())) {
+                        	idToCharacter.put(id2, character1);
                         }
                     }
                 }
@@ -290,12 +301,13 @@ public class CorefSystem {
                         if (idToCharacter.containsKey(id)) {
                             character = idToCharacter.get(id);
 
+                             String processedChar = String.join("_", character.split(" ")).replaceAll("[,\\.\\!\\? \\h']", "").replaceAll("_+", "_").replaceAll("^_", "").replaceAll("_$", "");
                             if (!character.equals("")) {
                                 replacements.add(
                                     new Pair<>(
                                         new Pair<>(m.startIndex, m.endIndex),
                                         //String.join("_", character.split(" "))
-                                        String.join("_", character.split(" ")).replaceAll("\\W", "").replaceAll("_+", "_").replaceAll("_$", "")
+                                        processedChar
                                     )
                                 );
                             }
@@ -306,10 +318,6 @@ public class CorefSystem {
                     replacements.sort(
                         Comparator.comparingInt(o -> o.first.first)
                     );
-
-					if (textFilename.contains("teenwolf") && words.contains("Maaan")) {
-					System.out.println(replacements);
-					}
 
                     List<String> replacedWords = new ArrayList<>(words); // new sentence tokens with modifications, joined to a string at end
 
