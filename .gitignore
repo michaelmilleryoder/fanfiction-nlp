@@ -22,3 +22,5 @@ CoreNLP/.classpath
 CoreNLP/.project
 CoreNLP/.settings/
 CoreNLP/coref.temp
+CoreNLP/*.error
+config/

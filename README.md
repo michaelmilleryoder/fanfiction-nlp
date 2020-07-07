@@ -47,20 +47,30 @@ No tokenization or other preprocessing is necessary: that is completed in the pi
 	* a directory with 2 JSON files for each fic, 1 titled `{fic_name}_adj_cooccurrence.json` and the other `{fic_name}_ship_cooccurrence.json`. In each, keys are coreferenced character cluster names and values are adjectives (for the `adj` file) or other character names (for the `ship`, or "relationship", file). A cooccurrence measure is given for each adjective or character name that is between 0 and 1.
 
 ## Settings
-To use the pipeline, modify the input and output settings in `run.sh`. You'll also need to add paths to BookNLP and SVMRank if you are running quote attribution. Comment out any modules that you are not running. Commands within this shell script will likely not need to be modified.
+The pipeline takes settings and input/output filepaths in a configuration file. An example config file is `example.cfg`. Descriptions of each configuration setting by section are as follows:
+
+[Input/output]
+`collection_name`: the name of the dataset (user-defined)
+`input_path`: path to the directory of input files
+`output_path`: path to the directory where processed files will be stored
+
+[Character coreference]
+`run_coref`: Whether to run character coreference (True or False)
+`n_threads`: The number of threads (actually processes) to run the coreference (integer)
+`split_input_dir`: Whether to split the input directory into separate directories. Do this if the input directory contains many files and you want to do multithreading (multiprocessing). For effective multithreading, the number of threads cannot be fewer than the number of directory splits. Acceptable values: True or False
+`max_files_per_split`: If splitting the input directory, the maximum number of files per directory split. 100 is a good choice for fast performance.
+`delete_existing_tmp`: Coreference does some preprocessing of the input CSV files into text files and splits the directory (if specified). To delete any existing temporary files and redo this process, set this to True. Otherwise, set to False.
+
+[Quote attribution]
+`run_quote_attribution`: Whether to run quote attribution (True or False)
+`svmrank_path`: Path to SVMRank installation directory (see [quote_attribution](quote_attribution)
+
+[Assertion extraction]
+`run_assertion_extraction`: Whether to run assertion extraction (True or False)
 
 ## Command
-`./run.sh`
+`python run.py <config_file_path>`
 
 ## Run a test
-To test that everything is set up properly, run `run.sh`, which by default will run the pipeline on test fics in the `example_fandom` directory.
+To test that everything is set up properly, run `python run.py example.cfg`, which by default will run the pipeline on test fics in the `example_fandom` directory.
 The output should be placed in a new directory, `output/example_fandom`. This output should be the same as that provided in `output_test/example_fandom`.
-
-<!---
-`./run.sh <input_dir_path>`
-
-`<collection_name>` of fics to be processed will be extracted from the directory name of the `<input_dir_path>`.
-
-Output is automatically stored in `output/<collection_name>`.
---->
-
