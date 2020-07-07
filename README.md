@@ -49,24 +49,39 @@ No tokenization or other preprocessing is necessary: that is completed in the pi
 ## Settings
 The pipeline takes settings and input/output filepaths in a configuration file. An example config file is `example.cfg`. Descriptions of each configuration setting by section are as follows:
 
-[Input/output]
+`[Input/output]`
+
 `collection_name`: the name of the dataset (user-defined)
+
 `input_path`: path to the directory of input files
+
 `output_path`: path to the directory where processed files will be stored
 
-[Character coreference]
+
+`[Character coreference]`
+
 `run_coref`: Whether to run character coreference (True or False)
+
 `n_threads`: The number of threads (actually processes) to run the coreference (integer)
+
 `split_input_dir`: Whether to split the input directory into separate directories. Do this if the input directory contains many files and you want to do multithreading (multiprocessing). For effective multithreading, the number of threads cannot be fewer than the number of directory splits. Acceptable values: True or False
+
 `max_files_per_split`: If splitting the input directory, the maximum number of files per directory split. 100 is a good choice for fast performance.
+
 `delete_existing_tmp`: Coreference does some preprocessing of the input CSV files into text files and splits the directory (if specified). To delete any existing temporary files and redo this process, set this to True. Otherwise, set to False.
 
-[Quote attribution]
-`run_quote_attribution`: Whether to run quote attribution (True or False)
-`svmrank_path`: Path to SVMRank installation directory (see [quote_attribution](quote_attribution)
 
-[Assertion extraction]
+`[Quote attribution]`
+
+`run_quote_attribution`: Whether to run quote attribution (True or False)
+
+`svmrank_path`: Path to SVMRank installation directory (see [quote_attribution](quote_attribution))
+
+
+`[Assertion extraction]`
+
 `run_assertion_extraction`: Whether to run assertion extraction (True or False)
+
 
 ## Command
 `python run.py <config_file_path>`
