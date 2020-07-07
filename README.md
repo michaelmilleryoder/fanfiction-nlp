@@ -58,7 +58,7 @@ The pipeline takes settings and input/output filepaths in a configuration file. 
 `output_path`: path to the directory where processed files will be stored
 
 
-### `[Character coreference]`
+#### `[Character coreference]`
 
 `run_coref`: Whether to run character coreference (True or False)
 
@@ -71,14 +71,14 @@ The pipeline takes settings and input/output filepaths in a configuration file. 
 `delete_existing_tmp`: Coreference does some preprocessing of the input CSV files into text files and splits the directory (if specified). To delete any existing temporary files and redo this process, set this to True. Otherwise, set to False.
 
 
-### `[Quote attribution]`
+#### `[Quote attribution]`
 
 `run_quote_attribution`: Whether to run quote attribution (True or False)
 
 `svmrank_path`: Path to SVMRank installation directory (see [quote_attribution](quote_attribution))
 
 
-### `[Assertion extraction]`
+#### `[Assertion extraction]`
 
 `run_assertion_extraction`: Whether to run assertion extraction (True or False)
 
