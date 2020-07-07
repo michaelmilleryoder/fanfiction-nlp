@@ -49,7 +49,7 @@ No tokenization or other preprocessing is necessary: that is completed in the pi
 ## Settings
 The pipeline takes settings and input/output filepaths in a configuration file. An example config file is `example.cfg`. Descriptions of each configuration setting by section are as follows:
 
-`[Input/output]`
+### `[Input/output]`
 
 `collection_name`: the name of the dataset (user-defined)
 
