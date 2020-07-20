@@ -219,7 +219,7 @@ public class CorefSystem {
 
                 Annotation document = new Annotation(textBuilder.toString());
 
-                // Run the annotation pipeline
+                // Run the annotation pipeline on entire document
                 pipeline.annotate(document);
 
                 StringBuilder outputBuilder = new StringBuilder();
