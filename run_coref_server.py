@@ -27,7 +27,6 @@ def run_corenlp(text, corenlp_ips):
         }
 
         url = random.choice(corenlp_ips)
-        pdb.set_trace()
         res = requests.post(url, params=params, data=text_, headers={'Content-type': 'text/plain'})
 
         if res.status_code == 200:
@@ -122,7 +121,7 @@ def run_linker_client():
                             'para_id'   : para_id, 
                             'text'      : text, 
                             'text_tokenized': text_tokenized,
-                            'corenlp'   : process_json(res)
+                            'coref_text'   : process_json(res)
                         }
 
                         fw.write(json.dumps(doc) + '\n')
@@ -143,7 +142,7 @@ if __name__ == '__main__':
     parser.add_argument('--ip',        default='misty.lti.cs.cmu.edu')
     parser.add_argument('--port',      default=1234, type=int)
     parser.add_argument('--nums',      default=16, type=int)
-    parser.add_argument('--start_port',default=7000, type=int)
+    parser.add_argument('--start_port',default=7090, type=int)
     parser.add_argument('--clear',     action='store_true')
     parser.add_argument('--status',    action='store_true')
     parser.add_argument('--allclear',  action='store_true')
