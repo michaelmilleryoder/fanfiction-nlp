@@ -122,6 +122,8 @@ public class CorefSystem {
         Map<Integer, CorefChain> result = Generics.newHashMap();
         for (CorefCluster c : document.corefClusters.values()) {
             result.put(c.clusterID, new CorefChain(c, document.positions));
+			System.err.println("CorefSystem annotate character:::::::");
+			System.err.println(c.character);
         }
         ann.set(CorefCoreAnnotations.CorefChainAnnotation.class, result);
     }

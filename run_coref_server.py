@@ -7,13 +7,16 @@ import sys; sys.path.append('./common')
 from helper import *
 from queue_client import *
 from collections import ChainMap
+from corenlp import CoreNLPClient
 
 #import scispacy, spacy
 #from scispacy.abbreviation import AbbreviationDetector
 #from pymongo.errors import BulkWriteError
 import pdb
+import traceback
 
 ######################### Run CoreNLP on Entire Wikipedia
+
 
 def run_corenlp(text, corenlp_ips):
     text_ = text.encode('utf-8')
@@ -21,12 +24,13 @@ def run_corenlp(text, corenlp_ips):
     try:
         params = {
             'properties': '{"annotators":"tokenize,ssplit,pos,lemma,ner,parse,coref", "tokenize.whitespace": "true"}',
-            'outputFormat': 'json'
-            #'outputFormat': 'serialized',
-            #"serializer": "edu.stanford.nlp.pipeline.ProtobufAnnotationSerializer"
+            #'outputFormat': 'json'
+            'outputFormat': 'serialized',
+            "serializer": "edu.stanford.nlp.pipeline.ProtobufAnnotationSerializer"
         }
 
         url = random.choice(corenlp_ips)
+        pdb.set_trace()
         res = requests.post(url, params=params, data=text_, headers={'Content-type': 'text/plain'})
 
         if res.status_code == 200:
@@ -40,6 +44,95 @@ def run_corenlp(text, corenlp_ips):
         print('Server {} not working'.format(url))
         pdb.set_trace()
         return run_corenlp(text, corenlp_ips)
+
+
+def run_corenlp_client(text, corenlp_ips):
+    text_ = text.encode('utf-8')
+
+   # with CoreNLPClient(
+   #     annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'], 
+   #     properties = {'tokenize.whitespace': 'true',
+   #                   'coref.algorithm': 'clustering'},
+   #     be_quiet = False,
+   #     memory = '5G',
+   #     timeout = 1500000,
+   # ) as client:
+        #ann = client.annotate(text)
+        #ann = client.annotate('This is a test sentence Mr. Weirdo. He went to the store. Then he went all the way to the moon.')
+
+    client = CoreNLPClient(
+        annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'], 
+        properties = {'tokenize.whitespace': 'true',
+                      'coref.algorithm': 'clustering'},
+        #properties = {'tokenize.whitespace': 'true'},
+        be_quiet = False,
+        memory = '5G',
+        timeout = 1500000,
+    )   
+
+    ann = client.annotate('This is a test sentence Mr. Weirdo. He went to the store. Then he went all the way to the moon.')
+    client.stop()
+    pdb.set_trace()
+
+
+def run_linker_client():
+    ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
+    #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
+
+    def process_data(pid):
+        q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
+
+        while True:
+            file_list = q.dequeServer()
+
+            if file_list == -1:
+                print('[{}] All Jobs Over!!!!'.format(pid))
+                time.sleep(60)
+                continue
+
+            count = 0
+            for fname in file_list:
+                name  = fname.split('/')[-1]
+                fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
+
+                # Build text to send to CoreNLP
+                with open(fname) as f:
+                    f.readline()
+
+                    text_aggregate = ''
+                    for data in csv.reader(f):
+                        text = data[-1]
+                        text_aggregate += ' # . '.join(text.split('\n'))
+                        text_aggregate += " # . "
+                    
+                    #res = run_corenlp(text_aggregate, ip_list)
+                    res = run_corenlp_client(text_aggregate, ip_list)
+                    pdb.set_trace()
+                    print("Got result")
+
+                # Write CSV output
+                with open(fname) as f:
+                    for data in csv.reader(f):
+                        fic_id, chapter_id, para_id, text, text_tokenized = data
+                        doc = {
+                            'fic_id'    : fic_id,
+                            'chapter_id'    : chapter_id, 
+                            'para_id'   : para_id, 
+                            'text'      : text, 
+                            'text_tokenized': text_tokenized,
+                            'coref_text'   : process_json(res)
+                        }
+
+                        fw.write(json.dumps(doc) + '\n')
+                        count += 1
+                        if count % 10000 == 0:
+                            print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
+
+    #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
+
+    # for debugging, skip parallelization
+    process_data(1)
+
 
 def run_linker_server():
     q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
@@ -85,54 +178,6 @@ def process_json(data):
         embed with <tags> in the text
     """
     pass
-
-
-
-def run_linker_client():
-    ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
-    #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
-
-    def process_data(pid):
-        q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
-
-        while True:
-            file_list = q.dequeServer()
-
-            if file_list == -1:
-                print('[{}] All Jobs Over!!!!'.format(pid))
-                time.sleep(60)
-                continue
-
-            count = 0
-            for fname in file_list:
-                name  = fname.split('/')[-1]
-                fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
-
-                with open(fname) as f:
-                    f.readline()
-                    for data in csv.reader(f):
-                        fic_id, chapter_id, para_id, text, text_tokenized = data
-                        res = run_corenlp(text_tokenized, ip_list)
-                        print("Got result")
-                        pdb.set_trace()
-                        doc = {
-                            'fic_id'    : fic_id,
-                            'chapter_id'    : chapter_id, 
-                            'para_id'   : para_id, 
-                            'text'      : text, 
-                            'text_tokenized': text_tokenized,
-                            'coref_text'   : process_json(res)
-                        }
-
-                        fw.write(json.dumps(doc) + '\n')
-                        count += 1
-                        if count % 10000 == 0:
-                            print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
-
-    #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
-
-    # for debugging, skip parallelization
-    process_data(1)
 
 
 if __name__ == '__main__':

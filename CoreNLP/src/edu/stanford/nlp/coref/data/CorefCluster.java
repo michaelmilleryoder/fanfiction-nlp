@@ -67,7 +67,7 @@ public class CorefCluster implements Serializable {
      * The first mention in this cluster
      */
     protected Mention firstMention;
-    public String character = "";
+    public String character = "NO_ASSIGNED_CHARACTER";
 
     public Gender gender = Gender.UNKNOWN;
     HashMap<Gender, Integer> genderCounts;
@@ -99,7 +99,7 @@ public class CorefCluster implements Serializable {
     }
 
     public CorefCluster(int ID) {
-//    System.err.println("public CorefCluster(int ID) is called");
+    System.err.println("CUSTOM public CorefCluster(int ID) is called");
         clusterID = ID;
         corefMentions = Generics.newHashSet();
         numbers = EnumSet.noneOf(Number.class);
@@ -110,7 +110,7 @@ public class CorefCluster implements Serializable {
         words = Generics.newHashSet();
         firstMention = null;
         representative = null;
-        character = "";
+        character = "NO_CHARACTER";
         characterCounts = new HashMap<String, Integer>();
         genderCounts = new HashMap<>();
     }

@@ -305,6 +305,7 @@ message CorefChain {
   required int32        chainID        = 1;
   repeated CorefMention mention        = 2;
   required uint32       representative = 3;
+  optional string       character	   = 4;
 }
 
 //
