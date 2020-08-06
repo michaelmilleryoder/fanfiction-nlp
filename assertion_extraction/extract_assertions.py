@@ -183,49 +183,51 @@ def get_topic_segments(para_id,para,k=1):
     return segments
 
 
-#command line arguments
-input_dir = str(sys.argv[1])
-chars_dir = str(sys.argv[2])
-op_dir    = str(sys.argv[3])
+def main():
+    #command line arguments
+    input_dir = str(sys.argv[1])
+    chars_dir = str(sys.argv[2])
+    op_dir    = str(sys.argv[3])
 
-files =      [f for f in listdir(input_dir) if isfile(join(input_dir, f))]
+    files =      [f for f in listdir(input_dir) if isfile(join(input_dir, f))]
 
-for f in tqdm(files, ncols=50):
+    for f in tqdm(files, ncols=50):
 
-    #get the story_chapter name from the story file
-    #for matching with the characters file 
-    if 'txt' not in f:
-        fic = f.split('.coref.csv')[0]
-    else:
-        continue
-    
-    char_f = chars_dir + '/' + fic + ".chars"
-    char_list = []
-    para_dict = {}
-   
-    #Get list of characters for each chapter
-    char_file = codecs.open(char_f, "r", errors='ignore') #io.open(char_f,'r', encoding="utf-8")
-    char_list = [character.rstrip() for character in char_file]
-    
-    #Get the segments for each paragraph in each chapter of a fic
-    f = input_dir + '/' + f
-    inp_file = codecs.open(f, "r", errors='ignore')#open(f)
-    csv_reader = csv.reader(inp_file, delimiter=',')
-    next(csv_reader)
-    for row in csv_reader:
-        para_id = row[2]
-        para    = row[3]
-        segments = get_topic_segments(para_id,para,1)
-        para_dict[para_id] = segments
+        #get the story_chapter name from the story file
+        #for matching with the characters file 
+        if 'txt' not in f:
+            fic = f.split('.coref.csv')[0]
+        else:
+            continue
+        
+        char_f = chars_dir + '/' + fic + ".chars"
+        char_list = []
+        para_dict = {}
+       
+        #Get list of characters for each chapter
+        char_file = codecs.open(char_f, "r", errors='ignore') #io.open(char_f,'r', encoding="utf-8")
+        char_list = [character.rstrip() for character in char_file]
+        
+        #Get the segments for each paragraph in each chapter of a fic
+        f = input_dir + '/' + f
+        inp_file = codecs.open(f, "r", errors='ignore')#open(f)
+        csv_reader = csv.reader(inp_file, delimiter=',')
+        next(csv_reader)
+        for row in csv_reader:
+            para_id = row[2]
+            para    = row[3]
+            segments = get_topic_segments(para_id,para,1)
+            para_dict[para_id] = segments
 
-    #Extract the character assertions per file.
-    if para_dict is not None and char_list is not None:
-        assertions = extract_assertion(para_dict,char_list)
-        j_file = codecs.open(op_dir + '/' + fic + '.json', "w", errors='ignore')#open(op_dir + '/'+ fic + '.json','w')
-        json.dump(assertions,j_file)
+        #Extract the character assertions per file.
+        if para_dict is not None and char_list is not None:
+            assertions = extract_assertion(para_dict,char_list)
+            j_file = codecs.open(op_dir + '/' + fic + '.json', "w", errors='ignore')#open(op_dir + '/'+ fic + '.json','w')
+            json.dump(assertions,j_file)
 
 
 
+if __name__ == '__main__': main()
 
 
 

@@ -31,6 +31,8 @@ class Pipeline():
         self.modules = modules
         self.coreference_settings = coreference_settings
         self.quote_attribution_settings = quote_attribution_settings
+        self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
+        self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
 
     def run(self):
         if 'coref' in self.modules:
@@ -41,8 +43,6 @@ class Pipeline():
             self.assertion_extraction()
 
     def coref(self, n_threads, split_input_dir, max_files_per_split, delete_existing_tmp):
-        self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
-        self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
         if not os.path.exists(self.coref_stories_path):
             os.mkdir(self.coref_stories_path)
         if not os.path.exists(self.coref_chars_path):
@@ -71,7 +71,7 @@ class Pipeline():
         if not os.path.exists(assertion_output_path):
             os.mkdir(assertion_output_path)
 
-        call(['python3', 'assertion_extraction/extraction_assertions.py',
+        call(['python3', 'assertion_extraction/extract_assertions.py',
             self.coref_stories_path, self.coref_chars_path, assertion_output_path])
 
 
@@ -93,6 +93,7 @@ def main():
     run_assertion_extraction = config.getboolean('Assertion extraction', 'run_assertion_extraction')
     modules = []
 
+    # Coref settings
     coreference_settings = []
     if run_coref:
         modules.append('coref')
@@ -105,12 +106,14 @@ def main():
         delete_existing_tmp = config.getboolean('Character coreference', 'delete_existing_tmp')
         coreference_settings.append(delete_existing_tmp)
 
+    # Quote attribution settings
     quote_attribution_settings = []
     if run_quote_attribution:
         modules.append('quote_attribution')
         svmrank_path = config.get('Quote attribution', 'svmrank_path')
         quote_attribution_settings.append(svmrank_path)
 
+    # Assertion extraction settings
     if run_assertion_extraction:
         modules.append('assertion_extraction')
 
