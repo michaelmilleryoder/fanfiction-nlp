@@ -307,11 +307,8 @@ public class CorefChain implements Serializable {
   }
 
   public CorefChain(CorefCluster c, Map<Mention, IntTuple> positions){
-    System.err.println("*********CorefChain is called");
-    //chainID = c.clusterID;
-    chainID = 22;
+    chainID = c.clusterID;
     character = c.character;
-	System.err.println(character);
     // Collect mentions
     mentions = new ArrayList<>();
     mentionMap = Generics.newHashMap();
@@ -341,6 +338,22 @@ public class CorefChain implements Serializable {
     this.chainID = cid;
     this.representative = representative;
 	this.character = character;
+    this.mentionMap = mentionMap;
+    this.mentions = new ArrayList<>();
+    for (Set<CorefMention> ms: mentionMap.values()) {
+      for (CorefMention m: ms) {
+        this.mentions.add(m);
+      }
+    }
+    Collections.sort(mentions, new CorefMentionComparator());
+  }
+
+  /** Constructor required by CustomAnnotationSerializer */
+  public CorefChain(int cid,
+                    Map<IntPair, Set<CorefMention>> mentionMap,
+                    CorefMention representative) {
+    this.chainID = cid;
+    this.representative = representative;
     this.mentionMap = mentionMap;
     this.mentions = new ArrayList<>();
     for (Set<CorefMention> ms: mentionMap.values()) {

@@ -30,7 +30,6 @@ def run_corenlp(text, corenlp_ips):
         }
 
         url = random.choice(corenlp_ips)
-        pdb.set_trace()
         res = requests.post(url, params=params, data=text_, headers={'Content-type': 'text/plain'})
 
         if res.status_code == 200:
@@ -42,40 +41,175 @@ def run_corenlp(text, corenlp_ips):
 
     except Exception as e:
         print('Server {} not working'.format(url))
-        pdb.set_trace()
         return run_corenlp(text, corenlp_ips)
 
 
-def run_corenlp_client(text, corenlp_ips):
+def run_corenlp_client(text, output_dirpath, fname, corenlp_ips):
+    coref_text_outpath = os.path.join(output_dirpath, 'char_coref_stories', f'{fname}.coref.txt')
+    coref_chars_outpath = os.path.join(output_dirpath, 'char_coref_chars', f'{fname}.chars')
+
     text_ = text.encode('utf-8')
 
-   # with CoreNLPClient(
-   #     annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'], 
-   #     properties = {'tokenize.whitespace': 'true',
-   #                   'coref.algorithm': 'clustering'},
-   #     be_quiet = False,
-   #     memory = '5G',
-   #     timeout = 1500000,
-   # ) as client:
-        #ann = client.annotate(text)
-        #ann = client.annotate('This is a test sentence Mr. Weirdo. He went to the store. Then he went all the way to the moon.')
-
+    print('Launching server...')
     client = CoreNLPClient(
         annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'], 
         properties = {'tokenize.whitespace': 'true',
-                      'coref.algorithm': 'clustering'},
-        #properties = {'tokenize.whitespace': 'true'},
+                      #'coref.algorithm': 'clustering'
+                    },
         be_quiet = False,
-        memory = '5G',
+        max_char_length = 1000000,
+        memory = '16G',
         timeout = 1500000,
     )   
+    print('done.')
 
-    ann = client.annotate('This is a test sentence Mr. Weirdo. He went to the store. Then he went all the way to the moon.')
+    #test = 'This is a test sentence Mr. Weirdo . He went to the store . Then he went all the way to the moon .'
+    #text = test
+
+    print(f'Text character length: {len(text)}')
+    print(f'Annotating a file...')
+    ann = client.annotate(text)
     client.stop()
+    print(f'done.') 
+    print(f'Processing annotations...')
+    annotated_text, chars = process(ann, text)
+    print('done.')
+    
+
+    # Write out annotated story text
+    with open(coref_text_outpath, 'w') as f:
+        f.write(annotated_text)
+
+    # Write out character list
+    with open(coref_chars_outpath, 'w') as f:
+        for c in chars:
+            f.write(f'{c}\n')
+
     pdb.set_trace()
 
 
-def run_linker_client():
+def process(annotations, text):
+    """ Take CoreNLP-processed annotations and add coreference tags to the text """
+
+    out_text = '' # outputBuilder
+    id2char = {}
+    ids = []
+
+    # Build id2char
+    for chain in annotations.corefChain:
+        if chain.character != '':
+            id2char[chain.chainID] = chain.character
+            ids.append(chain.chainID)
+
+    # Merging character names
+    for i in range(len(ids)):
+        for j in range(len(ids)):
+            id1 = ids[i]
+            id2 = ids[j]
+            char1, char2 = id2char[id1], id2char[id2]
+    
+            if char2 in char1:
+                id2char[id2] = char1
+            elif char1 in char2:
+                id2char[id1] = char2
+            elif char1.lower() == char2.lower():
+                id2char[id2] = char1
+
+    chars = set()
+
+    # Add the character tags to the text and process the paragraph delimiter "# ."
+    for sent in annotations.sentence:
+
+        # No coref mentions; just take text and replace . # with paragraph break
+        if len(sent.mentionsForCoref) == 0: 
+            text = ' '.join([tok.word for tok in sent.token])
+            if text == '# .':
+                out_text += '\n'
+            elif text.endswith(' # .'):
+                out_text += text[0:-4]
+            else:
+                out_text += text + ' '
+            continue
+
+        # Place character name tags with character mentions
+        words = []
+        replacements = []
+        replaced_sent = ''
+
+        # Build up list of where will add tags (replacements)
+        for mention in sent.mentionsForCoref:
+            char_id = mention.corefClusterID
+            char = ''
+            if len(words) == 0:
+                for word in mention.sentenceWords:
+                    words.append(sent.token[word.tokenIndex].word)
+
+            if char_id in id2char:
+                char = id2char[char_id]
+                processed_char = process_char(char)
+                
+                if char != '': 
+                    replacements.append((
+                            (mention.startIndex, mention.endIndex),
+                            processed_char
+                            ))
+            
+                replacements.sort(key = lambda x: x[0][0])
+        
+            replaced_words = words.copy() # new sentence tokens with modifications, joined to a string at end
+
+        # Do the replacing
+        for replacement in replacements:
+            begin_tag = f'<character name="{replacement[1]}">' 
+            end_tag = '</character>'
+            tagged_word = ''
+
+            # Add tags
+            if replacement[0][0] + 1 == replacement[0][1]: # 1-word mention
+                tagged_word = begin_tag + replaced_words[replacement[0][0]] + end_tag
+                replaced_words[replacement[0][0]] = tagged_word
+
+            else: # multi-word mention
+                # begin-tag first word
+                tagged_word = begin_tag + replaced_words[replacement[0][0]]
+                replaced_words[replacement[0][0]] = tagged_word
+
+                # end-tag after last word
+                if words[replacement[0][1] - 1] == "'s":
+                    tagged_word = replaced_words[replacement[0][1] - 2] + end_tag
+                    replaced_words[replacement[0][1] - 2] = tagged_word
+                else:
+                    taggedWord = replaced_words[replacement[0][1] - 1] + end_tag
+                    replaced_words[replacement[0][1] - 1] = tagged_word
+
+            chars.add(replacement[1])
+
+        replaced_sentence = ' '.join(replaced_words) + ' '
+
+        # Replace # . to paragraph breaks
+        replaced_sentence = replaced_sentence.replace('# .', '\n')
+        out_text += replaced_sentence
+
+    return out_text, chars
+
+
+def process_char(char):
+    """ Process a character name """
+
+    # Punctation, regular spaces, horizontal non-breaking spaces
+    processed_char = re.sub(r'[,\.\!\?]', '', char)
+    processed_char = processed_char.replace(' ', '_')
+    processed_char = re.sub(r'[^\S\n]', '', processed_char, flags=re.UNICODE)
+
+    # Underscores (substituting them and handling them)
+    processed_char = re.sub(r'_+', '_', processed_char)
+    processed_char = re.sub(r'^_', '', processed_char)
+    processed_char = re.sub(r'_$', '', processed_char)
+
+    return processed_char
+
+
+def run_linker_client(args):
     ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
     #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
 
@@ -83,7 +217,10 @@ def run_linker_client():
         q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
 
         while True:
-            file_list = q.dequeServer()
+            if args.debug:
+                file_list = ['/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/2416073.csv']
+            else:
+                file_list = q.dequeServer()
 
             if file_list == -1:
                 print('[{}] All Jobs Over!!!!'.format(pid))
@@ -93,7 +230,14 @@ def run_linker_client():
             count = 0
             for fname in file_list:
                 name  = fname.split('/')[-1]
+                fic_id_string = name.split('.')[0]
                 fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
+
+                # Check if already processed
+                output_dirpath = '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/output/'
+                char_output_fpath = os.path.join(output_dirpath, f'char_coref_chars/{name}.chars')
+                if os.path.exists(char_output_fpath):
+                    continue
 
                 # Build text to send to CoreNLP
                 with open(fname) as f:
@@ -106,7 +250,7 @@ def run_linker_client():
                         text_aggregate += " # . "
                     
                     #res = run_corenlp(text_aggregate, ip_list)
-                    res = run_corenlp_client(text_aggregate, ip_list)
+                    res = run_corenlp_client(text_aggregate, output_dirpath, fic_id_string, ip_list)
                     pdb.set_trace()
                     print("Got result")
 
@@ -128,13 +272,14 @@ def run_linker_client():
                         if count % 10000 == 0:
                             print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
 
-    #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
-
     # for debugging, skip parallelization
-    process_data(1)
+    if args.debug:
+        process_data(1)
+    else:
+        res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
 
 
-def run_linker_server():
+def run_linker_server(args):
     q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
 
     if args.clear:    q.clear()
@@ -180,7 +325,7 @@ def process_json(data):
     pass
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('--step',      required=True)
     parser.add_argument('--workers',   default=30,  type=int)
@@ -192,7 +337,11 @@ if __name__ == '__main__':
     parser.add_argument('--status',    action='store_true')
     parser.add_argument('--allclear',  action='store_true')
     parser.add_argument('--check',     action='store_true')
+    parser.add_argument('--debug',     action='store_true')
     args = parser.parse_args()
 
-    if   args.step == 'server':     run_linker_server()
-    elif args.step == 'client':     run_linker_client()
+    if   args.step == 'server':     run_linker_server(args)
+    elif args.step == 'client':     run_linker_client(args)
+
+
+if __name__ == '__main__': main()

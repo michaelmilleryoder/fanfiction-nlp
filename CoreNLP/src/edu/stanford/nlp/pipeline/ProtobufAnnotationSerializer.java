@@ -836,6 +836,7 @@ public class ProtobufAnnotationSerializer extends AnnotationSerializer {
     // Set representative mention
     builder.setRepresentative(mentionToIndex.get(chain.getRepresentativeMention()));
     // Return
+    System.err.println("Using HERE in ProtobufAnnotationSerializer.toProto");
     return builder.build();
   }
 
@@ -2384,6 +2385,7 @@ public class ProtobufAnnotationSerializer extends AnnotationSerializer {
     }
     // Return
     //return new CorefChain(cid, mentions, representative);
+    System.err.println("Using HERE in ProtobufAnnotationSerializer");
     return new CorefChain(cid, mentions, character, representative);
   }
 
