@@ -48,8 +48,6 @@ def run_corenlp_client(text, output_dirpath, fname, corenlp_ips):
     coref_text_outpath = os.path.join(output_dirpath, 'char_coref_stories', f'{fname}.coref.txt')
     coref_chars_outpath = os.path.join(output_dirpath, 'char_coref_chars', f'{fname}.chars')
 
-    text_ = text.encode('utf-8')
-
     print('Launching server...')
     client = CoreNLPClient(
         annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'], 
@@ -72,9 +70,8 @@ def run_corenlp_client(text, output_dirpath, fname, corenlp_ips):
     client.stop()
     print(f'done.') 
     print(f'Processing annotations...')
-    annotated_text, chars = process(ann, text)
+    annotated_text, chars = process_text(ann, text)
     print('done.')
-    
 
     # Write out annotated story text
     with open(coref_text_outpath, 'w') as f:
@@ -85,13 +82,11 @@ def run_corenlp_client(text, output_dirpath, fname, corenlp_ips):
         for c in chars:
             f.write(f'{c}\n')
 
-    pdb.set_trace()
 
-
-def process(annotations, text):
-    """ Take CoreNLP-processed annotations and add coreference tags to the text """
-
-    out_text = '' # outputBuilder
+def extract_characters(annotations):
+    """ Returns id2char dictionary,
+        with similar character names merged """
+    
     id2char = {}
     ids = []
 
@@ -115,80 +110,126 @@ def process(annotations, text):
             elif char1.lower() == char2.lower():
                 id2char[id2] = char1
 
+    return id2char
+
+
+def process_sentence(sent, id2char):
+    """ Adds tags around coref mentions for a sentence """
+
+    replaced_sent = ''
+    chars = set()
+
+    # No coref mentions; just take text and replace . # with paragraph break
+    if len(sent.mentionsForCoref) == 0: 
+        text = ' '.join([tok.word for tok in sent.token])
+        #if 'Goddamn' in text:
+        #    pdb.set_trace()
+        if text == '# .':
+            replaced_sent = '\n'
+        elif text.endswith(' # .'):
+            replaced_sent = text[0:-4] + '\n'
+        else:
+            replaced_sent = text + ' '
+
+    else:
+        replaced_sent, chars = add_coref_tags(sent, id2char)
+
+    return replaced_sent, chars
+
+
+def build_replacements(sent, id2char):
+    """ Returns data structure with locations of coref mentions and 
+        the character each mention refers to 
+    """
+
+    words = [] # new sentence tokens with modifications, joined to a string at end
+    replacements = []
+
+    for mention in sent.mentionsForCoref:
+        char_id = mention.corefClusterID
+        char = ''
+        if len(words) == 0:
+            for word in mention.sentenceWords:
+                words.append(sent.token[word.tokenIndex].word)
+
+        if char_id in id2char:
+            char = id2char[char_id]
+            processed_char = process_char(char)
+            
+            if char != '': 
+                replacements.append((
+                        (mention.startIndex, mention.endIndex),
+                        processed_char
+                        ))
+        
+    replacements.sort(key = lambda x: x[0][0])
+    
+    return replacements, words
+
+
+def replace_tokens(replacements, replaced_words):
+    """ Replace untagged tokens with tokens with coref tags """
+
+    chars = set()
+
+    for replacement in replacements:
+        begin_tag = f'<character name="{replacement[1]}">' 
+        end_tag = '</character>'
+        tagged_word = ''
+
+        # Add tags
+        if replacement[0][0] + 1 == replacement[0][1]: # 1-word mention
+            tagged_word = begin_tag + replaced_words[replacement[0][0]] + end_tag
+            replaced_words[replacement[0][0]] = tagged_word
+
+        else: # multi-word mention
+            # begin-tag first word
+            tagged_word = begin_tag + replaced_words[replacement[0][0]]
+            replaced_words[replacement[0][0]] = tagged_word
+
+            # end-tag after last word
+            if replaced_words[replacement[0][1] - 1] == "'s":
+                tagged_word = replaced_words[replacement[0][1] - 2] + end_tag
+                replaced_words[replacement[0][1] - 2] = tagged_word
+            else:
+                tagged_word = replaced_words[replacement[0][1] - 1] + end_tag
+                replaced_words[replacement[0][1] - 1] = tagged_word
+
+        chars.add(replacement[1])
+
+    return replaced_words, chars
+
+
+def add_coref_tags(sent, id2char):
+    """ Adds tags around coref mentions for a sentence """
+
+    # Build up list of where will add tags (replacements)
+    replacements, replaced_words = build_replacements(sent, id2char)
+
+    # Do the replacing
+    replaced_words, chars = replace_tokens(replacements, replaced_words)
+    replaced_sentence = ' '.join(replaced_words) + ' '
+    #if 'Goddamn' in replaced_sentence:
+    #    pdb.set_trace()
+
+    # Replace # . to paragraph breaks
+    replaced_sentence = replaced_sentence.replace('# .', '\n')
+
+    return replaced_sentence, chars
+
+
+def process_text(annotations, text):
+    """ Take CoreNLP-processed annotations and add coreference tags to the text """
+
+    out_text = '' # outputBuilder
+    id2char = extract_characters(annotations)
     chars = set()
 
     # Add the character tags to the text and process the paragraph delimiter "# ."
     for sent in annotations.sentence:
-
-        # No coref mentions; just take text and replace . # with paragraph break
-        if len(sent.mentionsForCoref) == 0: 
-            text = ' '.join([tok.word for tok in sent.token])
-            if text == '# .':
-                out_text += '\n'
-            elif text.endswith(' # .'):
-                out_text += text[0:-4]
-            else:
-                out_text += text + ' '
-            continue
-
-        # Place character name tags with character mentions
-        words = []
-        replacements = []
-        replaced_sent = ''
-
-        # Build up list of where will add tags (replacements)
-        for mention in sent.mentionsForCoref:
-            char_id = mention.corefClusterID
-            char = ''
-            if len(words) == 0:
-                for word in mention.sentenceWords:
-                    words.append(sent.token[word.tokenIndex].word)
-
-            if char_id in id2char:
-                char = id2char[char_id]
-                processed_char = process_char(char)
-                
-                if char != '': 
-                    replacements.append((
-                            (mention.startIndex, mention.endIndex),
-                            processed_char
-                            ))
-            
-                replacements.sort(key = lambda x: x[0][0])
-        
-            replaced_words = words.copy() # new sentence tokens with modifications, joined to a string at end
-
-        # Do the replacing
-        for replacement in replacements:
-            begin_tag = f'<character name="{replacement[1]}">' 
-            end_tag = '</character>'
-            tagged_word = ''
-
-            # Add tags
-            if replacement[0][0] + 1 == replacement[0][1]: # 1-word mention
-                tagged_word = begin_tag + replaced_words[replacement[0][0]] + end_tag
-                replaced_words[replacement[0][0]] = tagged_word
-
-            else: # multi-word mention
-                # begin-tag first word
-                tagged_word = begin_tag + replaced_words[replacement[0][0]]
-                replaced_words[replacement[0][0]] = tagged_word
-
-                # end-tag after last word
-                if words[replacement[0][1] - 1] == "'s":
-                    tagged_word = replaced_words[replacement[0][1] - 2] + end_tag
-                    replaced_words[replacement[0][1] - 2] = tagged_word
-                else:
-                    taggedWord = replaced_words[replacement[0][1] - 1] + end_tag
-                    replaced_words[replacement[0][1] - 1] = tagged_word
-
-            chars.add(replacement[1])
-
-        replaced_sentence = ' '.join(replaced_words) + ' '
-
-        # Replace # . to paragraph breaks
-        replaced_sentence = replaced_sentence.replace('# .', '\n')
+        replaced_sentence, sent_chars =  process_sentence(sent, id2char)
         out_text += replaced_sentence
+        chars |= sent_chars
 
     return out_text, chars
 
@@ -196,8 +237,14 @@ def process(annotations, text):
 def process_char(char):
     """ Process a character name """
 
-    # Punctation, regular spaces, horizontal non-breaking spaces
-    processed_char = re.sub(r'[,\.\!\?]', '', char)
+    processed_char = char
+
+    # Punctation, 's
+    processed_char = processed_char.replace('’s', '')
+    processed_char = processed_char.replace("'s", '')
+    processed_char = re.sub(r'[,\.\!\?“”’…–]', '', processed_char)
+
+    # Regular spaces, horizontal non-breaking spaces
     processed_char = processed_char.replace(' ', '_')
     processed_char = re.sub(r'[^\S\n]', '', processed_char, flags=re.UNICODE)
 
@@ -209,72 +256,89 @@ def process_char(char):
     return processed_char
 
 
-def run_linker_client(args):
-    ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
-    #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
+def process_data(pid, args, ip_list):
+    q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
 
-    def process_data(pid):
-        q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
+    while True:
+        if args.debug:
+            #file_list = [
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/4545384.csv'
+            #]
+            file_list = q.dequeServer()
+        else:
+            file_list = q.dequeServer()
 
-        while True:
-            if args.debug:
-                file_list = ['/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/2416073.csv']
-            else:
-                file_list = q.dequeServer()
+        if file_list == -1:
+            print('[{}] All Jobs Over!!!!'.format(pid))
+            time.sleep(60)
+            continue
 
-            if file_list == -1:
-                print('[{}] All Jobs Over!!!!'.format(pid))
-                time.sleep(60)
+        count = 0
+        for fname in file_list:
+            name  = fname.split('/')[-1]
+            fic_id_string = name.split('.')[0]
+            fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
+
+            # Check if already processed
+            output_dirpath = '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/output/'
+            char_output_fpath = os.path.join(output_dirpath, f'char_coref_chars/{name}.chars')
+            if os.path.exists(char_output_fpath):
                 continue
 
-            count = 0
-            for fname in file_list:
-                name  = fname.split('/')[-1]
-                fic_id_string = name.split('.')[0]
-                fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
+            # Build text to send to CoreNLP
+            with open(fname) as f:
+                f.readline()
 
-                # Check if already processed
-                output_dirpath = '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/output/'
-                char_output_fpath = os.path.join(output_dirpath, f'char_coref_chars/{name}.chars')
-                if os.path.exists(char_output_fpath):
-                    continue
+                text_aggregate = ''
+                for data in csv.reader(f):
+                    text = data[-1]
+                    text_aggregate += ' # . '.join(text.split('\n'))
+                    text_aggregate += " # . "
+                
+                #res = run_corenlp(text_aggregate, ip_list)
+                run_corenlp_client(text_aggregate, output_dirpath, fic_id_string, ip_list)
+                pdb.set_trace()
 
-                # Build text to send to CoreNLP
-                with open(fname) as f:
-                    f.readline()
+                count += 1
+                if count % 10000 == 0:
+                    print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
 
-                    text_aggregate = ''
-                    for data in csv.reader(f):
-                        text = data[-1]
-                        text_aggregate += ' # . '.join(text.split('\n'))
-                        text_aggregate += " # . "
-                    
-                    #res = run_corenlp(text_aggregate, ip_list)
-                    res = run_corenlp_client(text_aggregate, output_dirpath, fic_id_string, ip_list)
-                    pdb.set_trace()
-                    print("Got result")
 
-                # Write CSV output
-                with open(fname) as f:
-                    for data in csv.reader(f):
-                        fic_id, chapter_id, para_id, text, text_tokenized = data
-                        doc = {
-                            'fic_id'    : fic_id,
-                            'chapter_id'    : chapter_id, 
-                            'para_id'   : para_id, 
-                            'text'      : text, 
-                            'text_tokenized': text_tokenized,
-                            'coref_text'   : process_json(res)
-                        }
+def start_corenlp_servers(n_servers):
+    """ Returns a list of initialized client objects """
 
-                        fw.write(json.dumps(doc) + '\n')
-                        count += 1
-                        if count % 10000 == 0:
-                            print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
+    clients = []
+
+    print('Launching CoreNLP servers...')
+    for _ in range(n_servers):
+    clients.append(CoreNLPClient(
+        annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'],
+        properties = {'tokenize.whitespace': 'true',
+                      #'coref.algorithm': 'clustering'
+                    },
+        be_quiet = False,
+        max_char_length = 1000000,
+        memory = '16G',
+        timeout = 1500000,
+    ))
+    print('done.')
+
+    return clients
+
+
+def run_linker_client(args):
+
+    # Old method with ip lists
+    #ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
+    #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
+
+    # Initialize CoreNLP servers (through Python wrapper)
+    clients = start_corenlp_servers(args.nums)
 
     # for debugging, skip parallelization
     if args.debug:
-        process_data(1)
+        #process_data(1, args, ip_list)
+        process_data(1, args, clients)
     else:
         res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
 
