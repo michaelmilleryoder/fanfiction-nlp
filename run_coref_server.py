@@ -15,6 +15,11 @@ from corenlp import CoreNLPClient
 import pdb
 import traceback
 
+# Global variables 
+
+clients = []
+
+
 ######################### Run CoreNLP on Entire Wikipedia
 
 
@@ -44,34 +49,23 @@ def run_corenlp(text, corenlp_ips):
         return run_corenlp(text, corenlp_ips)
 
 
-def run_corenlp_client(text, output_dirpath, fname, corenlp_ips):
+def run_corenlp_client(text, output_dirpath, fname):
     coref_text_outpath = os.path.join(output_dirpath, 'char_coref_stories', f'{fname}.coref.txt')
     coref_chars_outpath = os.path.join(output_dirpath, 'char_coref_chars', f'{fname}.chars')
 
-    print('Launching server...')
-    client = CoreNLPClient(
-        annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'], 
-        properties = {'tokenize.whitespace': 'true',
-                      #'coref.algorithm': 'clustering'
-                    },
-        be_quiet = False,
-        max_char_length = 1000000,
-        memory = '16G',
-        timeout = 1500000,
-    )   
-    print('done.')
+    client_num = random.choice(range(len(clients)))
+    client = clients[client_num]
 
     #test = 'This is a test sentence Mr. Weirdo . He went to the store . Then he went all the way to the moon .'
     #text = test
 
-    print(f'Text character length: {len(text)}')
-    print(f'Annotating a file...')
+    #print(f'Text character length: {len(text)}')
+    print(f'Annotating {fname}...')
     ann = client.annotate(text)
-    client.stop()
-    print(f'done.') 
+    print(f'\tdone.') 
     print(f'Processing annotations...')
     annotated_text, chars = process_text(ann, text)
-    print('done.')
+    print('\tdone.')
 
     # Write out annotated story text
     with open(coref_text_outpath, 'w') as f:
@@ -256,19 +250,23 @@ def process_char(char):
     return processed_char
 
 
-def process_data(pid, args, ip_list):
+def process_data(pid, args):
     q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
 
     while True:
         if args.debug:
             #file_list = [
-            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/4545384.csv'
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/2416073.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/4545384.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/7030585.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/15730266.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/3917902.csv',
             #]
             file_list = q.dequeServer()
         else:
             file_list = q.dequeServer()
 
-        if file_list == -1:
+        if file_list == -1: # Stops when no more in file list
             print('[{}] All Jobs Over!!!!'.format(pid))
             time.sleep(60)
             continue
@@ -277,7 +275,7 @@ def process_data(pid, args, ip_list):
         for fname in file_list:
             name  = fname.split('/')[-1]
             fic_id_string = name.split('.')[0]
-            fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
+            #fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
 
             # Check if already processed
             output_dirpath = '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/output/'
@@ -296,31 +294,43 @@ def process_data(pid, args, ip_list):
                     text_aggregate += " # . "
                 
                 #res = run_corenlp(text_aggregate, ip_list)
-                run_corenlp_client(text_aggregate, output_dirpath, fic_id_string, ip_list)
-                pdb.set_trace()
+                run_corenlp_client(text_aggregate, output_dirpath, fic_id_string)
 
                 count += 1
                 if count % 10000 == 0:
                     print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
 
+        else: # finished loop through file_list
+            break
+
 
 def start_corenlp_servers(n_servers):
-    """ Returns a list of initialized client objects """
-
-    clients = []
+    """ Initializes client objects """
 
     print('Launching CoreNLP servers...')
-    for _ in range(n_servers):
-    clients.append(CoreNLPClient(
-        annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'],
-        properties = {'tokenize.whitespace': 'true',
-                      #'coref.algorithm': 'clustering'
-                    },
-        be_quiet = False,
-        max_char_length = 1000000,
-        memory = '16G',
-        timeout = 1500000,
-    ))
+    for i in range(n_servers):
+        client = CoreNLPClient(
+            endpoint = f'http://localhost:{9000+i}',
+            annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'coref'],
+            properties = {'tokenize.whitespace': 'true',
+                          #'coref.algorithm': 'clustering'
+                        },
+            be_quiet = True,
+            max_char_length = 1000000,
+            memory = '16G',
+            timeout = 1500000,
+        )
+        client.start()
+        clients.append(client)
+    print('\tdone.')
+
+
+def stop_corenlp_servers(clients):
+    """ Stops a list of initialized client objects """
+
+    print('Stopping CoreNLP servers...')
+    for client in clients:
+        client.stop()
     print('done.')
 
     return clients
@@ -333,14 +343,18 @@ def run_linker_client(args):
     #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
 
     # Initialize CoreNLP servers (through Python wrapper)
-    clients = start_corenlp_servers(args.nums)
+    start_corenlp_servers(args.nums)
 
     # for debugging, skip parallelization
     if args.debug:
         #process_data(1, args, ip_list)
         process_data(1, args, clients)
+        #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i, args) for i in range(args.workers))
     else:
-        res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
+        res_list  = Parallel(n_jobs = args.workers, require='sharedmem')(delayed(process_data)(i, args) for i in range(args.workers))
+        #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
+
+    stop_corenlp_servers()
 
 
 def run_linker_server(args):
