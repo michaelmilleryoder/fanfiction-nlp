@@ -285,8 +285,6 @@ public class StanfordCoreNLPServer implements Runnable {
   private Annotation getDocument(Properties props, HttpExchange httpExchange) throws IOException, ClassNotFoundException {
     String inputFormat = props.getProperty("inputFormat", "text");
     String date = props.getProperty("date");
-	System.out.println("Annotation input format in StanfordCoreNLPServer HERE:");
-	System.out.println(inputFormat);
     switch (inputFormat) {
       case "text":
         // The default encoding by the HTTP standard is ISO-8859-1, but most
@@ -1466,7 +1464,7 @@ public class StanfordCoreNLPServer implements Runnable {
    */
   public static void main(String[] args) throws IOException {
     // Add a bit of logging
-    log("--- " + StanfordCoreNLPServer.class.getSimpleName() + "#main() called WHAT ---");
+    log("--- " + StanfordCoreNLPServer.class.getSimpleName() + "#main() called ---");
     String build = System.getenv("BUILD");
     if (build != null) {
       log("    Build: " + build);

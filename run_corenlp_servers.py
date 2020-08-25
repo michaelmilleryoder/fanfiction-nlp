@@ -17,7 +17,7 @@ def start_servers(start_port, n_servers):
 
 
 def stop_servers(start_port, n_servers):
-    # Find PIDs
+    # Find PIDs, kill
     for i in range(n_servers):
         try:
             pid = subprocess.check_output(["pgrep", '-f', f'port {start_port+i}'])
@@ -26,6 +26,11 @@ def stop_servers(start_port, n_servers):
         except subprocess.CalledProcessError as e:
             print(f'Port {start_port+i} not able to be killed')
             continue
+
+    # Remove tmp lock
+    shutdown_keypath = 'CoreNLP/tmp/corenlp.shutdown'
+    if os.path.exists(shutdown_keypath):
+        os.remove(shutdown_keypath)
 
 
 def main():

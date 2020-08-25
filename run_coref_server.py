@@ -8,6 +8,8 @@ from helper import *
 from queue_client import *
 from collections import ChainMap
 from corenlp import CoreNLPClient
+from corenlp_protobuf import Document, parseFromDelimitedString
+from multiprocessing import Pool
 
 #import scispacy, spacy
 #from scispacy.abbreviation import AbbreviationDetector
@@ -17,36 +19,48 @@ import traceback
 
 # Global variables 
 
-clients = []
+#clients = []
 
 
 ######################### Run CoreNLP on Entire Wikipedia
 
 
 def run_corenlp(text, corenlp_ips):
+    """ Run CoreNLP through server/REST API"""
+
     text_ = text.encode('utf-8')
 
     try:
         params = {
             'properties': '{"annotators":"tokenize,ssplit,pos,lemma,ner,parse,coref", "tokenize.whitespace": "true"}',
-            #'outputFormat': 'json'
             'outputFormat': 'serialized',
             "serializer": "edu.stanford.nlp.pipeline.ProtobufAnnotationSerializer"
         }
 
         url = random.choice(corenlp_ips)
-        res = requests.post(url, params=params, data=text_, headers={'Content-type': 'text/plain'})
+        r = requests.post(url, params=params, data=text_, headers={'Content-type': 'text/plain'})
+        print('\tdone.')
 
-        if res.status_code == 200:
-            data = res.json(strict=False)               
-            return data
+        if r.status_code == 200:
+            # Decode protobuf object
+            doc = Document()
+            parseFromDelimitedString(doc, r.content)            
+
+            print(f'Processing annotations...')
+            annotated_text, chars = process_text(doc, text)
+            print('\tdone.')
+            
+            return annotated_text, chars
+
         else:
-            print("CoreNLP Error, status code:{}".format(res.status_code))
-            return None
+            print("CoreNLP Error, status code:{}".format(r.status_code))
+            return None, None
 
     except Exception as e:
-        print('Server {} not working'.format(url))
-        return run_corenlp(text, corenlp_ips)
+        track = traceback.format_exc()
+        print(track)
+        #print('Server {} not working'.format(url))
+        print('Server not working')
 
 
 def run_corenlp_client(text, output_dirpath, fname):
@@ -116,8 +130,6 @@ def process_sentence(sent, id2char):
     # No coref mentions; just take text and replace . # with paragraph break
     if len(sent.mentionsForCoref) == 0: 
         text = ' '.join([tok.word for tok in sent.token])
-        #if 'Goddamn' in text:
-        #    pdb.set_trace()
         if text == '# .':
             replaced_sent = '\n'
         elif text.endswith(' # .'):
@@ -203,8 +215,6 @@ def add_coref_tags(sent, id2char):
     # Do the replacing
     replaced_words, chars = replace_tokens(replacements, replaced_words)
     replaced_sentence = ' '.join(replaced_words) + ' '
-    #if 'Goddamn' in replaced_sentence:
-    #    pdb.set_trace()
 
     # Replace # . to paragraph breaks
     replaced_sentence = replaced_sentence.replace('# .', '\n')
@@ -250,60 +260,6 @@ def process_char(char):
     return processed_char
 
 
-def process_data(pid, args):
-    q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
-
-    while True:
-        if args.debug:
-            #file_list = [
-            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/2416073.csv',
-            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/4545384.csv',
-            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/7030585.csv',
-            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/15730266.csv',
-            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/3917902.csv',
-            #]
-            file_list = q.dequeServer()
-        else:
-            file_list = q.dequeServer()
-
-        if file_list == -1: # Stops when no more in file list
-            print('[{}] All Jobs Over!!!!'.format(pid))
-            time.sleep(60)
-            continue
-
-        count = 0
-        for fname in file_list:
-            name  = fname.split('/')[-1]
-            fic_id_string = name.split('.')[0]
-            #fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
-
-            # Check if already processed
-            output_dirpath = '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/output/'
-            char_output_fpath = os.path.join(output_dirpath, f'char_coref_chars/{name}.chars')
-            if os.path.exists(char_output_fpath):
-                continue
-
-            # Build text to send to CoreNLP
-            with open(fname) as f:
-                f.readline()
-
-                text_aggregate = ''
-                for data in csv.reader(f):
-                    text = data[-1]
-                    text_aggregate += ' # . '.join(text.split('\n'))
-                    text_aggregate += " # . "
-                
-                #res = run_corenlp(text_aggregate, ip_list)
-                run_corenlp_client(text_aggregate, output_dirpath, fic_id_string)
-
-                count += 1
-                if count % 10000 == 0:
-                    print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
-
-        else: # finished loop through file_list
-            break
-
-
 def start_corenlp_servers(n_servers):
     """ Initializes client objects """
 
@@ -336,25 +292,119 @@ def stop_corenlp_servers(clients):
     return clients
 
 
+def process_data(pid):
+    q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
+
+    while True:
+        if args.debug:
+            file_list = [
+            # large files
+            #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/776979.csv',
+            #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/8100271.csv',
+            #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/12317418.csv',
+            #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/2051274.csv',
+            #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/308287.csv',
+            #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/8008267.csv',
+                # normal size files
+                #'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/2416073.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/4545384.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/7030585.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/15730266.csv',
+            #    '/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics/3917902.csv',
+            ]
+            file_list = q.dequeServer()
+        else:
+            file_list = q.dequeServer()
+
+        if file_list == -1: # Stops when no more in file list
+            print('[{}] All Jobs Over!!!!'.format(pid))
+            time.sleep(60)
+            continue
+
+        count = 0
+        for fname in file_list:
+            name  = fname.split('/')[-1]
+            fic_id_string = name.split('.')[0]
+
+            # Build fpaths, Check if already processed
+            stories_dirpath = os.path.join(args.output, 'char_coref_stories')
+            chars_dirpath = os.path.join(args.output, 'char_coref_chars')
+            if not os.path.exists(stories_dirpath):
+                os.mkdir(stories_dirpath)
+            if not os.path.exists(chars_dirpath):
+                os.mkdir(chars_dirpath)
+            coref_text_outpath = os.path.join(stories_dirpath, f'{fic_id_string}.coref.txt')
+            coref_csv_outpath = os.path.join(stories_dirpath, f'{fic_id_string}.coref.csv')
+            coref_chars_outpath = os.path.join(chars_dirpath, f'{fic_id_string}.chars')
+            print(coref_text_outpath)
+            print(coref_csv_outpath)
+            print(coref_chars_outpath)
+            if os.path.exists(coref_chars_outpath):
+                print(f'Skipping {fic_id_string}; already processed')
+                continue
+
+            # Build text to send to CoreNLP
+            with open(fname) as f:
+                f.readline()
+                text_aggregate = ''
+                for data in csv.reader(f):
+                    text = data[-1]
+                    text_aggregate += ' # . '.join(text.split('\n'))
+                    text_aggregate += " # . "
+                
+                #print(f'\tFic character length: {len(text_aggregate)}')
+                print(f'Annotating {fic_id_string}...')
+                annotated_text, chars = run_corenlp(text_aggregate, ip_list)
+                if annotated_text is None and chars is None:
+                    print(f"Could not process {fic_id_string}")
+                    continue
+                #annotated_text, chars = '', set()
+                #run_corenlp_client(text_aggregate, output_dirpath, fic_id_string)
+                count += 1
+                if count % 10000 == 0:
+                    print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
+
+            print('Writing output...')
+            # Write out annotated story text (coref txt)
+            with open(coref_text_outpath, 'w') as f:
+                f.write(annotated_text)
+
+            # Write out annotated story text (coref csv)
+            output_txt2csv(coref_csv_outpath, coref_text_outpath, fname)
+
+            # Write out character list
+            with open(coref_chars_outpath, 'w') as f:
+                for c in chars:
+                    f.write(f'{c}\n')
+            print('\tdone.')
+
+        else: # finished loop through file_list
+            break
+
+
 def run_linker_client(args):
 
-    # Old method with ip lists
+    # IP method
     #ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
-    #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
 
-    # Initialize CoreNLP servers (through Python wrapper)
-    start_corenlp_servers(args.nums)
+    # Python wrapper method initialize CoreNLP servers
+    #start_corenlp_servers(args.nums)
 
+    # back to main run_linker_client function
     # for debugging, skip parallelization
-    if args.debug:
-        #process_data(1, args, ip_list)
-        process_data(1, args, clients)
-        #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i, args) for i in range(args.workers))
-    else:
-        res_list  = Parallel(n_jobs = args.workers, require='sharedmem')(delayed(process_data)(i, args) for i in range(args.workers))
-        #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
+    try:
+        if args.debug:
+            process_data(1)
+            #with Pool(args.workers) as pool:
+            #    pool.map(process_data, range(args.workers))
+        else:
+            with Pool(args.workers) as pool:
+                pool.map(process_data, range(args.workers))
 
-    stop_corenlp_servers()
+    except Exception as e:
+        track = traceback.format_exc()
+        print(track)
+        #stop_corenlp_servers()
 
 
 def run_linker_server(args):
@@ -378,7 +428,7 @@ def run_linker_server(args):
     file_list = []
     temp = []
     count = 0
-    for root, dirs, files in os.walk('/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics'):
+    for root, dirs, files in os.walk(args.input):
         for file in files:
             if '.csv' not in file: continue
             fname = os.path.join(root, file)
@@ -396,21 +446,33 @@ def run_linker_server(args):
     print('\nInserted {}, Total {} in queue. Complete'.format(count, q.getSize()))
 
 
-def process_json(data):
-    """ Extract character coreference assignments from CoreNLP output and
-        embed with <tags> in the text
-    """
-    pass
+def output_txt2csv(coref_csv_outpath, coref_txt_outpath, fic_csv_fpath):
+    """ Convert output files from text to original CSV format """
+    with open(coref_txt_outpath) as coref_txt_outfile:
+        lines = re.split(r'\n+| # . ', coref_txt_outfile.read())
+
+    with open(fic_csv_fpath) as fic_csv_file:
+        reader = csv.reader(fic_csv_file)
+        header = next(reader)
+        with open(coref_csv_outpath, 'w', encoding='utf8') as coref_csv_outfile:
+            writer = csv.writer(coref_csv_outfile)
+            writer.writerow(header)
+            for row,text in zip(reader, lines):
+                row[len(row)-1]= text
+                writer.writerow(row)
 
 
-def main():
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('--step',      required=True)
+    parser.add_argument('--input',     help='Path to directory with input files')
+    parser.add_argument('--output',     help='Path to output directory')
     parser.add_argument('--workers',   default=30,  type=int)
-    parser.add_argument('--ip',        default='misty.lti.cs.cmu.edu')
+    #parser.add_argument('--ip',        default='misty.lti.cs.cmu.edu')
+    parser.add_argument('--ip',        default='localhost')
     parser.add_argument('--port',      default=1234, type=int)
     parser.add_argument('--nums',      default=16, type=int)
-    parser.add_argument('--start_port',default=7090, type=int)
+    parser.add_argument('--start_port',default=8060, type=int)
     parser.add_argument('--clear',     action='store_true')
     parser.add_argument('--status',    action='store_true')
     parser.add_argument('--allclear',  action='store_true')
@@ -418,8 +480,7 @@ def main():
     parser.add_argument('--debug',     action='store_true')
     args = parser.parse_args()
 
+    ip_list = ['http://localhost:{}'.format(args.start_port + i) for i in range(args.nums)]
+
     if   args.step == 'server':     run_linker_server(args)
     elif args.step == 'client':     run_linker_client(args)
-
-
-if __name__ == '__main__': main()
