@@ -61,6 +61,7 @@ def run_corenlp(text, corenlp_ips):
         print(track)
         #print('Server {} not working'.format(url))
         print('Server not working')
+        return None, None
 
 
 def run_corenlp_client(text, output_dirpath, fname):
@@ -318,8 +319,8 @@ def process_data(pid):
 
         if file_list == -1: # Stops when no more in file list
             print('[{}] All Jobs Over!!!!'.format(pid))
-            time.sleep(60)
-            continue
+            #time.sleep(60)
+            break
 
         count = 0
         for fname in file_list:
@@ -336,9 +337,6 @@ def process_data(pid):
             coref_text_outpath = os.path.join(stories_dirpath, f'{fic_id_string}.coref.txt')
             coref_csv_outpath = os.path.join(stories_dirpath, f'{fic_id_string}.coref.csv')
             coref_chars_outpath = os.path.join(chars_dirpath, f'{fic_id_string}.chars')
-            print(coref_text_outpath)
-            print(coref_csv_outpath)
-            print(coref_chars_outpath)
             if os.path.exists(coref_chars_outpath):
                 print(f'Skipping {fic_id_string}; already processed')
                 continue
@@ -358,8 +356,6 @@ def process_data(pid):
                 if annotated_text is None and chars is None:
                     print(f"Could not process {fic_id_string}")
                     continue
-                #annotated_text, chars = '', set()
-                #run_corenlp_client(text_aggregate, output_dirpath, fic_id_string)
                 count += 1
                 if count % 10000 == 0:
                     print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
@@ -378,8 +374,8 @@ def process_data(pid):
                     f.write(f'{c}\n')
             print('\tdone.')
 
-        else: # finished loop through file_list
-            break
+#        else: # finished loop through file_list
+#            break
 
 
 def run_linker_client(args):
@@ -413,10 +409,9 @@ def run_linker_server(args):
     if args.clear:    q.clear()
     if args.allclear: q.clear(); exit(0)
     if args.status:
-        while True:
-            size = q.getSize()
-            print('{}, Queue size. {}'.format(time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S"), size))
-            time.sleep(20)
+        size = q.getSize()
+        print('{}, Queue size. {}'.format(time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S"), size))
+        return
 
     exclude_ids = set([])
 
@@ -428,22 +423,28 @@ def run_linker_server(args):
     file_list = []
     temp = []
     count = 0
+    step = 500 # max number of files to serve at once
     for root, dirs, files in os.walk(args.input):
+        n_files = len([f for f in files if '.csv' in f])
+        file_list_size = min(int(n_files/10)+1, step) # number of file names in each list to be served by the server
         for file in files:
             if '.csv' not in file: continue
             fname = os.path.join(root, file)
             name  = fname.split('/')[-1]
+            temp.append(fname)
+            if len(temp) >= file_list_size: 
+                q.enqueue(temp)
+                count += 1
+                temp = []
+                print("Inserting {}".format(count * file_list_size), end='\r')
+        final_nfiles = 0
+        if len(temp) > 0:
+            final_nfiles = len(temp)
+            q.enqueue(temp)
+            temp = []
+        print("Inserting {}".format(count * file_list_size + final_nfiles), end='\r')
 
-            if name not in done_list:
-                temp.append(fname)
-
-                if len(temp) > 500: 
-                    q.enqueue(temp)
-                    count += 1
-                    temp = []
-                    print("Inserting {}".format(count), end='\r')
-
-    print('\nInserted {}, Total {} in queue. Complete'.format(count, q.getSize()))
+    print('\nInserted {} files, Total {} file lists in queue. Complete'.format(count * file_list_size + final_nfiles, q.getSize()))
 
 
 def output_txt2csv(coref_csv_outpath, coref_txt_outpath, fic_csv_fpath):
