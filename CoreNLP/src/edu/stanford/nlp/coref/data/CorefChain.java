@@ -112,6 +112,10 @@ public class CorefChain implements Serializable {
   public CorefMention getRepresentativeMention() { return representative; }
   public int getChainID() { return chainID; }
 
+  /** Return the character assigned to the chain.
+   */
+  public String getCharacter() { return character; }
+
   /** Mention for coref output.  This is one instance of the entity
    * referred to by a given CorefChain.
    */
@@ -303,7 +307,6 @@ public class CorefChain implements Serializable {
   }
 
   public CorefChain(CorefCluster c, Map<Mention, IntTuple> positions){
-//    System.err.println("CorefChain is called");
     chainID = c.clusterID;
     character = c.character;
     // Collect mentions
@@ -325,6 +328,24 @@ public class CorefChain implements Serializable {
       }
     }
     representative = represents;
+  }
+
+  /** Constructor required by CustomAnnotationSerializer */
+  public CorefChain(int cid,
+                    Map<IntPair, Set<CorefMention>> mentionMap,
+					String character,
+                    CorefMention representative) {
+    this.chainID = cid;
+    this.representative = representative;
+	this.character = character;
+    this.mentionMap = mentionMap;
+    this.mentions = new ArrayList<>();
+    for (Set<CorefMention> ms: mentionMap.values()) {
+      for (CorefMention m: ms) {
+        this.mentions.add(m);
+      }
+    }
+    Collections.sort(mentions, new CorefMentionComparator());
   }
 
   /** Constructor required by CustomAnnotationSerializer */

@@ -340,6 +340,7 @@ public class CustomAnnotationSerializer extends AnnotationSerializer  {
         if(rep) representative = mention;
       }
       // construct the cluster
+      System.err.println("CustomAnnotationSerializer CorefChain called HERE");
       CorefChain chain = new CorefChain(cid, mentionMap, representative);
       chains.put(cid, chain);
     }

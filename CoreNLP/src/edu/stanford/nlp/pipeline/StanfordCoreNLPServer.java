@@ -853,6 +853,7 @@ public class StanfordCoreNLPServer implements Runnable {
       try {
         // Annotate
         StanfordCoreNLP pipeline = mkStanfordCoreNLP(props);
+		log("Annotating...");
         completedAnnotationFuture = corenlpExecutor.submit(() -> {
           pipeline.annotate(ann);
           return ann;

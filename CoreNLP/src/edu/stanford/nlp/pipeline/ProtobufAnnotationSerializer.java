@@ -813,6 +813,8 @@ public class ProtobufAnnotationSerializer extends AnnotationSerializer {
     CoreNLPProtos.CorefChain.Builder builder = CoreNLPProtos.CorefChain.newBuilder();
     // Set ID
     builder.setChainID(chain.getChainID());
+	// Set character
+	builder.setCharacter(chain.getCharacter());
     // Set mentions
     Map<CorefChain.CorefMention, Integer> mentionToIndex = new IdentityHashMap<>();
     for (Map.Entry<IntPair, Set<CorefChain.CorefMention>> entry : chain.getMentionMap().entrySet()) {
@@ -2341,6 +2343,8 @@ public class ProtobufAnnotationSerializer extends AnnotationSerializer {
   private CorefChain fromProto(CoreNLPProtos.CorefChain proto, Annotation partialDocument) {
     // Get chain ID
     int cid = proto.getChainID();
+    // Get character
+    String character = proto.getCharacter();
     // Get mentions
     Map<IntPair, Set<CorefChain.CorefMention>> mentions = new HashMap<>();
     CorefChain.CorefMention representative = null;
@@ -2379,7 +2383,8 @@ public class ProtobufAnnotationSerializer extends AnnotationSerializer {
       }
     }
     // Return
-    return new CorefChain(cid, mentions, representative);
+    //return new CorefChain(cid, mentions, representative);
+    return new CorefChain(cid, mentions, character, representative);
   }
 
   private Mention fromProtoNoTokens(CoreNLPProtos.Mention protoMention) {
