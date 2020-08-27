@@ -74,7 +74,7 @@ def output_txt2csv(data_dirpath, csv_input_dirpath, csv_output_dirpath, n_dir_sp
             fout.close()
 
         else:
-            tqdm.write(fname, " file not found")
+            tqdm.write(f"{fname} file not found")
             continue
 
 

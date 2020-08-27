@@ -28,6 +28,8 @@ class Pipeline():
         self.collection_name = collection_name
         self.input_path = input_path
         self.output_path = output_path
+        if not os.path.exists(self.output_path):
+            os.mkdir(self.output_path)
         self.modules = modules
         self.coreference_settings = coreference_settings
         self.quote_attribution_settings = quote_attribution_settings
