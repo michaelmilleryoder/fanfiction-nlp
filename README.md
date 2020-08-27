@@ -22,7 +22,6 @@ The pipeline does:
 * Python packages: [spaCy](https://spacy.io/usage), [nltk](https://www.nltk.org/install.html) with the `punkt` resource downloaded.
 
 * For quote attribution, you will need to install:
-	* [BookNLP](https://github.com/dbamman/book-nlp). Make sure this is working properly by running the test described in their README.
 	* [SVMRank](https://www.cs.cornell.edu/people/tj/svm_light/svm_rank.html). Download the binary file appropriate for your OS. Then follow their instructions to unpack and install this tool.
 
 ## Input 
@@ -30,11 +29,11 @@ Directory path to directory of fanfiction story (fic) chapter CSV files.
 
 If your input is raw text you'll need to format it like the examples in the `example_fandom` directory. [Here's](https://github.com/michaelmilleryoder/fanfiction-nlp/blob/master/example_fandom/10118594_0004.csv) an example. Eventually we'll support raw text file input.
 
-No tokenization or other preprocessing is necessary: that is completed in the pipeline.
+Please tokenize text (split into words) before running it through the pipeline and include this as a fourth column, `text_tokenized`. We are working on including this as an option.
 
 ## Output 
 * Character coreference: 
-	* a directory where fics (fanfiction stories) are stored with cluster-level coreference names appended after mentions, like this: "she ($\_hermione) and harry ($\_harry) walked through the woods". We have preprended `$_` to these cluster-level names to distinguish them from regular character mentions.
+	* a directory where fics (fanfiction stories) are stored with character mentions surrounded by cluster-level coreference names in XML tags, like this: "\<character name="hermione"\>she\</character\> and \<character name="harry"\>harry\</character\> walked through the woods".
 	* a directory with files with cluster-level character names for each processed fic, one per line.
 
 * Quote attribution: 
@@ -60,15 +59,11 @@ The pipeline takes settings and input/output filepaths in a configuration file. 
 
 #### `[Character coreference]`
 
-`run_coref`: Whether to run character coreference (True or False)
+`run_coref`: (True or False) Whether to run character coreference.
 
-`n_threads`: The number of threads (actually processes) to run the coreference (integer)
+`n_servers`: (integer) Coreference runs by starting a number of local servers on whatever machine the processing is done on. This specifies how many servers should be run. More servers generally increases processing speed, though starting more servers than threads does not.
 
-`split_input_dir`: Whether to split the input directory into separate directories. Do this if the input directory contains many files and you want to do multithreading (multiprocessing). For effective multithreading, the number of threads cannot be fewer than the number of directory splits. Acceptable values: True or False
-
-`max_files_per_split`: If splitting the input directory, the maximum number of files per directory split. 100 is a good choice for fast performance.
-
-`delete_existing_tmp`: Coreference does some preprocessing of the input CSV files into text files and splits the directory (if specified). To delete any existing temporary files and redo this process, set this to True. Otherwise, set to False.
+`n_threads`: (integer) The number of threads (actually processes) to run the coreference. Try setting this number to 3-4 times the number of servers used.
 
 
 #### `[Quote attribution]`
