@@ -42,25 +42,24 @@ def coref_dir_splits(n_dir_splits, n_threads, data_dir, char_dir, output_dir):
 def output_txt2csv(data_dirpath, csv_input_dirpath, csv_output_dirpath, n_dir_splits):
     """ Convert output files from text to original CSV format """
 
-    print("Processing the outputs..")
+    print("Processing the outputs...")
 
     if n_dir_splits > 1:
         filenames = []
         for dirname in os.listdir(data_dirpath):
-            filenames += [dirname + '/' + fname for fname in os.listdir(os.path.join(data_dirpath, dirname))]
+            filenames += [fname for fname in os.listdir(os.path.join(data_dirpath, dirname))]
     else:
         filenames = os.listdir(data_dirpath)
 
-    for filename in filenames:
-        
-        fname = csv_output_dirpath+"/"+filename+".coref.txt" # output from the processing
+    for filename in tqdm(filenames, ncols=50):
+        fname = os.path.join(csv_output_dirpath, filename + ".coref.txt") # output from the processing
         exists = os.path.isfile(fname)
         if(exists):
-            txtfile = open(csv_output_dirpath+"/"+filename+".coref.txt")
+            txtfile = open(os.path.join(csv_output_dirpath, filename + ".coref.txt"))
             fin = open(os.path.join(csv_input_dirpath, filename + ".csv"))
             reader = csv.reader(fin)
             header = next(reader)
-            fout = open(csv_output_dirpath+"/"+filename+".coref.csv","w", encoding='utf8')
+            fout = open(os.path.join(csv_output_dirpath, filename+".coref.csv"),"w", encoding='utf8')
             writer = csv.writer(fout)
             #lines = txtfile.readlines()
             lines = re.split(r'\n+| # . ', txtfile.read())
@@ -75,7 +74,7 @@ def output_txt2csv(data_dirpath, csv_input_dirpath, csv_output_dirpath, n_dir_sp
             fout.close()
 
         else:
-            print (fname, " file not found")
+            tqdm.write(fname, " file not found")
             continue
 
 
