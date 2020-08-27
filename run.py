@@ -46,7 +46,7 @@ class Pipeline():
         if 'assertion_extraction' in self.modules:
             self.assertion_extraction()
 
-    def coref(self, n_threads, split_input_dir, max_files_per_split, delete_existing_tmp):
+    def coref(self, n_servers, n_threads):
         if not os.path.exists(self.coref_stories_path):
             os.mkdir(self.coref_stories_path)
         if not os.path.exists(self.coref_chars_path):
@@ -99,7 +99,6 @@ class Pipeline():
             os.mkdir(assertion_output_path)
 
         subprocess.call(['python3', 'assertion_extraction/extract_assertions.py',
-        call(['python3', 'assertion_extraction/extract_assertions.py',
             self.coref_stories_path, self.coref_chars_path, assertion_output_path])
 
     def start_corenlp_servers(self, n_servers, n_threads):
