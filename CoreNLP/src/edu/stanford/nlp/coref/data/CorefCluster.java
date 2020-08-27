@@ -99,7 +99,6 @@ public class CorefCluster implements Serializable {
     }
 
     public CorefCluster(int ID) {
-    System.err.println("CUSTOM public CorefCluster(int ID) is called");
         clusterID = ID;
         corefMentions = Generics.newHashSet();
         numbers = EnumSet.noneOf(Number.class);
@@ -110,7 +109,7 @@ public class CorefCluster implements Serializable {
         words = Generics.newHashSet();
         firstMention = null;
         representative = null;
-        character = "NO_CHARACTER";
+        character = "";
         characterCounts = new HashMap<String, Integer>();
         genderCounts = new HashMap<>();
     }

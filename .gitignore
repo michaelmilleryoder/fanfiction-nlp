@@ -1,4 +1,5 @@
 *.jar
+temp.out
 .nfs*
 *.class
 .DS_Store

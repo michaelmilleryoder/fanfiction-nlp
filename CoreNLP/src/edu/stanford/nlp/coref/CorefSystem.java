@@ -356,65 +356,6 @@ public class CorefSystem {
 
                     }
 
-//                    int currIdx = 0;
-//
-//                    for (Pair<Pair<Integer, Integer>, String> replacement : replacements) {
-//                    	
-//                    		// Handle newlines in between replacements
-//                        while (currIdx < replacement.first.first) {
-//                            if (words.get(currIdx).equals("#")
-//                                && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
-//                                replacedSentence.append("\n");
-//                                currIdx += 2;
-//                            } else {
-//                                replacedSentence.append(words.get(currIdx)).append(" ");
-//                                currIdx += 1;
-//                            }
-//                        }
-//						
-//						// Add <character name=name>mention</character> tags (apostrophe s exclude from mention)
-//                        boolean hasApostropheS = false;
-//						replacedSentence.append("<character name=\"" + replacement.second + "\">");
-//                        if (replacement.first.first + 1 == replacement.first.second) {
-//                            replacedSentence.append(words.get(replacement.first.first));
-//
-//                        } else {
-//                            for (int j = replacement.first.first; j < replacement.first.second; ++j) {
-//                                if (j == replacement.first.second - 1 && words.get(j).equals("'s")) {
-//                                    hasApostropheS = true;
-//                                    break;
-//                                }
-//
-//                                replacedSentence.append(words.get(j));
-//
-//								if (j < replacement.first.second - 1 && !(j == replacement.first.second - 2 && words.get(j+1).equals("'s"))) {
-//									replacedSentence.append(" ");
-//								}
-//                            }
-//                        }
-//						replacedSentence.append("</character> ");
-//                        characters.add(replacement.second);
-//
-//                        if (hasApostropheS) {
-//                            replacedSentence.append("'s").append(" ");
-//                        }
-//
-//                        currIdx = replacement.first.second;
-//
-//                    }
-//
-//					// # to paragraph breaks at the end of going through all the replacements
-//                    while (currIdx < words.size()) {
-//                        if (words.get(currIdx).equals("#")
-//                            && (currIdx + 1 < words.size() && words.get(currIdx + 1).equals("."))) {
-//                            replacedSentence.append("\n");
-//                            currIdx += 2;
-//                        } else {
-//                            replacedSentence.append(words.get(currIdx)).append(" ");
-//                            currIdx += 1;
-//                        }
-//                    }
-                    
                     String replacedSentence = String.join(" ", replacedWords) + " ";
                     // Replace # . to paragraph breaks
                     replacedSentence = replacedSentence.replaceAll("# \\.", "\n");
