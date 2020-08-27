@@ -1077,6 +1077,8 @@ public class Document {
   private CorefChain fromProto(CoreNLPProtos.CorefChain proto) {
     // Get chain ID
     int cid = proto.getChainID();
+    // Get character
+    String character = proto.getCharacter();
     // Get mentions
     Map<IntPair, Set<CorefChain.CorefMention>> mentions = new HashMap<>();
     CorefChain.CorefMention representative = null;
@@ -1112,7 +1114,8 @@ public class Document {
       }
     }
     // Return
-    return new CorefChain(cid, mentions, representative);
+    //return new CorefChain(cid, mentions, representative);
+    return new CorefChain(cid, mentions, character, representative);
   }
 
 

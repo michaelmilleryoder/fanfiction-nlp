@@ -853,6 +853,7 @@ public class StanfordCoreNLPServer implements Runnable {
       try {
         // Annotate
         StanfordCoreNLP pipeline = mkStanfordCoreNLP(props);
+		log("Annotating...");
         completedAnnotationFuture = corenlpExecutor.submit(() -> {
           pipeline.annotate(ann);
           return ann;
@@ -1463,7 +1464,7 @@ public class StanfordCoreNLPServer implements Runnable {
    */
   public static void main(String[] args) throws IOException {
     // Add a bit of logging
-    log("--- " + StanfordCoreNLPServer.class.getSimpleName() + "#main() called ---");
+    log("--- " + StanfordCoreNLPServer.class.getSimpleName() + "#main() called WHAT ---");
     String build = System.getenv("BUILD");
     if (build != null) {
       log("    Build: " + build);

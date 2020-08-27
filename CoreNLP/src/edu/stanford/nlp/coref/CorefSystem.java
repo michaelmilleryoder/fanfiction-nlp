@@ -11,7 +11,6 @@ import edu.stanford.nlp.util.Generics;
 import edu.stanford.nlp.util.Pair;
 import edu.stanford.nlp.util.logging.Redwood;
 
-
 import edu.stanford.nlp.coref.data.CorefChain;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -123,6 +122,8 @@ public class CorefSystem {
         Map<Integer, CorefChain> result = Generics.newHashMap();
         for (CorefCluster c : document.corefClusters.values()) {
             result.put(c.clusterID, new CorefChain(c, document.positions));
+			System.err.println("CorefSystem annotate character:::::::");
+			System.err.println(c.character);
         }
         ann.set(CorefCoreAnnotations.CorefChainAnnotation.class, result);
     }
