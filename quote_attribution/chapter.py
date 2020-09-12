@@ -309,16 +309,17 @@ class Chapter(object):
         story_token_id = 0
 
         with open(coref_file) as coref_csv:
-            reader = csv.reader(coref_csv) # fic_id, chapter_id, para_id, text, text_tokenized
-            header = next(reader) # skip header
+            #reader = csv.reader(coref_csv) # fic_id, chapter_id, para_id, text, text_tokenized
+            #header = next(reader) # skip header
+            reader = csv.DictReader(coref_csv) # fic_id, chapter_id, para_id, text, text_tokenized
 
             for line in reader:
                 paragraph_token_id = 1 # start with 1 to match annotations
                 paragraph_has_quote = False
 
-                chapter_id = int(line[1])
-                paragraph_id = int(line[2])
-                text = line[-1]
+                chapter_id = int(line['chapter_id'])
+                paragraph_id = int(line['paragraph_id'])
+                text = line['text_tokenized']
 
                 self.paragraph_start_token_id.append(story_token_id)
                 self.story_quote_token_id.append([])
@@ -642,9 +643,9 @@ class Chapter(object):
 
         # Build output directory if not exist
         output_abs_path = os.path.abspath(outputfile)
-        output_father_path = os.path.abspath(os.path.dirname(output_abs_path) + os.path.sep + ".")
-        if not os.path.exists(output_father_path):
-            os.makedirs(output_father_path)
+        output_parent_path = os.path.abspath(os.path.dirname(output_abs_path) + os.path.sep + ".")
+        if not os.path.exists(output_parent_path):
+            os.makedirs(output_parent_path)
 
         # Get answer speaker and utterance
         if answer is not None:

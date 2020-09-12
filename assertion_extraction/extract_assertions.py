@@ -197,7 +197,7 @@ def main():
         #for matching with the characters file 
         if 'txt' not in f:
             fic = f.split('.coref.csv')[0]
-        else:
+        else: # only process CSVs
             continue
         
         char_f = chars_dir + '/' + fic + ".chars"
@@ -211,11 +211,14 @@ def main():
         #Get the segments for each paragraph in each chapter of a fic
         f = input_dir + '/' + f
         inp_file = codecs.open(f, "r", errors='ignore')#open(f)
-        csv_reader = csv.reader(inp_file, delimiter=',')
-        next(csv_reader)
+        #csv_reader = csv.reader(inp_file, delimiter=',')
+        #next(csv_reader)
+        csv_reader = csv.DictReader(inp_file, delimiter=',')
         for row in csv_reader:
-            para_id = row[2]
-            para    = row[3]
+            #para_id = row[2]
+            #para    = row[3]
+            para_id = row['paragraph_id']
+            para    = row['text'] # So don't get character tags (but then isn't tokenized)
             segments = get_topic_segments(para_id,para,1)
             para_dict[para_id] = segments
 

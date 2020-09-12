@@ -25,3 +25,4 @@ CoreNLP/.settings/
 CoreNLP/coref.temp
 CoreNLP/*.error
 config/
+log/

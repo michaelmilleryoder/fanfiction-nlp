@@ -29,6 +29,8 @@ class Pipeline():
         self.collection_name = collection_name
         self.input_path = input_path
         self.output_path = output_path
+        if not os.path.exists(self.output_path):
+            os.mkdir(self.output_path)
         self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
         self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
         self.modules = modules
@@ -51,24 +53,34 @@ class Pipeline():
             os.mkdir(self.coref_stories_path)
         if not os.path.exists(self.coref_chars_path):
             os.mkdir(self.coref_chars_path)
+        if not os.path.exists('log'):
+            os.mkdir('log')
 
         try:
-            # Start CoreNLP servers
-            proc = self.start_corenlp_servers(n_servers, n_threads)
+            with open('log/coref_corenlp_servers.log', 'w') as logfile:
+                # Start CoreNLP servers
+                server_proc = self.start_corenlp_servers(n_servers, n_threads, logfile)
 
-            # Start Flask filename queue server, add filenames to it
-            print('Starting filename queue server...')
-            if int(subprocess.check_output(['pgrep', '-f', f'queue_server.py 1234'])) is None:
-                subprocess.call(['python3', 'queue_server.py', '1234'])
-            subprocess.call(['python3', 'run_coref_server.py', '--step', 'server', '--clear', '--input', self.input_path])
+                # Start Flask filename queue server, add filenames to it
+                print('Starting filename queue server...')
+                if subprocess.run(['pgrep', '-f', f'queue_server.py 1234']).returncode != 0:
+                    subprocess.Popen(['python3', 'queue_server.py', '1234'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                subprocess.call(['python3', 'run_coref_server.py', '--step', 'server', '--clear', '--port', '1234', '--input', self.input_path])
 
-            print("Processing files...")
-            # Start client processing
-            subprocess.call(['python3', 'run_coref_server.py', '--step', 'client', '--output', str(self.output_path), '--nums', str(n_servers), '--workers', str(n_threads)])
+                print("Processing files...")
+                # Start client processing
+                #client_proc = subprocess.run(['python3', 'run_coref_server.py', '--step', 'client', '--port', '1234', '--output', str(self.output_path), '--nums', str(n_servers), '--workers', str(n_threads)])
+                client_proc = subprocess.Popen(['python3', 'run_coref_server.py', '--step', 'client', '--output', str(self.output_path), '--nums', str(n_servers), '--workers', str(n_threads)])
 
-            print("Stopping coreference servers...")
-            # Stop CoreNLP servers
-            subprocess.call(['python3', 'run_corenlp_servers.py', '--stop', '8060', str(n_servers)])
+                while True:
+                    for line in server_proc.stderr: # Does this ever end?
+                        logfile.write(line)
+                    if client_proc.poll() is not None:
+                        break
+
+                print("Stopping coreference servers...")
+                # Stop CoreNLP servers
+                subprocess.call(['python3', 'run_corenlp_servers.py', '--stop', '8060', str(n_servers)])
 
         except Exception as e:
             print("Stopping coreference servers...")
@@ -83,15 +95,16 @@ class Pipeline():
         if not os.path.exists(quote_output_path):
             os.mkdir(quote_output_path)
         os.chdir('quote_attribution')
-        cmd = [ 'run.py', 'predict', 
+        cmd = [ 'python3', 'run.py', 'predict', 
                 '--story-path', self.coref_stories_path,
                 '--char-path', self.coref_chars_path,
                 '--output-path', quote_output_path,
-                '--features', 'disttoutter', 'spkappcnt', 'nameinuutr', 'spkcntpar',
+                '--features', 'disttoutter', 'spkappcnt', 'nameinuttr', 'spkcntpar',
                 '--model-path', 'models/austen_5features_c50.model',
                 '--svmrank', svmrank_path
             ]
         subprocess.call(cmd)
+        os.chdir('..')
 
     def assertion_extraction(self):
         assertion_output_path = os.path.join(self.output_path, 'assertion_extraction')
@@ -101,20 +114,20 @@ class Pipeline():
         subprocess.call(['python3', 'assertion_extraction/extract_assertions.py',
             self.coref_stories_path, self.coref_chars_path, assertion_output_path])
 
-    def start_corenlp_servers(self, n_servers, n_threads):
+    def start_corenlp_servers(self, n_servers, n_threads, logfile):
         print("Starting coreference servers...")
 
-        # Start subprocess, wait until the servers are ready
+        # Start subprocess, wait until the servers are ready to return
         proc = subprocess.Popen(f'python3 run_corenlp_servers.py --start 8060 {n_servers}', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         line_count = 0
         while True:
             line = proc.stderr.readline()
+            logfile.write(line)
             if 'StanfordCoreNLPServer listening' in line:
                 sys.stderr.write(f'\t{line}')
                 line_count += 1
             if line_count == n_servers: # TODO: sometimes doesn't happen (not sure why). Should wait and then just move if not, or raise an Exception
                 break
-        print("\tdone.")
 
         return proc
 

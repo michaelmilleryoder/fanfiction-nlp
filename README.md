@@ -37,10 +37,14 @@ Please tokenize text (split into words) before running it through the pipeline a
 	* a directory with files with cluster-level character names for each processed fic, one per line.
 
 * Quote attribution: 
-	* a directory with a JSON file for each processed fic. Each JSON file has cluster-level character names as keys and extracted and attributed quotes as values.
+	* a directory with a JSON file for each processed fic. Each JSON file consists of a list of "quote entries" for a unique speaker in a paragraph. Keys in each quote entry include:
+		* `speaker`
+		* `quotes`
+		* `chapter`
+		* `paragraph`
 
 * Assertion attribution: 
-	* a directory where for each fic, there is a JSON file with cluster-level character names as keys and extracted assertions (narrative or evaluation) about the character as values. You can think of assertions as anything other than quotes that is relevant to seeing how a character is portrayed.
+	* a directory where for each fic, there is a JSON file with cluster-level character names as keys and extracted assertions (narrative or evaluation) about the character as a list of values. Assertions are any text other than quotes that is relevant to seeing how a character is portrayed.
 
 * Character cooccurrence matrix: 
 	* a directory with 2 JSON files for each fic, 1 titled `{fic_name}_adj_cooccurrence.json` and the other `{fic_name}_ship_cooccurrence.json`. In each, keys are coreferenced character cluster names and values are adjectives (for the `adj` file) or other character names (for the `ship`, or "relationship", file). A cooccurrence measure is given for each adjective or character name that is between 0 and 1.

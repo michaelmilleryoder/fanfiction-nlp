@@ -311,11 +311,12 @@ def process_data(pid):
             file_list = q.dequeServer()
         else:
             file_list = q.dequeServer()
+            print("New file list!!!!")
 
         if file_list == -1: # Stops when no more in file list
             print('[{}] All Jobs Over!!!!'.format(pid))
-            #time.sleep(60)
-            break
+            time.sleep(60)
+            continue # though never ends then? Could break
 
         count = 0
         for fname in file_list:
@@ -369,9 +370,6 @@ def process_data(pid):
                     f.write(f'{c}\n')
             print('\tdone.')
 
-#        else: # finished loop through file_list
-#            break
-
 
 def run_linker_client(args):
 
@@ -396,7 +394,6 @@ def run_linker_client(args):
         track = traceback.format_exc()
         print(track)
         #stop_corenlp_servers()
-
 
 
 def run_corenlp_client(text, corenlp_ips):
@@ -425,66 +422,7 @@ def run_corenlp_client(text, corenlp_ips):
 
     ann = client.annotate('This is a test sentence Mr. Weirdo. He went to the store. Then he went all the way to the moon.')
     client.stop()
-    pdb.set_trace()
 
-
-#def run_linker_client():
-#    ip_list = ['http://127.0.0.1:{}'.format(args.start_port + i) for i in range(args.nums)]
-#    #ip_list = ['http://misty.lti.cs.cmu.edu:{}'.format(args.start_port + i) for i in range(args.nums)]
-#
-#    def process_data(pid):
-#        q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
-#
-#        while True:
-#            file_list = q.dequeServer()
-#
-#            if file_list == -1:
-#                print('[{}] All Jobs Over!!!!'.format(pid))
-#                time.sleep(60)
-#                continue
-#
-#            count = 0
-#            for fname in file_list:
-#                name  = fname.split('/')[-1]
-#                fw    = open(f'/data/fanfiction_ao3/allmarvel/complete_en_1k-50k/fics_proc/{name}', 'w')
-#
-#                # Build text to send to CoreNLP
-#                with open(fname) as f:
-#                    f.readline()
-#
-#                    text_aggregate = ''
-#                    for data in csv.reader(f):
-#                        text = data[-1]
-#                        text_aggregate += ' # . '.join(text.split('\n'))
-#                        text_aggregate += " # . "
-#                    
-#                    #res = run_corenlp(text_aggregate, ip_list)
-#                    res = run_corenlp_client(text_aggregate, ip_list)
-#                    pdb.set_trace()
-#                    print("Got result")
-#
-#                # Write CSV output
-#                with open(fname) as f:
-#                    for data in csv.reader(f):
-#                        fic_id, chapter_id, para_id, text, text_tokenized = data
-#                        doc = {
-#                            'fic_id'    : fic_id,
-#                            'chapter_id'    : chapter_id, 
-#                            'para_id'   : para_id, 
-#                            'text'      : text, 
-#                            'text_tokenized': text_tokenized,
-#                            'coref_text'   : process_json(res)
-#                        }
-#
-#                        fw.write(json.dumps(doc) + '\n')
-#                        count += 1
-#                        if count % 10000 == 0:
-#                            print('Completed {} [{}] {}, {}'.format(pid, name, count, time.strftime("%d_%m_%Y") + '_' + time.strftime("%H:%M:%S")))
-#
-#    #res_list  = Parallel(n_jobs = args.workers)(delayed(process_data)(i) for i in range(args.workers))
-#
-#    # for debugging, skip parallelization
-#    process_data(1)
 
 def run_linker_server(args):
     q = QueueClient('http://{}:{}/'.format(args.ip, args.port))
