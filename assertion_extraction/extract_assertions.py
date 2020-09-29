@@ -218,7 +218,7 @@ def main():
             #para_id = row[2]
             #para    = row[3]
             para_id = row['paragraph_id']
-            para    = row['text'] # So don't get character tags (but then isn't tokenized)
+            para    = row['text_tokenized'] # after coref this column has <character tags>
             segments = get_topic_segments(para_id,para,1)
             para_dict[para_id] = segments
 

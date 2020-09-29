@@ -344,6 +344,8 @@ class Chapter(object):
                     for character in token_chars:
                         #character_name = character.lower()
                         character_name = character
+                        if not character_name in self.characters:
+                            continue
                         if not character_name in self.character_appear_token_id:
                             self.character_appear_token_id[character_name] = []
                         self.character_appear_token_id[character_name].append(story_token_id)
