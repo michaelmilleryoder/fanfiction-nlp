@@ -48,7 +48,7 @@ def extract_assertion(para_dict,char_list):
             for character in char_list:
                 if character in segment:
                     #Added fix for quotation removal
-                    segment = re.sub(r'".*?"', '', segment)
+                    segment = re.sub(r'\s".*?"\s', '', segment)
                     char_dict[character].append(segment)
     return char_dict
 
