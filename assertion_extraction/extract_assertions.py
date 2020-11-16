@@ -47,9 +47,18 @@ def extract_assertion(para_dict,char_list):
             #For each character in character list
             for character in char_list:
                 if character in segment:
-                    #Added fix for quotation removal
-                    segment = re.sub(r'\s".*?"\s', '', segment)
-                    char_dict[character].append(segment)
+                    #Added fix for quotation removal (would be ideal to use the same as quote attribution does if possible)
+                    # Replace quote tags so don't interfere
+                    segment = re.sub(r'<character name="(.+?)">', r'<character name=|||\1|||>', segment)
+
+                    #segment = re.sub(r'\s".*?"\s', '', segment)
+                    #segment = re.sub(r'(^|\s)(“|``|"+|«).+?(”|\'\'|"+|»)(\s|$)', ' ', segment)
+                    segment = re.sub(r'(^|\s)(“|``|"+|«).+?(”|\'\'|"+|»)', ' ', segment)
+                    segment = re.sub(r' +', ' ', segment)
+
+                    # Put quote tags back in
+                    segment = segment.replace('|||', '"')
+                    char_dict[character].append(segment.strip())
     return char_dict
 
 
@@ -180,6 +189,16 @@ def get_topic_segments(para_id,para,k=1):
             segments[j] += ' '+decode_sentence(i2w,formatted_sents[i])
 
     #print ("SEGMENTS",segments,"SEGMENTS")
+
+    # Check for quotations splitting segments incorrectly
+    #for segment_id, segment in segments.items():
+    for segment_id in list(segments):
+        segment = segments[segment_id]
+        if segment.endswith('"') and segment.count('"') % 2 == 1:
+            # Move ending quotation mark to next segment
+            segments[segment_id+1] = segment[-1] + segments[segment_id+1]
+            segments[segment_id] = segments[segment_id][:-1].strip()
+
     return segments
 
 
@@ -189,7 +208,7 @@ def main():
     chars_dir = str(sys.argv[2])
     op_dir    = str(sys.argv[3])
 
-    files =      [f for f in listdir(input_dir) if isfile(join(input_dir, f))]
+    files =      [f for f in listdir(input_dir) if isfile(join(input_dir, f)) and not f.startswith('.')]
 
     for f in tqdm(files, ncols=50):
 
@@ -218,6 +237,7 @@ def main():
             #para_id = row[2]
             #para    = row[3]
             para_id = row['paragraph_id']
+            #para_id = row['para_id']
             para    = row['text_tokenized'] # after coref this column has <character tags>
             segments = get_topic_segments(para_id,para,1)
             para_dict[para_id] = segments

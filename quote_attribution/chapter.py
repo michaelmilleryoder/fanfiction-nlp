@@ -319,6 +319,7 @@ class Chapter(object):
 
                 chapter_id = int(line['chapter_id'])
                 paragraph_id = int(line['paragraph_id'])
+                #paragraph_id = int(line['para_id'])
                 text = line['text_tokenized']
 
                 self.paragraph_start_token_id.append(story_token_id)
