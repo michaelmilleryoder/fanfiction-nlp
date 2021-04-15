@@ -38,6 +38,7 @@ class Pipeline():
         self.quote_attribution_settings = quote_attribution_settings
         self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
         self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
+        self.coref_output_path = os.path.join(self.output_path, 'char_coref')
 
     def run(self):
         if 'coref' in self.modules:
@@ -48,7 +49,21 @@ class Pipeline():
         if 'assertion_extraction' in self.modules:
             self.assertion_extraction()
 
-    def coref(self, n_servers, n_threads):
+    def coref(self, coref_alg, n_servers, n_threads):
+        """ Run character coreference """
+        if coref_alg == 'spanbert':
+            self.coref_spanbert(n_threads)
+        elif coref_alg == 'corenlp':
+            self.coref_corenlp(n_servers, n_threads)
+
+    def coref_spanbert(self, n_threads):
+        """ Run coref using SpanBERT """
+        subprocess.run(['python3', 'spanbert_coref/main.py', self.input_path,
+            self.coref_output_path, '--threads', str(n_threads)], 
+            check=True)
+
+    def coref_corenlp(self, n_servers, n_threads):
+        """ Run coref using modified CoreNLP """
         if not os.path.exists(self.coref_stories_path):
             os.mkdir(self.coref_stories_path)
         if not os.path.exists(self.coref_chars_path):
@@ -91,6 +106,7 @@ class Pipeline():
             print(track)
 
     def quote_attribution(self, svmrank_path):
+        """ Run quote attribution """
         quote_output_path = os.path.join(self.output_path, 'quote_attribution')
         if not os.path.exists(quote_output_path):
             os.mkdir(quote_output_path)
@@ -154,6 +170,8 @@ def main():
     coreference_settings = []
     if run_coref:
         modules.append('coref')
+        coref_alg = config.get('Character coreference', 'coref_type')
+        coreference_settings.append(coref_alg)
         n_servers = config.getint('Character coreference', 'n_servers')
         coreference_settings.append(n_servers)
         n_threads = config.getint('Character coreference', 'n_threads')

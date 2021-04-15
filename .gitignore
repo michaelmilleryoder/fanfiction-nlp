@@ -1,3 +1,4 @@
+conda_env/
 *.jar
 temp.out
 .nfs*
