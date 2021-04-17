@@ -16,10 +16,15 @@
 
 from configparser import ConfigParser
 import argparse
-import os, sys
+import os
+import sys
 import subprocess
 import pdb
 import traceback
+
+from quote_attribution_muzny.input_format import AnnotatorInput
+from quote_attribution_muzny.quote_annotator import QuoteAnnotator
+from quote_attribution_muzny.output import AnnotatorOutput
 
 
 class Pipeline():
@@ -45,7 +50,8 @@ class Pipeline():
             print("Running character coreference...")
             self.coref(*self.coreference_settings)
         if 'quote_attribution' in self.modules:
-            self.quote_attribution(*self.quote_attribution_settings)
+            svmrank_path = self.quote_attribution_settings           
+            self.quote_attribution()
         if 'assertion_extraction' in self.modules:
             self.assertion_extraction()
 
@@ -78,7 +84,7 @@ class Pipeline():
 
                 # Start Flask filename queue server, add filenames to it
                 print('Starting filename queue server...')
-                if subprocess.run(['pgrep', '-f', f'queue_server.py 1234']).returncode != 0:
+                if subprocess.run(['pgrep', '-f', 'queue_server.py 1234']).returncode != 0:
                     subprocess.Popen(['python3', 'queue_server.py', '1234'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 subprocess.call(['python3', 'run_coref_server.py', '--step', 'server', '--clear', '--port', '1234', '--input', self.input_path])
 
@@ -105,8 +111,21 @@ class Pipeline():
             track = traceback.format_exc()
             print(track)
 
-    def quote_attribution(self, svmrank_path):
-        """ Run quote attribution """
+    def quote_attribution(self): 
+        """ Run quote attribution with Muzny method """
+        os.chdir('quote_attribution_muzny') # seems unstable to do this
+        quote_output_path = os.path.join(self.output_path, 'quote_attribution')
+        if not os.path.exists(quote_output_path):
+            os.mkdir(quote_output_path)
+        inp = AnnotatorInput(self.input_path, self.coref_output_path)
+        inp.load_input()
+        annotator = QuoteAnnotator(inp, quote_output_path)
+        out = annotator.annotate()
+        out.transform() # transform to pipeline output format
+        os.chdir('..')
+
+    def quote_attribution_he(self, svmrank_path):
+        """ Run quote attribution with old method (not used anymore) """
         quote_output_path = os.path.join(self.output_path, 'quote_attribution')
         if not os.path.exists(quote_output_path):
             os.mkdir(quote_output_path)

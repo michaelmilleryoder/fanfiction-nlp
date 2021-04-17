@@ -33,15 +33,25 @@ Please tokenize text (split into words) before running it through the pipeline a
 
 ## Output 
 * Character coreference: 
-	* a directory where fics (fanfiction stories) are stored with character mentions surrounded by cluster-level coreference names in XML tags, like this: "\<character name="hermione"\>she\</character\> and \<character name="harry"\>harry\</character\> walked through the woods".
-	* a directory with files with cluster-level character names for each processed fic, one per line.
+	* a directory with a JSON file for each processed fic. The JSON file has the following keys:
+		* `doc_tokens`: a list of tokens
+		* `clusters`: a list of character clusters, each with the fields:
+			* `name`
+			* `tokens`: 
+			* `mentions`: a list of mentions, each a dictionary with keys:
+				* `start_token_id`: the position of the start token of the mention in the `doc_tokens` list (inclusive)
+				* `end_token_id`: the position 1 after the last token in the mention in the `doc_tokens` list
+	<!-- * a directory where fics (fanfiction stories) are stored with character mentions surrounded by cluster-level coreference names in XML tags, like this: "\<character name="hermione"\>she\</character\> and \<character name="harry"\>harry\</character\> walked through the woods".-->
+	<!--* a directory with files with cluster-level character names for each processed fic, one per line.-->
 
 * Quote attribution: 
 	* a directory with a JSON file for each processed fic. Each JSON file consists of a list of "quote entries" for a unique speaker in a paragraph. Keys in each quote entry include:
 		* `speaker`
-		* `quotes`
-		* `chapter`
-		* `paragraph`
+		* `quotes`: a list of quotes, each a dictionary with keys:
+			* `start_token_id`: the position of the start token of the quote in the `tokens` list (inclusive)
+			* `end_token_id`: the position 1 after the last token in the quote in the `tokens` list
+		<!--* `chapter`-->
+		<!--* `paragraph`-->
 
 * Assertion attribution: 
 	* a directory where for each fic, there is a JSON file with cluster-level character names as keys and extracted assertions (narrative or evaluation) about the character as a list of values. Assertions are any text other than quotes that is relevant to seeing how a character is portrayed.

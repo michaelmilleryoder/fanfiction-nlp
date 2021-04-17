@@ -1,0 +1,29 @@
+quote_start	quote_end	mention_start	mention_end	mention_phrase	char_id
+307	310	324	326	a distressed Tevinter	5
+364	372	373	373	Dorian	2
+387	390	391	391	Sera	3
+399	405	391	391	Sera	3
+406	415	442	443	the Tevinter	5
+427	434	442	443	the Tevinter	5
+447	451	442	443	the Tevinter	5
+491	497	590	593	the Well of Sorrows	1
+527	535	590	593	the Well of Sorrows	1
+662	665	666	666	she	3
+690	697	698	698	He	2
+727	734	735	735	He	2
+753	759	728	728	Dorian	2
+760	768	769	769	Sera	3
+778	788	789	789	Dorian	2
+792	800	789	789	Dorian	2
+801	810	811	812	the surgeon	4
+823	836	842	843	the surgeon	4
+853	873	893	895	the entire Inquisition	8
+1002	1011	None	None	None	3
+1012	1017	1018	1018	he	2
+1048	1060	1061	1061	Leliana	3
+1080	1085	1075	1075	he	2
+1111	1114	1108	1109	the mage	2
+1115	1121	None	None	None	2
+1140	1149	1122	1122	Leliana	3
+1164	1178	1150	1150	Dorian	2
+1186	1192	1183	1184	the spymaster	0

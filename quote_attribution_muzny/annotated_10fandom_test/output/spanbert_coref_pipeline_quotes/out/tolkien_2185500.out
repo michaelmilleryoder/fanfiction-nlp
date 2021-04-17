@@ -1,0 +1,35 @@
+quote_start	quote_end	mention_start	mention_end	mention_phrase	char_id
+238	241	None	None	None	11
+374	377	399	401	The female Gandalf	10
+394	398	399	401	The female Gandalf	10
+414	463	464	464	she	10
+467	471	490	491	Female Bilbo	10
+519	529	530	530	she	10
+533	542	543	544	male Gandalf	5
+575	584	585	585	she	10
+588	592	None	None	None	5
+708	715	734	735	the Gandalfs	5
+805	811	812	813	Male Kíli	1
+929	948	949	950	female Kíli	3
+981	1002	1003	1004	female Bilbo	10
+1009	1018	1019	1020	Male Kíli	1
+1057	1064	1065	1066	female Fíli	3
+1111	1118	1119	1120	female Thorin	10
+1141	1155	1119	1120	female Thorin	10
+1156	1175	1187	1200	male Thorin , who had n’t spoken much in the last hour or so	11
+1217	1230	1231	1231	he	1
+1244	1260	1264	1265	Male Thorin	1
+1272	1297	None	None	None	1
+1298	1307	1275	1275	Thorin	1
+1308	1315	None	None	None	1
+1323	1349	1316	1317	Female Thorin	10
+1350	1353	None	None	None	1
+1379	1382	1383	1384	female Bilbo	10
+1387	1395	1396	1397	male Bilbo	1
+1400	1403	None	None	None	10
+1404	1407	None	None	None	1
+1408	1410	None	None	None	10
+1411	1414	None	None	None	1
+1459	1474	1475	1475	He	1
+1480	1501	1475	1475	He	1
+1542	1558	None	None	None	1

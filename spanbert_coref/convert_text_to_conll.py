@@ -24,8 +24,8 @@ def get_text(fic_csv_filepath):
     except EmptyDataError:
         tqdm.write("Empty file")
         return None
-    #para_tokens = fic_data['text_tokenized'].str.split().to_dict()
-    para_tokens = fic_data['text'].str.split().to_dict()
+    para_tokens = fic_data['text_tokenized'].str.split().to_dict()
+    #para_tokens = fic_data['text'].str.split().to_dict()
     return para_tokens
 
 
@@ -52,6 +52,8 @@ def convert(fic_csv_filepath, output_dirpath):
     conll_output.append(['#begin document (' + str(fandom_fname) + '); part 0'])
     for (c, p), tokens in para_tokens.items():
             count = 0
+            if isinstance(tokens, float) or len(tokens) == 0:
+                continue
             para = " ".join(tokens)
             sents = nltk.sent_tokenize(para)
             for sent in sents:
