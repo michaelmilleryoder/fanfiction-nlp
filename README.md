@@ -37,10 +37,9 @@ Please tokenize text (split into words) before running it through the pipeline a
 		* `doc_tokens`: a list of tokens
 		* `clusters`: a list of character clusters, each with the fields:
 			* `name`
-			* `tokens`: 
 			* `mentions`: a list of mentions, each a dictionary with keys:
-				* `start_token_id`: the position of the start token of the mention in the `doc_tokens` list (inclusive)
-				* `end_token_id`: the position 1 after the last token in the mention in the `doc_tokens` list
+				* `position`: [start_token_id, end_token_id+1]. The position of the start token of the mention in the `doc_tokens` list (inclusive), and the position 1 after the last token in the mention in the `doc_tokens` list.
+				* `text`: The text of the mention
 	<!-- * a directory where fics (fanfiction stories) are stored with character mentions surrounded by cluster-level coreference names in XML tags, like this: "\<character name="hermione"\>she\</character\> and \<character name="harry"\>harry\</character\> walked through the woods".-->
 	<!--* a directory with files with cluster-level character names for each processed fic, one per line.-->
 

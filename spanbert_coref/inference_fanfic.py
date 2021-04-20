@@ -74,10 +74,10 @@ def main():
                 phrase = ' '.join(d['tokens'][tok_beg:tok_end])
                 cluster['mentions'].append({
                     'position': (tok_beg, tok_end),
-                    'phrase': phrase})
+                    'text': phrase})
                 names.append(phrase)
             # Assign cluster canonical character name
-            cluster['name'] = canonical_character_name(Counter(names))
+            #cluster['name'] = canonical_character_name(Counter(names))
             clusters.append(cluster)
         
         #print(d['predicted_clusters'][0][-1])

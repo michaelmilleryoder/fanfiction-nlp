@@ -61,11 +61,12 @@ class SpanbertProcessor:
             itertools.repeat(self.coref_output_path),
             )
         
-        with Pool(self.threads) as p:
-            list(tqdm(p.imap(process_fic, params), total=len(fpaths), ncols=70))
-
-        # for debugging
-        #list(tqdm(map(process_fic, params), total=len(fpaths), ncols=70))
+        if self.threads > 1:
+            with Pool(self.threads) as p:
+                list(tqdm(p.imap(process_fic, params), total=len(fpaths), ncols=70))
+        else:
+            # for debugging
+            list(tqdm(map(process_fic, params), total=len(fpaths), ncols=70))
 
 def process_fic(params):
     """ Run coref on an individual fic """
@@ -88,9 +89,23 @@ def process_fic(params):
         f'--jsonlines_path={json_dirpath}/{fname}.english.384.jsonlines',
         f'--output_path={pred_dirpath}/{fname}.pred.english.384.jsonlines'],
         check=True)
+    #subprocess.run(['python3', 'inference_fanfic.py', 
+    #    f'{pred_dirpath}/{fname}.pred.english.384.jsonlines',
+    #    out_dirpath], check=True)
     subprocess.run(['python3', 'inference_fanfic.py', 
         f'{pred_dirpath}/{fname}.pred.english.384.jsonlines',
-        out_dirpath], check=True)
+        pred_dirpath], check=True)
+    subprocess.run(['python3', 'post_process_wordnet.py', os.path.join(pred_dirpath,
+        f'{fname}.json'), out_dirpath], check=True)
+
+    # Remove tmp files
+    tmp_paths = []
+    tmp_paths.append(os.path.join(conll_dirpath, f'{fname}.conll'))
+    tmp_paths.append(os.path.join(json_dirpath, f'{fname}.english.384.jsonlines'))
+    tmp_paths.append(os.path.join(pred_dirpath}, f'{fname}.pred.english.384.jsonlines'))
+    tmp_paths.append(os.path.join(pred_dirpath}, f'{fname}.json'))
+    for path in tmp_paths:
+        os.remove(path)
 
 
 def get_args():
