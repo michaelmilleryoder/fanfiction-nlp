@@ -1,6 +1,7 @@
 import sys, re, argparse
 import pdb
 from collections import Counter
+from tqdm import tqdm
 
 def read_ents(path):
     entities={}
@@ -29,6 +30,9 @@ def read_tokens(path):
         for line in file:
             #cols=line.rstrip().split("\t")
             cols=line.replace('\n', '').split("\t")
+            if len(cols) < 14:
+                #tqdm.write('messed up line')
+                continue
             tokens.append(cols)
             tid=int(cols[2])
             head=int(cols[6])
@@ -297,9 +301,11 @@ def trigram_matching_after(tokens, tokenStart, maxLength, lastChar, entities):
                 return cands[0]
 
     # QUOTE VERB MENTION
-
     for vidx in range(3):
-    
+        if len(tokens) <= tokenStart + vidx:
+            continue
+        if len(tokens[tokenStart+vidx]) < 11:
+            pdb.set_trace()
         pos=tokens[tokenStart+vidx][10]
         lemma=tokens[tokenStart+vidx][9]
         ss=tokens[tokenStart+vidx][15]

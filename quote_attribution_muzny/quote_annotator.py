@@ -29,9 +29,9 @@ class QuoteAnnotator:
             #'/projects/quote_annotator_muzny/annotated_10fandom_test/output/spanbert_coref_pipeline_quotes'
         self.out_dirpath = out_dirpath
         self.tmp_dirpath = 'tmp'
-        self.tmp_out_dirpath = 'tmp/out' # confusing
-        if not os.path.exists(self.tmp_out_dirpath):
-            os.mkdir(self.tmp_out_dirpath)
+        #self.tmp_out_dirpath = 'tmp/out' # confusing
+        #if not os.path.exists(self.tmp_out_dirpath):
+        #    os.mkdir(self.tmp_out_dirpath)
     
     def annotate(self):
         """ Run annotation """
@@ -51,7 +51,7 @@ class QuoteAnnotator:
         tok_fpath = os.path.join(self.inp.out_dirpath, f'{fandom_fname}.tokens')
         ents_fpath = os.path.join(self.inp.out_dirpath, f'{fandom_fname}.ents')
         outpath = os.path.join(self.tmp_dirpath, 'out', f'{fandom_fname}.out')
-        cmd = ['python', 'quotation_attribution.py', tok_fpath, ents_fpath, outpath]
+        cmd = ['python', 'muzny_alg.py', tok_fpath, ents_fpath, outpath]
         try:
             subprocess.run(cmd, check=True)
         except Exception as e:

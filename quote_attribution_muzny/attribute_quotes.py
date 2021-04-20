@@ -5,6 +5,8 @@
 
 import os
 import itertools
+from multiprocessing import Pool
+import pdb
 
 from tqdm import tqdm
 
@@ -13,7 +15,7 @@ from quote_attribution_muzny.quote_annotator import QuoteAnnotator
 from quote_attribution_muzny.output import AnnotatorOutput
 
 
-def attribute_quotes(fic_dirpath, coref_dirpath, quote_dirpath):
+def attribute_quotes(fic_dirpath, coref_dirpath, quote_dirpath, threads):
     """ Attribute quotes """
     if not os.path.exists(quote_dirpath):
         os.mkdir(quote_dirpath)
@@ -24,20 +26,20 @@ def attribute_quotes(fic_dirpath, coref_dirpath, quote_dirpath):
             quote_dirpath, f'{name}.quote.json')):
             #fpaths.append(os.path.join(fic_dirpath, fname))
             fnames.append(name)
-    params = zip(
+    params = sorted(zip(
         fnames,
         itertools.repeat(fic_dirpath),
         itertools.repeat(coref_dirpath),
         itertools.repeat(quote_dirpath),
-        )
+        ))
     
-    #if self.threads > 1:
-    #    with Pool(self.threads) as p:
-    #        list(tqdm(p.imap(process_fic, params), total=len(fpaths), ncols=70))
-    #else:
-    #    # for debugging
-
-    list(tqdm(map(attribute_quotes_file, params), total=len(fnames), ncols=70))
+    if threads > 1:
+        with Pool(threads) as p:
+            list(tqdm(p.imap(attribute_quotes_file, params), total=len(fnames), 
+                ncols=70))
+    else:
+        # for debugging
+        list(tqdm(map(attribute_quotes_file, params), total=len(fnames), ncols=70))
 
 def attribute_quotes_file(params):
     fname, fic_dirpath, coref_dirpath, quote_dirpath = params

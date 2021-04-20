@@ -48,8 +48,8 @@ class Pipeline():
             print("Running character coreference...")
             self.coref(*self.coreference_settings)
         if 'quote_attribution' in self.modules:
-            svmrank_path = self.quote_attribution_settings           
-            self.quote_attribution()
+            n_quote_threads = self.quote_attribution_settings[0]
+            self.quote_attribution(n_quote_threads)
         if 'assertion_extraction' in self.modules:
             self.assertion_extraction()
 
@@ -109,11 +109,12 @@ class Pipeline():
             track = traceback.format_exc()
             print(track)
 
-    def quote_attribution(self): 
+    def quote_attribution(self, n_threads): 
         """ Run quote attribution with Muzny method """
         os.chdir('quote_attribution_muzny') # seems unstable to do this
         quote_output_path = os.path.join(self.output_path, 'quote_attribution')
-        attribute_quotes(self.input_path, self.coref_output_path, quote_output_path)
+        attribute_quotes(self.input_path, self.coref_output_path, 
+            quote_output_path, n_threads)
         os.chdir('..')
 
     def quote_attribution_he(self, svmrank_path):
@@ -192,8 +193,8 @@ def main():
     quote_attribution_settings = []
     if run_quote_attribution:
         modules.append('quote_attribution')
-        svmrank_path = config.get('Quote attribution', 'svmrank_path')
-        quote_attribution_settings.append(svmrank_path)
+        n_threads = config.getint('Quote attribution', 'n_threads')
+        quote_attribution_settings.append(n_threads)
 
     # Assertion extraction settings
     if run_assertion_extraction:

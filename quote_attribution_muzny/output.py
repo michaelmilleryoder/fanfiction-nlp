@@ -52,8 +52,11 @@ class AnnotatorOutput():
         """ Transform output to pipeline annotation format """
         #for fandom_fname in sorted({fname.split('.')[0] for fname in os.listdir(
         #    os.path.join(self.tmp_dirpath, 'out'))}):
-        data = pd.read_csv(os.path.join(self.tmp_dirpath, 'out', 
-            f'{self.fandom_fname}.out'), sep='\t')
+        output_path = os.path.join(self.tmp_dirpath, 'out', 
+            f'{self.fandom_fname}.out')
+        if not os.path.exists(output_path):
+            pdb.set_trace()
+        data = pd.read_csv(output_path, sep='\t')
         #global2local = self.get_global2local(fandom_fname)
         self.process(data, self.charmap[self.fandom_fname], self.fandom_fname)
     
@@ -66,7 +69,10 @@ class AnnotatorOutput():
             entry = {}
             quote_text = ' '.join(self.coref['doc_tokens'][
                 quote.quote_start:quote.quote_end])
-            speaker = charid2name[quote.char_id]
+            if quote.char_id == 'None':
+                print('skipped quote')
+                continue
+            speaker = charid2name[int(quote.char_id)]
             if speaker not in quotes:
                 quotes[speaker] = []
             #mention_start = global2local[int(quote.mention_start)] \
