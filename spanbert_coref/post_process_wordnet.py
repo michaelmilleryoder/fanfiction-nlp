@@ -227,7 +227,6 @@ def post_process(data):
         for j, men in enumerate(clus['mentions']):
             if not men['text'] in PRPs:
                 cluster['mentions'].append(men)
-                #data['clusters'][i]['mentions'].remove(men)
         if len(cluster['mentions']) > 0:
             out['clusters'].append(cluster)
 
@@ -252,18 +251,29 @@ def post_process(data):
     #for c in remove_clusts:
     #    data['clusters'].remove(c)
     
+    clusters = []
     for clus in out['clusters']:
         mentions = [m['text'] for m in clus['mentions']]
         name = canonical_character_name(Counter(mentions))
         if (name.lower() == name) and (name.lower() not in remove_PRPs):
             if (p.singular_noun(name) is not False and name != p.singular_noun(name)):
-                out['clusters'].remove(clus)
                 continue
             elif (not is_head_a_person_wordnet(name)):
-                out['clusters'].remove(clus)
                 continue
         clus['name'] = name
-        
+        clusters.append(clus)
+    out['clusters'] = clusters
+
+    #for clus in out['clusters']:
+    #    mentions = [m['text'] for m in clus['mentions']]
+    #    clus['name'] = canonical_character_name(Counter(mentions))
+    #    if (name.lower() == name) and (name.lower() not in remove_PRPs):
+    #        if (p.singular_noun(name) is not False and name != p.singular_noun(name)):
+    #            out['clusters'].remove(clus)
+    #            continue
+    #        elif (not is_head_a_person_wordnet(name)):
+    #            out['clusters'].remove(clus)
+    #            continue
 
     #cluster_reps = preproc_cluster_rep(data)[0]
     #for c, rep in enumerate(cluster_reps):

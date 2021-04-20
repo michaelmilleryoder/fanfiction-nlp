@@ -22,9 +22,7 @@ import subprocess
 import pdb
 import traceback
 
-from quote_attribution_muzny.input_format import AnnotatorInput
-from quote_attribution_muzny.quote_annotator import QuoteAnnotator
-from quote_attribution_muzny.output import AnnotatorOutput
+from quote_attribution_muzny.attribute_quotes import attribute_quotes
 
 
 class Pipeline():
@@ -115,13 +113,7 @@ class Pipeline():
         """ Run quote attribution with Muzny method """
         os.chdir('quote_attribution_muzny') # seems unstable to do this
         quote_output_path = os.path.join(self.output_path, 'quote_attribution')
-        if not os.path.exists(quote_output_path):
-            os.mkdir(quote_output_path)
-        inp = AnnotatorInput(self.input_path, self.coref_output_path)
-        inp.load_input()
-        annotator = QuoteAnnotator(inp, quote_output_path)
-        out = annotator.annotate()
-        out.transform() # transform to pipeline output format
+        attribute_quotes(self.input_path, self.coref_output_path, quote_output_path)
         os.chdir('..')
 
     def quote_attribution_he(self, svmrank_path):

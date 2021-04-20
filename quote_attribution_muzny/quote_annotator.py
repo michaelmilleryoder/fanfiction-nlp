@@ -36,14 +36,14 @@ class QuoteAnnotator:
     def annotate(self):
         """ Run annotation """
         # Get fandom_fnames
-        fandom_fnames = sorted({fname.split('.')[0] for fname in os.listdir(
-            self.inp.out_dirpath)})
-        for fandom_fname in fandom_fnames:
-            if len(fandom_fname) != '':
-                self.run_cmd(fandom_fname)
+        #fandom_fnames = sorted({fname.split('.')[0] for fname in os.listdir(
+        #    self.inp.out_dirpath)})
+        #for fandom_fname in fandom_fnames:
+        #    if len(fandom_fname) != '':
+        self.run_cmd(self.inp.fandom_fname)
 
-        out = AnnotatorOutput(self.out_dirpath, self.inp.coref_dirpath, 
-            self.inp.toks, self.inp.cluster_ids)
+        out = AnnotatorOutput(self.inp.fandom_fname, self.out_dirpath, 
+            self.inp.coref_dirpath, self.inp.toks, self.inp.cluster_ids)
         return out
 
     def run_cmd(self, fandom_fname):

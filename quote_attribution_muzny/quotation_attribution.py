@@ -544,7 +544,7 @@ def attribute_quotes(filename, tokens, children, entities):
     ratio=0
     if total > 0:
         ratio=noneCount/total
-    sys.stderr.write ("%s, None: %.3f (%s/%s)\n" % (filename, ratio, noneCount, total))
+    #sys.stderr.write ("%s, None: %.3f (%s/%s)\n" % (filename, ratio, noneCount, total))
 
     return attributed
 

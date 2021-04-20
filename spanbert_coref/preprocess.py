@@ -6,6 +6,7 @@ import collections
 import json
 import conll
 import util
+import pdb
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
@@ -203,7 +204,8 @@ def get_document(doc_key, doc_lines, language, seg_len, tokenizer):
     for line in doc_lines:
         row = line.split()  # Columns for each token
         if len(row) == 0:
-            document_state.sentence_end[-1] = True
+            if len(document_state.sentence_end) > 0:
+                document_state.sentence_end[-1] = True
         else:
             assert len(row) >= 12
             word_idx += 1

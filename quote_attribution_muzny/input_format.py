@@ -41,17 +41,8 @@ class AnnotatorInput:
         there aren't many tools out there for this)
     """
 
-    def __init__(self, inp_dirpath, coref_dirpath):
-        #self.dirpath = '/projects/quote_annotator_muzny'
-        #self.inp_dirpath = '/data/fanfiction_ao3/annotated_10fandom/test/fics'
-        #self.coref_dirpath = \
-            #'/data/fanfiction_ao3/annotated_10fandom/test/entity_clusters/' # gold
-        #self.coref_dirpath =  \
-        #    '/data/fanfiction_ao3/annotated_10fandom/test/output/char_coref' # spanbert
-            #'/data/fanfiction_ao3/annotated_10fandom/test/output/char_coref_stories_spanbert_coref' # spanbert
-        #self.out_dirpath = \
-        #    '/projects/quote_annotator_muzny/annotated_10fandom_test/input/'
-    
+    def __init__(self, fandom_fname, inp_dirpath, coref_dirpath):
+        self.fandom_fname = fandom_fname
         self.inp_dirpath = inp_dirpath
         self.coref_dirpath = coref_dirpath
         self.coref_type = 'spanbert' # {gold, spanbert}
@@ -83,20 +74,21 @@ class AnnotatorInput:
                 self.coref = json.load(f)
 
     def load_input(self):
-        for fname in sorted(os.listdir(self.inp_dirpath)):
+        #for fname in sorted(os.listdir(self.inp_dirpath)):
         #for fname in sorted(os.listdir(self.coref_dirpath)):
             #print(f'Processing {fname}...')
-            fandom_fname = fname.split('.')[0]
-            fic_data = pd.read_csv(os.path.join(self.inp_dirpath, fname))
-            self.process_input(fandom_fname, fic_data)
+            #fandom_fname = fname.split('.')[0]
+        fic_data = pd.read_csv(os.path.join(
+            self.inp_dirpath, self.fandom_fname + '.csv'))
+        self.process_input(fic_data)
 
-    def process_input(self, fandom_fname, fic_data):
+    def process_input(self, fic_data):
         """ Process one input fic, saves token and coref files """
-        self.load_coref_input(fandom_fname)
-        self.toks[fandom_fname], tok_data = self.preprocess_tokens(fic_data)
+        self.load_coref_input(self.fandom_fname)
+        self.toks[self.fandom_fname], tok_data = self.preprocess_tokens(fic_data)
         #global_token_id = self.get_global_token_id(self.toks[fandom_fname])
-        coref_ents = self.build_coref(fandom_fname)
-        self.build_tokens(fandom_fname, tok_data, fic_data, coref_ents)
+        coref_ents = self.build_coref()
+        self.build_tokens(tok_data, fic_data, coref_ents)
 
     def preprocess_tokens(self, fic_data):
         """ Split, lemmatize, postag, parse tokens. """
@@ -286,15 +278,15 @@ class AnnotatorInput:
         tok_data['paragraphId'] = fic_data.text_tokenized.str.split().explode().index
         return tok_data
 
-    def build_tokens(self, fandom_fname, tok_data, fic_data, coref_ents):
+    def build_tokens(self, tok_data, fic_data, coref_ents):
         """ Build token file """
         tok_data = self.add_coref_info(coref_ents, tok_data)
-        tok_data = self.add_quote_info(fandom_fname, tok_data)
+        tok_data = self.add_quote_info(self.fandom_fname, tok_data)
         #tok_data = self.add_para_ids(tok_data, fic_data)
         tok_data = self.add_empty_cols(tok_data)
 
         # Save tokens file
-        tok_data.to_csv(os.path.join(self.out_dirpath, f'{fandom_fname}.tokens'), 
+        tok_data.to_csv(os.path.join(self.out_dirpath, f'{self.fandom_fname}.tokens'),
             sep='\t', index=False)
 
     def get_global_token_id(self, toks):
@@ -303,7 +295,7 @@ class AnnotatorInput:
             'token_id'])['fic_token_id'].to_dict()
         return global_token_id
 
-    def build_coref(self, fandom_fname, fic_data=None):
+    def build_coref(self, fic_data=None):
         """ Build coref input """
 
         # Load annotated fanfiction coref output
@@ -312,7 +304,7 @@ class AnnotatorInput:
 
         if self.coref_type == 'gold':
             coref_anns = pd.read_csv(os.path.join(self.coref_dirpath, 
-                f'{fandom_fname}_entity_clusters.csv'))
+                f'{self.fandom_fname}_entity_clusters.csv'))
             for colname in coref_anns.columns: # each column is a character
                 annotations_set.add(colname)
                 for mention in coref_anns[colname].dropna():
@@ -342,26 +334,34 @@ class AnnotatorInput:
                      (mention.chap_id, mention.para_id)][
                      mention.start_token_id-1:mention.end_token_id])
             # Get coreference cluster IDs from annotation columns
-            self.cluster_ids[fandom_fname] = {coref_anns.columns[i]: i for i in range(
+            self.cluster_ids[self.fandom_fname] = {coref_anns.columns[i]: i for i in range(
                 len(coref_anns.columns))}
 
         elif self.coref_type == 'spanbert':
             char_names = [cluster['name'] for cluster in self.coref['clusters']]
             annotations_set = set(char_names)
-            self.cluster_ids[fandom_fname] = {name: i for i, name in enumerate(
+            self.cluster_ids[self.fandom_fname] = {name: i for i, name in enumerate(
                 char_names)}
             for cluster in self.coref['clusters']:
                 for mention in cluster['mentions']:
-                    annotations.append(AnnotatedSpan(
-                        start_token_id=mention['position'][0],
-                        end_token_id=mention['position'][1],
-                        annotation=cluster['name'],
-                        text = mention['phrase']
-                    ))
+                    if 'text' in mention:
+                        annotations.append(AnnotatedSpan(
+                            start_token_id=mention['position'][0],
+                            end_token_id=mention['position'][1],
+                            annotation=cluster['name'],
+                            text=mention['text']
+                        ))
+                    elif 'phrase' in mention:
+                        annotations.append(AnnotatedSpan(
+                            start_token_id=mention['position'][0],
+                            end_token_id=mention['position'][1],
+                            annotation=cluster['name'],
+                            text = mention['phrase']
+                        ))
                 annotations_set.add(cluster['name'])
 
             #coref_fic = pd.read_csv(os.path.join(self.coref_dirpath, 
-            #    f'{fandom_fname}.coref.csv'))
+            #    f'{self.fandom_fname}.coref.csv'))
             #with open(os.path.join(self.coref_dirpath.replace('stories', 'chars'),
             #    f'{fandom_fname}.chars')) as f:
             #    char_names = f.read().splitlines()
@@ -383,13 +383,13 @@ class AnnotatorInput:
             columns=['coreference_name', 'tokens', 
                 'span_start', 'span_end'])
         coref_data['coreference_id'] = coref_data.coreference_name.map(
-            self.cluster_ids[fandom_fname].get)
+            self.cluster_ids[self.fandom_fname].get)
         output_cols = ['coreference_id', 'tokens', 'span_start', 'span_end']
         coref_ents_data = coref_data[output_cols]
 
         # Save coref ents file
         coref_ents_data.to_csv(os.path.join(self.out_dirpath, 
-            f'{fandom_fname}.ents'), sep='\t', header=False, index=False)
+            f'{self.fandom_fname}.ents'), sep='\t', header=False, index=False)
 
         return coref_ents_data
 

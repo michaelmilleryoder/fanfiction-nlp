@@ -102,8 +102,8 @@ def process_fic(params):
     tmp_paths = []
     tmp_paths.append(os.path.join(conll_dirpath, f'{fname}.conll'))
     tmp_paths.append(os.path.join(json_dirpath, f'{fname}.english.384.jsonlines'))
-    tmp_paths.append(os.path.join(pred_dirpath}, f'{fname}.pred.english.384.jsonlines'))
-    tmp_paths.append(os.path.join(pred_dirpath}, f'{fname}.json'))
+    tmp_paths.append(os.path.join(pred_dirpath, f'{fname}.pred.english.384.jsonlines'))
+    tmp_paths.append(os.path.join(pred_dirpath, f'{fname}.json'))
     for path in tmp_paths:
         os.remove(path)
 
