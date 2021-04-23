@@ -183,10 +183,13 @@ def split_into_segments(document_state: DocumentState, max_seg_len, constraints1
             if end_idx < curr_idx:
                 logger.error('Cannot split valid segment: no sentence end or token end')
 
+        # TODO: handle issue where end_idx < curr_idx
         segment = [tokenizer.cls_token] + document_state.subtokens[curr_idx: end_idx + 1] + [tokenizer.sep_token]
         document_state.segments.append(segment)
 
         subtoken_map = document_state.subtoken_map[curr_idx: end_idx + 1]
+        if len(subtoken_map) == 0:
+            pdb.set_trace()
         document_state.segment_subtoken_map.append([prev_token_idx] + subtoken_map + [subtoken_map[-1]])
 
         document_state.segment_info.append([None] + document_state.info[curr_idx: end_idx + 1] + [None])

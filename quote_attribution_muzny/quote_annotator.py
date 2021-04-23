@@ -41,7 +41,6 @@ class QuoteAnnotator:
         #for fandom_fname in fandom_fnames:
         #    if len(fandom_fname) != '':
         self.run_cmd(self.inp.fandom_fname)
-
         out = AnnotatorOutput(self.inp.fandom_fname, self.out_dirpath, 
             self.inp.coref_dirpath, self.inp.toks, self.inp.cluster_ids)
         return out

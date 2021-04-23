@@ -44,7 +44,16 @@ def attribute_quotes(fic_dirpath, coref_dirpath, quote_dirpath, threads):
 def attribute_quotes_file(params):
     fname, fic_dirpath, coref_dirpath, quote_dirpath = params
     inp = AnnotatorInput(fname, fic_dirpath, coref_dirpath)
-    inp.load_input()
+    if not inp.load_input():
+        tqdm.write('skipping file (no coref or fic file)')
+        return
     annotator = QuoteAnnotator(inp, quote_dirpath)
     out = annotator.annotate()
     out.transform() # transform to pipeline output format
+    
+    # Remove tmp files
+    tmp_dirpath = 'tmp'
+    out_dirpath = os.path.join(tmp_dirpath, 'formatted_input')
+    os.remove(os.path.join(out_dirpath, f'{fname}.tokens'))
+    os.remove(os.path.join(out_dirpath, f'{fname}.ents'))
+    os.remove(os.path.join(tmp_dirpath, 'out', f'{fname}.out'))

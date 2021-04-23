@@ -70,25 +70,37 @@ class AnnotatorInput:
     def load_coref_input(self, fandom_fname):
         """ Load coref information and fic tokens """
         if self.coref_type == 'spanbert':
-            with open(os.path.join(self.coref_dirpath, f'{fandom_fname}.json')) as f:
+            fpath = os.path.join(self.coref_dirpath, f'{fandom_fname}.json')
+            if not os.path.exists(fpath):
+                return False
+            with open(fpath) as f:
                 self.coref = json.load(f)
+            return True
 
     def load_input(self):
         #for fname in sorted(os.listdir(self.inp_dirpath)):
         #for fname in sorted(os.listdir(self.coref_dirpath)):
             #print(f'Processing {fname}...')
             #fandom_fname = fname.split('.')[0]
-        fic_data = pd.read_csv(os.path.join(
-            self.inp_dirpath, self.fandom_fname + '.csv'))
-        self.process_input(fic_data)
+        fpath = os.path.join(self.inp_dirpath, self.fandom_fname + '.csv')
+        try:
+            fic_data = pd.read_csv(fpath, dtype={'text': str, 'text_tokenized': str})
+            fic_data.dropna(subset=['text_tokenized'], inplace=True)
+        except pd.errors.EmptyDataError:
+            return False
+        if not self.process_input(fic_data):
+            return False
+        return True
 
     def process_input(self, fic_data):
         """ Process one input fic, saves token and coref files """
-        self.load_coref_input(self.fandom_fname)
+        if not self.load_coref_input(self.fandom_fname):
+            return False
         self.toks[self.fandom_fname], tok_data = self.preprocess_tokens(fic_data)
         #global_token_id = self.get_global_token_id(self.toks[fandom_fname])
         coref_ents = self.build_coref()
         self.build_tokens(tok_data, fic_data, coref_ents)
+        return True
 
     def preprocess_tokens(self, fic_data):
         """ Split, lemmatize, postag, parse tokens. """
@@ -338,11 +350,17 @@ class AnnotatorInput:
                 len(coref_anns.columns))}
 
         elif self.coref_type == 'spanbert':
-            char_names = [cluster['name'] for cluster in self.coref['clusters']]
+            clusters = []
+            for cluster in self.coref['clusters']:
+                if 'name' not in cluster:
+                    print('no name cluster')
+                    continue
+                clusters.append(cluster)
+            char_names = [cluster['name'] for cluster in clusters]
             annotations_set = set(char_names)
             self.cluster_ids[self.fandom_fname] = {name: i for i, name in enumerate(
                 char_names)}
-            for cluster in self.coref['clusters']:
+            for cluster in clusters:
                 for mention in cluster['mentions']:
                     if 'text' in mention:
                         annotations.append(AnnotatedSpan(

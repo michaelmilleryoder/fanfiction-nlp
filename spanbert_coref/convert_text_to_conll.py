@@ -1,5 +1,7 @@
 import sys
 sys.path.append('/projects/fanfiction-nlp-evaluation')
+import re
+import warnings
 
 import nltk
 import os
@@ -24,9 +26,19 @@ def get_text(fic_csv_filepath):
     except EmptyDataError:
         tqdm.write("Empty file")
         return None
-    para_tokens = fic_data['text_tokenized'].str.split().to_dict()
-    #para_tokens = fic_data['text'].str.split().to_dict()
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore')
+        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').str.split().to_dict()
+        #para_tokens = fic_data['text'].str.split().to_dict()
     return para_tokens
+
+
+def remove_problem_chars(text):
+    """ Remove unicode characters. Not used """
+    rep = re.sub(r'(\\x..){3}', '', text)
+    if re.search(r'(\\x..){3}', text):
+        pdb.set_trace()
+    return rep
 
 
 def convert(fic_csv_filepath, output_dirpath):

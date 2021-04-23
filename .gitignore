@@ -27,3 +27,4 @@ CoreNLP/coref.temp
 CoreNLP/*.error
 config/
 log/
+spanbert_coref/cache/

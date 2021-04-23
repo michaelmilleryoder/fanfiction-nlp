@@ -119,6 +119,8 @@ def get_descendents(tid, children, tokens):
     right=tid
     if tid in children:
         for child in children[tid]:
+            if child >= len(tokens):
+                continue
             rel=tokens[child][12]
             if rel == "det" or rel == "amod" or rel == "nn":
                 if child < left:
@@ -158,6 +160,8 @@ def get_dep_parse(tokens, tokenStart, tokenEnd, children, entities):
         if lemma in target_verbs or ss == "B-verb.communication":
             if tid in children:
                 for child in children[tid]:
+                    if child >= len(tokens):
+                        continue
                     if tokens[child][13] == "O" and tokens[child][12]== "nsubj":
                         cands=find_entities_containing_position(child, entities, tokens)
                         if len(cands) > 0:
@@ -188,6 +192,8 @@ def get_dep_parse(tokens, tokenStart, tokenEnd, children, entities):
         if lemma in target_verbs or ss == "B-verb.communication":
             if tid in children:
                 for child in children[tid]:
+                    if child >= len(tokens):
+                        continue
                     if tokens[child][13] == "O" and tokens[child][12]== "nsubj":
                         cands=find_entities_containing_position(child, entities, tokens)
                         if len(cands) > 0:
