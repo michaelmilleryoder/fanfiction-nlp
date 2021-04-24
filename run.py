@@ -28,7 +28,8 @@ from quote_attribution_muzny.attribute_quotes import attribute_quotes
 class Pipeline():
 
     def __init__(self, collection_name, input_path, output_path, modules=[],
-                    coreference_settings=[], quote_attribution_settings=[]):
+                    coreference_settings=[], quote_attribution_settings=[],
+                    assertion_extraction_settings=[]):
         self.collection_name = collection_name
         self.input_path = input_path
         self.output_path = output_path
@@ -39,6 +40,7 @@ class Pipeline():
         self.modules = modules
         self.coreference_settings = coreference_settings
         self.quote_attribution_settings = quote_attribution_settings
+        self.assertion_extraction_settings = assertion_extraction_settings
         self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
         self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
         self.coref_output_path = os.path.join(self.output_path, 'char_coref')
@@ -51,7 +53,8 @@ class Pipeline():
             n_quote_threads = self.quote_attribution_settings[0]
             self.quote_attribution(n_quote_threads)
         if 'assertion_extraction' in self.modules:
-            self.assertion_extraction()
+            n_assertion_threads = self.assertion_extraction_settings[0]
+            self.assertion_extraction(n_assertion_threads)
 
     def coref(self, coref_alg, n_servers, n_threads):
         """ Run character coreference """
@@ -134,13 +137,13 @@ class Pipeline():
         subprocess.call(cmd)
         os.chdir('..')
 
-    def assertion_extraction(self):
+    def assertion_extraction(self, n_threads):
         assertion_output_path = os.path.join(self.output_path, 'assertion_extraction')
         if not os.path.exists(assertion_output_path):
             os.mkdir(assertion_output_path)
-
         subprocess.call(['python3', 'assertion_extraction/extract_assertions.py',
-            self.coref_stories_path, self.coref_chars_path, assertion_output_path])
+            self.input_path, self.coref_output_path, assertion_output_path, 
+                str(n_threads)])
 
     def start_corenlp_servers(self, n_servers, n_threads, logfile):
         print("Starting coreference servers...")
@@ -197,12 +200,16 @@ def main():
         quote_attribution_settings.append(n_threads)
 
     # Assertion extraction settings
+    assertion_extraction_settings = []
     if run_assertion_extraction:
         modules.append('assertion_extraction')
+        n_threads = config.getint('Assertion extraction', 'n_threads')
+        assertion_extraction_settings.append(n_threads)
 
     pipeline = Pipeline(collection_name, input_path, output_path, modules,
                         coreference_settings=coreference_settings,
-                        quote_attribution_settings=quote_attribution_settings)
+                        quote_attribution_settings=quote_attribution_settings,
+                        assertion_extraction_settings=assertion_extraction_settings)
     pipeline.run()
 
 
