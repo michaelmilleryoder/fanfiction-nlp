@@ -85,7 +85,9 @@ class AnnotatorInput:
         fpath = os.path.join(self.inp_dirpath, self.fandom_fname + '.csv')
         try:
             fic_data = pd.read_csv(fpath, dtype={'text': str, 'text_tokenized': str})
-            fic_data.dropna(subset=['text_tokenized'], inplace=True)
+            fic_data.para_id = pd.to_numeric(fic_data.para_id, errors='coerce')
+            fic_data.dropna(subset=['text_tokenized', 'para_id'], inplace=True)
+            fic_data.para_id = fic_data.para_id.astype(int)
         except pd.errors.EmptyDataError:
             return False
         if not self.process_input(fic_data):
@@ -122,6 +124,7 @@ class AnnotatorInput:
         fic_data['word'] = [[tok.text for tok in toks] for toks in fic_data['token'].tolist()]
 
         fic_data['para_id'] = fic_data['para_id'] - 1 # 0-index instead of 1-index
+        fic_data['para_id'] = fic_data['para_id'].astype(int)
 
         # melt on whitespace for string columns
         explode_cols = ['word', 'postag', 'lemma', 'sent_id', 'head_id', 

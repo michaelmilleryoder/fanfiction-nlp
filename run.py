@@ -50,9 +50,11 @@ class Pipeline():
             print("Running character coreference...")
             self.coref(*self.coreference_settings)
         if 'quote_attribution' in self.modules:
+            print("Running quote attribution...")
             n_quote_threads = self.quote_attribution_settings[0]
             self.quote_attribution(n_quote_threads)
         if 'assertion_extraction' in self.modules:
+            print("Running assertion extraction...")
             n_assertion_threads = self.assertion_extraction_settings[0]
             self.assertion_extraction(n_assertion_threads)
 

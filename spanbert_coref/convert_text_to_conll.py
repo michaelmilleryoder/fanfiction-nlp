@@ -2,6 +2,7 @@ import sys
 sys.path.append('/projects/fanfiction-nlp-evaluation')
 import re
 import warnings
+import unicodedata as ud
 
 import nltk
 import os
@@ -28,9 +29,23 @@ def get_text(fic_csv_filepath):
         return None
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
-        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').str.split().to_dict()
+        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').map(remove_nonlatin).str.split().to_dict()
+        if sum(len(el) for el in para_tokens.values()) == 0:
+            return None
         #para_tokens = fic_data['text'].str.split().to_dict()
     return para_tokens
+
+
+def remove_nonlatin(word):
+    """ Remove non-Latin characters from a word """
+    removed = ''
+    for c in word:
+        try:
+            if 'LATIN' in ud.name(c):
+                removed += c
+        except ValueError:
+            continue        
+    return removed
 
 
 def remove_problem_chars(text):

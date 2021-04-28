@@ -1,4 +1,5 @@
 import argparse
+import unicodedata as ud
 import logging
 import os
 import re
@@ -18,11 +19,19 @@ def skip_doc(doc_key):
     return False
 
 
+def remove_nonlatin(word):
+    """ Remove non-Latin characters from a word """
+    removed = ''.join([c for c in word if 'LATIN' in ud.name(c)])
+    return removed
+
+
 def normalize_word(word, language):
     if language == "arabic":
         word = word[:word.find("#")]
     if word == "/." or word == "/?":
         return word[1:]
+    #if language == 'english': # remove lines with no Latin characters
+    #    return remove_nonlatin(word)
     else:
         return word
 
@@ -213,6 +222,8 @@ def get_document(doc_key, doc_lines, language, seg_len, tokenizer):
             assert len(row) >= 12
             word_idx += 1
             word = normalize_word(row[3], language)
+            if word == '':
+                continue
             subtokens = tokenizer.tokenize(word)
             document_state.tokens.append(word)
             document_state.token_end += [False] * (len(subtokens) - 1) + [True]
@@ -224,8 +235,8 @@ def get_document(doc_key, doc_lines, language, seg_len, tokenizer):
                 document_state.subtoken_map.append(word_idx)
 
     # Split documents
-    constraits1 = document_state.sentence_end if language != 'arabic' else document_state.token_end
-    split_into_segments(document_state, seg_len, constraits1, document_state.token_end, tokenizer)
+    constraints1 = document_state.sentence_end if language != 'arabic' else document_state.token_end
+    split_into_segments(document_state, seg_len, constraints1, document_state.token_end, tokenizer)
     document = document_state.finalize()
     return document
 
@@ -252,9 +263,12 @@ def minimize_partition(partition, extension, args, tokenizer):
     # Write documents
     with open(output_path, 'w') as output_file:
         for doc_key, doc_lines in documents:
-            if skip_doc(doc_key):
+            #if skip_doc(doc_key):
+            #    continue
+            document = get_document(doc_key, doc_lines, args.language, 
+                args.seg_len, tokenizer)
+            if document is None:
                 continue
-            document = get_document(doc_key, doc_lines, args.language, args.seg_len, tokenizer)
             output_file.write(json.dumps(document))
             output_file.write('\n')
             doc_count += 1

@@ -79,7 +79,6 @@ def process_fic(params):
         return
     #subprocess.run(['python3', 'convert_text_to_conll.py', fpath, 
     #    conll_dirpath], check=True)
-    #os.environ['OMP_NUM_THREADS'] = '10' # not sure if this works
     subprocess.run(['python3', 'preprocess.py', '--filename', fname, 
         '--input_dir', conll_dirpath, '--output_dir', json_dirpath,
         '--seg_len', '384'], check=True)
