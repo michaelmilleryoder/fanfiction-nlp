@@ -87,8 +87,8 @@ def main():
         #       ele[1] = d['subtoken_map'][ele[1]] + 1
         
         output = {
-            #"document": " ".join(d['tokens']),
-            "doc_tokens": d['tokens'],
+            "document": " ".join(d['tokens']),
+            #"doc_tokens": d['tokens'],
             #"subtoken_map": d['subtoken_map'],
             #"tokenized_doc": d['sentences'], 
             #"clusters": d['predicted_clusters'],

@@ -34,7 +34,7 @@ Please tokenize text (split into words) before running it through the pipeline a
 ## Output 
 * Character coreference: 
 	* a directory with a JSON file for each processed fic. The JSON file has the following keys:
-		* `doc_tokens`: a list of tokens
+		* `document`: list of tokenized text (space between each token)
 		* `clusters`: a list of character clusters, each with the fields:
 			* `name`
 			* `mentions`: a list of mentions, each a dictionary with keys:

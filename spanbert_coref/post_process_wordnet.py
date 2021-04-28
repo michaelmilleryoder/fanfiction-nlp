@@ -218,7 +218,7 @@ def post_process(data):
     remove_PRPs = ["you", "me", "he", "she", "my", "mine", "your", "her", "his", "female", "male"]
 
     removable_mens = []
-    out = {'doc_tokens': data['doc_tokens'],
+    out = {'document': data['document'],
             'clusters': []}
 
     # Remove any PRP mentions

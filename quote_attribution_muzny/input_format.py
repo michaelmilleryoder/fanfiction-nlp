@@ -75,6 +75,8 @@ class AnnotatorInput:
                 return False
             with open(fpath) as f:
                 self.coref = json.load(f)
+                if not hasattr(self.coref, 'doc_tokens'):
+                    self.coref['doc_tokens'] = self.coref['document'].split()
             return True
 
     def load_input(self):

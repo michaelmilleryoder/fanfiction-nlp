@@ -20,7 +20,6 @@ from tqdm import tqdm
 from pandas.errors import EmptyDataError
 
 
-
 def get_text(fic_csv_filepath):
     try:
         fic_data = pd.read_csv(fic_csv_filepath + ".csv").set_index(['chapter_id', 'para_id'], inplace=False)
@@ -29,7 +28,8 @@ def get_text(fic_csv_filepath):
         return None
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
-        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').map(remove_nonlatin).str.split().to_dict()
+        # remove non-Latin characters
+        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').str.replace(r'[^\\x00-\\x7F\\x80-\\xFF\\u0100-\\u017F\\u0180-\\u024F\\u1E00-\\u1EFF]', '').str.split().to_dict()
         if sum(len(el) for el in para_tokens.values()) == 0:
             return None
         #para_tokens = fic_data['text'].str.split().to_dict()
@@ -37,14 +37,14 @@ def get_text(fic_csv_filepath):
 
 
 def remove_nonlatin(word):
-    """ Remove non-Latin characters from a word """
+    """ Remove non-Latin characters from a word. Doesn't handle punct and spaces """
     removed = ''
     for c in word:
         try:
             if 'LATIN' in ud.name(c):
                 removed += c
         except ValueError:
-            continue        
+            removed += c
     return removed
 
 

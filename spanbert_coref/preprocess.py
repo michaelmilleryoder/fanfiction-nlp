@@ -1,5 +1,4 @@
 import argparse
-import unicodedata as ud
 import logging
 import os
 import re
@@ -17,12 +16,6 @@ logger.disabled = True # silence logging
 
 def skip_doc(doc_key):
     return False
-
-
-def remove_nonlatin(word):
-    """ Remove non-Latin characters from a word """
-    removed = ''.join([c for c in word if 'LATIN' in ud.name(c)])
-    return removed
 
 
 def normalize_word(word, language):
