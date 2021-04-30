@@ -29,8 +29,8 @@ def get_text(fic_csv_filepath):
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         # remove non-Latin characters
-        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').str.replace(r'[^\\x00-\\x7F\\x80-\\xFF\\u0100-\\u017F\\u0180-\\u024F\\u1E00-\\u1EFF]', '').str.split().to_dict()
-        if sum(len(el) for el in para_tokens.values()) == 0:
+        para_tokens = fic_data['text_tokenized'].str.replace(r'(\\x..){3}', '').str.replace(u'[^\\x00-\\x7F\\x80-\\xFF\\u0100-\\u017F\\u0180-\\u024F\\u1E00-\\u1EFF]', '').str.slice(0,50000).str.split().to_dict()
+        if sum(len(el) for el in para_tokens.values()) <= 2:
             return None
         #para_tokens = fic_data['text'].str.split().to_dict()
     return para_tokens

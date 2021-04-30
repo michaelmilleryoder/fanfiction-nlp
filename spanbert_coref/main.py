@@ -76,7 +76,7 @@ def process_fic(params):
         return
     # TODO: Replace bash calls with direct calls to functions in scripts
     if not convert_text_to_conll.convert(fpath, conll_dirpath):
-        tqdm.write(f'skipped {fname}: empty or no non-Latin characters')
+        tqdm.write(f'\nskipped {fname}: empty or no non-Latin characters')
         return
     #subprocess.run(['python3', 'convert_text_to_conll.py', fpath, 
     #    conll_dirpath], check=True)

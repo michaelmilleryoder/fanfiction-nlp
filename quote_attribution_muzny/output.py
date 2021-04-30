@@ -31,6 +31,8 @@ class AnnotatorOutput():
         """ Load coref information and fic tokens """
         with open(os.path.join(self.coref_dirpath, f'{fandom_fname}.json')) as f:
             self.coref = json.load(f)
+        if 'doc_tokens' not in self.coref:
+            self.coref['doc_tokens'] = self.coref['document'].split()
 
     def get_charmap(self, fandom_fname):
         """ Get coreference IDs for characters from annotation file """

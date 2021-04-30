@@ -20,7 +20,8 @@ def attribute_quotes(fic_dirpath, coref_dirpath, quote_dirpath, threads):
     if not os.path.exists(quote_dirpath):
         os.mkdir(quote_dirpath)
     fnames = []
-    for fname in sorted(os.listdir(fic_dirpath)):
+    #for fname in sorted(os.listdir(fic_dirpath)):
+    for fname in sorted(os.listdir(coref_dirpath)):
         name = fname.split('.')[0]
         if not os.path.exists(os.path.join(
             quote_dirpath, f'{name}.quote.json')):

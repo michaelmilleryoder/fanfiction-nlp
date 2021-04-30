@@ -53,7 +53,10 @@ Please tokenize text (split into words) before running it through the pipeline a
 		<!--* `paragraph`-->
 
 * Assertion attribution: 
-	* a directory where for each fic, there is a JSON file with cluster-level character names as keys and extracted assertions (narrative or evaluation) about the character as a list of values. Assertions are any text other than quotes that is relevant to seeing how a character is portrayed.
+	* a directory with a JSON file for each processed fic. Each JSON file has cluster-level character names as keys and values of a list of dictionaries, one for each assertion (narrative or evaluation) about the character:
+		* `position`: [start_token_id, end_token_id+1]. The position of the start token of the assertion in the `doc_tokens` list (inclusive), and the position 1 after the last token in the assertion in the `doc_tokens` list.
+		* `text`: The text of the assertion
+Assertions are any text other than quotes that is relevant to seeing how a character is portrayed.
 
 * Character cooccurrence matrix: 
 	* a directory with 2 JSON files for each fic, 1 titled `{fic_name}_adj_cooccurrence.json` and the other `{fic_name}_ship_cooccurrence.json`. In each, keys are coreferenced character cluster names and values are adjectives (for the `adj` file) or other character names (for the `ship`, or "relationship", file). A cooccurrence measure is given for each adjective or character name that is between 0 and 1.

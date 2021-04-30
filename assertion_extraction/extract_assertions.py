@@ -35,13 +35,13 @@ def decode_sentence(i2w,formatted_sent):
     return sentence
 
 
-"""
- input: para_dict -> key:paragraph ID, value: dict of segmented sentences from that para
-        char_list -> a list of characters in the format $_canonical_name
-
-output: char_dict -> key: canonical name of character, value: list of segments
-"""
 def extract_assertion(para_dict,coref_info):
+    """
+     input: para_dict -> key:paragraph ID, value: dict of segmented sentences from that para
+            coref_info -> 
+
+    output: char_dict -> key: canonical name of character, values: dict with 'position' and 'text' as keys
+    """
     char_dict = defaultdict(list)
     #For each paragraph and it's corresponding segments
     for (para_id, (segments, segment_ranges)) in para_dict.items():
@@ -56,7 +56,8 @@ def extract_assertion(para_dict,coref_info):
                 mention_positions = [m['position'] for m in cluster['mentions']]
                 if any(pos[0] >= segment_range[0] and pos[1] <= segment_range[1] \
                     for pos in mention_positions):
-                    char_dict[character].append(segment.strip())
+                    char_dict[character].append({'position': segment_range, 
+                        'text': segment.strip()})
                 #if character in segment:
                 #    #Added fix for quotation removal 
                 #    #(would be ideal to use the same as quote attribution does 
@@ -227,7 +228,7 @@ def get_topic_segments(para_id,para,offset,k=1):
 
 def process_file(params):
     fname, fic_dir, coref_dir, op_dir = params
-    fandom_fname = fname.split('.csv')[0]
+    fandom_fname = fname.split('.')[0]
 
     # Check if has already been processed
     if os.path.exists(os.path.join(op_dir, fandom_fname + '.json')):
@@ -257,7 +258,7 @@ def process_file(params):
         coref = json.load(coref_file)
     
     #Get the segments for each paragraph in each chapter of a fic
-    f = fic_dir + '/' + fname
+    f = os.path.join(fic_dir, fandom_fname + '.csv')
     inp_file = codecs.open(f, "r", errors='ignore')#open(f)
     #csv_reader = csv.reader(inp_file, delimiter=',')
     #next(csv_reader)
@@ -287,7 +288,9 @@ def main():
     coref_dir = str(sys.argv[2])
     op_dir    = str(sys.argv[3])
     n_threads = int(sys.argv[4])
-    files = [f for f in listdir(fic_dir) if isfile(join(fic_dir, f)) and \
+    #files = [f for f in listdir(fic_dir) if isfile(join(fic_dir, f)) and \
+    #    not f.startswith('.')]
+    files = [f for f in listdir(coref_dir) if isfile(join(coref_dir, f)) and \
         not f.startswith('.')]
 
     params = zip(files,
