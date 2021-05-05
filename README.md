@@ -47,8 +47,8 @@ Please tokenize text (split into words) before running it through the pipeline a
 	* a directory with a JSON file for each processed fic. Each JSON file consists of a list of "quote entries" for a unique speaker in a paragraph. Keys in each quote entry include:
 		* `speaker`
 		* `quotes`: a list of quotes, each a dictionary with keys:
-			* `start_token_id`: the position of the start token of the quote in the `tokens` list (inclusive)
-			* `end_token_id`: the position 1 after the last token in the quote in the `tokens` list
+			* `position`: [start_token_id, end_token_id+1]. The position of the start token of the mention in the coreference `doc_tokens` list (inclusive), and the position 1 after the last token in the mention.
+			* `text`: The text of the quote
 		<!--* `chapter`-->
 		<!--* `paragraph`-->
 

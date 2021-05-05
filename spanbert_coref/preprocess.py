@@ -188,16 +188,18 @@ def split_into_segments(document_state: DocumentState, max_seg_len, constraints1
         # TODO: handle issue where end_idx < curr_idx
         segment = [tokenizer.cls_token] + document_state.subtokens[curr_idx: end_idx + 1] + [tokenizer.sep_token]
         document_state.segments.append(segment)
-
         subtoken_map = document_state.subtoken_map[curr_idx: end_idx + 1]
         if len(subtoken_map) == 0:
-            pdb.set_trace()
-        document_state.segment_subtoken_map.append([prev_token_idx] + subtoken_map + [subtoken_map[-1]])
-
-        document_state.segment_info.append([None] + document_state.info[curr_idx: end_idx + 1] + [None])
-
-        curr_idx = end_idx + 1
-        prev_token_idx = subtoken_map[-1]
+            return False
+        else:
+            document_state.segment_subtoken_map.append(
+                [prev_token_idx] + subtoken_map + [subtoken_map[-1]])
+            document_state.segment_info.append(
+                [None] + document_state.info[curr_idx: end_idx + 1] + [None])
+            curr_idx = end_idx + 1
+            prev_token_idx = subtoken_map[-1]
+    
+    return True
 
 
 def get_document(doc_key, doc_lines, language, seg_len, tokenizer):
@@ -229,7 +231,9 @@ def get_document(doc_key, doc_lines, language, seg_len, tokenizer):
 
     # Split documents
     constraints1 = document_state.sentence_end if language != 'arabic' else document_state.token_end
-    split_into_segments(document_state, seg_len, constraints1, document_state.token_end, tokenizer)
+    if not split_into_segments(document_state, seg_len, constraints1, 
+        document_state.token_end, tokenizer):
+        return None
     document = document_state.finalize()
     return document
 

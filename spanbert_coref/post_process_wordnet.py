@@ -314,18 +314,19 @@ post_prod_dir = sys.argv[2]
 if not os.path.exists(post_prod_dir):
     os.mkdir(post_prod_dir)
 
-with open(model_out_path, "r") as f:
-    data = json.load(f)
-    
-#cluster_reps = preproc_cluster_rep(data)[0]
-    
-#print(cluster_reps, '\n')
+if os.path.exists(model_out_path):
+    with open(model_out_path, "r") as f:
+        data = json.load(f)
+        
+    #cluster_reps = preproc_cluster_rep(data)[0]
+        
+    #print(cluster_reps, '\n')
 
-data = post_process(data)
+    data = post_process(data)
 
-with open(os.path.join(post_prod_dir, model_out_file + ".json"), 'w') as f:
-    json.dump(data, f)
-    
-#cluster_reps = preproc_cluster_rep(data)[0]
-    
-#print(cluster_reps, '\n')
+    with open(os.path.join(post_prod_dir, model_out_file + ".json"), 'w') as f:
+        json.dump(data, f)
+        
+    #cluster_reps = preproc_cluster_rep(data)[0]
+        
+    #print(cluster_reps, '\n')
