@@ -1,5 +1,5 @@
 # fanfiction-nlp
-An NLP pipeline for extracting information related to characters in fanfiction.
+An NLP pipeline for extracting information related to characters in fanfiction in English.
 For each input fanfiction story (or other document), the pipeline produces a list of characters.
 For each character, the pipeline produces:
 * mentions of the character in the text (such as pronouns that refer to the character)
@@ -10,7 +10,7 @@ More information on the pipeline is available in the paper [here](https://www.ac
 If you use it academically, please cite this work:
 > Michael Miller Yoder, Sopan Khosla, Qinlan Shen, Aakanksha Naik, Huiming Jin, Hariharan Muralidharan, and Carolyn P Rosé. 
 > 2021. 
-> FanfictionNLP : A Text Processing Pipeline for Fanfiction. 
+> FanfictionNLP: A Text Processing Pipeline for Fanfiction. 
 > In *Proceedings of the 3rd Workshop on Narrative Understanding*, pages 13–23.
 
 Contact Michael Miller Yoder <yoder [at] cs.cmu.edu> with any questions.
