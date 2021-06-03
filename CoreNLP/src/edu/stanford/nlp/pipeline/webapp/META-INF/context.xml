@@ -1,3 +1,0 @@
-<!-- Not sure why this is necessary, for reading the file system? -->
-<Context privileged="true">
-</Context>

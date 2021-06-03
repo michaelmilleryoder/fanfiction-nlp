@@ -1,1 +1,0 @@
-java -mx300m -cp "stanford-tregex.jar;" edu.stanford.nlp.trees.tregex.gui.TregexGUI

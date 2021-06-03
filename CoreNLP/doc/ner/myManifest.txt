@@ -1,1 +1,0 @@
-Main-Class: edu.stanford.nlp.ie.crf.NERGUI
