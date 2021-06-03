@@ -1,9 +1,0 @@
-[submodule "speaker_transfer/delete_retrieve_generate"]
-	path = speaker_transfer/delete_retrieve_generate
-	url = https://github.com/oncebasun/delete_retrieve_generate.git
-[submodule "speaker_transfer/cross_alignment"]
-	path = speaker_transfer/cross_alignment
-	url = https://github.com/oncebasun/language-style-transfer.git
-[submodule "speaker_transfer/back_translation"]
-	path = speaker_transfer/back_translation
-	url = https://github.com/oncebasun/Style-Transfer-Through-Back-Translation.git
