@@ -8,9 +8,7 @@ For each character, the pipeline produces:
 
 More information on the pipeline is available in the paper [here](https://www.aclweb.org/anthology/2021.nuse-1.2.pdf).
 If you use it academically, please cite this work:
-```
-Michael Miller Yoder, Sopan Khosla, Qinlan Shen, Aakanksha Naik, Huiming Jin, Hariharan Muralidharan, and Carolyn P Rosé. 2021. FanfictionNLP : A Text Processing Pipeline for Fanfiction. In *Proceedings of the 3rd Workshop on Narrative Understanding*, pages 13–23.
-'''
+> Michael Miller Yoder, Sopan Khosla, Qinlan Shen, Aakanksha Naik, Huiming Jin, Hariharan Muralidharan, and Carolyn P Rosé. 2021. FanfictionNLP : A Text Processing Pipeline for Fanfiction. In *Proceedings of the 3rd Workshop on Narrative Understanding*, pages 13–23.
 
 Contact Michael Miller Yoder <yoder [at] cs.cmu.edu> with any questions.
 
