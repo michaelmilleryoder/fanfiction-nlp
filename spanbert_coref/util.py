@@ -19,7 +19,7 @@ def flatten(l):
 
 def get_tokenizer(bert_tokenizer_name):
     return BertTokenizer.from_pretrained(bert_tokenizer_name, cache_dir='cache',
-        local_files_only=True)
+        local_files_only=False)
 
 
 def initialize_config(config_name):
