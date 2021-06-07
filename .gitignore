@@ -1,4 +1,5 @@
 conda_env/
+log/
 *.jar
 temp.out
 .nfs*
@@ -26,5 +27,4 @@ CoreNLP/.settings/
 CoreNLP/coref.temp
 CoreNLP/*.error
 config/
-log/
 spanbert_coref/cache/
