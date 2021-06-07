@@ -10,11 +10,6 @@ import pandas as pd
 from configparser import ConfigParser
 import argparse
 import pdb
-from annotation import Annotation
-from pipeline_output import PipelineOutput
-from booknlp_output import BookNLPOutput
-import evaluation_utils as utils
-from annotated_span import characters_match, spans_union
 
 from tqdm import tqdm
 from pandas.errors import EmptyDataError
