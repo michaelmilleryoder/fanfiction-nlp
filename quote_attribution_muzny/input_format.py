@@ -13,7 +13,7 @@ import spacy
 from spacy.tokenizer import Tokenizer
 
 sys.path.append('/projects/fanfiction-nlp-evaluation')
-from pipeline_output import extract_mention_tags
+#from pipeline_output import extract_mention_tags
 
 
 def get_sent_ids(toks):

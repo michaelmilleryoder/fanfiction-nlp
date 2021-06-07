@@ -26,7 +26,7 @@ The pipeline does:
 	* [Assertion attribution](assertion_extraction) (narrative and evaluation about a character)
 
 ## Requirements
-A list of dependencies from which a Python 3 virtual environment can be created is at `requirements.txt'.
+A list of dependencies from which a Python 3 virtual environment can be created is at `requirements.txt`.
 (The list is a bit bloated, so some packages may not be necessary.)
 
 ## Input 
