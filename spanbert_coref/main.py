@@ -12,7 +12,9 @@ import pdb
 
 from tqdm import tqdm
 
-import convert_text_to_conll
+import spanbert_coref.convert_text_to_conll as convert_text_to_conll
+import spanbert_coref.predict as predict
+import spanbert_coref.preprocess as preprocess
 
 
 class SpanbertProcessor:
@@ -67,6 +69,7 @@ class SpanbertProcessor:
         else:
             # for debugging
             list(tqdm(map(process_fic, params), total=len(fpaths), ncols=70))
+        os.chdir('..')
 
 def process_fic(params):
     """ Run coref on an individual fic """
@@ -80,15 +83,24 @@ def process_fic(params):
         return
     #subprocess.run(['python3', 'convert_text_to_conll.py', fpath, 
     #    conll_dirpath], check=True)
-    subprocess.run(['python3', 'preprocess.py', '--filename', fname, 
+    #subprocess.run(['python3', '../spanbert_coref/preprocess.py', '--filename', fname, 
+    #    '--input_dir', conll_dirpath, '--output_dir', json_dirpath,
+    #    '--seg_len', '384'], check=True)
+    preprocess_params = ['--filename', fname, 
         '--input_dir', conll_dirpath, '--output_dir', json_dirpath,
-        '--seg_len', '384'], check=True)
-    subprocess.run(['python3', 'predict.py', 
-        '--config_name=train_spanbert_base_lit_toshni',
-        '--model_identifier=Jan27_03-17-00_4200', '--gpu_id=-1', 
-        f'--jsonlines_path={json_dirpath}/{fname}.english.384.jsonlines',
-        f'--output_path={pred_dirpath}/{fname}.pred.english.384.jsonlines'],
-        check=True)
+        '--seg_len', '384']
+    preprocess_argparser = preprocess.get_argparser()
+    preprocess_args = preprocess_argparser.parse_args(preprocess_params)
+    preprocess.minimize_language(preprocess_args)
+    #subprocess.run(['python3', 'predict.py', 
+    #    '--config_name=train_spanbert_base_lit_toshni',
+    #    '--model_identifier=Jan27_03-17-00_4200', '--gpu_id=-1', 
+    #    f'--jsonlines_path={json_dirpath}/{fname}.english.384.jsonlines',
+    #    f'--output_path={pred_dirpath}/{fname}.pred.english.384.jsonlines'],
+    #    check=True)
+    predict.main('train_spanbert_base_lit_toshni', 'Jan27_03-17-00_4200', gpu_id=-1, 
+        jsonlines_path=f'{json_dirpath}/{fname}.english.384.jsonlines', 
+        output_path=f'{pred_dirpath}/{fname}.pred.english.384.jsonlines')
     #subprocess.run(['python3', 'inference_fanfic.py', 
     #    f'{pred_dirpath}/{fname}.pred.english.384.jsonlines',
     #    out_dirpath], check=True)

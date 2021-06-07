@@ -6,22 +6,23 @@ import torch
 from torch.utils.tensorboard import SummaryWriter
 from transformers import AdamW
 from torch.optim import Adam
-from tensorize import CorefDataProcessor
-import util
+from spanbert_coref.tensorize import CorefDataProcessor
+import spanbert_coref.util as util
 import time
 from os.path import join
-from metrics import CorefEvaluator
+from spanbert_coref.metrics import CorefEvaluator
 from datetime import datetime
 from torch.optim.lr_scheduler import LambdaLR
-from model import CorefModel
-import conll
+from spanbert_coref.model import CorefModel
+import spanbert_coref.conll as conll
 import sys
 import pdb
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
-                    datefmt='%m/%d/%Y %H:%M:%S',
-                    level=logging.INFO)
-logger = logging.getLogger()
+#logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
+#                    datefmt='%m/%d/%Y %H:%M:%S',
+#                    level=logging.INFO)
+#logger = logging.getLogger()
+#logger.disabled = True # silence logging
 
 
 class Runner:
@@ -35,9 +36,9 @@ class Runner:
         self.config = util.initialize_config(config_name)
 
         # Set up logger
-        log_path = join(self.config['log_dir'], 'log_' + self.name_suffix + '.txt')
-        logger.addHandler(logging.FileHandler(log_path, 'a'))
-        logger.info('Log file path: %s' % log_path)
+        #log_path = join(self.config['log_dir'], 'log_' + self.name_suffix + '.txt')
+        #logger.addHandler(logging.FileHandler(log_path, 'a'))
+        #logger.info('Log file path: %s' % log_path)
 
         # Set up seed
         if seed:
@@ -64,18 +65,18 @@ class Runner:
 
     def train(self, model):
         conf = self.config
-        logger.info(conf)
+        #logger.info(conf)
         epochs, grad_accum = conf['num_epochs'], conf['gradient_accumulation_steps']
 
         model.to(self.device)
-        logger.info('Model parameters:')
-        for name, param in model.named_parameters():
-            logger.info('%s: %s' % (name, tuple(param.shape)))
+        #logger.info('Model parameters:')
+        #for name, param in model.named_parameters():
+        #    logger.info('%s: %s' % (name, tuple(param.shape)))
 
         # Set up tensorboard
         tb_path = join(conf['tb_dir'], self.name + '_' + self.name_suffix)
         tb_writer = SummaryWriter(tb_path, flush_secs=30)
-        logger.info('Tensorboard summary path: %s' % tb_path)
+        #logger.info('Tensorboard summary path: %s' % tb_path)
 
         # Set up data
         examples_train, examples_dev, examples_test = self.data.get_tensor_examples()
@@ -90,11 +91,11 @@ class Runner:
         bert_param, task_param = model.get_params()
 
         # Start training
-        logger.info('*******************Training*******************')
-        logger.info('Num samples: %d' % len(examples_train))
-        logger.info('Num epochs: %d' % epochs)
-        logger.info('Gradient accumulation steps: %d' % grad_accum)
-        logger.info('Total update steps: %d' % total_update_steps)
+        #logger.info('*******************Training*******************')
+        #logger.info('Num samples: %d' % len(examples_train))
+        #logger.info('Num epochs: %d' % epochs)
+        #logger.info('Gradient accumulation steps: %d' % grad_accum)
+        #logger.info('Total update steps: %d' % total_update_steps)
 
         loss_during_accum = []  # To compute effective loss at each update
         loss_during_report = 0.0  # Effective loss during logging step
@@ -139,8 +140,8 @@ class Runner:
                         avg_loss = loss_during_report / conf['report_frequency']
                         loss_during_report = 0.0
                         end_time = time.time()
-                        logger.info('Step %d: avg loss %.2f; steps/sec %.2f' %
-                                    (len(loss_history), avg_loss, conf['report_frequency'] / (end_time - start_time)))
+                        #logger.info('Step %d: avg loss %.2f; steps/sec %.2f' %
+                        #            (len(loss_history), avg_loss, conf['report_frequency'] / (end_time - start_time)))
                         start_time = end_time
 
                         tb_writer.add_scalar('Training_Loss', avg_loss, len(loss_history))
@@ -155,18 +156,18 @@ class Runner:
                         if f1 > max_f1:
                             max_f1 = f1
                             self.save_model_checkpoint(model, len(loss_history), total_update_steps)
-                        logger.info('Eval max f1: %.2f' % max_f1)
+                        #logger.info('Eval max f1: %.2f' % max_f1)
                         start_time = time.time()
 
-        logger.info('**********Finished training**********')
-        logger.info('Actual update steps: %d' % len(loss_history))
+        #logger.info('**********Finished training**********')
+        #logger.info('Actual update steps: %d' % len(loss_history))
 
         # Wrap up
         tb_writer.close()
         return loss_history
 
     def evaluate(self, model, tensor_examples, stored_info, step, official=False, conll_path=None, tb_writer=None):
-        logger.info('Step %d: evaluating on %d samples...' % (step, len(tensor_examples)))
+        #logger.info('Step %d: evaluating on %d samples...' % (step, len(tensor_examples)))
         model.to(self.device)
         evaluator = CorefEvaluator()
         doc_to_prediction = {}
@@ -210,22 +211,22 @@ class Runner:
         metrics = {'Eval_Avg_Precision': p * 100, 'Eval_Avg_Recall': r * 100, 'Eval_Avg_F1': f * 100}
         lea_metrics = {'LEA_Precision': lp * 100, 'LEA_Recall': lr * 100, 'LEA_F1': lf * 100}
         for name, score in metrics.items():
-            logger.info('%s: %.2f' % (name, score))
+            #logger.info('%s: %.2f' % (name, score))
             if tb_writer:
                 tb_writer.add_scalar(name, score, step)
 
-        for name, score in lea_metrics.items():
-            logger.info('%s: %.2f' % (name, score))
+        #for name, score in lea_metrics.items():
+            #logger.info('%s: %.2f' % (name, score))
 
         if official:
             conll_results = conll.evaluate_conll(conll_path, doc_to_prediction, stored_info['subtoken_maps'])
             official_f1 = sum(results["f"] for results in conll_results.values()) / len(conll_results)
-            logger.info('Official avg F1: %.4f' % official_f1)
+            #logger.info('Official avg F1: %.4f' % official_f1)
 
         return f * 100, metrics, lea_metrics
 
     def predict(self, model, tensor_examples):
-        logger.info('Predicting %d samples...' % len(tensor_examples))
+        #logger.info('Predicting %d samples...' % len(tensor_examples))
         model.to(self.device)
         predicted_spans, predicted_antecedents, predicted_clusters = [], [], []
 
@@ -313,7 +314,7 @@ class Runner:
             return  # Debug
         path_ckpt = join(self.config['log_dir'], f'model_{self.name_suffix}_{step}.bin')
         torch.save(model.state_dict(), path_ckpt)
-        logger.info('Saved model to %s' % path_ckpt)
+        #logger.info('Saved model to %s' % path_ckpt)
 
     def load_model_checkpoint(self, model, suffix):
         if self.config['pretrained_model_path'] != 'None':
@@ -321,7 +322,7 @@ class Runner:
         else:
             path_ckpt = join(self.config['log_dir'], f'model_{suffix}.bin')
         model.load_state_dict(torch.load(path_ckpt, map_location=torch.device('cpu')), strict=False)
-        logger.info('Loaded model from %s' % path_ckpt)
+        #logger.info('Loaded model from %s' % path_ckpt)
 
 
 if __name__ == '__main__':

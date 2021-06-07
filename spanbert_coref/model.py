@@ -1,18 +1,19 @@
 import torch
 import torch.nn as nn
 from transformers import BertModel
-import util
+import spanbert_coref.util as util
 import logging
 from collections import Iterable
 import numpy as np
 import torch.nn.init as init
-import higher_order as ho
+import spanbert_coref.higher_order as ho
 
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S',
                     level=logging.INFO)
 logger = logging.getLogger()
+logger.disabled = True # silence logging
 
 
 class CorefModel(nn.Module):

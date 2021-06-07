@@ -10,6 +10,7 @@ from transformers import BertTokenizer
 
 
 logger = logging.getLogger(__name__)
+logger.disabled = True # silence logging
 
 
 def flatten(l):

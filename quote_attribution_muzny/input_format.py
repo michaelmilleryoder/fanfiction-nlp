@@ -57,8 +57,8 @@ class AnnotatorInput:
         self.quote_extraction_type = 'pipeline' # {gold, pipeline}
         #self.quote_dirpath = \
             #'/data/fanfiction_ao3/annotated_10fandom/test/quote_attribution/'
-        self.quote_dirpath = \
-            '/data/fanfiction_ao3/annotated_10fandom/test/output/quote_attribution_spanbert_coref'
+        #self.quote_dirpath = \
+        #    '/data/fanfiction_ao3/annotated_10fandom/test/output/quote_attribution_spanbert_coref'
         self.tok_cols = ['paragraphId', 'sentenceID', 'tokenId', 'beginOffset',
             'endOffset', 'whitespaceAfter', 'headTokenId', 'originalWord',
             'normalizedWord', 'lemma', 'pos', 'ner', 'deprel', 'inQuotation', 
@@ -87,8 +87,10 @@ class AnnotatorInput:
         fpath = os.path.join(self.inp_dirpath, self.fandom_fname + '.csv')
         try:
             fic_data = pd.read_csv(fpath, dtype={'text': str, 'text_tokenized': str})
+            #fic_data = pd.read_csv(fpath, dtype={'text': str})
             fic_data.para_id = pd.to_numeric(fic_data.para_id, errors='coerce')
             fic_data.dropna(subset=['text_tokenized', 'para_id'], inplace=True)
+            #fic_data.dropna(subset=['text', 'para_id'], inplace=True)
             fic_data.para_id = fic_data.para_id.astype(int)
         except pd.errors.EmptyDataError:
             return False
@@ -109,8 +111,10 @@ class AnnotatorInput:
     def preprocess_tokens(self, fic_data):
         """ Split, lemmatize, postag, parse tokens. """
         nlp = spacy.load('en')
+        # TODO: Load the tokenized string from the coref step, then feed that to spacy
         nlp.tokenizer = Tokenizer(nlp.vocab, token_match=re.compile(r'\S+').match)
         fic_data['token'] = fic_data.text_tokenized.map(nlp)
+        #fic_data['token'] = fic_data.text.map(nlp)
         fic_data['postag'] = [[tok.tag_ for tok in toks] for toks in fic_data[
             'token'].tolist()]
         fic_data['lemma'] = [[tok.lemma_ for tok in toks] for toks in fic_data[
@@ -208,58 +212,58 @@ class AnnotatorInput:
         """ Add quote information to token input file """
         # Load quotes
         quotes = []
-        if self.quote_extraction_type == 'gold':
-            quote_df = pd.read_csv(os.path.join(self.quote_dirpath, 
-                f'{fandom_fname}_quote_attribution.csv'))
-            if len(quote_df) == 0: # No quotes
-                tok_data['inQuotation'] = 'O' 
-                return tok_data
-            for colname in quote_df.columns: # each column is a character
-                for mention in quote_df[colname].dropna():
-                    parts = mention.split('.')
-                    chapter_id = int(parts[0])
-                    paragraph_id = int(parts[1])
-                    if '-' in parts[2]:
-                        token_id_start = int(parts[2].split('-')[0])
-                        token_id_end = int(parts[2].split('-')[-1])
-                    else:
-                        token_id_start = int(parts[2])
-                        token_id_end = int(parts[2])
-                    quotes.append(AnnotatedSpan(
-                      chap_id=chapter_id,
-                      para_id=paragraph_id,
-                      start_token_id=token_id_start,
-                      end_token_id=token_id_end,
-                      annotation=colname
-                  ))
+        #if self.quote_extraction_type == 'gold':
+        #    quote_df = pd.read_csv(os.path.join(self.quote_dirpath, 
+        #        f'{fandom_fname}_quote_attribution.csv'))
+        #    if len(quote_df) == 0: # No quotes
+        #        tok_data['inQuotation'] = 'O' 
+        #        return tok_data
+        #    for colname in quote_df.columns: # each column is a character
+        #        for mention in quote_df[colname].dropna():
+        #            parts = mention.split('.')
+        #            chapter_id = int(parts[0])
+        #            paragraph_id = int(parts[1])
+        #            if '-' in parts[2]:
+        #                token_id_start = int(parts[2].split('-')[0])
+        #                token_id_end = int(parts[2].split('-')[-1])
+        #            else:
+        #                token_id_start = int(parts[2])
+        #                token_id_end = int(parts[2])
+        #            quotes.append(AnnotatedSpan(
+        #              chap_id=chapter_id,
+        #              para_id=paragraph_id,
+        #              start_token_id=token_id_start,
+        #              end_token_id=token_id_end,
+        #              annotation=colname
+        #          ))
 
-            # Turn annotations into df
-            if len(quotes) == 0:
-                tok_data['inQuotation'] = 'O'
-                return tok_data
-            quote_data = pd.DataFrame([[annotation.annotation, annotation.text, 
-                annotation.chap_id, annotation.para_id, annotation.start_token_id, 
-                annotation.end_token_id] for annotation in quotes],
-                columns=['character_name', 'tokens', 'chap_id', 'para_id', 
-                    'start_token_id', 'end_token_id'])
-            quote_data['span_start'] = [global_token_id[el] for el in tuple(zip(
-                quote_data.chap_id, quote_data.para_id, quote_data.start_token_id))]
-            quote_data['span_end'] = [global_token_id[el] for el in tuple(zip(
-                quote_data.chap_id, quote_data.para_id, quote_data.end_token_id))]
+        #    # Turn annotations into df
+        #    if len(quotes) == 0:
+        #        tok_data['inQuotation'] = 'O'
+        #        return tok_data
+        #    quote_data = pd.DataFrame([[annotation.annotation, annotation.text, 
+        #        annotation.chap_id, annotation.para_id, annotation.start_token_id, 
+        #        annotation.end_token_id] for annotation in quotes],
+        #        columns=['character_name', 'tokens', 'chap_id', 'para_id', 
+        #            'start_token_id', 'end_token_id'])
+        #    quote_data['span_start'] = [global_token_id[el] for el in tuple(zip(
+        #        quote_data.chap_id, quote_data.para_id, quote_data.start_token_id))]
+        #    quote_data['span_end'] = [global_token_id[el] for el in tuple(zip(
+        #        quote_data.chap_id, quote_data.para_id, quote_data.end_token_id))]
 
-            # Add BIO in quotations for tokens
-            quote_data['span'] = [range(beg, end+1) for (beg, end) in zip(quote_data.span_start, quote_data.span_end)]
-            quote_data_toks = quote_data.explode('span')
-            quote_data_toks.reset_index(inplace=True)
-            quote_data_toks.rename(columns={'index': 'quote_id'}, inplace=True)
-            beg_quotes = quote_data_toks.groupby('quote_id').head(1).index
-            quote_data_toks.loc[beg_quotes, 'inQuotation'] = 'B-QUOTE'
-            quote_data_toks['inQuotation'] = quote_data_toks.inQuotation.fillna('I-QUOTE')
-            tok2quote = quote_data_toks.set_index('span')['inQuotation'].to_dict()
-            tok_data['inQuotation'] = tok_data.tokenId.map(
-                lambda x: tok2quote.get(x, 'O'))
+        #    # Add BIO in quotations for tokens
+        #    quote_data['span'] = [range(beg, end+1) for (beg, end) in zip(quote_data.span_start, quote_data.span_end)]
+        #    quote_data_toks = quote_data.explode('span')
+        #    quote_data_toks.reset_index(inplace=True)
+        #    quote_data_toks.rename(columns={'index': 'quote_id'}, inplace=True)
+        #    beg_quotes = quote_data_toks.groupby('quote_id').head(1).index
+        #    quote_data_toks.loc[beg_quotes, 'inQuotation'] = 'B-QUOTE'
+        #    quote_data_toks['inQuotation'] = quote_data_toks.inQuotation.fillna('I-QUOTE')
+        #    tok2quote = quote_data_toks.set_index('span')['inQuotation'].to_dict()
+        #    tok_data['inQuotation'] = tok_data.tokenId.map(
+        #        lambda x: tok2quote.get(x, 'O'))
 
-        elif self.quote_extraction_type == 'pipeline':
+        if self.quote_extraction_type == 'pipeline':
             tok_data['inQuotation'] = self.extract_quotes(fandom_fname, tok_data)
             # From PipelineOutput.extract_quotes
             #quote_predictions_fpath = os.path.join(self.quote_dirpath, 

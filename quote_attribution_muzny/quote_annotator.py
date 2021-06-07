@@ -29,9 +29,9 @@ class QuoteAnnotator:
             #'/projects/quote_annotator_muzny/annotated_10fandom_test/output/spanbert_coref_pipeline_quotes'
         self.out_dirpath = out_dirpath
         self.tmp_dirpath = 'tmp'
-        #self.tmp_out_dirpath = 'tmp/out' # confusing
-        #if not os.path.exists(self.tmp_out_dirpath):
-        #    os.mkdir(self.tmp_out_dirpath)
+        self.tmp_out_dirpath = 'tmp/out' # confusing
+        if not os.path.exists(self.tmp_out_dirpath):
+            os.mkdir(self.tmp_out_dirpath)
     
     def annotate(self):
         """ Run annotation """

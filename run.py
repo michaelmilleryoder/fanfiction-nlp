@@ -23,6 +23,7 @@ import pdb
 import traceback
 
 from quote_attribution_muzny.attribute_quotes import attribute_quotes
+from spanbert_coref.main import SpanbertProcessor
 
 
 class Pipeline():
@@ -31,8 +32,8 @@ class Pipeline():
                     coreference_settings=[], quote_attribution_settings=[],
                     assertion_extraction_settings=[]):
         self.collection_name = collection_name
-        self.input_path = input_path
-        self.output_path = output_path
+        self.input_path = os.path.abspath(input_path)
+        self.output_path = os.path.abspath(output_path)
         if not os.path.exists(self.output_path):
             os.mkdir(self.output_path)
         self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
@@ -43,12 +44,14 @@ class Pipeline():
         self.assertion_extraction_settings = assertion_extraction_settings
         self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
         self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
-        self.coref_output_path = os.path.join(self.output_path, 'char_coref')
+        self.coref_output_path = os.path.abspath(os.path.join(self.output_path, 
+            'char_coref'))
 
     def run(self):
         if 'coref' in self.modules:
             print("Running character coreference...")
-            self.coref(*self.coreference_settings)
+            #self.coref(*self.coreference_settings)
+            self.coref_spanbert(*self.coreference_settings)
         if 'quote_attribution' in self.modules:
             print("Running quote attribution...")
             n_quote_threads = self.quote_attribution_settings[0]
@@ -67,9 +70,12 @@ class Pipeline():
 
     def coref_spanbert(self, n_threads):
         """ Run coref using SpanBERT """
-        subprocess.run(['python3', 'spanbert_coref/main.py', self.input_path,
-            self.coref_output_path, '--threads', str(n_threads)], 
-            check=True)
+        processor = SpanbertProcessor(self.input_path, self.coref_output_path, 
+            n_threads)
+        processor.run()
+        #subprocess.run(['python3', 'spanbert_coref/main.py', self.input_path,
+        #    self.coref_output_path, '--threads', str(n_threads)], 
+        #    check=True)
 
     def coref_corenlp(self, n_servers, n_threads):
         """ Run coref using modified CoreNLP """
@@ -141,11 +147,12 @@ class Pipeline():
 
     def assertion_extraction(self, n_threads):
         assertion_output_path = os.path.join(self.output_path, 'assertion_extraction')
+        quote_output_path = os.path.join(self.output_path, 'quote_attribution')
         if not os.path.exists(assertion_output_path):
             os.mkdir(assertion_output_path)
         subprocess.call(['python3', 'assertion_extraction/extract_assertions.py',
-            self.input_path, self.coref_output_path, assertion_output_path, 
-                str(n_threads)])
+            self.input_path, self.coref_output_path, quote_output_path, 
+                assertion_output_path, str(n_threads)])
 
     def start_corenlp_servers(self, n_servers, n_threads, logfile):
         print("Starting coreference servers...")
@@ -187,10 +194,10 @@ def main():
     coreference_settings = []
     if run_coref:
         modules.append('coref')
-        coref_alg = config.get('Character coreference', 'coref_type')
-        coreference_settings.append(coref_alg)
-        n_servers = config.getint('Character coreference', 'n_servers')
-        coreference_settings.append(n_servers)
+        #coref_alg = config.get('Character coreference', 'coref_type')
+        #coreference_settings.append(coref_alg)
+        #n_servers = config.getint('Character coreference', 'n_servers')
+        #coreference_settings.append(n_servers)
         n_threads = config.getint('Character coreference', 'n_threads')
         coreference_settings.append(n_threads)
 

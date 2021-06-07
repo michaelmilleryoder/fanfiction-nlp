@@ -1,4 +1,4 @@
-import util
+import spanbert_coref.util as util
 import numpy as np
 import random
 import os
@@ -9,6 +9,7 @@ import logging
 import torch
 
 logger = logging.getLogger(__name__)
+logger.disabled = True # silence logging
 
 
 class CorefDataProcessor:

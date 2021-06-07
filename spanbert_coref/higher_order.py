@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import util
+import spanbert_coref.util as util
 
 
 def attended_antecedent(top_span_emb, top_antecedent_emb, top_antecedent_scores, device):

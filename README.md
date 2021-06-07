@@ -33,8 +33,12 @@ A list of dependencies from which a Python 3 virtual environment can be created 
 Directory path to directory of fanfiction story CSV files. 
 
 If your input is raw text you'll need to format it like the examples in the `example_fandom` directory. [Here's](https://github.com/michaelmilleryoder/fanfiction-nlp/blob/master/example_fandom/10118594_0004.csv) an example. Eventually we'll support raw text file input.
+Columns needed in the input are:
+`fic_id`, `chapter_id`, `para_id`, `text`, `text_tokenized`
+
 
 Please tokenize text (split into words) before running it through the pipeline and include this as a fourth column, `text_tokenized`. We are working on including this as an option.
+A script, `tokenize_fics.py`, is included for convenience, though this will require modification to work with your input.
 
 ## Output 
 * Character coreference: 

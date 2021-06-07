@@ -4,8 +4,9 @@ import os
 import re
 import collections
 import json
-import conll
-import util
+
+import spanbert_coref.conll as conll
+import spanbert_coref.util as util
 import pdb
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
@@ -273,6 +274,7 @@ def minimize_partition(partition, extension, args, tokenizer):
 
 
 def minimize_language(args):
+    os.makedirs(args.output_dir, exist_ok=True)
     tokenizer = util.get_tokenizer(args.tokenizer_name)
     
     if not args.splits:
@@ -282,8 +284,7 @@ def minimize_language(args):
         minimize_partition('test', 'v4_gold_conll', args, tokenizer)
         minimize_partition('train', 'v4_gold_conll', args, tokenizer)
 
-
-if __name__ == '__main__':
+def get_argparser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--filename', type=str, required=False,
                         help='Name of file')
@@ -301,8 +302,11 @@ if __name__ == '__main__':
     #                     help='Do lower case on input')
     parser.add_argument('--splits', action='store_true',
                         help='Only consider train/val/test splits')
+    return parser
+
+
+if __name__ == '__main__':
+    parser = get_argparser()
     args = parser.parse_args()
     logger.info(args)
-    os.makedirs(args.output_dir, exist_ok=True)
-
     minimize_language(args)

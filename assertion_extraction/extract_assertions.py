@@ -77,6 +77,11 @@ def extract_assertion(para_dict,coref_info):
     return char_dict
 
 
+def remove_quotes(segment_range, segment):
+    """ Removes quotes from span with character mentions. """
+    pass
+
+
 def get_topic_segments(para_id,para,offset,k=1):
     """
      input: para_id  -> int, id for the paragraph
@@ -256,6 +261,15 @@ def process_file(params):
         return
     with open(coref_fpath) as coref_file:
         coref = json.load(coref_file)
+
+    # Load quotes (to remove them from assertions)
+    #quotes_fpath = os.path.join(quotes_dir, fandom_fname+'.quote.json')
+    #if not os.path.exists(quotes_fpath):
+    #    tqdm.write('no quotes file, skipping')
+    #    return
+    #with open(quotes_fpath) as quote_file:
+    #    quotes = json.load(quote_file)
+    # TODO: add in quote processing here
     
     #Get the segments for each paragraph in each chapter of a fic
     f = os.path.join(fic_dir, fandom_fname + '.csv')
@@ -286,8 +300,9 @@ def main():
     #command line arguments
     fic_dir = str(sys.argv[1])
     coref_dir = str(sys.argv[2])
-    op_dir    = str(sys.argv[3])
-    n_threads = int(sys.argv[4])
+    quote_dir = str(sys.argv[3])
+    op_dir    = str(sys.argv[4])
+    n_threads = int(sys.argv[5])
     #files = [f for f in listdir(fic_dir) if isfile(join(fic_dir, f)) and \
     #    not f.startswith('.')]
     files = [f for f in listdir(coref_dir) if isfile(join(coref_dir, f)) and \
