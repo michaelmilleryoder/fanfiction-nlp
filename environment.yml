@@ -1,4 +1,4 @@
-name: /projects/fanfiction-nlp/conda_env
+name: fanfiction-nlp
 channels:
   - huggingface
   - conda-forge
