@@ -133,4 +133,3 @@ dependencies:
     - pyhocon==0.3.57
     - sentencepiece==0.1.95
     - torch-struct==0.5
-prefix: /projects/fanfiction-nlp/conda_env
