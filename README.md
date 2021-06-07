@@ -37,7 +37,7 @@ Columns needed in the input are:
 `fic_id`, `chapter_id`, `para_id`, `text`, `text_tokenized`
 
 
-Please tokenize text (split into words) before running it through the pipeline and include this as a fourth column, `text_tokenized`. We are working on including this as an option.
+Please tokenize text (split into words) before running it through the pipeline and include this as a final column, `text_tokenized`. We are working on including this as an option.
 A script, `tokenize_fics.py`, is included for convenience, though this will require modification to work with your input.
 
 ## Output 
