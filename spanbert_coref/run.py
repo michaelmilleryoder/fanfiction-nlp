@@ -3,7 +3,7 @@ import logging
 import random
 import numpy as np
 import torch
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter
 from transformers import AdamW
 from torch.optim import Adam
 from spanbert_coref.tensorize import CorefDataProcessor
@@ -74,8 +74,8 @@ class Runner:
         #    logger.info('%s: %s' % (name, tuple(param.shape)))
 
         # Set up tensorboard
-        tb_path = join(conf['tb_dir'], self.name + '_' + self.name_suffix)
-        tb_writer = SummaryWriter(tb_path, flush_secs=30)
+        #tb_path = join(conf['tb_dir'], self.name + '_' + self.name_suffix)
+        #tb_writer = SummaryWriter(tb_path, flush_secs=30)
         #logger.info('Tensorboard summary path: %s' % tb_path)
 
         # Set up data
@@ -144,9 +144,9 @@ class Runner:
                         #            (len(loss_history), avg_loss, conf['report_frequency'] / (end_time - start_time)))
                         start_time = end_time
 
-                        tb_writer.add_scalar('Training_Loss', avg_loss, len(loss_history))
-                        tb_writer.add_scalar('Learning_Rate_Bert', schedulers[0].get_last_lr()[0], len(loss_history))
-                        tb_writer.add_scalar('Learning_Rate_Task', schedulers[1].get_last_lr()[-1], len(loss_history))
+                        #tb_writer.add_scalar('Training_Loss', avg_loss, len(loss_history))
+                        #tb_writer.add_scalar('Learning_Rate_Bert', schedulers[0].get_last_lr()[0], len(loss_history))
+                        #tb_writer.add_scalar('Learning_Rate_Task', schedulers[1].get_last_lr()[-1], len(loss_history))
 
                     # Evaluate
                     if len(loss_history) > 0 and len(loss_history) % conf['eval_frequency'] == 0:
@@ -163,7 +163,7 @@ class Runner:
         #logger.info('Actual update steps: %d' % len(loss_history))
 
         # Wrap up
-        tb_writer.close()
+        #tb_writer.close()
         return loss_history
 
     def evaluate(self, model, tensor_examples, stored_info, step, official=False, conll_path=None, tb_writer=None):
@@ -210,10 +210,10 @@ class Runner:
         lp, lr, lf = evaluator.get_lea()
         metrics = {'Eval_Avg_Precision': p * 100, 'Eval_Avg_Recall': r * 100, 'Eval_Avg_F1': f * 100}
         lea_metrics = {'LEA_Precision': lp * 100, 'LEA_Recall': lr * 100, 'LEA_F1': lf * 100}
-        for name, score in metrics.items():
+        #for name, score in metrics.items():
             #logger.info('%s: %.2f' % (name, score))
-            if tb_writer:
-                tb_writer.add_scalar(name, score, step)
+            #if tb_writer:
+                #tb_writer.add_scalar(name, score, step)
 
         #for name, score in lea_metrics.items():
             #logger.info('%s: %.2f' % (name, score))
