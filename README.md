@@ -29,7 +29,7 @@ The pipeline does:
 A list of dependencies from which a Python 3 virtual environment can be created is at `requirements.txt`.
 (The list is a bit bloated, so some packages may not be necessary.)
 
-To run the SpanBERT-based coreference, a model file is required that is ~500MB, unfortunately too big for GitHub's file size limit. That file is available from [https://cmu.box.com/s/leg9pkato6gtv9afg6e7tz9auwya2h3n]. Please download it and place it in the `spanbert_coref directory.
+To run the SpanBERT-based coreference, a model file is required that is ~500MB, unfortunately too big for GitHub's file size limit. That file is available from https://cmu.box.com/s/leg9pkato6gtv9afg6e7tz9auwya2h3n. Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
 
 ## Input 
 Directory path to directory of fanfiction story CSV files. 

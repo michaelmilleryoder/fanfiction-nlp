@@ -32,6 +32,9 @@ def initialize_config(config_name):
     config['tb_dir'] = join(config['log_root'], 'tensorboard')
     makedirs(config['tb_dir'], exist_ok=True)
 
+    # Added to just load models
+    config['pretrained_model_path'] = config_name
+
     logger.info(pyhocon.HOCONConverter.convert(config, "hocon"))
     return config
 

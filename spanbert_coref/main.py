@@ -98,7 +98,10 @@ def process_fic(params):
     #    f'--jsonlines_path={json_dirpath}/{fname}.english.384.jsonlines',
     #    f'--output_path={pred_dirpath}/{fname}.pred.english.384.jsonlines'],
     #    check=True)
-    predict.main('train_spanbert_base_lit_toshni', 'Jan27_03-17-00_4200', gpu_id=-1, 
+    #predict.main('train_spanbert_base_lit_toshni', 'Jan27_03-17-00_4200', gpu_id=-1, 
+    #    jsonlines_path=f'{json_dirpath}/{fname}.english.384.jsonlines', 
+    #    output_path=f'{pred_dirpath}/{fname}.pred.english.384.jsonlines')
+    predict.main('model', 'fanfiction-nlp-coref-model-2020-01.bin', gpu_id=-1, 
         jsonlines_path=f'{json_dirpath}/{fname}.english.384.jsonlines', 
         output_path=f'{pred_dirpath}/{fname}.pred.english.384.jsonlines')
     #subprocess.run(['python3', 'inference_fanfic.py', 

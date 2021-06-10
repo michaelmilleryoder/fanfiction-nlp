@@ -318,7 +318,8 @@ class Runner:
 
     def load_model_checkpoint(self, model, suffix):
         if self.config['pretrained_model_path'] != 'None':
-            path_ckpt = join(self.config['pretrained_model_path'], f'model_{suffix}.bin')
+            pdb.set_trace()
+            path_ckpt = join(self.config['pretrained_model_path'], suffix)
         else:
             path_ckpt = join(self.config['log_dir'], f'model_{suffix}.bin')
         model.load_state_dict(torch.load(path_ckpt, map_location=torch.device('cpu')), strict=False)

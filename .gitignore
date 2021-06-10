@@ -1,5 +1,6 @@
 conda_env/
 log/
+spanbert_coref/model/fanfiction-nlp-coref-model-2020-01.bin
 *.jar
 temp.out
 .nfs*
