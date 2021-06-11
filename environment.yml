@@ -10,6 +10,7 @@ dependencies:
   - inflect
   - pytorch
   - transformers
+  - pip
   - pip:
     - benepar
     - en-core-web-sm
