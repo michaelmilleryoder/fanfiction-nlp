@@ -37,7 +37,7 @@ The pipeline is written in Python 3. Dependencies are listed below. Sorry about 
 * pytorch
 * [HuggingFace transformers](https://huggingface.co/transformers/installation.html)
 * [benepar](https://pypi.org/project/benepar/) (available with pip, not conda)
-* pyhocon (available with pipe, not conda)
+* pyhocon (available with pip, not conda)
 
 A conda environment file that lists these dependencies is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml`.
 
