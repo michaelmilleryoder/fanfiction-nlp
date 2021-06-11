@@ -13,5 +13,4 @@ dependencies:
   - pip
   - pip:
     - benepar
-    - en-core-web-sm
     - pyhocon
