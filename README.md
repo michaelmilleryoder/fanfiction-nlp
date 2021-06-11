@@ -54,6 +54,7 @@ To run the SpanBERT-based coreference, a model file is required that is 534 MB, 
 
 ## Run a test
 To test that everything is set up properly, run `python run.py example.cfg`, which by default will run the pipeline on a test story in the `example_fandom` directory.
+This will take ~2 GB of RAM to run.
 The output should be placed in a new directory, `output/example_fandom`. This output should be the same as that provided in `output_test/example_fandom`.
 
 ## Input 
@@ -66,6 +67,9 @@ Columns needed in the input are:
 
 Please tokenize text (split into words) before running it through the pipeline and include this as a final column, `text_tokenized`. We are working on including this as an option.
 A script, `tokenize_fics.py`, is included for convenience, though this will require modification to work with your input.
+
+The pipeline uses quite a bit of RAM, mostly depending on the length of the input. It is not recommended to run on stories with greater than 5000 words.
+Runnin on storis with 5000 words can use ~20 GB of RAM.
 
 ## Output 
 * Character coreference: 
