@@ -26,10 +26,35 @@ The pipeline does:
 	* [Assertion attribution](assertion_extraction) (narrative and evaluation about a character)
 
 ## Requirements
-A list of dependencies from which a Python 3 virtual environment can be created is at `requirements.txt`.
-(The list is a bit bloated, so some packages may not be necessary.)
+Python dependencies are listed below. Sorry about there being so many! We are planning on trimming this down.
 
-To run the SpanBERT-based coreference, a model file is required that is ~500MB, unfortunately too big for GitHub's file size limit. That file is available from https://cmu.box.com/s/leg9pkato6gtv9afg6e7tz9auwya2h3n. Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
+* scipy
+* pandas
+* scikit-learn
+* nltk
+* spacy
+* inflect
+* pytorch
+* [HuggingFace transformers](https://huggingface.co/transformers/installation.html)
+* [benepar](https://pypi.org/project/benepar/) (available with pip, not conda)
+* pyhocon (available with pipe, not conda)
+
+A conda environment file that lists these dependencies is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml`.
+
+Some additional data and model files are also required:
+* spacy's en_core_web_sm model. This can be downloaded with `python -m spacy download en`.
+* The wordnet package from nltk. This can be downloaded with `python -m nltk.downloader wordnet
+* An English parsing model for benepar. Download this through a Python interpreter (or see [instructions](https://pypi.org/project/benepar/)).
+```
+import benepar
+benepar.download('benepar_en3')
+```
+
+To run the SpanBERT-based coreference, a model file is required that is 534 MB, unfortunately too big for GitHub's file size limit. That file is available from https://cmu.box.com/s/leg9pkato6gtv9afg6e7tz9auwya2h3n. Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
+
+## Run a test
+To test that everything is set up properly, run `python run.py example.cfg`, which by default will run the pipeline on test fics in the `example_fandom` directory.
+The output should be placed in a new directory, `output/example_fandom`. This output should be the same as that provided in `output_test/example_fandom`.
 
 ## Input 
 Directory path to directory of fanfiction story CSV files. 
@@ -99,13 +124,8 @@ The pipeline takes settings and input/output filepaths in a configuration file. 
 
 `n_threads`: (integer) The number of threads (actually processes) to run the quote attribution
 
-
 ## Command
 `python run.py <config_file_path>`
-
-## Run a test
-To test that everything is set up properly, run `python run.py example.cfg`, which by default will run the pipeline on test fics in the `example_fandom` directory.
-The output should be placed in a new directory, `output/example_fandom`. This output should be the same as that provided in `output_test/example_fandom`.
 
 # Notes
 This pipeline was inspired by David Bamman's [BookNLP](https://github.com/dbamman/book-nlp).
