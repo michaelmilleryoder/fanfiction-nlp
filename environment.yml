@@ -9,8 +9,8 @@ dependencies:
   - spacy
   - inflect
   - pytorch
-  - transformers
   - pip
   - pip:
     - benepar
     - pyhocon
+    - transformers
