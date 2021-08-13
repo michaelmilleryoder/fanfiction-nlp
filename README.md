@@ -35,7 +35,7 @@ The pipeline is written in Python 3. Dependencies are listed below. Sorry about 
 * spacy
 * inflect
 * pytorch
-* [HuggingFace transformers](https://huggingface.co/transformers/installation.html)
+* [HuggingFace transformers](https://huggingface.co/transformers/installation.html). Install with pip, since the conda version raises a GLibC error when running the pipeline
 * [benepar](https://pypi.org/project/benepar/) (available with pip, not conda)
 * pyhocon (available with pip, not conda)
 
