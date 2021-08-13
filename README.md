@@ -44,6 +44,7 @@ A conda environment file that lists these dependencies is at `environment.yml`. 
 Some additional data and model files are also required:
 * spacy's en_core_web_sm model. This can be downloaded with `python -m spacy download en`.
 * The wordnet package from nltk. This can be downloaded with `python -m nltk.downloader wordnet`.
+* The stopwords package from nltk. This can be downloaded with `python -m nltk.downloader stopwords`.
 * An English parsing model for benepar. Download this through a Python interpreter (or see [instructions](https://pypi.org/project/benepar/)):
 ```
 import benepar
