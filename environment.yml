@@ -10,6 +10,6 @@ dependencies:
   - pytorch=1.7.1
   - pip=21.0.1
   - pip:
-    - benepar=0.2.0
-    - pyhocon=0.3.57
-    - transformers=4.4.2
+    - benepar==0.2.0
+    - pyhocon==0.3.57
+    - transformers==4.4.2
