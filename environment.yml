@@ -1,16 +1,15 @@
 name: fanfiction-nlp
-channels:
-  - huggingface
 dependencies:
-  - scipy
-  - pandas
-  - scikit-learn
-  - nltk
-  - spacy
-  - inflect
-  - pytorch
-  - pip
+  - python=3.8.8
+  - scipy=1.6.2
+  - pandas=1.2.3
+  - scikit-learn=0.24.1
+  - nltk=3.5
+  - spacy=2.3.5
+  - inflect=5.3.0
+  - pytorch=1.7.1
+  - pip=21.0.1
   - pip:
-    - benepar
-    - pyhocon
-    - transformers
+    - benepar=0.2.0
+    - pyhocon=0.3.57
+    - transformers=4.4.2
