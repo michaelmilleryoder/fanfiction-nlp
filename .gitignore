@@ -29,3 +29,4 @@ CoreNLP/coref.temp
 CoreNLP/*.error
 config/
 spanbert_coref/cache/
+output/

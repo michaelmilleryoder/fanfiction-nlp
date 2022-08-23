@@ -35,11 +35,12 @@ The pipeline is written in Python 3. Dependencies are listed below. Sorry about 
 * spacy
 * inflect
 * pytorch
-* [HuggingFace transformers](https://huggingface.co/transformers/installation.html). Install with pip, since the conda version raises a GLibC error when running the pipeline
+* [HuggingFace transformers](https://huggingface.co/transformers/installation.html). Install with pip, since the conda version may raise a GLibC error when running the pipeline
 * [benepar](https://pypi.org/project/benepar/) (available with pip, not conda)
+* protobuf
 * pyhocon (available with pip, not conda)
 
-A conda environment file that lists these dependencies is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml`.
+A conda environment file that lists these dependencies with tested version numbers is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml`.
 
 Some additional data and model files are also required:
 * spacy's en_core_web_sm model. This can be downloaded with `python -m spacy download en`.
@@ -69,7 +70,7 @@ Please tokenize text (split into words) before running it through the pipeline a
 A script, `tokenize_fics.py`, is included for convenience, though this will require modification to work with your input.
 
 The pipeline uses quite a bit of RAM, mostly depending on the length of the input. It is not recommended to run on stories with greater than 5000 words.
-Runnin on storis with 5000 words can use ~20 GB of RAM.
+Running on stories with 5000 words can use ~20 GB of RAM.
 
 ## Output 
 * Character coreference: 
