@@ -15,6 +15,8 @@ from tqdm import tqdm
 import spanbert_coref.convert_text_to_conll as convert_text_to_conll
 import spanbert_coref.predict as predict
 import spanbert_coref.preprocess as preprocess
+import spanbert_coref.inference_fanfic as inference_fanfic
+import spanbert_coref.post_process_wordnet as post_process_wordnet
 
 
 class SpanbertProcessor:
@@ -74,7 +76,8 @@ class SpanbertProcessor:
 def process_fic(params):
     """ Run coref on an individual fic """
     fpath, conll_dirpath, json_dirpath, pred_dirpath, out_dirpath = params
-    fname = fpath.split('/')[-1].split('.')[0]
+    #fname = fpath.split('/')[-1].split('.')[0]
+    fname = os.path.splitext(os.path.basename(fpath))[0]
     if os.path.exists(os.path.join(out_dirpath, f'{fname}.json')): # already done
         return
     # TODO: Replace bash calls with direct calls to functions in scripts
@@ -107,11 +110,10 @@ def process_fic(params):
     #subprocess.run(['python3', 'inference_fanfic.py', 
     #    f'{pred_dirpath}/{fname}.pred.english.384.jsonlines',
     #    out_dirpath], check=True)
-    subprocess.run(['python3', 'inference_fanfic.py', 
-        f'{pred_dirpath}/{fname}.pred.english.384.jsonlines',
-        pred_dirpath], check=True)
-    subprocess.run(['python3', 'post_process_wordnet.py', os.path.join(pred_dirpath,
-        f'{fname}.json'), out_dirpath], check=True)
+    inference_fanfic.main(os.path.join(pred_dirpath, f'{fname}.pred.english.384.jsonlines'), pred_dirpath)
+    #subprocess.run(['python3', 'post_process_wordnet.py', os.path.join(pred_dirpath,
+    #    f'{fname}.json'), out_dirpath], check=True)
+    post_process_wordnet.main(os.path.join(pred_dirpath, f'{fname}.json'), out_dirpath)
 
     # Remove tmp files
     tmp_paths = []

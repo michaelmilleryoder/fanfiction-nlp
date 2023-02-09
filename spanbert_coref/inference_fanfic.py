@@ -41,11 +41,11 @@ def canonical_character_name(names):
 
     return capitalized.most_common(1)[0][0]
 
-def main():
+def main(fic_in_file, fic_out_dirpath):
     # base_dir = "/projects/presidio_analysis/Patient_Doctor_Conversations/COREF_RESOLUTION/fanfiction_coref"
 
-    fic_in_file = sys.argv[1]
-    fic_out_dirpath = sys.argv[2]
+    #fic_in_file = sys.argv[1]
+    #fic_out_dirpath = sys.argv[2]
     # fic_in_file = "./data/litbank/dev.preds.384.spb_lit_tosh.jsonlines"
     # fic_out_dirpath = "./data/litbank/output_spb_lit/"
 

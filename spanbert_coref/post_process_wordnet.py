@@ -16,7 +16,8 @@ from nltk import Tree
 
 import benepar, spacy
 #nlp_spacy = spacy.load('en_core_web_md')
-nlp_spacy = spacy.load('en')
+#nlp_spacy = spacy.load('en')
+nlp_spacy = spacy.load('en_core_web_sm')
 if spacy.__version__.startswith('2'):
     nlp_spacy.add_pipe(benepar.BeneparComponent("benepar_en3"))
 else:
@@ -305,28 +306,31 @@ def post_process(data):
     return out
 
 
-model_out_path = sys.argv[1]
-model_out_file = model_out_path.split("/")[-1].split(".")[0]
-post_prod_dir = sys.argv[2]
+def main(model_out_path, post_prod_dir):
 
-#print(model_out_path, model_out_file, post_prod_dir)
+    #model_out_path = sys.argv[1]
+    #model_out_file = model_out_path.split("/")[-1].split(".")[0]
+    model_out_file = os.path.splitext(os.path.basename(model_out_path))[0]
+    #post_prod_dir = sys.argv[2]
 
-if not os.path.exists(post_prod_dir):
-    os.mkdir(post_prod_dir)
+    #print(model_out_path, model_out_file, post_prod_dir)
 
-if os.path.exists(model_out_path):
-    with open(model_out_path, "r") as f:
-        data = json.load(f)
-        
-    #cluster_reps = preproc_cluster_rep(data)[0]
-        
-    #print(cluster_reps, '\n')
+    if not os.path.exists(post_prod_dir):
+        os.mkdir(post_prod_dir)
 
-    data = post_process(data)
+    if os.path.exists(model_out_path):
+        with open(model_out_path, "r") as f:
+            data = json.load(f)
+            
+        #cluster_reps = preproc_cluster_rep(data)[0]
+            
+        #print(cluster_reps, '\n')
 
-    with open(os.path.join(post_prod_dir, model_out_file + ".json"), 'w') as f:
-        json.dump(data, f)
-        
-    #cluster_reps = preproc_cluster_rep(data)[0]
-        
-    #print(cluster_reps, '\n')
+        data = post_process(data)
+
+        with open(os.path.join(post_prod_dir, model_out_file + ".json"), 'w') as f:
+            json.dump(data, f)
+            
+        #cluster_reps = preproc_cluster_rep(data)[0]
+            
+        #print(cluster_reps, '\n')

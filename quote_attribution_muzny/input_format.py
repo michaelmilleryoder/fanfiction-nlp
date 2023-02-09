@@ -110,7 +110,7 @@ class AnnotatorInput:
 
     def preprocess_tokens(self, fic_data):
         """ Split, lemmatize, postag, parse tokens. """
-        nlp = spacy.load('en')
+        nlp = spacy.load('en_core_web_sm')
         # TODO: Load the tokenized string from the coref step, then feed that to spacy
         nlp.tokenizer = Tokenizer(nlp.vocab, token_match=re.compile(r'\S+').match)
         fic_data['token'] = fic_data.text_tokenized.map(nlp)

@@ -6,6 +6,7 @@ from os import listdir
 from os.path import isfile, join
 from multiprocessing import Pool
 import itertools
+import ctypes as ct
 
 import numpy as np
 import csv
@@ -19,7 +20,8 @@ import pdb
 import codecs
 from tqdm import tqdm
 
-csv.field_size_limit(sys.maxsize)
+#csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(int(ct.c_ulong(-1).value // 2))
 
 """
  input: i2w            -> dictionary, key:word_index, value: word

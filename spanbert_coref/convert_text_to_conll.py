@@ -58,7 +58,8 @@ def convert(fic_csv_filepath, output_dirpath):
 
     #print(fic_csv_filepath)
 
-    fandom_fname = fic_csv_filepath.split("/")[-1][:-4]
+    #fandom_fname = fic_csv_filepath.split("/")[-1][:-4]
+    fandom_fname = os.path.splitext(os.path.basename(fic_csv_filepath))[0]
 
     char_map = {}
     span_map = {}

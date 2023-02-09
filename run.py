@@ -35,7 +35,7 @@ class Pipeline():
         self.input_path = os.path.abspath(input_path)
         self.output_path = os.path.abspath(output_path)
         if not os.path.exists(self.output_path):
-            os.mkdir(self.output_path)
+            os.makedirs(self.output_path)
         self.coref_stories_path = os.path.join(self.output_path, 'char_coref_stories')
         self.coref_chars_path = os.path.join(self.output_path, 'char_coref_chars')
         self.modules = modules
