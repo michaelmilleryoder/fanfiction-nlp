@@ -24,6 +24,8 @@ import pdb
 #logger = logging.getLogger()
 #logger.disabled = True # silence logging
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false" # disables warning
+
 
 class Runner:
     def __init__(self, config_name, gpu_id=0, seed=None):
