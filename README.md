@@ -43,7 +43,7 @@ The pipeline is written in Python 3. Dependencies are listed below. Sorry about 
 A conda environment file that lists these dependencies with tested version numbers is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml`.
 
 Some additional data and model files are also required:
-* spacy's en_core_web_sm model. This can be downloaded with `python -m spacy download en`.
+* spacy's en_core_web_sm model. This can be downloaded with `python -m spacy download en_core_web_sm`.
 * The wordnet, stopwords, and punkt packages from nltk. These can be downloaded with `python -m nltk.downloader wordnet stopwords punkt`.
 * An English parsing model for benepar. Download this through a Python interpreter (or see [instructions](https://pypi.org/project/benepar/)):
 ```
