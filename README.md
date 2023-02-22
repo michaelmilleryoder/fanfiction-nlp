@@ -40,7 +40,7 @@ The pipeline is written in Python 3. Dependencies are listed below. Sorry about 
 * protobuf
 * pyhocon (available with pip, not conda)
 
-A conda environment file that lists these dependencies with tested version numbers is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml`.
+A conda environment file that lists these dependencies with tested version numbers is at `environment.yml`. A new environment with these dependencies can be created with `conda env create -n fanfiction-nlp --file environment.yml` and then activated with `conda activate fanfiction-nlp`.
 
 Some additional data and model files are also required:
 * spacy's en_core_web_sm model. This can be downloaded with `python -m spacy download en_core_web_sm`.
