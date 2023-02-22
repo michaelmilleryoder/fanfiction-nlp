@@ -1,4 +1,8 @@
 name: fanfiction-nlp
+channels:
+- conda-forge
+- pytorch
+- defaults
 dependencies:
   - python=3.8.8
   - scipy=1.6.2
@@ -14,3 +18,4 @@ dependencies:
     - protobuf==3.20.1
     - pyhocon==0.3.57
     - transformers==4.4.2
+    - packaging==21.3
