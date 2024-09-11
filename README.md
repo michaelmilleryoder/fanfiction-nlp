@@ -13,7 +13,7 @@ If you use it academically, please cite this work:
 > FanfictionNLP: A Text Processing Pipeline for Fanfiction. 
 > In *Proceedings of the 3rd Workshop on Narrative Understanding*, pages 13–23.
 
-Contact Michael Miller Yoder <yoder [at] cs.cmu.edu> with any questions.
+Contact Michael Miller Yoder <mmyoder [at] pitt.edu> with any questions.
 
 # Running the pipeline
 This pipeline processes a directory of fanfiction files and extracts
