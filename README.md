@@ -51,7 +51,7 @@ import benepar
 benepar.download('benepar_en3')
 ```
 
-To run the SpanBERT-based coreference, a model file is required that is 534 MB, unfortunately too big for GitHub's file size limit. That file is available from https://pitt-my.sharepoint.com/:u:/g/personal/mmyoder_pitt_edu/IQAAz-wuwIT_T6A-hp1qRVHpAVdYcy7g1cmBwig7TfdybYQ?e=WEdpzI. Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
+To run the SpanBERT-based coreference, a model file is required that is 534 MB, unfortunately too big for GitHub's file size limit. That model file is available [here](https://pitt-my.sharepoint.com/:u:/g/personal/mmyoder_pitt_edu/IQAAz-wuwIT_T6A-hp1qRVHpAVdYcy7g1cmBwig7TfdybYQ?e=WEdpzI). Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
 
 ## Run a test
 To test that everything is set up properly, run `python run.py example.cfg`, which by default will run the pipeline on a test story in the `example_fandom` directory.
