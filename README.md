@@ -26,7 +26,7 @@ The pipeline does:
 	* [Assertion attribution](assertion_extraction) (narrative and evaluation about a character)
 
 ## Requirements
-The pipeline is written in Python 3. Dependencies are listed below. Sorry about there being so many! We are planning on trimming this down.
+The pipeline is written in Python 3. Dependencies are listed below. Sorry about there being so many! We would like to trim this down eventually.
 
 * scipy
 * pandas
@@ -51,7 +51,7 @@ import benepar
 benepar.download('benepar_en3')
 ```
 
-To run the SpanBERT-based coreference, a model file is required that is 534 MB, unfortunately too big for GitHub's file size limit. That file is available from https://cmu.box.com/s/leg9pkato6gtv9afg6e7tz9auwya2h3n. Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
+To run the SpanBERT-based coreference, a model file is required that is 534 MB, unfortunately too big for GitHub's file size limit. That file is available from https://pitt-my.sharepoint.com/:u:/g/personal/mmyoder_pitt_edu/IQAAz-wuwIT_T6A-hp1qRVHpAVdYcy7g1cmBwig7TfdybYQ?e=WEdpzI. Please download it and place it in a new directory called `model` in the `spanbert_coref` directory.
 
 ## Run a test
 To test that everything is set up properly, run `python run.py example.cfg`, which by default will run the pipeline on a test story in the `example_fandom` directory.
@@ -61,7 +61,7 @@ The output should be placed in a new directory, `output/example_fandom`. This ou
 ## Input 
 Directory path to directory of fanfiction story CSV files. 
 
-If your input is raw text you'll need to format it like the examples in the `example_fandom` directory. [Here's](https://github.com/michaelmilleryoder/fanfiction-nlp/blob/master/example_fandom/10118594_0004.csv) an example. Eventually we'll support raw text file input.
+If your input is raw text you'll need to format it like the examples in the `example_fandom` directory. [Here's](https://github.com/michaelmilleryoder/fanfiction-nlp/blob/master/example_fandom/10118594_0004.csv) an example. Eventually we aim to support raw text file input.
 Columns needed in the input are:
 `fic_id`, `chapter_id`, `para_id`, `text`, `text_tokenized`
 
